@@ -3,7 +3,8 @@ App.vue:
   <Header 
     :active-section="activeSection" 
     :current-theme="theme"
-    @toggle-theme="toggleTheme"
+    :is-scrolled="isHeaderScrolled"  @toggle-theme="toggleTheme"
+
   />
   
   <main class="main">
@@ -52,7 +53,7 @@ const showScrollBtn = ref(false);
 const activeSection = ref('home');
 // 4. NUEVA: Variable para el tema (light/dark)
 const theme = ref('light');
-
+const isHeaderScrolled = ref(false);
 // 5. NUEVA: Función para cambiar el tema
 const toggleTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light';
@@ -72,7 +73,7 @@ watch(theme, (newTheme) => {
 const handleScroll = () => {
   // Lógica para el botón de scroll
   showScrollBtn.value = window.scrollY >= 560;
-
+  isHeaderScrolled.value = window.scrollY >= 80;
   // Lógica para la sección activa
   const scrollY = window.scrollY;
   const sections = document.querySelectorAll('section[id]');
@@ -111,11 +112,11 @@ onUnmounted(() => {
   right: 1rem;
   bottom: -20%;
   background-color: var(--first-color);
-  opacity: 0.8;
-  padding: 0 0.3rem;
-  border-radius: 0.4rem;
+  opacity: .8;
+  padding: 0 .3rem;
+  border-radius: .4rem;
   z-index: var(--z-tooltip);
-  transition: 0.4s;
+  transition: .4s;
 }
 
 .scrollup:hover {
@@ -131,6 +132,7 @@ onUnmounted(() => {
   bottom: 3rem;
 }
 
+/* Media Queries para el botón de scroll */
 @media screen and (min-width: 768px) {
   .show-scroll {
     bottom: 3rem;
@@ -147,216 +149,11 @@ import App from './App.vue'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import '@iconscout/unicons/css/line.css'
 
 import './assets/css/global.css' // Tu archivo global
 
 createApp(App).mount('#app')
-
-main.js:
-/*==================== MENU SHOW Y HIDDEN ====================*/
-const navMenu = document.querySelector("#nav-menu");
-const navToggle = document.querySelector("#nav-toggle");
-const navClose = document.getElementById("nav-close");
-
-/*===== MENU SHOW =====*/
-/* Validate if constant exists */
-if (navToggle) {
-    navToggle.addEventListener("click", showMenu);
-}
-
-function showMenu() {
-    navMenu.classList.add("show-menu");
-}
-
-/*===== MENU HIDDEN =====*/
-/* Validate if constant exists */
-if (navClose) {
-    navClose.addEventListener("click", () => {
-        navMenu.classList.remove("show-menu");
-    });
-}
-
-/*==================== REMOVE MENU MOBILE ====================*/
-const navLink = document.querySelectorAll(".nav__link");
-
-function linkAction() {
-    const navMenu = document.getElementById("nav-menu");
-    // when we click on each nav__link, we remove the show menu class
-    navMenu.classList.remove("show-menu");
-}
-navLink.forEach((n) => n.addEventListener("click", linkAction));
-
-/*==================== ACCORDION SKILLS ====================*/
-const skillsContent = document.getElementsByClassName("skills__content"),
-    skillsHeader = document.querySelectorAll(".skills__header");
-
-function toggleSkills() {
-    let itemClass = this.parentNode.className;
-
-    for (let i = 0; i < skillsContent.length; i++) {
-        skillsContent[i].className = "skills__content skills__close";
-    }
-
-    if (itemClass === "skills__content skills__close") {
-        this.parentNode.className = "skills__content skills__open";
-    }
-}
-
-skillsHeader.forEach((el) => {
-    el.addEventListener("click", toggleSkills);
-});
-
-/*==================== QUALIFICATION TABS ====================*/
-const tabs = document.querySelectorAll("[data-target]"),
-    tabContents = document.querySelectorAll("[data-content]");
-
-tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-        const target = document.querySelector(tab.dataset.target);
-
-        tabContents.forEach((tabContent) => {
-            tabContent.classList.remove("qualification__active");
-        });
-        target.classList.add("qualification__active");
-
-        tabs.forEach((tab) => {
-            tab.classList.remove("qualification__active");
-        });
-        tab.classList.add("qualification__active");
-    });
-});
-
-/*==================== SERVICES MODAL ====================*/
-const modalViews = document.querySelectorAll(".services__modal"),
-    modalBtns = document.querySelectorAll(".services__button"),
-    modalCloses = document.querySelectorAll(".services__modal-close");
-
-let modal = function (modalClick) {
-    modalViews[modalClick].classList.add("active-modal");
-};
-
-modalBtns.forEach((modalBtn, i) => {
-    modalBtn.addEventListener("click", () => {
-        modal(i);
-    });
-});
-
-modalCloses.forEach((modalClose) => {
-    modalClose.addEventListener("click", () => {
-        modalViews.forEach((modalView) => {
-            modalView.classList.remove("active-modal");
-        });
-    });
-});
-
-/*==================== PORTFOLIO SWIPER  ====================*/
-let swiperPortfolio = new Swiper(".portfolio__container", {
-    cssMode: true,
-    loop: true,
-    navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
-    pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-    },
-});
-
-/*==================== TESTIMONIAL ====================*/
-let swiperTestimonial = new Swiper(".testimonial_container", {
-    loop: true,
-    grabCursor: true,
-    spaceBetween: 48,
-
-    pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-        dynamicBullets: true,
-    },
-    breakpoints: {
-        568: {
-            slidePerView: 2,
-        },
-    },
-});
-
-/*==================== SCROLL SECTIONS ACTIVE LINK ====================*/
-const sections = document.querySelectorAll("section[id]");
-
-function scrollActive() {
-    const verticalScrollPosition = window.verticalScrollPosition || window.pageYOffset;
-
-    sections.forEach((current) => {
-        const sectionHeight = current.offsetHeight;
-        const sectionTop = current.offsetTop - 50;
-        let sectionId = current.getAttribute("id");
-
-        if (verticalScrollPosition > sectionTop && verticalScrollPosition <= sectionTop + sectionHeight) {
-            document
-                .querySelector(".nav__menu a[href*=" + sectionId + "]")
-                .classList.add("active-link");
-        } else {
-            document
-                .querySelector(".nav__menu a[href*=" + sectionId + "]")
-                .classList.remove("active-link");
-        }
-    });
-}
-
-window.addEventListener("scroll", scrollActive);
-
-/*==================== CHANGE BACKGROUND HEADER ====================*/
-function scrollHeader() {
-    const nav = document.getElementById("header");
-    if (this.verticalScrollPosition >= 80) nav.classList.add("scroll-header");
-    else nav.classList.remove("scroll-header");
-}
-
-window.addEventListener("scroll", scrollHeader);
-
-/*==================== SHOW SCROLL UP ====================*/
-function scrollUp() {
-    const scrollUp = document.getElementById("scroll-up");
-    if (this.verticalScrollPosition >= 560) scrollUp.classList.add("show-scroll");
-    else scrollUp.classList.remove("show-scroll");
-}
-
-window.addEventListener("scroll", scrollUp);
-
-/*==================== DARK LIGHT THEME ====================*/
-const themeButton = document.getElementById("theme-button");
-const darkTheme = "dark-theme";
-const iconTheme = "uil-sun";
-
-const selectedTheme = localStorage.getItem("selected-theme");
-const selectedIcon = localStorage.getItem("selected-icon");
-
-const getCurrentTheme = () =>
-    document.body.classList.contains(darkTheme) ? "dark" : "light";
-const getCurrentIcon = () =>
-    document.body.classList.contains(iconTheme) ? "uil-moon" : "uil-sun";
-
-if (selectedTheme) {
-    document.body.classList[selectedTheme === "dark" ? "add" : "remove"](
-        darkTheme
-    );
-    themeButton.classList[selectedIcon === "uil-moon" ? "add" : "remove"](
-        iconTheme
-    );
-}
-
-//activate / deactivate the theme manually with the button
-themeButton.addEventListener("click", () => {
-    //add or remove dark / icon theme
-    document.body.classList.toggle(darkTheme);
-    themeButton.classList.toggle(iconTheme);
-
-    //we save the theme and the current icon so that the user choose
-    localStorage.setItem("selected-theme", getCurrentTheme());
-    localStorage.setItem("selected-icon", getCurrentIcon());
-});
-
 
 About.vue:
 <template>
@@ -663,7 +460,7 @@ export default {
 
 Header.vue:
 <template>
-  <header class="header" id="header">
+  <header class="header" id="header" :class="{ 'scroll-header': isScrolled }">
     <nav class="nav container">
       <a href="#" class="nav__logo">GalvezDev</a>
       <div class="nav__menu" id="nav-menu" :class="{ 'show-menu': isMenuOpen }">
@@ -728,42 +525,75 @@ const closeMenu = () => isMenuOpen.value = false;
 // Declaramos las props y los emits
 defineProps({
   activeSection: String,
-  currentTheme: String
+  currentTheme: String,
+  isScrolled: Boolean
 });
 defineEmits(['toggle-theme']);
 </script>
+
 <style scoped>
-/* ESTILOS BASE (ESCRITORIO) */
+
+/* ==================== BASE ESTILOS (MOBILE-FIRST) ==================== */
+
 .header {
   width: 100%;
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
   z-index: var(--z-fixed);
-  background-color: var(--body-color);
+  background-color: var(--first-color-3); /* Color del CSS original para la barra inferior */
 }
 
+/* --- NAV --- */
 .nav {
-  height: calc(var(--header-height) + 1.5rem);
+  max-width: 968px;
+  height: var(--header-height);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  column-gap: 1rem;
 }
 
 .nav__logo,
 .nav__toggle {
-  color: var(--title-color);
+  color: white; /* El logo y el toggle son blancos en móvil */
   font-weight: var(--font-medium);
 }
 
 .nav__logo:hover {
-  color: var(--first-color);
+  color: white; /* Mantenemos el color al hacer hover */
+}
+
+.nav__toggle {
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.nav__toggle:hover {
+  color: var(--first-color-lighter); /* Un color más claro al hacer hover para feedback */
+}
+
+/* --- Menú desplegable --- */
+.nav__menu {
+  position: fixed;
+  bottom: -100%; /* Oculto por defecto */
+  left: 0;
+  width: 100%;
+  background-color: var(--body-color);
+  padding: 2rem 1.5rem 4rem;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 1.5rem 1.5rem 0 0;
+  transition: .3s;
+}
+
+/* Clase para mostrar el menú */
+.show-menu {
+  bottom: 0;
 }
 
 .nav__list {
-  display: flex;
-  column-gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
 }
 
 .nav__link {
@@ -771,23 +601,33 @@ defineEmits(['toggle-theme']);
   flex-direction: column;
   align-items: center;
   font-size: var(--small-font-size);
-  color: var(--title-color);
+  color: var(--title-color); /* Color de texto para los items dentro del menú desplegable */
   font-weight: var(--font-medium);
-  transition: .3s;
 }
 
-/* Efecto simple para escritorio */
-.nav__link:hover,
-.active-link {
+/* Al estar dentro del menú, el active-link solo cambia de color */
+.nav__menu .active-link {
+   color: var(--first-color);
+}
+
+.nav__icon {
+  font-size: 1.2rem;
+}
+
+.nav__close {
+  position: absolute;
+  right: 1.3rem;
+  bottom: .5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
   color: var(--first-color);
 }
 
-.nav__icon,
-.nav__close,
-.nav__toggle {
-  display: none;
+.nav__close:hover {
+  color: var(--first-color-alt);
 }
 
+/* --- Botones de Navegación (Tema) --- */
 .nav__btns {
   display: flex;
   align-items: center;
@@ -795,126 +635,115 @@ defineEmits(['toggle-theme']);
 
 .change-theme {
   font-size: 1.25rem;
-  color: var(--title-color);
+  color: white; /* El ícono de tema es blanco en móvil */
   margin-right: var(--mb-1);
   cursor: pointer;
 }
 
 .change-theme:hover {
-  color: var(--first-color);
+  color: var(--first-color-lighter);
 }
 
-/* KEYFRAMES PARA LA ANIMACIÓN DEL ENLACE ACTIVO (del original) */
+/* --- Active link en la barra inferior (con animación) --- */
+.active-link {
+  color: white;
+  background-color: hsl(var(--hue-color), 65%, 65%);
+  box-shadow:
+    0 -10px 0 15px hsl(var(--hue-color), 65%, 65%),
+    0 10px 0 15px hsl(var(--hue-color), 65%, 65%);
+  animation: showThenFade 4s ease-in-out forwards;
+}
+
 @keyframes showThenFade {
-  0%, 100% {
+  0%, 90% { /* Muestra el efecto por un tiempo */
+    background-color: hsl(var(--hue-color), 65%, 65%);
+    box-shadow:
+      0 -10px 0 15px hsl(var(--hue-color), 65%, 65%),
+      0 10px 0 15px hsl(var(--hue-color), 65%, 65%);
+  }
+  100% { /* Se desvanece al final */
     background-color: transparent;
     box-shadow: none;
   }
 }
 
-/*==================== ESTILOS PARA MÓVILES (Réplica del original) ====================*/
-@media screen and (max-width: 767px) {
+/* Clase para la sombra al hacer scroll (se aplica con JS) */
+.scroll-header {
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ==================== ESTILOS PARA TABLET Y SUPERIOR (>= 768px) ==================== */
+@media screen and (min-width: 768px) {
   .header {
-    top: initial;
-    bottom: 0;
-    /* Color de fondo del original */
-    background-color: var(--first-color-3, hsl(var(--hue-color), 69%, 66%)); 
+    top: 0; /* Header arriba */
+    bottom: initial;
+    padding: 0 1rem;
+    background-color: var(--body-color);
   }
 
   .nav {
-    height: var(--header-height);
+    height: calc(var(--header-height) + 1.5rem);
+    column-gap: 1rem;
   }
 
+  /* Reset y ajuste de elementos del menú */
   .nav__menu {
-    position: fixed;
-    bottom: -100%;
-    left: 0;
-    width: 100%;
-    background-color: var(--body-color);
-    padding: 2rem 1.5rem 4rem;
-    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 1.5rem 1.5rem 0 0;
-    transition: 0.3s;
+    position: static;
+    width: auto;
+    background-color: transparent;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
   }
   
-  .show-menu {
-    bottom: 0;
-  }
-
   .nav__list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    display: flex;
+    column-gap: 2rem;
   }
 
   .nav__link {
-    /* Los enlaces dentro del menú desplegable tienen el color del tema */
-    color: var(--title-color); 
-  }
-
-  .nav__icon {
-    font-size: 1.2rem;
-  }
-
-  /* Efecto hover y activo DENTRO del menú desplegable */
-  .nav__menu .nav__link:hover,
-  .nav__menu .active-link {
-     color: var(--first-color);
-     /* Importante: Reseteamos los estilos de cápsula aquí para que no apliquen dentro del menú */
-     background-color: transparent;
-     box-shadow: none;
-     animation: none;
-  }
-
-  .nav__close {
-    position: absolute;
-    right: 1.3rem;
-    bottom: .5rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--first-color);
-  }
-
-  .nav__close:hover {
-    color: var(--first-color-alt);
+    flex-direction: row;
+    color: var(--title-color);
   }
   
-  .nav__toggle {
-    color: white; /* Ícono del toggle en blanco */
-    font-size: 1.1rem;
-    cursor: pointer;
-  }
-  
-  /* Hacemos visibles los íconos y botones de menú en móvil */
+  /* Se ocultan los elementos que no se usan en escritorio */
   .nav__icon,
   .nav__close,
   .nav__toggle {
-    display: block;
+    display: none;
   }
 
-  /* ESTILOS DE LA BARRA INFERIOR (No del menú desplegable) */
-  /* Aquí aplicamos los estilos de cápsula del original al NAV principal en móvil */
-  .nav:not(.nav__menu) .nav__link {
-    color: white;
+  /* Estilo simple para el enlace activo en escritorio */
+  .active-link {
+    color: var(--first-color);
+    background-color: transparent;
+    box-shadow: none;
+    animation: none; /* Se quita la animación */
   }
 
-  .nav:not(.nav__menu) .nav__link:hover {
-    color: white;
-    background-color: hsl(var(--hue-color), 65%, 45%);
-    box-shadow:
-      0 -10px 0 15px hsl(var(--hue-color), 65%, 45%),
-      0 10px 0 15px hsl(var(--hue-color), 65%, 45%);
+  .nav__link:hover {
+    color: var(--first-color);
+  }
+  
+  .change-theme {
+    margin: 0;
+    color: var(--title-color); /* Color del icono de tema en escritorio */
   }
 
-  .nav:not(.nav__menu) .active-link {
-    color: white;
-    background-color: hsl(var(--hue-color), 65%, 65%);
-    box-shadow:
-      0 -10px 0 15px hsl(var(--hue-color), 65%, 65%),
-      0 10px 0 15px hsl(var(--hue-color), 65%, 65%);
-    animation: showThenFade 4s ease-in-out forwards;
+  .change-theme:hover {
+    color: var(--first-color);
+  }
+  
+  .nav__logo {
+     color: var(--title-color); /* Color del logo en escritorio */
+  }
+
+  .nav__logo:hover {
+    color: var(--first-color);
   }
 }
+
 </style>
 
 Home.vue:
@@ -2098,349 +1927,3 @@ onMounted(() => {
   }
 }
 </style>
-
-global.css:
-/*==================== GOOGLE FONTS ====================*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-
-/*==================== VARIABLES CSS ====================*/
-:root {
-  --header-height: 3rem;
-  --hue-color: 250;
-
-  /* HSL color mode */
-  --first-color: hsl(var(--hue-color), 69%, 61%);
-  --first-color-second: hsl(var(--hue-color), 69%, 61%);
-  --first-color-alt: hsl(var(--hue-color), 57%, 53%);
-  --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
-  --title-color: hsl(var(--hue-color), 8%, 15%);
-  --text-color: hsl(var(--hue-color), 8%, 45%);
-  --text-color-light: hsl(var(--hue-color), 8%, 65%);
-  --input-color: hsl(var(--hue-color), 70%, 96%);
-  --body-color: hsl(var(--hue-color), 60%, 99%);
-  --container-color: #fff;
-  --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
-  --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
-
-  /* Font and typography */
-  --body-font: "Poppins", sans-serif;
-  --big-font-size: 2rem;
-  --h1-font-size: 1.5rem;
-  --h2-font-size: 1.25rem;
-  --h3-font-size: 1.125rem;
-  --normal-font-size: 0.938rem;
-  --small-font-size: 0.813rem;
-  --smaller-font-size: 0.75rem;
-
-  /* Font weight */
-  --font-medium: 500;
-  --font-semi-bold: 600;
-
-  /* Margenes Bottom */
-  --mb-0-25: 0.25rem;
-  --mb-0-5: 0.5rem;
-  --mb-0-75: 0.75rem;
-  --mb-1: 1rem;
-  --mb-1-5: 1.5rem;
-  --mb-2: 2rem;
-  --mb-2-5: 2.5rem;
-  --mb-3: 3rem;
-
-  /* z index */
-  --z-tooltip: 10;
-  --z-fixed: 100;
-  --z-modal: 1000;
-}
-
-/* Font size for large devices */
-@media screen and (min-width: 968px) {
-  :root {
-    --big-font-size: 3rem;
-    --h1-font-size: 2.25rem;
-    --h2-font-size: 1.5rem;
-    --h3-font-size: 1.25rem;
-    --normal-font-size: 1rem;
-    --small-font-size: 0.875rem;
-    --smaller-font-size: 0.813rem;
-  }
-}
-
-/*==================== DARK THEME ====================*/
-body.dark-theme {
-  --first-color-second: hsl(var(--hue-color), 30%, 8%);
-  --title-color: hsl(var(--hue-color), 8%, 95%);
-  --text-color: hsl(var(--hue-color), 8%, 75%);
-  --input-color: hsl(var(--hue-color), 29%, 16%);
-  --body-color: hsl(var(--hue-color), 28%, 12%);
-  --container-color: hsl(var(--hue-color), 29%, 16%);
-  --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
-  --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
-}
-
-/*==================== BASE ====================*/
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0 0 var(--header-height) 0;
-  font-family: var(--body-font);
-  font-size: var(--normal-font-size);
-  background: linear-gradient(135deg, #ffffff 0%, #d8dfff 100%) fixed no-repeat;
-  color: var(--text-color);
-  position: relative;
-  overflow-x: hidden;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  bottom: -50px;
-  left: 0;
-  width: 100%;
-  height: 339px;
-  background:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%236e58e0' fill-opacity='1' d='M0,160L80,154.7C160,149,320,139,480,154.7C640,171,800,213,960,224C1120,235,1280,213,1360,202.7L1440,192L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'/></svg>") no-repeat center bottom,
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%236e58e0' fill-opacity='0.5' d='M0,224L60,234.7C120,245,240,267,360,266.7C480,267,600,245,720,213.3C840,181,960,139,1080,144C1200,149,1320,203,1380,229.3L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'/></svg>") no-repeat center bottom;
-  background-size: 100% 100%, 100% 100%;
-  z-index: -1;
-  pointer-events: none;
-}
-
-h1,h2,h3,h4 {
-  color: var(--title-color);
-  font-weight: var(--font-semi-bold);
-}
-
-ul {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/*==================== REUSABLE CSS CLASSES ====================*/
-.section {
-  padding: 2rem 0 4rem;
-}
-
-.section__title {
-  font-size: var(--h1-font-size);
-  text-align: center;
-}
-
-.section__subtitle {
-  display: block;
-  font-size: var(--small-font-size);
-  margin-bottom: var(--mb-3);
-  text-align: center;
-}
-
-.container {
-  max-width: 768px;
-  margin-left: var(--mb-1-5);
-  margin-right: var(--mb-1-5);
-}
-
-.grid {
-  display: grid;
-  gap: 1.5rem;
-}
-
-/*==================== BUTTONS ====================*/
-.button {
-  display: inline-block;
-  background-color: var(--first-color);
-  color: #fff;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  font-weight: var(--font-medium);
-}
-
-.button:hover {
-  background-color: var(--first-color-alt);
-}
-
-.button__icon {
-  font-size: 1.25rem;
-  margin-left: var(--mb-0-5);
-  transition: 0.3s;
-}
-
-.button--white {
-  background-color: #fff;
-  color: var(--first-color);
-}
-
-.button--white:hover {
-  background-color: #fff;
-}
-
-.button--flex {
-  display: inline-flex;
-  align-items: center;
-}
-
-.button--small {
-  padding: 0.75rem 1rem;
-}
-
-.button--link {
-  padding: 0;
-  background-color: transparent;
-  color: var(--first-color);
-}
-
-.button--link:hover {
-  background-color: transparent;
-  color: var(--first-color-alt);
-}
-
-
-/*==================== GLOBAL COMPONENT STYLES ====================*/
-/* Clase para el header al hacer scroll */
-.scroll-header {
-  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
-}
-
-/* Clases para el botón de scroll-up */
-.scrollup {
-  position: fixed;
-  right: 1rem;
-  bottom: -20%;
-  background-color: var(--first-color);
-  opacity: 0.8;
-  padding: 0 0.3rem;
-  border-radius: 0.4rem;
-  z-index: var(--z-tooltip);
-  transition: 0.4s;
-}
-
-.scrollup:hover {
-  background-color: var(--first-color-alt);
-}
-
-.scrollup__icon {
-  font-size: 1.5rem;
-  color: #fff;
-}
-
-.show-scroll {
-  bottom: 3rem;
-}
-
-
-/*==================== SWIPER CUSTOM STYLES ====================*/
-/* Se aplican a los sliders de Portfolio y Testimonial */
-.swiper-button-prev::after,
-.swiper-button-next::after {
-  content: '';
-}
-
-.swiper-pagination-bullet-active {
-  background-color: var(--first-color);
-}
-
-.swiper-button-prev,
-.swiper-button-next,
-.swiper-pagination-bullet {
-  outline: none;
-}
-
-/* Portfolio Swiper */
-.swiper-portfolio-icon {
-  font-size: 2rem;
-  color: var(--first-color);
-}
-
-.swiper-button-prev {
-  left: -0.5rem;
-}
-
-.swiper-button-next {
-  right: -0.5rem;
-}
-
-.swiper-container-horizontal > .swiper-pagination-bullets {
-  bottom: -2.5rem;
-}
-
-/* Testimonial Swiper */
-.testimonial_container .swiper-pagination-testimonial {
-  bottom: 0;
-}
-
-
-/*==================== SCROLL BAR ====================*/
-::-webkit-scrollbar {
-  width: 0.6rem;
-  background-color: var(--scroll-bar-color);
-  border-radius: 0.5rem;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--scroll-thumb-color);
-  border-radius: 0.5rem;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--text-color-light);
-}
-
-/*==================== MEDIA QUERIES ====================*/
-/* For medium devices */
-@media screen and (min-width: 768px) {
-    body {
-        margin: 0;
-    }
-
-    .section {
-        padding: 6rem 0 2rem;
-    }
-
-    .section__subtitle {
-        margin-bottom: 4rem;
-    }
-   
-    .container {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .show-scroll {
-        bottom: 3rem;
-    }
-}
-
-/* For large devices */
-@media screen and (min-width: 1024px) {
-    .container {
-        padding: 0;
-    }
-   
-    /* Swiper Portfolio adjustments for large screens */
-    .swiper-portfolio-icon {
-      font-size: 3.5rem;
-    }
-    .swiper-button-prev {
-      left: -3.5rem;
-    }
-    .swiper-button-next {
-      right: -3.5rem;
-    }
-    .swiper-container-horizontal > .swiper-pagination-bullets {
-      bottom: -4.5rem;
-    }
-}

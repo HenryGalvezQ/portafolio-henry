@@ -2,7 +2,8 @@
   <Header 
     :active-section="activeSection" 
     :current-theme="theme"
-    @toggle-theme="toggleTheme"
+    :is-scrolled="isHeaderScrolled"  @toggle-theme="toggleTheme"
+
   />
   
   <main class="main">
@@ -51,7 +52,7 @@ const showScrollBtn = ref(false);
 const activeSection = ref('home');
 // 4. NUEVA: Variable para el tema (light/dark)
 const theme = ref('light');
-
+const isHeaderScrolled = ref(false);
 // 5. NUEVA: Función para cambiar el tema
 const toggleTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light';
@@ -71,7 +72,7 @@ watch(theme, (newTheme) => {
 const handleScroll = () => {
   // Lógica para el botón de scroll
   showScrollBtn.value = window.scrollY >= 560;
-
+  isHeaderScrolled.value = window.scrollY >= 80;
   // Lógica para la sección activa
   const scrollY = window.scrollY;
   const sections = document.querySelectorAll('section[id]');
