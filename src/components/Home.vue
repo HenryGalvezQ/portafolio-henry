@@ -32,11 +32,11 @@
         </div>
         <div class="home__data">
           <h1 class="home__title">Hi, I'am Henry</h1>
-          <h3 class="home__subtitle">Frontend Developer - UX/UI Designer</h3>
+          <h3 class="home__subtitle">  <span>Ingeniero de Sistemas</span><br><span>Frontend Developer - UX/UI Designer</span></h3>
           <p class="home__discription">Experiencia de alto nivel en diseño y desarrollo web, produciendo
             trabajos de calidad.</p>
           <a href="#contact" class="button button--flex">
-            Contact Me<i class="uil uil-message button__icon"></i>
+            Contacto<i class="uil uil-message button__icon"></i>
           </a>
         </div>
       </div>
@@ -51,14 +51,10 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'Home'
-}
-</script>
 <style scoped>
 .home__container {
   gap: 1rem;
+  position: relative; /* [!code update] Se añade la posición relativa */
 }
 .home__content {
   grid-template-columns: .5fr 3fr;
@@ -79,7 +75,7 @@ export default {
 }
 .home__blob {
   width: 200px;
-  fill: var(--first-color);
+  fill: var(--first-color-2); /* [!code update] Corregido al color original */
 }
 .home__blob-img {
   width: 170px;
@@ -98,9 +94,15 @@ export default {
 }
 .home__discription {
   margin-bottom: var(--mb-2);
+  color: black;
 }
 .home__scroll {
   display: none;
+  position: absolute;
+  top: 495px;      /* [!code update] Se añade la propiedad 'top' que faltaba */
+  right: 1.5rem;   /* [!code update] Se corrige el valor de 'right' */
+  bottom: 4rem;
+ 
 }
 .home__scroll-button {
   color: var(--first-color);
@@ -146,7 +148,7 @@ export default {
 @media screen and (min-width: 768px) {
   .home__container {
     row-gap: 5rem;
-    padding-top: 4rem; /* Ajuste para header fijo */
+    padding-top: 4rem;
   }
   .home__content {
     padding-top: 5.5rem;
@@ -169,5 +171,6 @@ export default {
   .home__social {
     transform: translateX(-6rem);
   }
+
 }
 </style>

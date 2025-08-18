@@ -100,7 +100,7 @@ body {
 body::after {
   content: "";
   position: fixed;
-  bottom: -50px;
+  bottom: -100px;
   left: 0;
   width: 100%;
   height: 339px;
@@ -263,4 +263,14 @@ img {
     .container {
         padding: 0;
     }
+}
+
+/* ==================== AJUSTE PARA MONITORES GRANDES ==================== */
+/* Cuando la pantalla tenga un ancho de 1600px o más... */
+
+@media screen and (min-width: 1600px) {
+  body {
+    /* ...aplicamos un zoom general del 125% a toda la página. */
+    zoom: 1.25;
+  }
 }

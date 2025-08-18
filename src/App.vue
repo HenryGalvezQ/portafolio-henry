@@ -104,6 +104,7 @@ onUnmounted(() => {
 <style scoped>
 .main {
   overflow-x: hidden; /* Opcional, si es necesario */
+  margin-top: -4rem; /* <--- Añade esta línea para subir todo */
 }
 
 .scrollup {

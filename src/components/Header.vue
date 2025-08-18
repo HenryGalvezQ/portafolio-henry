@@ -241,6 +241,7 @@ defineEmits(['toggle-theme']);
   .nav__list {
     display: flex;
     column-gap: 2rem;
+    margin-left: 3rem;
   }
 
   .nav__link {
