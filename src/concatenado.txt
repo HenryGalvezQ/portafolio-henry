@@ -105,6 +105,7 @@ onUnmounted(() => {
 <style scoped>
 .main {
   overflow-x: hidden; /* Opcional, si es necesario */
+  margin-top: -4rem; /* <--- Añade esta línea para subir todo */
 }
 
 .scrollup {
@@ -154,6 +155,370 @@ import '@iconscout/unicons/css/line.css'
 import './assets/css/global.css' // Tu archivo global
 
 createApp(App).mount('#app')
+
+style.css:
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.card {
+  padding: 2em;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+global.css:
+/*==================== GOOGLE FONTS ====================*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/*==================== VARIABLES CSS ====================*/
+:root {
+  --header-height: 3rem;
+  --hue-color: 250; /* Cambia tu color favorito */
+
+  /* HSL color mode */
+  --first-color: hsl(var(--hue-color), 69%, 61%);
+  --first-color-2: hsl(var(--hue-color), 69%, 70%);
+  --first-color-3: hsl(var(--hue-color), 69%, 66%);
+  --first-color-second: hsl(var(--hue-color), 69%, 61%);
+  --first-color-alt: hsl(var(--hue-color), 57%, 53%);
+  --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
+  --title-color: hsl(var(--hue-color), 8%, 15%);
+  --text-color: hsl(var(--hue-color), 8%, 45%);
+  --text-color-light: hsl(var(--hue-color), 8%, 65%);
+  --input-color: hsl(var(--hue-color), 70%, 96%);
+  --body-color: hsl(var(--hue-color), 60%, 99%);
+  --container-color: #fff;
+  --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
+  --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
+
+  /* Font and typography */
+  --body-font: "Poppins", sans-serif;
+  --big-font-size: 2rem;
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1.125rem;
+  --normal-font-size: .938rem;
+  --small-font-size: .813rem;
+  --smaller-font-size: .75rem;
+
+  /* Font weight */
+  --font-medium: 500;
+  --font-semi-bold: 600;
+
+  /* Margenes Bottom */
+  --mb-0-25: .25rem;
+  --mb-0-5: .5rem;
+  --mb-0-75: .75rem;
+  --mb-1: 1rem;
+  --mb-1-5: 1.5rem;
+  --mb-2: 2rem;
+  --mb-2-5: 2.5rem;
+  --mb-3: 3rem;
+
+  /* z index */
+  --z-tooltip: 10;
+  --z-fixed: 100;
+  --z-modal: 1000;
+}
+
+@media screen and (min-width: 968px) {
+  :root {
+    --big-font-size: 3rem;
+    --h1-font-size: 2.25rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .875rem;
+    --smaller-font-size: .813rem;
+  }
+}
+
+/*==================== Variables Dark theme ====================*/
+body.dark-theme {
+  --first-color-second: hsl(var(--hue-color), 30%, 8%);
+  --title-color: hsl(var(--hue-color), 8%, 95%);
+  --text-color: hsl(var(--hue-color), 8%, 75%);
+  --input-color: hsl(var(--hue-color), 29%, 16%);
+  --body-color: hsl(var(--hue-color), 28%, 12%);
+  --container-color: hsl(var(--hue-color), 29%, 16%);
+  --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
+  --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
+}
+
+/*==================== BASE ====================*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0 0 var(--header-height) 0;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background: linear-gradient(135deg, #ffffff 0%, #d8dfff 100%) fixed no-repeat;
+  color: var(--text-color);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  bottom: -120px;
+  left: 0;
+  width: 100%;
+  height: 339px;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%236e58e0' fill-opacity='1' d='M0,160L80,154.7C160,149,320,139,480,154.7C640,171,800,213,960,224C1120,235,1280,213,1360,202.7L1440,192L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'/></svg>") no-repeat center bottom,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%236e58e0' fill-opacity='0.5' d='M0,224L60,234.7C120,245,240,267,360,266.7C480,267,600,245,720,213.3C840,181,960,139,1080,144C1200,149,1320,203,1380,229.3L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'/></svg>") no-repeat center bottom;
+  background-size: 100% 100%, 100% 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+h1, h2, h3, h4 {
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/*==================== REUSABLE CSS CLASSES ====================*/
+.section {
+  padding: 2rem 0 4rem;
+}
+
+.section__title {
+  font-size: var(--h1-font-size);
+  text-align: center;
+}
+
+.section__subtitle {
+  display: block;
+  font-size: var(--small-font-size);
+  margin-bottom: var(--mb-3);
+  text-align: center;
+}
+
+.container {
+  max-width: 768px;
+  margin-left: var(--mb-1-5);
+  margin-right: var(--mb-1-5);
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/*==================== BUTTONS ====================*/
+.button {
+  display: inline-block;
+  background-color: var(--first-color);
+  color: #fff;
+  padding: 1rem;
+  border-radius: .5rem;
+  font-weight: var(--font-medium);
+}
+
+.button:hover {
+  background-color: var(--first-color-alt);
+}
+
+.button__icon {
+  font-size: 1.25rem;
+  margin-left: var(--mb-0-5);
+  transition: .3s;
+}
+
+.button--white {
+  background-color: #fff;
+  color: var(--first-color);
+}
+
+.button--white:hover {
+  background-color: #fff;
+}
+
+.button--flex {
+  display: inline-flex;
+  align-items: center;
+}
+
+.button--small {
+  padding: .75rem 1rem;
+}
+
+.button--link {
+  padding: 0;
+  background-color: transparent;
+  color: var(--first-color);
+}
+
+.button--link:hover {
+  background-color: transparent;
+  color: var(--first-color-alt);
+}
+
+/*==================== GLOBAL COMPONENT STYLES ====================*/
+.scroll-header {
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, .15);
+}
+
+/*==================== SCROLL BAR ====================*/
+::-webkit-scrollbar {
+  width: .60rem;
+  background-color: var(--scroll-bar-color);
+  border-radius: .5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-color);
+  border-radius: .5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-color-light);
+}
+
+/*==================== MEDIA QUERIES ====================*/
+/* For small devices */
+@media screen and (max-width: 350px) {
+  .container {
+    margin-left: var(--mb-1);
+    margin-right: var(--mb-1);
+  }
+}
+
+/* For medium devices */
+@media screen and (min-width: 768px) {
+  body {
+    margin: 0;
+  }
+
+  .section {
+    padding: 6rem 0 2rem;
+  }
+
+  .section__subtitle {
+    margin-bottom: 4rem;
+  }
+
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* For large devices */
+@media screen and (min-width: 1024px) {
+    .container {
+        padding: 0;
+    }
+}
+
+/* ==================== AJUSTE PARA MONITORES GRANDES ==================== */
+/* Cuando la pantalla tenga un ancho de 1600px o más... */
+
+@media screen and (min-width: 1600px) {
+  body {
+    /* ...aplicamos un zoom general del 125% a toda la página. */
+    zoom: 1.25;
+  }
+}
 
 About.vue:
 <template>
@@ -674,12 +1039,14 @@ defineEmits(['toggle-theme']);
 
 
 /* ==================== ESTILOS PARA TABLET Y SUPERIOR (>= 768px) ==================== */
+/* ==================== ESTILOS PARA TABLET Y SUPERIOR (>= 768px) ==================== */
 @media screen and (min-width: 768px) {
   .header {
     top: 0; /* Header arriba */
     bottom: initial;
     padding: 0 1rem;
-    background-color: var(--body-color);
+    /* [!code --] background-color: var(--body-color); */
+    background-color: var(--first-color-3); /* [!code ++] Mantenemos el color púrpura */
   }
 
   .nav {
@@ -700,11 +1067,14 @@ defineEmits(['toggle-theme']);
   .nav__list {
     display: flex;
     column-gap: 2rem;
+    margin-left: 8rem;
   }
 
   .nav__link {
     flex-direction: row;
-    color: var(--title-color);
+    /* [!code --] color: var(--title-color); */
+    color: white; /* [!code ++] Letras de los enlaces en blanco */
+    transition: transform 0.3s ease;
   }
   
   /* Se ocultan los elementos que no se usan en escritorio */
@@ -714,36 +1084,36 @@ defineEmits(['toggle-theme']);
     display: none;
   }
 
-  /* Estilo simple para el enlace activo en escritorio */
-  .active-link {
-    color: var(--first-color);
-    background-color: transparent;
-    box-shadow: none;
-    animation: none; /* Se quita la animación */
+/* --- [!code ++] ESTA ES LA PARTE CORREGIDA --- */
+  .nav__link:hover {
+    /* Al pasar el mouse, solo cambiamos el tamaño. Hereda el color blanco. */
+    transform: scale(1.2);
   }
 
-  .nav__link:hover {
-    color: var(--first-color);
+  .active-link {
+    /* El enlace activo es grande por defecto y quitamos los estilos de móvil. */
+    transform: scale(1.2);
+    color: rgb(255, 255, 231) !important;
+    background-color: transparent;
+    box-shadow: none;
+    animation: none;
   }
+  /* --- [!code --] FIN DE LA CORRECCIÓN --- */
   
   .change-theme {
     margin: 0;
-    color: var(--title-color); /* Color del icono de tema en escritorio */
+    color: white;
   }
-
-  .change-theme:hover {
-    color: var(--first-color);
-  }
-  
   .nav__logo {
-     color: var(--title-color); /* Color del logo en escritorio */
+     color: white; /* Logo en blanco */
+     transition: transform 0.3s ease; /* [!code ++] Añadimos también transición al logo */
   }
 
   .nav__logo:hover {
-    color: var(--first-color);
+    transform: scale(1.05); /* [!code update] Agrandamos un poco el logo al pasar el mouse */
+    color: white; /* Mantenemos el color */
   }
 }
-
 </style>
 
 Home.vue:
@@ -781,11 +1151,11 @@ Home.vue:
         </div>
         <div class="home__data">
           <h1 class="home__title">Hi, I'am Henry</h1>
-          <h3 class="home__subtitle">Frontend Developer - UX/UI Designer</h3>
+          <h3 class="home__subtitle">  <span>Ingeniero de Sistemas</span><br><span>Frontend Developer - UX/UI Designer</span></h3>
           <p class="home__discription">Experiencia de alto nivel en diseño y desarrollo web, produciendo
             trabajos de calidad.</p>
           <a href="#contact" class="button button--flex">
-            Contact Me<i class="uil uil-message button__icon"></i>
+            Contacto<i class="uil uil-message button__icon"></i>
           </a>
         </div>
       </div>
@@ -800,14 +1170,10 @@ Home.vue:
   </section>
 </template>
 
-<script>
-export default {
-  name: 'Home'
-}
-</script>
 <style scoped>
 .home__container {
   gap: 1rem;
+  position: relative; /* [!code update] Se añade la posición relativa */
 }
 .home__content {
   grid-template-columns: .5fr 3fr;
@@ -828,7 +1194,7 @@ export default {
 }
 .home__blob {
   width: 200px;
-  fill: var(--first-color);
+  fill: var(--first-color-2); /* [!code update] Corregido al color original */
 }
 .home__blob-img {
   width: 170px;
@@ -847,9 +1213,15 @@ export default {
 }
 .home__discription {
   margin-bottom: var(--mb-2);
+  color: black;
 }
 .home__scroll {
   display: none;
+  position: absolute;
+  top: 495px;      /* [!code update] Se añade la propiedad 'top' que faltaba */
+  right: 1.5rem;   /* [!code update] Se corrige el valor de 'right' */
+  bottom: 4rem;
+ 
 }
 .home__scroll-button {
   color: var(--first-color);
@@ -895,7 +1267,7 @@ export default {
 @media screen and (min-width: 768px) {
   .home__container {
     row-gap: 5rem;
-    padding-top: 4rem; /* Ajuste para header fijo */
+    padding-top: 4rem;
   }
   .home__content {
     padding-top: 5.5rem;
@@ -918,6 +1290,7 @@ export default {
   .home__social {
     transform: translateX(-6rem);
   }
+
 }
 </style>
 

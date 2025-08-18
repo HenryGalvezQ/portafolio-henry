@@ -28,7 +28,7 @@ def main():
 
     for root, dirs, files in os.walk(SRC_DIR):
         for nombre in files:
-            if nombre.endswith(('.js', '.vue')):
+            if nombre.endswith(('.js', '.vue', '.css', '.html')):
                 ruta_archivo = os.path.join(root, nombre)
                 print(f'Procesando: {ruta_archivo}')
                 contenido = procesar_archivo(ruta_archivo)
