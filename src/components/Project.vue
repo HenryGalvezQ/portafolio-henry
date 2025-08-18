@@ -21,39 +21,53 @@ export default {
   name: 'Project'
 }
 </script>
+
 <style scoped>
+/* ==================== PROJECT ==================== */
 .project {
   text-align: center;
 }
+
 .project__bg {
   background-color: var(--first-color-second);
   padding-top: 3rem;
 }
+
 .project__title {
   font-size: var(--h2-font-size);
   margin-bottom: var(--mb-0-75);
   color: #fff;
 }
+
 .project__description {
   margin-bottom: var(--mb-1-5);
   color: #fff;
 }
+
 .project__img {
   width: 232px;
   justify-self: center;
 }
 
-/* Media Queries */
+/* El icono del botón hereda el color, pero podemos ser explícitos si es necesario */
+.project__icon {
+  color: var(--first-color);
+}
+
+/* ==================== MEDIA QUERIES ==================== */
 @media screen and (max-width: 350px) {
   .project__img {
     width: 200px;
   }
 }
+
 @media screen and (min-width: 568px) {
   .project__container {
     grid-template-columns: repeat(2, 1fr);
+    align-items: center; /* Añadido para mejor alineación vertical */
   }
 }
+
 @media screen and (min-width: 768px) {
   .project {
     text-align: initial;

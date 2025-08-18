@@ -26,7 +26,7 @@
                 <i class="uil uil-check-circle services__modal-icon"></i>
                 <p>Web page development.</p>
               </li>
-              </ul>
+            </ul>
           </div>
         </div>
       </div>
@@ -49,12 +49,16 @@
                   <i class="uil uil-check-circle services__modal-icon"></i>
                   <p>I develop the user interface.</p>
               </li>
-              </ul>
+               <li class="services__modal-service">
+                <i class="uil uil-check-circle services__modal-icon"></i>
+                <p>Web page development.</p>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
       
-      </div>
+    </div>
   </section>
 </template>
 
@@ -63,7 +67,7 @@ export default {
   name: 'Services',
   data() {
     return {
-      activeModal: null // Puede ser 'ui', 'frontend', 'branding', o null
+      activeModal: null // Puede ser 'ui', 'frontend', o null
     };
   },
   methods: {
@@ -76,11 +80,14 @@ export default {
   }
 }
 </script>
+
 <style scoped>
+/* ==================== SERVICES ==================== */
 .services__container {
   gap: 1.5rem;
   grid-template-columns: repeat(2, 1fr);
 }
+
 .services__content {
   position: relative;
   background-color: var(--container-color);
@@ -89,27 +96,33 @@ export default {
   box-shadow: 0 2px 4px rgba(0,0,0,.15);
   transition: .3s;
 }
+
 .services__content:hover {
   box-shadow: 0 4px 8px rgba(0,0,0,.15);
 }
+
 .services__icon {
   display: block;
   font-size: 1.5rem;
   color: var(--first-color);
   margin-bottom: var(--mb-1);
 }
+
 .services__title {
   font-size: var(--h3-font-size);
   margin-bottom: var(--mb-1);
   font-weight: var(--font-medium);
 }
+
 .services__button {
   cursor: pointer;
   font-size: var(--small-font-size);
 }
+
 .services__button:hover .button__icon {
   transform: translateX(.25rem);
 }
+
 .services__modal {
   position: fixed;
   top: 0;
@@ -126,23 +139,29 @@ export default {
   visibility: hidden;
   transition: .3s;
 }
+
 .services__modal-content {
   position: relative;
   background-color: var(--container-color);
   padding: 1.5rem;
   border-radius: .5rem;
 }
+
 .services__modal-services {
   row-gap: 1rem;
 }
+
 .services__modal-service {
   display: flex;
+  align-items: center;
 }
+
 .services__modal-title {
   font-size: var(--h3-font-size);
   font-weight: var(--font-medium);
   margin-bottom: var(--mb-1-5);
 }
+
 .services__modal-close {
   position: absolute;
   top: 1rem;
@@ -151,16 +170,19 @@ export default {
   color: var(--first-color);
   cursor: pointer;
 }
+
 .services__modal-icon {
   color: var(--first-color);
   margin-right: var(--mb-0-25);
 }
+
+/* Clase que activa el modal con Vue */
 .active-modal {
   opacity: 1;
   visibility: visible;
 }
 
-/* Media Queries */
+/* ==================== MEDIA QUERIES ==================== */
 @media screen and (max-width: 350px) {
   .services__container {
     grid-template-columns: max-content;
@@ -173,6 +195,7 @@ export default {
     padding: 0 .5rem;
   }
 }
+
 @media screen and (min-width: 768px) {
   .services__container {
     grid-template-columns: repeat(3, 218px);
@@ -189,6 +212,7 @@ export default {
     width: 450px;
   }
 }
+
 @media screen and (min-width: 1024px) {
   .services__container {
     grid-template-columns: repeat(3, 238px);

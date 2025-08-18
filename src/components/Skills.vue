@@ -1,127 +1,159 @@
 <template>
   <section class="skills section" id="skills">
-    <h2 class="section__title">Skills</h2>
-    <span class="section__subtitle">My technical level</span>
+    <h2 class="section__title">Habilidades</h2>
+    <span class="section__subtitle">Mi Nivel Técnico</span>
+    
     <div class="skills__container container grid">
-      <div :class="['skills__content', openSkill === 'frontend' ? 'skills__open' : 'skills__close']">
+      
+      <div :class="['skills__content', skillsState.frontend ? 'skills__open' : 'skills__close']" ref="frontendSkill" data-skill="frontend">
         <div class="skills__header" @click="toggleSkill('frontend')">
+          <i class="uil uil-swatchbook skills__icon"></i>
+          <div>
+            <h1 class="skills__title">Frontend y Diseño UX/UI</h1>
+            <span class="skills__subtitle">Mi especialidad principal</span>
+          </div>
+          <i class="uil uil-angle-down skills__arrow"></i>
+        </div>
+
+        <div class="skills__list skills__list--grid skills__list--4-cols grid">
+          <div v-for="skill in frontendSkills" :key="skill.name" class="skills__data skills__data--icon">
+            <SvgIcon :name="skill.iconName" />
+            <h3 class="skills__name">{{ skill.name }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div :class="['skills__content', skillsState.backend ? 'skills__open' : 'skills__close']" ref="backendSkill" data-skill="backend">
+        <div class="skills__header" @click="toggleSkill('backend')">
+          <i class="uil uil-database skills__icon"></i>
+          <div>
+            <h1 class="skills__title">Backend y Bases de Datos</h1>
+            <span class="skills__subtitle">Lógica de servidor y gestión de datos</span>
+          </div>
+          <i class="uil uil-angle-down skills__arrow"></i>
+        </div>
+        
+        <div class="skills__list skills__list--grid grid">
+          <div v-for="skill in backendSkills" :key="skill.name" class="skills__data skills__data--icon">
+            <SvgIcon :name="skill.iconName" />
+            <h3 class="skills__name">{{ skill.name }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div :class="['skills__content', skillsState.devops ? 'skills__open' : 'skills__close']" ref="devopsSkill" data-skill="devops">
+        <div class="skills__header" @click="toggleSkill('devops')">
           <i class="uil uil-brackets-curly skills__icon"></i>
           <div>
-            <h1 class="skills__title">Frontend Developer</h1>
-            <span class="skills__subtitle">More than 4 years</span>
+            <h1 class="skills__title">Programación y DevOps</h1>
+            <span class="skills__subtitle">Lógica, sistemas y herramientas</span>
           </div>
           <i class="uil uil-angle-down skills__arrow"></i>
         </div>
-        <div class="skills__list grid">
-          <div class="skills__data">
-            <div class="skills__titles">
-              <h3 class="skills__name">HTML</h3>
-              <span class="skills__number">90%</span>
-            </div>
-            <div class="skills__bar">
-              <span class="skills__percentage skills__html"></span>
-            </div>
-          </div>
-          <div class="skills__data">
-            <div class="skills__titles">
-              <h3 class="skills__name">CSS</h3>
-              <span class="skills__number">80%</span>
-            </div>
-            <div class="skills__bar">
-              <span class="skills__percentage skills__css"></span>
-            </div>
-          </div>
-          <div class="skills__data">
-            <div class="skills__titles">
-              <h3 class="skills__name">JAVASCRIPT</h3>
-              <span class="skills__number">70%</span>
-            </div>
-            <div class="skills__bar">
-              <span class="skills__percentage skills__js"></span>
-            </div>
-          </div>
-          <div class="skills__data">
-            <div class="skills__titles">
-              <h3 class="skills__name">React</h3>
-              <span class="skills__number">85%</span>
-            </div>
-            <div class="skills__bar">
-              <span class="skills__percentage skills__react"></span>
-            </div>
+        
+        <div class="skills__list skills__list--grid skills__list--6-cols grid">
+          <div v-for="skill in devopsSkills" :key="skill.name" class="skills__data skills__data--icon">
+            <SvgIcon :name="skill.iconName" />
+            <h3 class="skills__name">{{ skill.name }}</h3>
           </div>
         </div>
       </div>
 
-      <div :class="['skills__content', openSkill === 'backend' ? 'skills__open' : 'skills__close']">
-        <div class="skills__header" @click="toggleSkill('backend')">
-          <i class="uil uil-server-network skills__icon"></i>
-          <div>
-            <h1 class="skills__title">Backend Developer</h1>
-            <span class="skills__subtitle">More than 2 years</span>
-          </div>
-          <i class="uil uil-angle-down skills__arrow"></i>
-        </div>
-        <div class="skills__list grid">
-          <div class="skills__data">
-              <div class="skills__titles">
-                  <h3 class="skills__name">PHP</h3>
-                  <span class="skills__number">90%</span>
-              </div>
-              <div class="skills__bar">
-                  <span class="skills__percentage skills__php"></span>
-              </div>
-          </div>
-          </div>
-      </div>
-
-      <div :class="['skills__content', openSkill === 'designer' ? 'skills__open' : 'skills__close']">
-          <div class="skills__header" @click="toggleSkill('designer')">
-              <i class="uil uil-swatchbook skills__icon"></i>
-              <div>
-                  <h1 class="skills__title">Designer</h1>
-                  <span class="skills__subtitle">More than 5 years</span>
-              </div>
-              <i class="uil uil-angle-down skills__arrow"></i>
-          </div>
-          <div class="skills__list grid">
-              <div class="skills__data">
-                  <div class="skills__titles">
-                      <h3 class="skills__name">FIGMA</h3>
-                      <span class="skills__number">60%</span>
-                  </div>
-                  <div class="skills__bar">
-                      <span class="skills__percentage skills__figma"></span>
-                  </div>
-              </div>
-              </div>
-      </div>
     </div>
   </section>
 </template>
 
 <script>
+import SvgIcon from './SvgIcon.vue';
+
 export default {
   name: 'Skills',
+  components: {
+    SvgIcon
+  },
   data() {
     return {
-      // Mantiene el estado de la sección abierta.
-      // Inicia con 'frontend' para que esté abierto por defecto.
-      openSkill: 'frontend' 
+      // SECCIÓN 1: Ahora con WordPress
+      frontendSkills: [
+        { name: 'Figma', iconName: 'figma' },
+        { name: 'HTML', iconName: 'html' },
+        { name: 'CSS', iconName: 'css' },
+        { name: 'JavaScript', iconName: 'javascript' },
+        { name: 'Vue.js', iconName: 'vue' },
+        { name: 'Vite', iconName: 'vite' },
+        { name: 'WordPress', iconName: 'wordpress' },
+        { name: 'Android', iconName: 'android' },
+      ],
+      // SECCIÓN 2
+      backendSkills: [
+        { name: 'PHP', iconName: 'php' },
+        { name: 'Flask', iconName: 'flask' },
+        { name: 'Firebase', iconName: 'firebase' },
+        { name: 'MySQL', iconName: 'mysql' },
+        { name: 'PostgreSQL', iconName: 'postgresql' },
+      ],
+      // SECCIÓN 3: Sin WordPress
+      devopsSkills: [
+        { name: 'Python', iconName: 'python' },
+        { name: 'Java', iconName: 'java' },
+        { name: 'C#', iconName: 'csharp' },
+        { name: 'C++', iconName: 'cplusplus' },
+        { name: 'AWS', iconName: 'aws' },
+        { name: 'Docker', iconName: 'docker' },
+        { name: 'Linux', iconName: 'linux' },
+        { name: 'Bash', iconName: 'bash' },
+        { name: 'Git', iconName: 'git' },
+        { name: 'GitHub', iconName: 'github' },
+        { name: 'VSCode', iconName: 'vscode' },
+        { name: 'Unity', iconName: 'unity' },
+      ],
+      skillsState: {
+        frontend: false,
+        backend: false,
+        devops: false,
+      },
+      observer: null,
+      userHasClicked: false,
     };
   },
   methods: {
     toggleSkill(skill) {
-      // Si el skill clickeado ya está abierto, ciérralo.
-      // Si no, ábrelo.
-      if (this.openSkill === skill) {
-        this.openSkill = null;
-      } else {
-        this.openSkill = skill;
-      }
+      this.userHasClicked = true; 
+      const currentState = this.skillsState[skill];
+      Object.keys(this.skillsState).forEach(key => {
+        this.skillsState[key] = false;
+      });
+      this.skillsState[skill] = !currentState;
     }
-  }
+  },
+  mounted() {
+    const options = {
+      root: null,
+      rootMargin: '-65% 0px -35% 0px',
+      threshold: 0,
+    };
+    this.observer = new IntersectionObserver((entries) => {
+      if (this.userHasClicked) return;
+      entries.forEach(entry => {
+        const skillName = entry.target.dataset.skill;
+        if (skillName) {
+          this.skillsState[skillName] = entry.isIntersecting;
+        }
+      });
+    }, options);
+    const elementsToObserve = [this.$refs.frontendSkill, this.$refs.backendSkill, this.$refs.devopsSkill];
+    elementsToObserve.forEach(element => {
+      if (element) this.observer.observe(element);
+    });
+  },
+  beforeUnmount() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  },
 }
 </script>
+
 <style scoped>
 .skills__container {
   row-gap: 0;
@@ -149,66 +181,89 @@ export default {
 }
 .skills__arrow {
   margin-left: auto;
-  transition: .4s;
+  transition: transform 0.4s;
 }
 .skills__list {
-  row-gap: 1.5rem;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
   padding-left: 2.7rem;
 }
-.skills__titles {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: var(--mb-0-5);
+.skills__data {
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
-.skills__name {
-  font-size: var(--normal-font-size);
-  font-weight: var(--font-medium);
-}
-.skills__bar,
-.skills__percentage {
-  height: 5px;
-  border-radius: .25rem;
-}
-.skills__bar {
-  background-color: var(--first-color-lighter);
-}
-.skills__percentage {
-  display: block;
-  background-color: var(--first-color);
-}
-.skills__html { width: 90%; }
-.skills__css { width: 80%; }
-.skills__js { width: 70%; }
-.skills__react { width: 85%; }
-.skills__php { width: 90%; }
-.skills__node { width: 70%; }
-.skills__firebase { width: 60%; }
-.skills__python { width: 65%; }
-.skills__figma { width: 60%; }
-.skills__sketch { width: 70%; }
-.skills__photoshop { width: 80%; }
-
 .skills__close .skills__list {
-  height: 0;
-  overflow: hidden;
+  max-height: 0;
+}
+.skills__close .skills__data {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 .skills__open .skills__list {
-  height: max-content;
+  max-height: 1000px; 
   margin-bottom: var(--mb-2-5);
 }
 .skills__open .skills__arrow {
   transform: rotate(-180deg);
 }
-
-/* Media Queries */
-@media screen and (max-width: 350px) {
-  .skills__title {
-    font-size: var(--normal-font-size);
-  }
+.skills__name {
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-medium);
+  text-align: center;
 }
+
+/* === ESTILOS PARA LA CUADRÍCULA DE ICONOS === */
+.skills__list--grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem 1rem;
+  padding-left: 0;
+}
+.skills__data--icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.skills__data--icon :deep(svg) {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+.skills__data--icon .skills__name {
+  margin-top: var(--mb-0-25);
+}
+
+/* === RESPONSIVE Y ESTILOS ESPECIALES === */
 @media screen and (min-width: 568px) {
   .skills__container {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem; 
   }
+
+  .skills__content:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .skills__container {
+    grid-template-columns: 1fr;
+  }
+  
+  /* NUEVA REGLA: Frontend con 4 columnas */
+  .skills__list--4-cols {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* DevOps con 6 columnas */
+  .skills__list--6-cols {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media screen and (min-width: 992px) {
+    .skills__container {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 </style>

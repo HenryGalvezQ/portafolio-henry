@@ -61,7 +61,6 @@
 <script setup>
 import { ref } from 'vue';
 
-// Creamos un objeto reactivo para almacenar todos los datos del formulario
 const formData = ref({
   name: '',
   email: '',
@@ -71,43 +70,55 @@ const formData = ref({
 
 const handleSubmit = () => {
   console.log('Form data submitted:', formData.value);
-  // Aquí iría la lógica para enviar el formulario a un backend
   alert('Mensaje enviado (revisa la consola para ver los datos).');
   // Opcional: limpiar el formulario después de enviar
   formData.value = { name: '', email: '', project: '', message: '' };
 };
 </script>
+
 <style scoped>
+/* ==================== CONTACT ME ==================== */
 .contact__container {
   row-gap: 3rem;
 }
+
 .contact__information {
   display: flex;
   margin-bottom: var(--mb-2);
   align-items: center;
 }
+
 .contact__icon {
   font-size: 2rem;
   color: var(--first-color);
   margin-right: var(--mb-0-75);
 }
+
 .contact__title {
   font-size: var(--h3-font-size);
   font-weight: var(--font-medium);
 }
+
 .contact__subtitle {
   font-size: var(--small-font-size);
   color: var(--text-color-light);
 }
+
 .contact__content {
   background-color: var(--input-color);
   border-radius: .5rem;
   padding: .75rem 1rem .25rem;
 }
+
+.contact__content>textarea {
+  resize: vertical;
+}
+
 .contact__label {
   font-size: var(--smaller-font-size);
   color: var(--title-color);
 }
+
 .contact__input {
   width: 100%;
   background-color: var(--input-color);
@@ -118,22 +129,21 @@ const handleSubmit = () => {
   outline: none;
   padding: .25rem .5rem .5rem 0;
 }
-textarea.contact__input {
-  resize: vertical;
-}
 
-/* Media Queries */
+/* ==================== MEDIA QUERIES ==================== */
 @media screen and (min-width: 568px) {
   .contact__container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media screen and (min-width: 1024px) {
+
+@media screen and (min-width: 768px) {
   .contact__form {
     width: 460px;
   }
   .contact__inputs {
     grid-template-columns: repeat(2, 1fr);
+    column-gap: 1.5rem; /* Añadido para espaciar los inputs */
   }
 }
 </style>

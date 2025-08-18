@@ -1,5 +1,5 @@
 <template>
-  <section class="qualification section">
+  <section class="qualification section" id="qualification">
     <h2 class="section__title">Qualification</h2>
     <span class="section__subtitle">My personal journey</span>
 
@@ -27,7 +27,7 @@
             <div>
               <h3 class="qualification__title">Computer Engineer</h3>
               <span class="qualification__subtitle">Peru - University</span>
-              <div class="qualification__calender">
+              <div class="qualification__calendar">
                 <i class="uil uil-calendar-alt"></i>
                 2009 - 2014
               </div>
@@ -45,21 +45,21 @@
             </div>
             <div>
               <h3 class="qualification__title">Web Design</h3>
-              <span class="qualification__subtitle">Span - Institute</span>
-              <div class="qualification__calender">
+              <span class="qualification__subtitle">Spain - Institute</span>
+              <div class="qualification__calendar">
                 <i class="uil uil-calendar-alt"></i>
                 2014 - 2017
               </div>
             </div>
           </div>
-          </div>
+        </div>
 
         <div class="qualification__content" v-show="activeTab === 'work'">
           <div class="qualification__data">
             <div>
               <h3 class="qualification__title">Software Engineer</h3>
               <span class="qualification__subtitle">Microsoft - Peru</span>
-              <div class="qualification__calender">
+              <div class="qualification__calendar">
                 <i class="uil uil-calendar-alt"></i>
                 2016 - 2018
               </div>
@@ -69,7 +69,7 @@
               <span class="qualification__line"></span>
             </div>
           </div>
-          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -90,54 +90,67 @@ export default {
   }
 }
 </script>
+
 <style scoped>
-.qualification__container {
-  padding-bottom: 2rem;
-}
+/* ==================== QUALIFICATION ==================== */
 .qualification__tabs {
   display: flex;
   justify-content: space-evenly;
   margin-bottom: var(--mb-2);
 }
+
 .qualification__button {
   font-size: var(--h3-font-size);
   font-weight: var(--font-medium);
   cursor: pointer;
-  transition: color .3s;
+  transition: .3s;
 }
+
 .qualification__button:hover {
   color: var(--first-color);
 }
+
 .qualification__icon {
   font-size: 1.8rem;
   margin-right: var(--mb-0-25);
 }
-.qualification__active {
+
+/* La clase qualification__active se aplica dinámicamente con Vue */
+.qualification__button.qualification__active {
   color: var(--first-color);
 }
+
 .qualification__sections {
   margin-top: 2rem;
 }
-/* La lógica de mostrar/ocultar ahora la maneja Vue con v-show o v-if */
+
+.qualification__content[v-show="activeTab === 'education'"],
+.qualification__content[v-show="activeTab === 'work'"] {
+  display: block;
+}
+
 .qualification__data {
   display: grid;
   grid-template-columns: 1fr max-content 1fr;
   column-gap: 1.5rem;
-  margin-bottom: 1.5rem; /* Espaciado entre items de la timeline */
 }
+
 .qualification__title {
   font-size: var(--normal-font-size);
   font-weight: var(--font-medium);
 }
+
 .qualification__subtitle {
   display: inline-block;
   font-size: var(--small-font-size);
   margin-bottom: var(--mb-1);
 }
+
 .qualification__calendar {
   font-size: var(--smaller-font-size);
   color: var(--text-color-light);
 }
+
 .qualification__rounder {
   display: inline-block;
   width: 13px;
@@ -145,6 +158,7 @@ export default {
   background-color: var(--first-color);
   border-radius: 50%;
 }
+
 .qualification__line {
   display: block;
   width: 1px;
@@ -153,12 +167,13 @@ export default {
   transform: translate(6px, -7px);
 }
 
-/*==================== MEDIA QUERIES ====================*/
+/* ==================== MEDIA QUERIES ==================== */
 @media screen and (max-width: 350px) {
   .qualification__data {
     gap: .5rem;
   }
 }
+
 @media screen and (min-width: 568px) {
   .qualification__sections {
     display: grid;
@@ -166,6 +181,7 @@ export default {
     justify-content: center;
   }
 }
+
 @media screen and (min-width: 768px) {
   .qualification__tabs {
     justify-content: center;

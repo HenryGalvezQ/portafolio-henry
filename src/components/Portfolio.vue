@@ -56,16 +56,13 @@
 
 <script setup>
 import { onMounted } from 'vue';
-
 // Importaciones de Swiper
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
-
 // Importa los estilos de Swiper
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
 // El hook onMounted asegura que el DOM está listo
 onMounted(() => {
   new Swiper('.portfolio__container', {
@@ -84,8 +81,10 @@ onMounted(() => {
   });
 });
 </script>
+
 <style scoped>
-/* Necesitamos hacer estos estilos globales para que Swiper funcione bien desde el componente */
+/* Estilos globales para Swiper que necesitan aplicarse desde el componente */
+/* Usamos :global() porque Swiper añade clases fuera del "scope" del componente */
 :global(.portfolio__container) {
   overflow: initial;
 }
@@ -116,6 +115,7 @@ onMounted(() => {
 }
 /* Fin de estilos globales */
 
+/* Estilos propios del componente Portfolio */
 .portfolio__content {
   padding: 0 1.5rem;
 }
@@ -135,7 +135,7 @@ onMounted(() => {
   transform: translateX(.25rem);
 }
 
-/* Media Queries */
+/* ==================== MEDIA QUERIES ==================== */
 @media screen and (min-width: 568px) {
   .portfolio__content {
     grid-template-columns: repeat(2, 1fr);

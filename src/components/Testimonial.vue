@@ -73,14 +73,12 @@
 
 <script setup>
 import { onMounted } from 'vue';
-
 // Importaciones de Swiper
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 
 // Importa los estilos de Swiper
 import 'swiper/css';
-import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 onMounted(() => {
@@ -102,8 +100,9 @@ onMounted(() => {
   });
 });
 </script>
+
 <style scoped>
-/* Estilos globales para Swiper que necesitan aplicarse desde este componente */
+/* Estilos globales para la paginación de Swiper */
 :global(.testimonial_container .swiper-pagination-bullet-active) {
   background-color: var(--first-color);
 }
@@ -116,32 +115,38 @@ onMounted(() => {
 .testimonial__header {
   display: flex;
 }
+
 .testimonial__data {
   justify-content: space-between;
   margin-bottom: var(--mb-1);
 }
+
 .testimonial__img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   margin-right: var(--mb-0-75);
 }
+
 .testimonial__name {
   font-size: var(--h3-font-size);
   font-weight: var(--font-medium);
 }
+
 .testimonial__client {
   font-size: var(--small-font-size);
   color: var(--text-color-light);
 }
+
 .testimonial__description {
   margin-bottom: var(--mb-2-5);
 }
+
 .testimonial__icon-star {
   color: var(--first-color);
 }
 
-/* Media Queries */
+/* ==================== MEDIA QUERIES ==================== */
 @media screen and (max-width: 350px) {
   .testimonial__data,
   .testimonial__header {
