@@ -1,6 +1,6 @@
 <template>
   <section class="qualification section" id="qualification">
-    <h2 class="section__title">Qualification</h2>
+    <h2 class="section__title">Experiencia</h2>
     <span class="section__subtitle">My personal journey</span>
 
     <div class="qualification__container container">
@@ -10,66 +10,128 @@
           @click="setActiveTab('education')"
           :class="{ 'qualification__active': activeTab === 'education' }">
           <i class="uil uil-graduation-cap qualification__icon"></i>
-          Education
+          Educación
         </div>
         <div 
           class="qualification__button button--flex" 
           @click="setActiveTab('work')"
           :class="{ 'qualification__active': activeTab === 'work' }">
           <i class="uil uil-briefcase-alt qualification__icon"></i>
-          Work
+          Laboral
         </div>
       </div>
 
       <div class="qualification__sections">
-        <div class="qualification__content" v-show="activeTab === 'education'">
-          <div class="qualification__data">
-            <div>
-              <h3 class="qualification__title">Computer Engineer</h3>
-              <span class="qualification__subtitle">Peru - University</span>
-              <div class="qualification__calendar">
-                <i class="uil uil-calendar-alt"></i>
-                2009 - 2014
+        <div class="qualification__content" :class="{ 'show-active-education': activeTab === 'education', 'show-active-work': activeTab === 'work' }">
+          
+          <div class="qualification__data qualification__data-education">
+              <div>
+                  <h3 class="qualification__title">Ingeniería de Sistemas</h3>
+                  <span class="qualification__subtitle">Univ. Nacional de San Agustín</span>
+                  <div class="qualification__calendar">
+                      <i class="uil uil-calendar-alt"></i>
+                      Abril 2021 - Presente
+                  </div>
               </div>
-            </div>
-            <div>
-              <span class="qualification__rounder"></span>
-              <span class="qualification__line"></span>
-            </div>
+              <div>
+                  <span class="qualification__rounder"></span>
+                  <span class="qualification__line"></span>
+              </div>
           </div>
-          <div class="qualification__data">
+          
+          <div class="qualification__data qualification__data-work">
+              <div></div>
+              <div>
+                  <span class="qualification__rounder"></span>
+                  <span class="qualification__line"></span>
+              </div>
+              <div>
+                  <h3 class="qualification__title">Soporte TI</h3>
+                  <span class="qualification__subtitle">Particulares</span>
+                  <div class="qualification__calendar">
+                      <i class="uil uil-calendar-alt"></i>
+                      Enero 2022 - Diciembre 2024
+                  </div>
+              </div>
+          </div>
+      
+          <div class="qualification__data qualification__data-education">
+              <div>
+                  <h3 class="qualification__title">Carrera UX/UI</h3>
+                  <span class="qualification__subtitle">Coderhouse</span>
+                  <div class="qualification__calendar">
+                      <i class="uil uil-calendar-alt"></i>
+                      Abril 2023 - Diciembre 2023
+                  </div>
+              </div>
+              <div>
+                  <span class="qualification__rounder"></span>
+                  <span class="qualification__line"></span>
+              </div>
+          </div>
+      
+          <div class="qualification__data qualification__data-work">
+              <div></div>
+              <div>
+                  <span class="qualification__rounder"></span>
+                  <span class="qualification__line"></span>
+              </div>
+              <div>
+                  <h3 class="qualification__title">Soporte Informática (Prácticas pre-profesionales)</h3>
+                  <span class="qualification__subtitle">Municipalidad Distrital de La Joya</span>
+                  <div class="qualification__calendar">
+                      <i class="uil uil-calendar-alt"></i>
+                      Enero 2025 - Marzo 2025
+                  </div>
+              </div>
+          </div>
+          
+          <div class="qualification__data qualification__data-education">
+              <div>
+                  <h3 class="qualification__title">Oracle Cloud APEX Developer</h3>
+                  <span class="qualification__subtitle">Oracle</span>
+                  <div class="qualification__calendar">
+                      <i class="uil uil-calendar-alt"></i>
+                      Agosto 2023 - Setiembre 2023
+                  </div>
+              </div>
+              <div>
+                  <span class="qualification__rounder"></span>
+                  <span class="qualification__line"></span>
+              </div>
+          </div>
+      
+          <div class="qualification__data qualification__data-work">
             <div></div>
             <div>
-              <span class="qualification__rounder"></span>
-              <span class="qualification__line"></span>
+                <span class="qualification__rounder"></span>
+                <span class="qualification__line"></span>
             </div>
             <div>
-              <h3 class="qualification__title">Web Design</h3>
-              <span class="qualification__subtitle">Spain - Institute</span>
-              <div class="qualification__calendar">
-                <i class="uil uil-calendar-alt"></i>
-                2014 - 2017
-              </div>
+                <h3 class="qualification__title">Frontend Developer</h3>
+                <span class="qualification__subtitle">Innovaciencia Peru</span>
+                <div class="qualification__calendar">
+                    <i class="uil uil-calendar-alt"></i>
+                    Abril 2025 - Julio 2025
+                </div>
             </div>
           </div>
-        </div>
 
-        <div class="qualification__content" v-show="activeTab === 'work'">
-          <div class="qualification__data">
-            <div>
-              <h3 class="qualification__title">Software Engineer</h3>
-              <span class="qualification__subtitle">Microsoft - Peru</span>
-              <div class="qualification__calendar">
-                <i class="uil uil-calendar-alt"></i>
-                2016 - 2018
+          <div class="qualification__data qualification__data-education">
+              <div>
+                  <h3 class="qualification__title">Ciberseguridad</h3>
+                  <span class="qualification__subtitle">CISCO Networking Academy</span>
+                  <div class="qualification__calendar">
+                      <i class="uil uil-calendar-alt"></i>
+                      Agosto 2024 - Julio 2025
+                  </div>
               </div>
-            </div>
-            <div>
-              <span class="qualification__rounder"></span>
-              <span class="qualification__line"></span>
-            </div>
+              <div>
+                  <span class="qualification__rounder"></span>
+              </div>
           </div>
-        </div>
+      
+      </div>
       </div>
     </div>
   </section>
@@ -80,7 +142,7 @@ export default {
   name: 'Qualification',
   data() {
     return {
-      activeTab: 'education' // Inicia con la pestaña 'education' activa
+      activeTab: 'education'
     };
   },
   methods: {
@@ -95,7 +157,8 @@ export default {
 /* ==================== QUALIFICATION ==================== */
 .qualification__tabs {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  column-gap: 3rem;
   margin-bottom: var(--mb-2);
 }
 
@@ -115,7 +178,6 @@ export default {
   margin-right: var(--mb-0-25);
 }
 
-/* La clase qualification__active se aplica dinámicamente con Vue */
 .qualification__button.qualification__active {
   color: var(--first-color);
 }
@@ -124,15 +186,11 @@ export default {
   margin-top: 2rem;
 }
 
-.qualification__content[v-show="activeTab === 'education'"],
-.qualification__content[v-show="activeTab === 'work'"] {
-  display: block;
-}
-
 .qualification__data {
   display: grid;
   grid-template-columns: 1fr max-content 1fr;
   column-gap: 1.5rem;
+  transition: transform 0.4s ease;
 }
 
 .qualification__title {
@@ -148,7 +206,7 @@ export default {
 
 .qualification__calendar {
   font-size: var(--smaller-font-size);
-  color: var(--text-color-light);
+  /*color: var(--text-color-light);*/
 }
 
 .qualification__rounder {
@@ -165,6 +223,21 @@ export default {
   height: 100%;
   background-color: var(--first-color);
   transform: translate(6px, -7px);
+}
+
+/* ==================== LÓGICA DEL EFECTO DE ESCALADO ==================== */
+.qualification__content.show-active-education .qualification__data-education {
+  transform: scale(1.05);
+}
+.qualification__content.show-active-education .qualification__data-work {
+  transform: scale(0.95);
+}
+
+.qualification__content.show-active-work .qualification__data-work {
+  transform: scale(1.05);
+}
+.qualification__content.show-active-work .qualification__data-education {
+  transform: scale(0.95);
 }
 
 /* ==================== MEDIA QUERIES ==================== */
@@ -190,7 +263,7 @@ export default {
     margin: 0 var(--mb-1);
   }
   .qualification__sections {
-    grid-template-columns: .5fr;
+    grid-template-columns: .6fr;
   }
 }
 </style>
