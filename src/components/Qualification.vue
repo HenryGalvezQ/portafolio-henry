@@ -25,12 +25,15 @@
         <div class="qualification__content" :class="{ 'show-active-education': activeTab === 'education', 'show-active-work': activeTab === 'work' }">
           
           <div class="qualification__data qualification__data-education">
-              <div>
-                  <h3 class="qualification__title">Ingeniería de Sistemas</h3>
-                  <span class="qualification__subtitle">Univ. Nacional de San Agustín</span>
-                  <div class="qualification__calendar">
-                      <i class="uil uil-calendar-alt"></i>
-                      Abril 2021 - Presente
+              <div class="qualification__item-content">
+                  <img src="@/assets/img/logo-unsa.png" alt="Logo UNSA" class="qualification__logo">
+                  <div class="qualification__text-content">
+                    <h3 class="qualification__title">Ingeniería de Sistemas</h3>
+                    <span class="qualification__subtitle">Univ. Nacional de San Agustín</span>
+                    <div class="qualification__calendar">
+                        <i class="uil uil-calendar-alt"></i>
+                        Abril 2021 - Presente
+                    </div>
                   </div>
               </div>
               <div>
@@ -54,14 +57,17 @@
                   </div>
               </div>
           </div>
-      
+    
           <div class="qualification__data qualification__data-education">
-              <div>
-                  <h3 class="qualification__title">Carrera UX/UI</h3>
-                  <span class="qualification__subtitle">Coderhouse</span>
-                  <div class="qualification__calendar">
-                      <i class="uil uil-calendar-alt"></i>
-                      Abril 2023 - Diciembre 2023
+              <div class="qualification__item-content">
+                  <img src="@/assets/img/logo-coderhouse.png" alt="Logo Coderhouse" class="qualification__logo">
+                  <div class="qualification__text-content">
+                    <h3 class="qualification__title">Carrera UX/UI</h3>
+                    <span class="qualification__subtitle">Coderhouse</span>
+                    <div class="qualification__calendar">
+                        <i class="uil uil-calendar-alt"></i>
+                        Abril 2023 - Diciembre 2023
+                    </div>
                   </div>
               </div>
               <div>
@@ -69,30 +75,36 @@
                   <span class="qualification__line"></span>
               </div>
           </div>
-      
+    
           <div class="qualification__data qualification__data-work">
               <div></div>
               <div>
                   <span class="qualification__rounder"></span>
                   <span class="qualification__line"></span>
               </div>
-              <div>
-                  <h3 class="qualification__title">Soporte Informática (Prácticas pre-profesionales)</h3>
-                  <span class="qualification__subtitle">Municipalidad Distrital de La Joya</span>
-                  <div class="qualification__calendar">
-                      <i class="uil uil-calendar-alt"></i>
-                      Enero 2025 - Marzo 2025
+              <div class="qualification__item-content qualification__item-content--right">
+                  <div class="qualification__text-content">
+                    <h3 class="qualification__title">Soporte Informática (Prácticas)</h3>
+                    <span class="qualification__subtitle">Municipalidad Distrital de La Joya</span>
+                    <div class="qualification__calendar">
+                        <i class="uil uil-calendar-alt"></i>
+                        Enero 2025 - Marzo 2025
+                    </div>
                   </div>
+                  <img src="@/assets/img/logo-muni.png" alt="Logo Municipalidad" class="qualification__logo">
               </div>
           </div>
           
           <div class="qualification__data qualification__data-education">
-              <div>
-                  <h3 class="qualification__title">Oracle Cloud APEX Developer</h3>
-                  <span class="qualification__subtitle">Oracle</span>
-                  <div class="qualification__calendar">
-                      <i class="uil uil-calendar-alt"></i>
-                      Agosto 2023 - Setiembre 2023
+              <div class="qualification__item-content">
+                  <img src="@/assets/img/logo-oracle.png" alt="Logo Oracle" class="qualification__logo">
+                  <div class="qualification__text-content">
+                    <h3 class="qualification__title">Oracle Cloud APEX Developer</h3>
+                    <span class="qualification__subtitle">Oracle</span>
+                    <div class="qualification__calendar">
+                        <i class="uil uil-calendar-alt"></i>
+                        Agosto 2023 - Setiembre 2023
+                    </div>
                   </div>
               </div>
               <div>
@@ -100,38 +112,44 @@
                   <span class="qualification__line"></span>
               </div>
           </div>
-      
+    
           <div class="qualification__data qualification__data-work">
             <div></div>
             <div>
                 <span class="qualification__rounder"></span>
                 <span class="qualification__line"></span>
             </div>
-            <div>
+            <div class="qualification__item-content qualification__item-content--right">
+              <div class="qualification__text-content">
                 <h3 class="qualification__title">Frontend Developer</h3>
                 <span class="qualification__subtitle">Innovaciencia Peru</span>
                 <div class="qualification__calendar">
                     <i class="uil uil-calendar-alt"></i>
                     Abril 2025 - Julio 2025
                 </div>
+              </div>
+              <img src="@/assets/img/logo_innovaciencia.png" alt="Logo Innovaciencia" class="qualification__logo">
             </div>
           </div>
 
           <div class="qualification__data qualification__data-education">
-              <div>
-                  <h3 class="qualification__title">Ciberseguridad</h3>
-                  <span class="qualification__subtitle">CISCO Networking Academy</span>
-                  <div class="qualification__calendar">
-                      <i class="uil uil-calendar-alt"></i>
-                      Agosto 2024 - Julio 2025
+              <div class="qualification__item-content">
+                  <img src="@/assets/img/logo-cisco-net-academy.png" alt="Logo Cisco" class="qualification__logo">
+                  <div class="qualification__text-content">
+                    <h3 class="qualification__title">Ciberseguridad</h3>
+                    <span class="qualification__subtitle">CISCO Networking Academy</span>
+                    <div class="qualification__calendar">
+                        <i class="uil uil-calendar-alt"></i>
+                        Agosto 2024 - Julio 2025
+                    </div>
                   </div>
               </div>
               <div>
                   <span class="qualification__rounder"></span>
               </div>
           </div>
-      
-      </div>
+    
+        </div>
       </div>
     </div>
   </section>
@@ -193,6 +211,30 @@ export default {
   transition: transform 0.4s ease;
 }
 
+.qualification__item-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Espacio entre el logo y el texto */
+}
+
+.qualification__item-content--right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.qualification__item-content--right .qualification__text-content {
+  /* No se necesita ninguna regla especial aquí ahora */
+}
+
+
+.qualification__logo {
+  width: 40px;   /* Ancho del logo */
+  height: 40px;  /* Alto del logo */
+  object-fit: contain; /* Asegura que el logo no se deforme */
+  flex-shrink: 0; /* Evita que el logo se encoja */
+}
+
 .qualification__title {
   font-size: var(--normal-font-size);
   font-weight: var(--font-medium);
@@ -206,7 +248,6 @@ export default {
 
 .qualification__calendar {
   font-size: var(--smaller-font-size);
-  /*color: var(--text-color-light);*/
 }
 
 .qualification__rounder {
@@ -240,6 +281,17 @@ export default {
   transform: scale(0.95);
 }
 
+/* [!code ++] */
+/* CORRECCIÓN: Se usa un selector más específico para el hover,
+   de modo que sobreescriba las reglas anteriores. */
+.qualification__content .qualification__data:hover {
+  transform: scale(1.08); /* Escala más grande al pasar el mouse */
+  position: relative; /* Necesario para que z-index funcione correctamente */
+  z-index: 5; /* Asegura que el elemento agrandado se muestre por encima de los demás */
+}
+/* [!code --] */
+
+
 /* ==================== MEDIA QUERIES ==================== */
 @media screen and (max-width: 350px) {
   .qualification__data {
@@ -263,7 +315,11 @@ export default {
     margin: 0 var(--mb-1);
   }
   .qualification__sections {
-    grid-template-columns: .6fr;
+    grid-template-columns: .9fr;
+  }
+  .qualification__logo {
+    width: 85px;   /* Ancho del logo en desktop */
+    height: 85px;  /* Alto del logo en desktop */
   }
 }
 </style>
