@@ -1,230 +1,324 @@
 <template>
-  <section class="services section" id="services">
-    <h2 class="section__title">Services</h2>
-    <span class="section__subtitle">What I offer</span>
+  <section class="services section" id="services" ref="servicesSection">
+    <h2 class="section__title">Servicios</h2>
+    <span class="section__subtitle">Lo que ofrezco</span>
 
     <div class="services__container container grid">
-      <div class="services__content">
-        <div>
+      
+      <div :class="['services__content', servicesState.ui ? 'services__open' : 'services__close']" data-service="ui">
+        
+        <img src="@/assets/img/diseno_captura.png" alt="Captura de Diseño UI/UX" class="services__img">
+
+        <div class="services__header" @click="toggleService()">
           <i class="uil uil-web-grid services__icon"></i>
-          <h3 class="services__title">Ui/Ux <br> Designer</h3>
+          <div>
+            <h3 class="services__title">Diseñador <br> Ui/Ux</h3>
+            <span class="services__subtitle">Diseño de interfaces y experiencia</span>
+          </div>
+          <i class="uil uil-angle-down services__arrow"></i>
         </div>
-        <span @click="openModal('ui')" class="button button--flex button--small button--link services__button">
-          View More
+        
+        <div class="services__list grid">
+          <ul class="services__list-ul">
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Desarrollo de interfaces de usuario atractivas.</p>
+            </li>
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Creación de prototipos y wireframes.</p>
+            </li>
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Diseño de interacciones y flujos de usuario.</p>
+            </li>
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Posicionamiento de la marca de tu empresa.</p>
+            </li>
+          </ul>
+        </div>
+
+        <span @click="toggleService()" class="services__button">
+          Ver más
           <i class="uil uil-arrow-right button__icon"></i>
         </span>
-        <div class="services__modal" :class="{'active-modal': activeModal === 'ui'}">
-          <div class="services__modal-content">
-            <h4 class="services__modal-title">Ui/Ux <br> Designer</h4>
-            <i @click="closeModal" class="uil uil-times services__modal-close"></i>
-            <ul class="services__modal-services grid">
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>I develop the user interface.</p>
-              </li>
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>Web page development.</p>
-              </li>
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>I create ux element interactions.</p>
-              </li>
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>I position your company brand.</p>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
 
-      <div class="services__content">
-        <div>
+      <div :class="['services__content', servicesState.frontend ? 'services__open' : 'services__close']" data-service="frontend">
+        
+        <img src="@/assets/img/desarrollo_captura.png" alt="Captura de Desarrollo Frontend" class="services__img">
+
+        <div class="services__header" @click="toggleService()">
           <i class="uil uil-arrow services__icon"></i>
-          <h3 class="services__title">Frontend <br> Developer</h3>
+          <div>
+            <h3 class="services__title">Desarrollador <br> Frontend</h3>
+            <span class="services__subtitle">Implementación de diseños web</span>
+          </div>
+          <i class="uil uil-angle-down services__arrow"></i>
         </div>
-        <span @click="openModal('frontend')" class="button button--flex button--small button--link services__button">
-          View More
+
+        <div class="services__list grid">
+          <ul class="services__list-ul">
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Maquetación de sitios web responsivos.</p>
+            </li>
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Desarrollo con frameworks modernos como Vue.js.</p>
+            </li>
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Creación de interacciones dinámicas.</p>
+            </li>
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Optimización del rendimiento y la velocidad de carga.</p>
+            </li>
+          </ul>
+        </div>
+
+        <span @click="toggleService()" class="services__button">
+          Ver más
           <i class="uil uil-arrow-right button__icon"></i>
         </span>
-        <div class="services__modal" :class="{'active-modal': activeModal === 'frontend'}">
-          <div class="services__modal-content">
-            <h4 class="services__modal-title">Frontend <br> Developer</h4>
-            <i @click="closeModal" class="uil uil-times services__modal-close"></i>
-            <ul class="services__modal-services grid">
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>I develop the user interface.</p>
-              </li>
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>Web page development.</p>
-              </li>
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>I create ux element interactions.</p>
-              </li>
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>I position your company brand.</p>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
 
-      <div class="services__content">
-        <div>
-          <i class="uil uil-pen services__icon"></i>
-          <h3 class="services__title">Branding <br> Designer</h3>
+      <div :class="['services__content', servicesState.branding ? 'services__open' : 'services__close']" data-service="branding">
+
+        <img src="@/assets/img/wordpress_captura.png" alt="Captura de Desarrollo WordPress" class="services__img">
+
+        <div class="services__header" @click="toggleService()">
+           <i class="uil uil-pen services__icon"></i>
+          <div>
+            <h3 class="services__title">Desarrollo <br> WordPress</h3>
+             <span class="services__subtitle">Soluciones con el CMS líder</span>
+          </div>
+          <i class="uil uil-angle-down services__arrow"></i>
         </div>
-        <span @click="openModal('branding')" class="button button--flex button--small button--link services__button">
-          View More
+
+        <div class="services__list grid">
+          <ul class="services__list-ul">
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Creación de temas personalizados desde cero.</p>
+            </li>
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Desarrollo de plugins a medida.</p>
+            </li>
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Mantenimiento y optimización de sitios existentes.</p>
+            </li>
+             <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Integración con APIs y servicios de terceros.</p>
+            </li>
+          </ul>
+        </div>
+
+        <span @click="toggleService()" class="services__button">
+          Ver más
           <i class="uil uil-arrow-right button__icon"></i>
         </span>
-        <div class="services__modal" :class="{'active-modal': activeModal === 'branding'}">
-          <div class="services__modal-content">
-            <h4 class="services__modal-title">Branding <br> Designer</h4>
-            <i @click="closeModal" class="uil uil-times services__modal-close"></i>
-            <ul class="services__modal-services grid">
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>I develop the user interface.</p>
-              </li>
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>Web page development.</p>
-              </li>
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>I create ux element interactions.</p>
-              </li>
-              <li class="services__modal-service">
-                <i class="uil uil-check-circle services__modal-icon"></i>
-                <p>I position your company brand.</p>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-
-const activeModal = ref(null); // Puede ser 'ui', 'frontend', 'branding' o null
-
-const openModal = (modalId) => {
-  activeModal.value = modalId;
-};
-
-const closeModal = () => {
-  activeModal.value = null;
-};
+<script>
+export default {
+  name: 'Services',
+  data() {
+    return {
+      servicesState: {
+        ui: false,
+        frontend: false,
+        branding: false,
+      },
+      observer: null,
+      userHasClicked: false,
+    };
+  },
+  methods: {
+    toggleService() {
+      this.userHasClicked = true;
+      const isAnyCardOpen = Object.values(this.servicesState).some(isOpen => isOpen);
+      const newState = !isAnyCardOpen;
+      Object.keys(this.servicesState).forEach(key => {
+        this.servicesState[key] = newState;
+      });
+    }
+  },
+  mounted() {
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -95% 0px', 
+      threshold: 0,
+    };
+    this.observer = new IntersectionObserver((entries) => {
+      if (this.userHasClicked) return;
+      const entry = entries[0];
+      const isVisible = entry.isIntersecting;
+      Object.keys(this.servicesState).forEach(key => {
+        this.servicesState[key] = isVisible;
+      });
+    }, options);
+    const sectionToObserve = this.$refs.servicesSection;
+    if (sectionToObserve) {
+      this.observer.observe(sectionToObserve);
+    }
+  },
+  beforeUnmount() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  },
+}
 </script>
 
 <style scoped>
 /* ==================== SERVICES ==================== */
 .services__container {
   gap: 1.5rem;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
+  padding-top: 1rem;
 }
 
 .services__content {
-  position: relative;
   background-color: var(--container-color);
-  padding: 3.5rem .5rem 1.25rem 1.5rem;
-  border-radius: .25rem;
+  padding: 1.5rem;
+  border-radius: .5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,.15);
-  transition: .3s;
+  position: relative;
+  padding-bottom: 3rem;
+  /* CAMBIO 1: Transición mejorada para animar la sombra y el tamaño */
+  transition: transform 0.4s ease, box-shadow .3s;
 }
 
 .services__content:hover {
   box-shadow: 0 4px 8px rgba(0,0,0,.15);
+  /* CAMBIO 2: Se agranda la tarjeta al pasar el mouse */
+  transform: scale(1.03);
+  /* CAMBIO 3: Se asegura de que la tarjeta agrandada esté por encima de las demás */
+  z-index: 5;
+}
+
+/* === ESTILOS PARA LA IMAGEN === */
+.services__img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: .5rem;
+  margin-bottom: var(--mb-1-5);
+  box-shadow: 0 2px 4px rgba(0,0,0,.25);
+}
+
+.services__header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.services__icon,
+.services__arrow {
+  font-size: 2rem;
+  color: var(--first-color);
 }
 
 .services__icon {
-  display: block;
-  font-size: 1.5rem;
-  color: var(--first-color);
-  margin-bottom: var(--mb-1);
+  margin-right: var(--mb-1);
 }
 
 .services__title {
   font-size: var(--h3-font-size);
-  margin-bottom: var(--mb-1);
   font-weight: var(--font-medium);
 }
 
-.services__button {
-  cursor: pointer;
+.services__subtitle {
   font-size: var(--small-font-size);
+  color: var(--text-color-light);
+}
+
+.services__arrow {
+  margin-left: auto;
+  transition: transform 0.4s;
+}
+
+.services__list {
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, margin-top 0.4s ease-out;
+}
+
+.services__list-ul {
+  list-style: none;
+  padding-left: 0;
+  row-gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.services__list-item {
+  display: flex;
+  align-items: flex-start;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.services__list-icon {
+  color: var(--first-color);
+  margin-right: var(--mb-0-5);
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+/* --- Estados de Abierto y Cerrado --- */
+.services__close .services__list {
+  max-height: 0;
+}
+
+.services__close .services__list-item {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.services__open .services__list {
+  max-height: 1000px;
+  margin-top: var(--mb-1-5);
+}
+
+.services__open .services__arrow {
+  transform: rotate(-180deg);
+}
+
+/* ==================== BOTÓN VER MÁS ==================== */
+.services__button {
+  position: absolute;
+  left: 1.5rem;
+  bottom: 1rem;
+  font-size: var(--small-font-size);
+  color: var(--first-color);
+  display: inline-flex;
+  align-items: center;
+  column-gap: .25rem;
+  cursor: pointer;
+  transition: opacity .3s;
 }
 
 .services__button:hover .button__icon {
   transform: translateX(.25rem);
 }
 
-.services__modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 1rem;
-  z-index: var(--z-modal);
+.button__icon {
+  font-size: 1rem;
+  transition: transform .3s;
+}
+
+.services__open .services__button {
   opacity: 0;
-  visibility: hidden;
-  transition: .3s;
-}
-
-.services__modal-content {
-  position: relative;
-  background-color: var(--container-color);
-  padding: 1.5rem;
-  border-radius: .5rem;
-}
-
-.services__modal-services {
-  row-gap: 1rem;
-}
-
-.services__modal-service {
-  display: flex;
-  align-items: center;
-}
-
-.services__modal-title {
-  font-size: var(--h3-font-size);
-  font-weight: var(--font-medium);
-  margin-bottom: var(--mb-1-5);
-}
-
-.services__modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1.5rem;
-  color: var(--first-color);
-  cursor: pointer;
-}
-
-.services__modal-icon {
-  color: var(--first-color);
-  margin-right: var(--mb-0-25);
-}
-
-/* Clase que activa el modal con Vue */
-.active-modal {
-  opacity: 1;
-  visibility: visible;
+  pointer-events: none;
 }
 
 /* ==================== MEDIA QUERIES ==================== */
@@ -233,34 +327,22 @@ const closeModal = () => {
     grid-template-columns: max-content;
     justify-content: center;
   }
-  .services__content {
-    padding-right: 3.5rem;
-  }
-  .services__modal {
-    padding: 0 .5rem;
-  }
 }
 
 @media screen and (min-width: 768px) {
   .services__container {
-    grid-template-columns: repeat(3, 218px);
+    grid-template-columns: repeat(3, 340px);
     justify-content: center;
     column-gap: 2rem;
   }
-  .services__icon {
-    font-size: 2rem;
-  }
   .services__content {
-    padding: 6rem 0 2rem 2.5rem;
-  }
-  .services__modal-content {
-    width: 450px;
+    padding: 2rem 1.5rem 3rem 1.5rem;
   }
 }
 
 @media screen and (min-width: 1024px) {
   .services__container {
-    grid-template-columns: repeat(3, 238px);
+    grid-template-columns: repeat(3, 340px);
   }
 }
 </style>
