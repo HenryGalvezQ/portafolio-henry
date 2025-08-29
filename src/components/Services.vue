@@ -26,6 +26,14 @@
                 <i class="uil uil-check-circle services__modal-icon"></i>
                 <p>Web page development.</p>
               </li>
+              <li class="services__modal-service">
+                <i class="uil uil-check-circle services__modal-icon"></i>
+                <p>I create ux element interactions.</p>
+              </li>
+              <li class="services__modal-service">
+                <i class="uil uil-check-circle services__modal-icon"></i>
+                <p>I position your company brand.</p>
+              </li>
             </ul>
           </div>
         </div>
@@ -46,39 +54,76 @@
             <i @click="closeModal" class="uil uil-times services__modal-close"></i>
             <ul class="services__modal-services grid">
               <li class="services__modal-service">
-                  <i class="uil uil-check-circle services__modal-icon"></i>
-                  <p>I develop the user interface.</p>
+                <i class="uil uil-check-circle services__modal-icon"></i>
+                <p>I develop the user interface.</p>
               </li>
-               <li class="services__modal-service">
+              <li class="services__modal-service">
                 <i class="uil uil-check-circle services__modal-icon"></i>
                 <p>Web page development.</p>
+              </li>
+              <li class="services__modal-service">
+                <i class="uil uil-check-circle services__modal-icon"></i>
+                <p>I create ux element interactions.</p>
+              </li>
+              <li class="services__modal-service">
+                <i class="uil uil-check-circle services__modal-icon"></i>
+                <p>I position your company brand.</p>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      
+
+      <div class="services__content">
+        <div>
+          <i class="uil uil-pen services__icon"></i>
+          <h3 class="services__title">Branding <br> Designer</h3>
+        </div>
+        <span @click="openModal('branding')" class="button button--flex button--small button--link services__button">
+          View More
+          <i class="uil uil-arrow-right button__icon"></i>
+        </span>
+        <div class="services__modal" :class="{'active-modal': activeModal === 'branding'}">
+          <div class="services__modal-content">
+            <h4 class="services__modal-title">Branding <br> Designer</h4>
+            <i @click="closeModal" class="uil uil-times services__modal-close"></i>
+            <ul class="services__modal-services grid">
+              <li class="services__modal-service">
+                <i class="uil uil-check-circle services__modal-icon"></i>
+                <p>I develop the user interface.</p>
+              </li>
+              <li class="services__modal-service">
+                <i class="uil uil-check-circle services__modal-icon"></i>
+                <p>Web page development.</p>
+              </li>
+              <li class="services__modal-service">
+                <i class="uil uil-check-circle services__modal-icon"></i>
+                <p>I create ux element interactions.</p>
+              </li>
+              <li class="services__modal-service">
+                <i class="uil uil-check-circle services__modal-icon"></i>
+                <p>I position your company brand.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
-<script>
-export default {
-  name: 'Services',
-  data() {
-    return {
-      activeModal: null // Puede ser 'ui', 'frontend', o null
-    };
-  },
-  methods: {
-    openModal(modalId) {
-      this.activeModal = modalId;
-    },
-    closeModal() {
-      this.activeModal = null;
-    }
-  }
-}
+<script setup>
+import { ref } from 'vue';
+
+const activeModal = ref(null); // Puede ser 'ui', 'frontend', 'branding' o null
+
+const openModal = (modalId) => {
+  activeModal.value = modalId;
+};
+
+const closeModal = () => {
+  activeModal.value = null;
+};
 </script>
 
 <style scoped>
