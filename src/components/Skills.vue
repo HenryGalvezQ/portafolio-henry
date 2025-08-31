@@ -129,7 +129,7 @@ export default {
   mounted() {
     const options = {
       root: null,
-      rootMargin: '-65% 0px -35% 0px',
+      rootMargin: '0px 0px -35% 0px',
       threshold: 0,
     };
     this.observer = new IntersectionObserver((entries) => {
