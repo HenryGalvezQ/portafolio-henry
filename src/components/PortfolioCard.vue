@@ -1,7 +1,6 @@
 <template>
   <div class="portfolio__card" @mouseleave="handleCardLeave" @mouseenter="handleCardEnter">
     
-    <!-- Tags identificadores encima de las imágenes -->
     <div v-if="project.tags && project.tags.length > 0" class="portfolio__tags">
       <span 
         v-for="tag in project.tags" 
@@ -20,13 +19,29 @@
       @mouseleave="startAutoSlide"
     >
       <div class="portfolio__img-track" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-        <img 
+        <div 
           v-for="(image, index) in project.images"
           :key="index"
-          :src="image"
-          :alt="project.title + ' project screenshot'"
-          class="portfolio__img"
+          class="portfolio__img-container"
         >
+          <img 
+            :src="image"
+            :alt="project.title + ' project screenshot'"
+            class="portfolio__img"
+          >
+        </div>
+      </div>
+      
+      <div class="portfolio__tech-badges-container">
+        <div 
+          v-for="tech in project.techBadge"
+          :key="tech"
+          class="portfolio__tech-badge"
+          @mouseenter="showTooltip($event, tech)"
+          @mouseleave="hideTooltip"
+        >
+          <SvgIcon :name="tech" />
+        </div>
       </div>
       
       <template v-if="project.images.length > 1">
@@ -50,7 +65,6 @@
       <h3 class="portfolio__title">{{ project.title }}</h3>
       <p class="portfolio__description">{{ project.description }}</p>
 
-      <!-- Call to Action element -->
       <div class="portfolio__cta">
         <i class="uil uil-rocket"></i>
         <span>¡Explora el proyecto!</span>
@@ -85,11 +99,20 @@
       <span>Ver más</span>
       <i class="uil uil-arrow-down"></i>
     </div>
-    </div>
+
+    <Teleport to="body">
+      <div 
+        v-show="tooltip.visible" 
+        class="custom-tooltip" 
+        :style="tooltip.style"
+      >
+        {{ tooltip.text }}
+      </div>
+    </Teleport>
+  </div>
 </template>
 
 <script>
-// El SCRIPT NO NECESITA CAMBIOS
 import SvgIcon from './SvgIcon.vue';
 
 export default {
@@ -110,11 +133,15 @@ export default {
       currentImageIndex: 0,
       autoSlideInterval: null,
       showCarouselHint: false,
+      tooltip: {
+        visible: false,
+        text: '',
+        style: {}
+      }
     };
   },
   methods: {
     handleCardEnter() {
-      // Activar hint del carrusel por 1 segundo solo si hay múltiples imágenes
       if (this.project.images && this.project.images.length > 1) {
         this.showCarouselHint = true;
         setTimeout(() => {
@@ -139,7 +166,7 @@ export default {
     handleCardLeave() {
       this.hoveredButton = null;
       this.lockHover = false;
-      this.showCarouselHint = false; // Asegurar que se oculte al salir
+      this.showCarouselHint = false;
     },
     startAutoSlide() {
       if (this.project.images.length <= 1) return;
@@ -161,6 +188,29 @@ export default {
     goToSlide(index) {
       this.currentImageIndex = index;
       this.startAutoSlide();
+    },
+    showTooltip(event, techName) {
+      const badge = event.currentTarget;
+      const rect = badge.getBoundingClientRect();
+
+      const top = rect.top - 38; 
+      const left = rect.left + (rect.width / 2);
+
+      this.tooltip.text = `Diseñado en ${techName.charAt(0).toUpperCase() + techName.slice(1)}`;
+      this.tooltip.style = {
+        top: `${top}px`,
+        left: `${left}px`,
+        opacity: 1,
+      };
+      this.tooltip.visible = true;
+    },
+    hideTooltip() {
+      this.tooltip.style.opacity = 0;
+      setTimeout(() => {
+        if (this.tooltip) {
+          this.tooltip.visible = false;
+        }
+      }, 200);
     }
   },
   mounted() {
@@ -182,11 +232,11 @@ export default {
 }
 
 .portfolio__tag {
-  background-color: #777f8d; /* Gris */
+  background-color: #777f8d;
   color: white;
-  padding: 0.1875rem 0.375rem; /* Más compacto */
-  border-radius: 0.75rem; /* Forma de píldora más pequeña */
-  font-size: 0.595rem; /* Más pequeño */
+  padding: 0.1875rem 0.375rem;
+  border-radius: 0.75rem;
+  font-size: 0.595rem;
   font-weight: 500;
   white-space: nowrap;
   line-height: 1.2;
@@ -198,18 +248,16 @@ export default {
   padding: 1.5rem;
   border-radius: .5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,.15);
-  /* Se ha modificado 'transition' para incluir 'max-height' */
   transition: transform 0.4s ease, box-shadow .3s, max-height 0.5s ease-in-out;
   display: flex;
   flex-direction: column;
-  /* Se añade una altura máxima inicial para el estado colapsado */
-  max-height: 430px; 
+  max-height: 530px; 
+  overflow: hidden;
 }
 .portfolio__card:hover {
   box-shadow: 0 4px 8px rgba(0,0,0,.15);
   transform: scale(1.03);
   z-index: 5;
-  /* Se expande la altura máxima en hover */
   max-height: 800px;
 }
 .portfolio__img {
@@ -217,13 +265,15 @@ export default {
   border-radius: .5rem;
   margin-bottom: var(--mb-1);
   flex-shrink: 0;
+  object-fit: cover;
+  height: auto;
+  max-height: 200px;
 }
 .portfolio__data {
   padding: 0 .5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  /* Se agrega para que no se desborde el contenido durante la transición */
   overflow: hidden;
 }
 .portfolio__title {
@@ -231,37 +281,34 @@ export default {
   margin-bottom: var(--mb-0-5);
 }
 .portfolio__description {
-  margin-bottom: var(--mb-0-75); /* Reducido el margen inferior */
+  margin-bottom: var(--mb-0-75);
   flex-grow: 1;
-  /* ==================== LÓGICA DE COLAPSAR DESCRIPCIÓN CON GRADIENTE ==================== */
-  max-height: 8em; /* Aproximadamente 3 líneas de texto */
+  max-height: 6em;
   overflow: hidden;
   transition: max-height 0.4s ease-in-out;
   position: relative;
 }
 
-/* ==================== EFECTO GRADIENTE FADE-OUT ==================== */
 .portfolio__description::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 1.5em; /* Altura del gradiente - aproximadamente media línea */
+  height: 1.5em;
   background: linear-gradient(transparent, var(--container-color));
   pointer-events: none;
   transition: opacity 0.4s ease-in-out;
 }
 
 .portfolio__card:hover .portfolio__description {
-  max-height: 200px; /* Un valor alto para asegurar que todo el texto entre */
+  max-height: 200px;
 }
 
 .portfolio__card:hover .portfolio__description::after {
-  opacity: 0; /* Desaparece el gradiente en hover */
+  opacity: 0;
 }
 
-/* ==================== CALL TO ACTION ==================== */
 .portfolio__cta {
   display: flex;
   align-items: center;
@@ -269,12 +316,12 @@ export default {
   color: #8b5cf6;
   font-size: var(--small-font-size);
   font-weight: var(--font-medium);
-  margin: var(--mb-0-5) 0; /* Espaciado compacto arriba y abajo */
+  margin: var(--mb-0-5) 0;
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
-  height: 0; /* CLAVE: Sin altura física cuando está oculto */
-  overflow: hidden; /* Evita que el contenido se muestre */
+  height: 0;
+  overflow: hidden;
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s, height 0.4s ease;
 }
 
@@ -282,7 +329,7 @@ export default {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-  height: auto; /* Recupera la altura automática en hover */
+  height: auto;
   transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s, visibility 0s 0.1s, height 0.4s ease 0.1s;
 }
 
@@ -296,7 +343,74 @@ export default {
   50% { opacity: 0.6; }
 }
 
-/* ==================== ESTILOS PARA EL BOTÓN "VER MÁS" ==================== */
+/* ==================== BADGE DE TECNOLOGÍA ==================== */
+.portfolio__tech-badges-container {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 4;
+}
+
+.portfolio__tech-badge {
+  width: 1.85rem;
+  height: 1.85rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.portfolio__tech-badge svg {
+  width: 1.125rem !important;
+  height: 1.125rem !important;
+  max-width: 1.125rem !important;
+  max-height: 1.125rem !important;
+  transition: transform 0.2s ease;
+}
+
+.portfolio__img-carousel:hover .portfolio__tech-badge svg {
+  transform: scale(1.1);
+}
+
+.portfolio__tech-badge :deep(svg) {
+  width: 1.125rem !important;
+  height: 1.125rem !important;
+  max-width: 1.125rem !important;
+  max-height: 1.125rem !important;
+}
+
+/* ==================== TOOLTIP PERSONALIZADO ==================== */
+.custom-tooltip {
+  position: fixed;
+  transform: translateX(-50%); 
+  white-space: nowrap;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.custom-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
+
+/* ==================== BOTÓN "VER MÁS" ==================== */
 .portfolio__expand-button {
   display: flex;
   align-items: center;
@@ -312,15 +426,13 @@ export default {
   font-weight: var(--font-medium);
   cursor: pointer;
   border-radius: .5rem;
-  /* Transición simétrica - aparece con delay en colapso */
   transition: opacity 0.3s ease, height 0.3s ease, padding 0.3s ease;
-  height: 40px; /* Altura explícita para la transición */
+  height: 40px;
 }
 .portfolio__expand-button:hover {
   background-color: #7c3aed;
 }
 .portfolio__card:hover .portfolio__expand-button {
-  /* Se oculta inmediatamente en hover */
   opacity: 0;
   height: 0;
   padding-top: 0;
@@ -332,18 +444,24 @@ export default {
   transition: transform .3s;
 }
 .portfolio__card:hover .portfolio__expand-button i {
-  /* Pequeño efecto para el ícono */
   transform: translateY(5px);
 }
 
-/* ESTILOS DEL CARRUSEL */
+/* ==================== CARRUSEL ==================== */
 .portfolio__img-carousel {
   position: relative;
   overflow: hidden;
   border-radius: .5rem;
-  margin-bottom: var(--mb-1);
+  margin-bottom: var(--mb-0);
   cursor: pointer;
 }
+
+.portfolio__img-container {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+}
+
 .portfolio__img-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
@@ -412,7 +530,7 @@ export default {
   background-color: var(--first-color);
 }
 
-/* ==================== LÓGICA DE BOTONES CORREGIDA ==================== */
+/* ==================== BOTONES DE ACCIÓN ==================== */
 .portfolio__buttons {
   display: flex;
   flex-wrap: wrap;
@@ -421,12 +539,11 @@ export default {
   margin-top: auto;
   --button-height: 2.25rem;
   position: relative;
-  /* ==================== SOLUCIÓN: Altura 0 cuando están ocultos ==================== */
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
-  height: 0; /* CLAVE: Sin altura física cuando están ocultos */
-  overflow: hidden; /* Evita que el contenido se muestre */
+  height: 0;
+  overflow: hidden;
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s, height 0.4s ease;
 }
 
@@ -434,11 +551,10 @@ export default {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-  height: auto; /* Recupera la altura automática en hover */
+  height: auto;
   transition: opacity 0.4s ease .2s, transform 0.4s ease .2s, visibility 0s .2s, height 0.4s ease .2s;
 }
 
-/* El resto de los estilos de botones */
 .portfolio__buttons.demo-hover .portfolio__button.button--presentation {
   flex-basis: 100%;
   width: 2.25rem !important;
@@ -544,21 +660,32 @@ export default {
   max-width: 19px !important;
   max-height: 19px !important;
 }
-.button--figma, .button--github, .button--presentation { color: white; }
+.button--figma, .button--github, .button--presentation { 
+  color: white;
+  transition: box-shadow 0.3s ease;
+}
 .button--figma { background-color: #ff9ad5; }
-.button--figma:hover { background-color: #ff7bc8; }
+.button--figma:hover { 
+  background-color: #ff7bc8; 
+  box-shadow: 0 6px 20px rgba(255, 154, 213, 0.5);
+}
 .button--github { background-color: #88bef5; }
-.button--github:hover { background-color: #6caff3; }
+.button--github:hover { 
+  background-color: #6caff3; 
+  box-shadow: 0 6px 20px rgba(136, 190, 245, 0.5);
+}
 .button--presentation { background-color: #ffb788; }
-.button--presentation:hover { background-color: #eb9b65; }
+.button--presentation:hover { 
+  background-color: #eb9b65; 
+  box-shadow: 0 6px 20px rgba(255, 183, 136, 0.5);
+}
 
-/* ==================== BOTÓN DEMO CON GRADIENTE ==================== */
 .button--demo {
   background: linear-gradient(135deg, #8b5cf6, #ec4899);
   color: white;
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
   position: relative;
   overflow: hidden;
+  transition: box-shadow 0.3s ease;
 }
 
 .button--demo::before {
@@ -578,7 +705,6 @@ export default {
 
 .button--demo:hover {
   background: linear-gradient(135deg, #8b5cf6, #ec4899);
-  transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
 }
 

@@ -43,6 +43,7 @@ export default {
           description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
           tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
           images: [ portfolio1_1, portfolio1_2, portfolio1_3 ],
+          techBadge: ['figma', 'vue'],
           buttons: [
             { type: 'demo', text: 'Demo', icon: 'uil uil-play', url: 'http://67.205.133.92/app/', animated: true, arrow: true },
             { type: 'figma', text: 'Diseño', icon: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0', animated: true, arrow: true },
