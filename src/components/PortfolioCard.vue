@@ -73,8 +73,8 @@
       <PortfolioActionButtons
         :buttons="project.buttons"
         :hover-state="{ 
-          'demo-hover': hoveredButton === 'demo',
-          'presentation-hover': hoveredButton === 'presentation'
+          'demo-hover': project.buttons.length === 4 && hoveredButton === 1,
+          'presentation-hover': project.buttons.length === 4 && hoveredButton === 4
         }"
         @button-hover="handleButtonHover"
         @button-leave="handleButtonLeave"
@@ -137,10 +137,15 @@ export default {
         }, 1000);
       }
     },
-    handleButtonHover(buttonType) {
+    handleButtonHover(buttonId) {
       if (this.lockHover) return;
-      this.hoveredButton = buttonType;
-      if (buttonType === 'presentation' || buttonType === 'demo') {
+      // Ahora 'hoveredButton' guardará un número (1, 2, 3, o 4)
+      this.hoveredButton = buttonId; 
+
+      // Esta lógica de bloqueo es para el efecto especial.
+      // La adaptamos para que se active con los botones 1 y 4
+      // solo cuando hay 4 botones en total.
+      if (this.project.buttons.length === 4 && (buttonId === 1 || buttonId === 4)) {
         this.lockHover = true;
         setTimeout(() => {
           this.lockHover = false;
@@ -202,10 +207,40 @@ export default {
           this.tooltip.visible = false;
         }
       }, 200);
+    },
+    calculateTagSpacing() {
+      if (!this.project.tags || this.project.tags.length <= 1) return;
+      
+      this.$nextTick(() => {
+        const container = this.$el.querySelector('.portfolio__tags');
+        if (!container) return;
+        
+        const tags = container.querySelectorAll('.portfolio__tag');
+        if (tags.length <= 1) return;
+        
+        // Calcular ancho total de todas las tags
+        let totalTagWidth = 0;
+        tags.forEach(tag => {
+          totalTagWidth += tag.offsetWidth;
+        });
+        
+        // Calcular espacio disponible para gaps
+        const containerWidth = container.offsetWidth;
+        const availableSpace = containerWidth - totalTagWidth;
+        const gap = Math.max(0.2 * 16, availableSpace / (tags.length - 1)); // Mínimo 0.2rem
+        
+        // Aplicar spacing usando justify-content y gap calculado
+        container.style.gap = `${Math.min(gap, 0.6 * 16)}px`; // Máximo 0.6rem
+      });
     }
   },
   mounted() {
     this.startAutoSlide();
+    this.calculateTagSpacing(); // Agregar esta línea
+
+  },
+  updated() {
+    this.calculateTagSpacing();
   },
   beforeUnmount() {
     this.clearAutoSlide();
@@ -217,9 +252,10 @@ export default {
 /* ==================== PORTFOLIO TAGS ==================== */
 .portfolio__tags {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
+  align-items: center;
+  width: 100%;
   margin-bottom: 0.875rem;
+  /* El gap se establecerá dinámicamente */
 }
 
 .portfolio__tag {

@@ -10,7 +10,7 @@
       rel="noopener noreferrer"
       class="button button--flex button--small portfolio__button"
       :class="['button--' + button.type, { 'portfolio__button--animated': button.animated }]"
-      @mouseenter="$emit('button-hover', button.type)"
+      @mouseenter="$emit('button-hover', button.id)"
       @mouseleave="$emit('button-leave')"
     >
       <SvgIcon v-if="button.icon === 'figma' || button.icon === 'github'" :name="button.icon" />
@@ -108,6 +108,7 @@ export default {
 
 <style scoped>
 /* ==================== BOTONES DE ACCIÓN ==================== */
+/* ==================== BOTONES DE ACCIÓN ==================== */
 .portfolio__buttons {
   display: flex;
   flex-wrap: wrap;
@@ -144,7 +145,7 @@ export default {
   opacity: 0;
   transform: scale(0.8);
   transition: opacity 0s, transform 0s;
-  animation: button-reappear 0.3s ease 0.23s forwards;
+  animation: button-reappear 0.3s ease 0.24s forwards;
   flex-basis: 100%;
   width: 2.25rem !important;
   max-width: 2.25rem;
@@ -173,9 +174,14 @@ export default {
 .portfolio__buttons.presentation-hover .portfolio__button:nth-child(3) { order: 2; }
 .portfolio__buttons.presentation-hover .portfolio__button:nth-child(4) { order: 3; }
 
+/* ======================================================================== */
+/* =====================  AQUÍ ESTÁN LAS CORRECCIONES  ==================== */
+/* ======================================================================== */
+
 .portfolio__button--animated:hover,
 .portfolio__buttons.demo-hover .portfolio__button:first-child,
-.portfolio__buttons.presentation-hover .portfolio__button.button--presentation {
+/* CORREGIDO: Apuntamos al 4to botón, no al que tenga la clase .button--presentation */
+.portfolio__buttons.presentation-hover .portfolio__button:nth-child(4) {
   width: auto;
   padding: 0 1rem;
   justify-content: center;
@@ -183,25 +189,38 @@ export default {
 }
 .portfolio__button--animated:hover .button__text,
 .portfolio__buttons.demo-hover .portfolio__button:first-child .button__text,
-.portfolio__buttons.presentation-hover .portfolio__button.button--presentation .button__text {
+/* CORREGIDO: Apuntamos al texto dentro del 4to botón */
+.portfolio__buttons.presentation-hover .portfolio__button:nth-child(4) .button__text {
   opacity: 1;
   width: auto;
   transition: opacity 0.25s cubic-bezier(0.2, 0, 0.38, 0.9) 0.1s, width 0.35s cubic-bezier(0.2, 0, 0.38, 0.9);
 }
 .portfolio__button--animated:hover .button__arrow,
 .portfolio__buttons.demo-hover .portfolio__button:first-child .button__arrow,
-.portfolio__buttons.presentation-hover .portfolio__button.button--presentation .button__arrow {
+/* CORREGIDO: Apuntamos a la flecha dentro del 4to botón */
+.portfolio__buttons.presentation-hover .portfolio__button:nth-child(4) .button__arrow {
   opacity: 1;
   width: auto;
   transition: opacity 0.2s cubic-bezier(0.2, 0, 0.38, 0.9) 0.15s, width 0.35s cubic-bezier(0.2, 0, 0.38, 0.9);
   animation: arrow-bounce-in 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
 }
+
 .portfolio__button--animated:first-child:hover,
 .portfolio__buttons.demo-hover .portfolio__button:first-child { width: 9rem; }
-.portfolio__button--animated.button--presentation:hover,
-.portfolio__buttons.presentation-hover .portfolio__button.button--presentation { width: 9rem; }
+
+/* CORREGIDO: Combinamos la regla de hover individual con la regla del contenedor */
+.portfolio__button--animated:nth-child(4):hover,
+.portfolio__buttons.presentation-hover .portfolio__button:nth-child(4) { width: 10rem; }
+
+/* Mantenemos las reglas individuales de hover para los demás botones */
 .portfolio__button--animated.button--figma:hover { width: 10rem; }
 .portfolio__button--animated.button--github:hover { width: 10rem; }
+.portfolio__button--animated.button--presentation:hover { width: 9rem; } /* Se mantiene para hover individual */
+
+
+/* ======================================================================== */
+/* ===================== FIN DE LAS CORRECCIONES ========================== */
+/* ======================================================================== */
 
 .portfolio__button {
   display: inline-flex;
@@ -339,7 +358,7 @@ export default {
 
 /* Nueva animación para desaparecer y reaparecer al desactivar presentation-hover */
 .portfolio__buttons:not(.presentation-hover):not(.delayed-reorder) .portfolio__button:nth-child(1) {
-  animation: button-disappear-reappear 1.9s ease forwards;
+  animation: button-disappear-reappear 1.4s cubic-bezier(0.55, 0, 0.2, 1) forwards;
 }
 
 @keyframes arrow-bounce-in {
@@ -362,7 +381,7 @@ export default {
 @keyframes button-disappear-reappear {
   0% { 
     opacity: 0; 
-    transform: scale(0.9) translateY(0); 
+    transform: scale(0.95) translateY(3px); 
   }
   100% { 
     opacity: 1; 
