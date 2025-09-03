@@ -14,98 +14,132 @@
 </template>
 
 <script>
-// 1. Importar el nuevo componente hijo
+// 1. Importar componentes necesarios
 import PortfolioCard from './PortfolioCard.vue';
-
-// --- IMPORTAR IMÁGENES ---
-// Se importan las imágenes para cada proyecto aquí, en el componente padre.
-import portfolio1_1 from '@/assets/img/portafolio/portfolio1_1.jpg';
-import portfolio1_2 from '@/assets/img/portafolio/portfolio1_2.jpg';
-import portfolio1_3 from '@/assets/img/portafolio/portfolio1_3.jpg';
-
-import portfolio2 from '@/assets/img/portfolio2.jpg';
-import portfolio3 from '@/assets/img/portfolio3.jpg';
-import portfolio4 from '@/assets/img/portfolio1.jpg';
+import { buttonTemplates } from '@/config/button-config.js';
+// ¡NUEVO! Importar nuestro cargador de imágenes
+import projectsImages from '@/utils/image-loader.js';
 
 export default {
   name: 'Portfolio',
-  // 2. Registrar el componente hijo para poder usarlo en el template
   components: {
     PortfolioCard
   },
   data() {
     return {
-      // 3. Definir todos los proyectos en un único array de objetos
-      projects: [
-        { 
-          id: 1, 
-          title: 'Sigepro', 
-          description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
-          tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
-          images: [ portfolio1_1, portfolio1_2, portfolio1_3 ],
-          techBadge: ['figma', 'vue'],
-          buttons: [
-            { id: 1, type: 'demo', text: 'Demo', icon: 'uil uil-play', url: 'http://67.205.133.92/app/', animated: true, arrow: true },
-            { id: 2, type: 'figma', text: 'Diseño', icon: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0', animated: true, arrow: true },
-            { id: 3, type: 'github', text: 'Código', icon: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend', animated: true, arrow: true },
-            { id: 4, type: 'presentation', text: 'Slides', icon: 'uil uil-presentation-play', url: '#', animated: true, arrow: true }
-          ]
-        },
-        { 
-          id: 2, 
-          title: 'Diseño de Marca', 
-          description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
-          tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
-          images: [ portfolio1_1, portfolio1_2, portfolio1_3 ],
-          techBadge: ['figma', 'vue'],
-          buttons: [
-            { id: 1, type: 'demo', text: 'Demo', icon: 'uil uil-play', url: 'http://67.205.133.92/app/', animated: true, arrow: true },
-            { id: 2, type: 'figma', text: 'Diseño', icon: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0', animated: true, arrow: true },
-            { id: 3, type: 'presentation', text: 'Slides', icon: 'uil uil-presentation-play', url: '#', animated: true, arrow: true },
-            { id: 4, type: 'github', text: 'Código', icon: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend', animated: true, arrow: true }
-
-          ]
-        },
-        { 
-          id: 3, 
-          title: 'Tienda Online', 
-          description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
-          images: [ portfolio3 ],
-          buttons: [
-            { type: 'demo', text: 'Demo', icon: 'uil uil-arrow-right', url: '#', animated: false }
-          ]
-        },
-        { 
-          id: 4, 
-          title: 'App de E-commerce', 
-          description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
-          images: [ portfolio4 ],
-          buttons: [
-            { type: 'demo', text: 'Demo', icon: 'uil uil-arrow-right', url: '#', animated: false }
-          ]
-        },
-        { 
-          id: 5, 
-          title: 'Proyecto 5', 
-          description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
-          images: [ portfolio2 ],
-          buttons: [
-            { type: 'demo', text: 'Demo', icon: 'uil uil-arrow-right', url: '#', animated: false }
-          ]
-        },
-        { 
-          id: 6, 
-          title: 'Proyecto 6', 
-          description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
-          images: [ portfolio3 ],
-          buttons: [
-            { type: 'demo', text: 'Demo', icon: 'uil uil-arrow-right', url: '#', animated: false }
-          ]
-        },
-      ]
+      projects: []
     };
+  },
+  methods: {
+    createProjectButtons(buttonList) {
+      if (!buttonList) return [];
+      
+      return buttonList.map((buttonInfo, index) => {
+        const template = buttonTemplates[buttonInfo.type] || {};
+        return {
+          ...template,
+          ...buttonInfo,
+          id: index + 1,
+        };
+      });
+    }
+  },
+  created() {
+    // Los datos "en crudo" ahora no necesitan la propiedad 'images'.
+    // La añadiremos dinámicamente.
+    const projectsData = [
+      {
+        id: 1,
+        title: 'Sigepro',
+        description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
+        tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+        techBadge: ['figma', 'vue'],
+        buttons: this.createProjectButtons([
+          { type: 'demo', url: 'http://67.205.133.92/app/' },
+          { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
+          { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' },
+          { type: 'presentation', url: '#' }
+        ])
+      },
+      {
+        id: 2,
+        title: 'Diseño de Marca',
+        description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
+        tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+        techBadge: ['figma', 'vue'],
+        buttons: this.createProjectButtons([
+          { type: 'demo', url: 'http://67.205.133.92/app/' },
+          { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
+          { type: 'presentation', url: '#' },
+          { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
+        ])
+      },
+      {
+        id: 3,
+        title: 'Tienda Online',
+        description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
+        buttons: this.createProjectButtons([
+          { type: 'demo-simple', url: '#' }
+        ])
+      },
+      {
+        id: 4,
+        title: 'App de E-commerce',
+        description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
+        buttons: this.createProjectButtons([
+          { type: 'demo-simple', url: '#' }
+        ])
+      },
+      {
+        id: 5,
+        title: 'Diseño de Marca',
+        description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
+        tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+        techBadge: ['figma', 'vue'],
+        buttons: this.createProjectButtons([
+          { type: 'demo', url: 'http://67.205.133.92/app/' },
+          { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
+          { type: 'presentation', url: '#' },
+          { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
+        ])
+      },
+      {
+        id: 6,
+        title: 'Diseño de Marca',
+        description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
+        tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+        techBadge: ['figma', 'vue'],
+        buttons: this.createProjectButtons([
+          { type: 'demo', url: 'http://67.205.133.92/app/' },
+          { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
+          { type: 'presentation', url: '#' },
+          { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
+        ])
+      },
+      {
+        id: 7,
+        title: 'Diseño de Marca',
+        description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
+        tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+        techBadge: ['figma', 'vue'],
+        buttons: this.createProjectButtons([
+          { type: 'demo', url: 'http://67.205.133.92/app/' },
+          { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
+          { type: 'presentation', url: '#' },
+          { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
+        ])
+      },
+      // ...etc.
+    ];
+    
+    // ¡MAGIA! Procesamos los datos para añadir las imágenes automáticamente.
+    this.projects = projectsData.map(project => ({
+      ...project,
+      // Busca en nuestro objeto de imágenes usando el título del proyecto como clave.
+      // Si no encuentra nada, devuelve un array vacío para evitar errores.
+      images: projectsImages[project.title] || []
+    }));
   }
-  // ¡Toda la lógica compleja ha sido eliminada de aquí!
 }
 </script>
 

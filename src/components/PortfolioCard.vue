@@ -308,9 +308,9 @@ export default {
   margin-bottom: var(--mb-0-5);
 }
 .portfolio__description {
-  margin-bottom: var(--mb-0-75);
+  margin-bottom: var(--mb-0-72);
   flex-grow: 1;
-  max-height: 4.5em;
+  max-height: 4.3em;
   overflow: hidden;
   transition: max-height 0.4s ease-in-out;
   position: relative;
@@ -561,7 +561,7 @@ export default {
 
 @media screen and (min-width: 992px) {
   .portfolio__card {
-    padding: 2rem 1.5rem;
+    padding: 1.6rem;
   }
 }
 </style>
