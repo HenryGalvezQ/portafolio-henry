@@ -1,3 +1,5 @@
+// PortfolioActionButtons.vue:
+
 <template>
   <div ref="buttonsContainer" class="portfolio__buttons"
        :class="{ ...hoverState, 'delayed-reorder': delayedButtonReorder }"

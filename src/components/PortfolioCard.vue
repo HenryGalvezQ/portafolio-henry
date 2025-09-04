@@ -1,5 +1,10 @@
 <template>
-  <div class="portfolio__card" @mouseleave="handleCardLeave" @mouseenter="handleCardEnter">
+  <div 
+    class="portfolio__card" 
+    :class="{ 'portfolio__card--expanded-mode': isExpanded }"
+    @mouseleave="handleCardLeave" 
+    @mouseenter="handleCardEnter"
+  >
     
     <div v-if="project.tags && project.tags.length > 0" class="portfolio__tags">
       <span 
@@ -63,9 +68,21 @@
 
     <div class="portfolio__data">
       <h3 class="portfolio__title">{{ project.title }}</h3>
-      <p class="portfolio__description">{{ project.description }}</p>
+      <div class="portfolio__description-container">
+        <p class="portfolio__description">
+          {{ project.description }}
+          
+          <button 
+            v-if="project.expandedDescription && !isExpanded"
+            @click="$emit('toggle-expand')"
+            class="portfolio__read-more"
+          >
+             Leer más
+          </button>
+        </p>
+      </div>
 
-      <div class="portfolio__cta">
+      <div class="portfolio__cta" :class="{ 'portfolio__cta--visible': isExpanded }">
         <i class="uil uil-rocket"></i>
         <span>Explora el proyecto aquí <i class="uil uil-arrow-down"></i></span> 
       </div>
@@ -81,7 +98,10 @@
       />
     </div>
     
-    <div class="portfolio__expand-button">
+    <div 
+      v-if="!isExpanded"
+      class="portfolio__expand-button"
+    >
       <span>Ver más</span>
       <i class="uil uil-arrow-down"></i>
     </div>
@@ -100,20 +120,25 @@
 
 <script>
 import SvgIcon from './SvgIcon.vue';
-import PortfolioActionButtons from './PortfolioActionButtons.vue'; // 1. Importar el componente hijo
+import PortfolioActionButtons from './PortfolioActionButtons.vue';
 
 export default {
   name: 'PortfolioCard',
   components: {
     SvgIcon,
-    PortfolioActionButtons // 2. Registrar el componente hijo
+    PortfolioActionButtons
   },
   props: {
     project: {
       type: Object,
       required: true
+    },
+    isExpanded: {
+      type: Boolean,
+      default: false
     }
   },
+  emits: ['toggle-expand'],
   data() {
     return {
       hoveredButton: null,
@@ -130,7 +155,7 @@ export default {
   },
   methods: {
     handleCardEnter() {
-      if (this.project.images && this.project.images.length > 1) {
+      if (this.project.images && this.project.images.length > 1 && !this.isExpanded) {
         this.showCarouselHint = true;
         setTimeout(() => {
           this.showCarouselHint = false;
@@ -139,12 +164,8 @@ export default {
     },
     handleButtonHover(buttonId) {
       if (this.lockHover) return;
-      // Ahora 'hoveredButton' guardará un número (1, 2, 3, o 4)
       this.hoveredButton = buttonId; 
 
-      // Esta lógica de bloqueo es para el efecto especial.
-      // La adaptamos para que se active con los botones 1 y 4
-      // solo cuando hay 4 botones en total.
       if (this.project.buttons.length === 4 && (buttonId === 1 || buttonId === 4)) {
         this.lockHover = true;
         setTimeout(() => {
@@ -157,12 +178,14 @@ export default {
       this.hoveredButton = null;
     },
     handleCardLeave() {
-      this.hoveredButton = null;
-      this.lockHover = false;
-      this.showCarouselHint = false;
+      if (!this.isExpanded) {
+        this.hoveredButton = null;
+        this.lockHover = false;
+        this.showCarouselHint = false;
+      }
     },
     startAutoSlide() {
-      if (this.project.images.length <= 1) return;
+      if (this.project.images.length <= 1 || this.isExpanded) return;
       this.clearAutoSlide();
       this.autoSlideInterval = setInterval(this.nextImage, 7000);
     },
@@ -218,26 +241,33 @@ export default {
         const tags = container.querySelectorAll('.portfolio__tag');
         if (tags.length <= 1) return;
         
-        // Calcular ancho total de todas las tags
         let totalTagWidth = 0;
         tags.forEach(tag => {
           totalTagWidth += tag.offsetWidth;
         });
         
-        // Calcular espacio disponible para gaps
         const containerWidth = container.offsetWidth;
         const availableSpace = containerWidth - totalTagWidth;
-        const gap = Math.max(0.2 * 16, availableSpace / (tags.length - 1)); // Mínimo 0.2rem
+        const gap = Math.max(0.2 * 16, availableSpace / (tags.length - 1));
         
-        // Aplicar spacing usando justify-content y gap calculado
-        container.style.gap = `${Math.min(gap, 0.6 * 16)}px`; // Máximo 0.6rem
+        container.style.gap = `${Math.min(gap, 0.6 * 16)}px`;
       });
+    }
+  },
+  watch: {
+    isExpanded(newVal) {
+      if (newVal) {
+        this.clearAutoSlide();
+      } else {
+        this.startAutoSlide();
+        this.hoveredButton = null;
+        this.lockHover = false;
+      }
     }
   },
   mounted() {
     this.startAutoSlide();
-    this.calculateTagSpacing(); // Agregar esta línea
-
+    this.calculateTagSpacing();
   },
   updated() {
     this.calculateTagSpacing();
@@ -255,7 +285,6 @@ export default {
   align-items: center;
   width: 100%;
   margin-bottom: 0.875rem;
-  /* El gap se establecerá dinámicamente */
 }
 
 .portfolio__tag {
@@ -280,13 +309,26 @@ export default {
   flex-direction: column;
   max-height: 530px; 
   overflow: hidden;
+  flex: 1;
+  min-width: 300px;
+  max-width: 340px;
 }
-.portfolio__card:hover {
+
+.portfolio__card--expanded-mode {
+  max-height: none;
+  transform: scale(1.03);
+  box-shadow: 0 4px 8px rgba(0,0,0,.15);
+  z-index: 5;
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.portfolio__card:not(.portfolio__card--expanded-mode):hover {
   box-shadow: 0 4px 8px rgba(0,0,0,.15);
   transform: scale(1.03);
   z-index: 5;
   max-height: 800px;
 }
+
 .portfolio__img {
   width: 100%;
   border-radius: .5rem;
@@ -296,6 +338,7 @@ export default {
   height: auto;
   max-height: 200px;
 }
+
 .portfolio__data {
   padding: 0 .5rem;
   display: flex;
@@ -303,10 +346,18 @@ export default {
   flex-grow: 1;
   overflow: hidden;
 }
+
 .portfolio__title {
   font-size: var(--h3-font-size);
   margin-bottom: var(--mb-0-5);
 }
+
+.portfolio__description-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 .portfolio__description {
   margin-bottom: var(--mb-0-72);
   flex-grow: 1;
@@ -328,12 +379,38 @@ export default {
   transition: opacity 0.4s ease-in-out;
 }
 
-.portfolio__card:hover .portfolio__description {
+.portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__description {
   max-height: 200px;
 }
 
-.portfolio__card:hover .portfolio__description::after {
+.portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__description::after {
   opacity: 0;
+}
+
+.portfolio__card--expanded-mode .portfolio__description {
+  max-height: none;
+}
+
+.portfolio__card--expanded-mode .portfolio__description::after {
+  display: none;
+}
+
+.portfolio__read-more {
+  background: none;
+  border: none;
+  color: #8b5cf6;
+  font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  padding: 0;
+  align-self: flex-start;
+  transition: color 0.3s ease;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.portfolio__read-more:hover {
+  color: #7c3aed;
 }
 
 .portfolio__cta {
@@ -352,7 +429,8 @@ export default {
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s, height 0.4s ease;
 }
 
-.portfolio__card:hover .portfolio__cta {
+.portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__cta,
+.portfolio__cta--visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -456,10 +534,12 @@ export default {
   transition: opacity 0.3s ease, height 0.3s ease, padding 0.3s ease;
   height: 40px;
 }
+
 .portfolio__expand-button:hover {
   background-color: #7c3aed;
 }
-.portfolio__card:hover .portfolio__expand-button {
+
+.portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__expand-button {
   opacity: 0;
   height: 0;
   padding: 0;
@@ -468,10 +548,12 @@ export default {
   border-top: none;
   transition: opacity 0.3s ease, height 0.3s ease, padding 0.3s ease;
 }
+
 .portfolio__expand-button i {
   transition: transform .3s;
 }
-.portfolio__card:hover .portfolio__expand-button i {
+
+.portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__expand-button i {
   transform: translateY(5px);
 }
 
@@ -494,17 +576,20 @@ export default {
   display: flex;
   transition: transform 0.5s ease-in-out;
 }
+
 .portfolio-carousel__button,
 .portfolio-carousel__pagination {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
 .portfolio__img-carousel:hover .portfolio-carousel__button,
 .portfolio__img-carousel:hover .portfolio-carousel__pagination,
 .portfolio__img-carousel.carousel-hint-active .portfolio-carousel__button,
 .portfolio__img-carousel.carousel-hint-active .portfolio-carousel__pagination {
   opacity: 1;
 }
+
 .portfolio-carousel__button {
   position: absolute;
   top: 50%;
@@ -521,16 +606,20 @@ export default {
   justify-content: center;
   cursor: pointer;
 }
+
 .portfolio-carousel__button:hover {
   background-color: var(--first-color);
   color: var(--container-color);
 }
+
 .portfolio-carousel__button--left {
   left: .5rem;
 }
+
 .portfolio-carousel__button--right {
   right: .5rem;
 }
+
 .portfolio-carousel__pagination {
   position: absolute;
   bottom: .5rem;
@@ -543,6 +632,7 @@ export default {
   padding: .25rem .5rem;
   border-radius: 1rem;
 }
+
 .portfolio-carousel__dot {
   width: 8px;
   height: 8px;
@@ -551,14 +641,14 @@ export default {
   cursor: pointer;
   transition: background-color .3s;
 }
+
 .portfolio-carousel__dot:hover {
   background-color: white;
 }
+
 .portfolio-carousel__dot--active {
   background-color: var(--first-color);
 }
-
-/* Los estilos de los botones de acción se han movido a PortfolioActionButtons.vue */
 
 @media screen and (min-width: 992px) {
   .portfolio__card {
