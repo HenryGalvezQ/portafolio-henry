@@ -51,7 +51,7 @@ export default {
       {
         id: 1,
         title: 'Sigepro',
-        description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
+        description: 'Prototipé en Figma y desarrollé una SPA de gestión de proyectos con una UI adaptativa basada en roles (Admin / Cliente / Colaborador), lo construí con Vue 3, Pinia y Tailwind CSS y lo conecté al backend con APIRESTful.',
         tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
         techBadge: ['figma', 'vue'],
         buttons: this.createProjectButtons([
@@ -151,6 +151,7 @@ export default {
   gap: 2.5rem;
   grid-template-columns: 1fr;
   padding-top: 1rem;
+  align-items: start;
 }
 
 @media screen and (max-width: 350px) {

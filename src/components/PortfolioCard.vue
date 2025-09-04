@@ -67,7 +67,7 @@
 
       <div class="portfolio__cta">
         <i class="uil uil-rocket"></i>
-        <span>¡Explora el proyecto!</span>
+        <span>Explora el proyecto aquí <i class="uil uil-arrow-down"></i></span> 
       </div>
 
       <PortfolioActionButtons
@@ -462,7 +462,8 @@ export default {
 .portfolio__card:hover .portfolio__expand-button {
   opacity: 0;
   height: 0;
-  padding-top: 0;
+  padding: 0;
+  margin: 0;
   overflow: hidden;
   border-top: none;
   transition: opacity 0.3s ease, height 0.3s ease, padding 0.3s ease;

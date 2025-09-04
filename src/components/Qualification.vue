@@ -121,7 +121,7 @@
             </div>
             <div class="qualification__item-content qualification__item-content--right">
               <div class="qualification__text-content">
-                <h3 class="qualification__title">Frontend Developer</h3>
+                <h3 class="qualification__title">Frontend Developer (Prácticas pre-profesionales)</h3>
                 <span class="qualification__subtitle">Innovaciencia Peru</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
