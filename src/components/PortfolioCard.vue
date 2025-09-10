@@ -6,65 +6,16 @@
     @mouseenter="handleCardEnter"
   >
     
-    <div v-if="project.tags && project.tags.length > 0" class="portfolio__tags">
-      <span 
-        v-for="tag in project.tags" 
-        :key="tag" 
-        class="portfolio__tag"
-      >
-        {{ tag }}
-      </span>
-    </div>
+    <PortfolioTags :tags="project.tags" />
     
-    <div 
-      v-if="project.images && project.images.length > 0"
-      class="portfolio__img-carousel"
-      :class="{ 'carousel-hint-active': showCarouselHint }"
-      @mouseenter="clearAutoSlide"
-      @mouseleave="startAutoSlide"
-    >
-      <div class="portfolio__img-track" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-        <div 
-          v-for="(image, index) in project.images"
-          :key="index"
-          class="portfolio__img-container"
-        >
-          <img 
-            :src="image" 
-            :alt="project.title + ' project screenshot'"
-            class="portfolio__img"
-          >
-        </div>
-      </div>
-      
-      <div class="portfolio__tech-badges-container">
-        <div 
-          v-for="tech in project.techBadge"
-          :key="tech"
-          class="portfolio__tech-badge"
-          @mouseenter="showTooltip($event, tech)"
-          @mouseleave="hideTooltip"
-        >
-          <SvgIcon :name="tech" />
-        </div>
-      </div>
-      
-      <template v-if="project.images.length > 1">
-        <i @click="prevImage" class="uil uil-angle-left-b portfolio-carousel__button portfolio-carousel__button--left"></i>
-        <i @click="nextImage" class="uil uil-angle-right-b portfolio-carousel__button portfolio-carousel__button--right"></i>
-        
-        <div class="portfolio-carousel__pagination">
-          <span 
-            v-for="(_, index) in project.images"
-            :key="index"
-            class="portfolio-carousel__dot"
-            :class="{ 'portfolio-carousel__dot--active': index === currentImageIndex }"
-            @click="goToSlide(index)"
-          >
-          </span>
-        </div>
-      </template>
-    </div>
+    <PortfolioImageCarousel
+      ref="carousel"
+      :images="project.images"
+      :alt="project.title"
+      :tech-badges="project.techBadge"
+      :is-expanded="isExpanded"
+      @carousel-hint-shown="handleCarouselHintShown"
+    />
 
     <div class="portfolio__data">
       <h3 class="portfolio__title">{{ project.title }}</h3>
@@ -105,27 +56,19 @@
       <span>Ver más</span>
       <i class="uil uil-arrow-down"></i>
     </div>
-
-    <Teleport to="body">
-      <div 
-        v-show="tooltip.visible" 
-        class="custom-tooltip" 
-        :style="tooltip.style"
-      >
-        {{ tooltip.text }}
-      </div>
-    </Teleport>
   </div>
 </template>
 
 <script>
-import SvgIcon from './SvgIcon.vue';
+import PortfolioTags from './PortfolioTags.vue';
+import PortfolioImageCarousel from './PortfolioImageCarousel.vue';
 import PortfolioActionButtons from './PortfolioActionButtons.vue';
 
 export default {
   name: 'PortfolioCard',
   components: {
-    SvgIcon,
+    PortfolioTags,
+    PortfolioImageCarousel,
     PortfolioActionButtons
   },
   props: {
@@ -143,24 +86,21 @@ export default {
     return {
       hoveredButton: null,
       lockHover: false,
-      currentImageIndex: 0,
-      autoSlideInterval: null,
-      showCarouselHint: false,
-      tooltip: {
-        visible: false,
-        text: '',
-        style: {}
-      }
+      showCarouselHint: false
     };
   },
   methods: {
     handleCardEnter() {
-      if (this.project.images && this.project.images.length > 1 && !this.isExpanded) {
-        this.showCarouselHint = true;
-        setTimeout(() => {
-          this.showCarouselHint = false;
-        }, 1000);
+      // Delegamos la lógica del hint al carrusel
+      if (this.$refs.carousel) {
+        this.$refs.carousel.showCarouselHintOnHover();
       }
+    },
+    handleCarouselHintShown() {
+      this.showCarouselHint = true;
+      setTimeout(() => {
+        this.showCarouselHint = false;
+      }, 1000);
     },
     handleButtonHover(buttonId) {
       if (this.lockHover) return;
@@ -183,121 +123,20 @@ export default {
         this.lockHover = false;
         this.showCarouselHint = false;
       }
-    },
-    startAutoSlide() {
-      if (this.project.images.length <= 1 || this.isExpanded) return;
-      this.clearAutoSlide();
-      this.autoSlideInterval = setInterval(this.nextImage, 7000);
-    },
-    clearAutoSlide() {
-      if (this.autoSlideInterval) {
-        clearInterval(this.autoSlideInterval);
-        this.autoSlideInterval = null;
-      }
-    },
-    nextImage() {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.project.images.length;
-    },
-    prevImage() {
-      this.currentImageIndex = (this.currentImageIndex - 1 + this.project.images.length) % this.project.images.length;
-    },
-    goToSlide(index) {
-      this.currentImageIndex = index;
-      this.startAutoSlide();
-    },
-    showTooltip(event, techName) {
-      const badge = event.currentTarget;
-      const rect = badge.getBoundingClientRect();
-
-      const isZoomed = window.matchMedia('(min-width: 1600px)').matches;
-      const zoomFactor = isZoomed ? 1.25 : 1;
-      
-      const top = (rect.top / zoomFactor) - 38;
-      const left = (rect.left / zoomFactor) + (rect.width / zoomFactor / 2);
-
-      this.tooltip.text = `Diseñado en ${techName.charAt(0).toUpperCase() + techName.slice(1)}`;
-      this.tooltip.style = {
-        top: `${top}px`,
-        left: `${left}px`,
-        opacity: 1,
-      };
-      this.tooltip.visible = true;
-    },
-    hideTooltip() {
-      this.tooltip.style.opacity = 0;
-      setTimeout(() => {
-        if (this.tooltip) {
-          this.tooltip.visible = false;
-        }
-      }, 200);
-    },
-    calculateTagSpacing() {
-      if (!this.project.tags || this.project.tags.length <= 1) return;
-      
-      this.$nextTick(() => {
-        const container = this.$el.querySelector('.portfolio__tags');
-        if (!container) return;
-        
-        const tags = container.querySelectorAll('.portfolio__tag');
-        if (tags.length <= 1) return;
-        
-        let totalTagWidth = 0;
-        tags.forEach(tag => {
-          totalTagWidth += tag.offsetWidth;
-        });
-        
-        const containerWidth = container.offsetWidth;
-        const availableSpace = containerWidth - totalTagWidth;
-        const gap = Math.max(0.2 * 16, availableSpace / (tags.length - 1));
-        
-        container.style.gap = `${Math.min(gap, 0.6 * 16)}px`;
-      });
     }
   },
   watch: {
     isExpanded(newVal) {
-      if (newVal) {
-        this.clearAutoSlide();
-      } else {
-        this.startAutoSlide();
+      if (!newVal) {
         this.hoveredButton = null;
         this.lockHover = false;
       }
     }
-  },
-  mounted() {
-    this.startAutoSlide();
-    this.calculateTagSpacing();
-  },
-  updated() {
-    this.calculateTagSpacing();
-  },
-  beforeUnmount() {
-    this.clearAutoSlide();
   }
 }
 </script>
 
 <style scoped>
-/* ==================== PORTFOLIO TAGS ==================== */
-.portfolio__tags {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 0.875rem;
-}
-
-.portfolio__tag {
-  background-color: #777f8d;
-  color: white;
-  padding: 0.1875rem 0.375rem;
-  border-radius: 0.75rem;
-  font-size: 0.595rem;
-  font-weight: 500;
-  white-space: nowrap;
-  line-height: 1.2;
-}
-
 /* ==================== PORTFOLIO CARD ==================== */
 .portfolio__card {
   background-color: var(--container-color);
@@ -327,16 +166,6 @@ export default {
   transform: scale(1.03);
   z-index: 5;
   max-height: 800px;
-}
-
-.portfolio__img {
-  width: 100%;
-  border-radius: .5rem;
-  margin-bottom: var(--mb-1);
-  flex-shrink: 0;
-  object-fit: cover;
-  height: auto;
-  max-height: 200px;
 }
 
 .portfolio__data {
@@ -448,73 +277,6 @@ export default {
   50% { opacity: 0.6; }
 }
 
-/* ==================== BADGE DE TECNOLOGÍA ==================== */
-.portfolio__tech-badges-container {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  display: flex;
-  gap: 0.5rem;
-  z-index: 4;
-}
-
-.portfolio__tech-badge {
-  width: 1.85rem;
-  height: 1.85rem;
-  background-color: white;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
-}
-
-.portfolio__tech-badge svg {
-  width: 1.125rem !important;
-  height: 1.125rem !important;
-  max-width: 1.125rem !important;
-  max-height: 1.125rem !important;
-  transition: transform 0.2s ease;
-}
-
-.portfolio__img-carousel:hover .portfolio__tech-badge svg {
-  transform: scale(1.1);
-}
-
-.portfolio__tech-badge :deep(svg) {
-  width: 1.125rem !important;
-  height: 1.125rem !important;
-  max-width: 1.125rem !important;
-  max-height: 1.125rem !important;
-}
-
-/* ==================== TOOLTIP PERSONALIZADO ==================== */
-.custom-tooltip {
-  position: fixed;
-  transform: translateX(-50%); 
-  white-space: nowrap;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 0.3rem 0.6rem;
-  border-radius: 0.25rem;
-  font-size: 0.75rem;
-  z-index: 1000;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.custom-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 5px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
-}
-
 /* ==================== BOTÓN "VER MÁS" ==================== */
 .portfolio__expand-button {
   display: flex;
@@ -555,99 +317,6 @@ export default {
 
 .portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__expand-button i {
   transform: translateY(5px);
-}
-
-/* ==================== CARRUSEL ==================== */
-.portfolio__img-carousel {
-  position: relative;
-  overflow: hidden;
-  border-radius: .5rem;
-  margin-bottom: var(--mb-0);
-  cursor: pointer;
-}
-
-.portfolio__img-container {
-  position: relative;
-  flex-shrink: 0;
-  width: 100%;
-}
-
-.portfolio__img-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.portfolio-carousel__button,
-.portfolio-carousel__pagination {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.portfolio__img-carousel:hover .portfolio-carousel__button,
-.portfolio__img-carousel:hover .portfolio-carousel__pagination,
-.portfolio__img-carousel.carousel-hint-active .portfolio-carousel__button,
-.portfolio__img-carousel.carousel-hint-active .portfolio-carousel__pagination {
-  opacity: 1;
-}
-
-.portfolio-carousel__button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  color: var(--title-color);
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.portfolio-carousel__button:hover {
-  background-color: var(--first-color);
-  color: var(--container-color);
-}
-
-.portfolio-carousel__button--left {
-  left: .5rem;
-}
-
-.portfolio-carousel__button--right {
-  right: .5rem;
-}
-
-.portfolio-carousel__pagination {
-  position: absolute;
-  bottom: .5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  gap: .5rem;
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: .25rem .5rem;
-  border-radius: 1rem;
-}
-
-.portfolio-carousel__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.6);
-  cursor: pointer;
-  transition: background-color .3s;
-}
-
-.portfolio-carousel__dot:hover {
-  background-color: white;
-}
-
-.portfolio-carousel__dot--active {
-  background-color: var(--first-color);
 }
 
 @media screen and (min-width: 992px) {
