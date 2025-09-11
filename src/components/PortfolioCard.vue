@@ -1,9 +1,10 @@
 <template>
   <div 
-    class="portfolio__card" 
-    :class="{ 'portfolio__card--expanded-mode': isExpanded }"
-    @mouseleave="handleCardLeave" 
-    @mouseenter="handleCardEnter"
+    class="portfolio-card__content" 
+    :class="{ 
+      'is-expanded-mode': isExpanded,
+      'parent-is-hovered': isHovered && !isExpanded
+    }"
   >
     
     <PortfolioTags :tags="project.tags" />
@@ -24,11 +25,11 @@
           {{ project.description }}
           
           <button 
-            v-if="project.expandedDescription && !isExpanded"
+            v-if="project.expandedDescription"
             @click="$emit('toggle-expand')"
             class="portfolio__read-more"
           >
-             Leer más
+            {{ isExpanded ? 'Leer menos' : 'Leer más' }}
           </button>
         </p>
       </div>
@@ -44,6 +45,7 @@
           'demo-hover': project.buttons.length === 4 && hoveredButton === 1,
           'presentation-hover': project.buttons.length === 4 && hoveredButton === 4
         }"
+        :class="{ 'is-visible': (isHovered && !isExpanded) || isExpanded,'is-expanded-mode': isExpanded }"
         @button-hover="handleButtonHover"
         @button-leave="handleButtonLeave"
       />
@@ -79,6 +81,11 @@ export default {
     isExpanded: {
       type: Boolean,
       default: false
+    },
+    // CAMBIO: Nueva prop para recibir el estado hover del padre
+    isHovered: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['toggle-expand'],
@@ -90,12 +97,7 @@ export default {
     };
   },
   methods: {
-    handleCardEnter() {
-      // Delegamos la lógica del hint al carrusel
-      if (this.$refs.carousel) {
-        this.$refs.carousel.showCarouselHintOnHover();
-      }
-    },
+    // CAMBIO: Eliminados handleCardEnter y handleCardLeave. La lógica se mueve al watcher.
     handleCarouselHintShown() {
       this.showCarouselHint = true;
       setTimeout(() => {
@@ -117,13 +119,6 @@ export default {
       if (this.lockHover) return;
       this.hoveredButton = null;
     },
-    handleCardLeave() {
-      if (!this.isExpanded) {
-        this.hoveredButton = null;
-        this.lockHover = false;
-        this.showCarouselHint = false;
-      }
-    }
   },
   watch: {
     isExpanded(newVal) {
@@ -131,41 +126,46 @@ export default {
         this.hoveredButton = null;
         this.lockHover = false;
       }
+    },
+    // CAMBIO: Observamos la prop `isHovered` para manejar la lógica interna
+    isHovered(newVal) {
+      if (newVal) {
+        if (this.$refs.carousel) {
+          this.$refs.carousel.showCarouselHintOnHover();
+        }
+      } else {
+        this.hoveredButton = null;
+        this.lockHover = false;
+        this.showCarouselHint = false;
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-/* ==================== PORTFOLIO CARD ==================== */
-.portfolio__card {
-  background-color: var(--container-color);
-  padding: 1.5rem;
-  border-radius: .5rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,.15);
-  transition: transform 0.4s ease, box-shadow .3s, max-height 0.5s ease-in-out;
+/* CAMBIO: Esta clase ya no es una "card", es solo un contenedor de contenido. */
+.portfolio-card__content {
   display: flex;
   flex-direction: column;
-  max-height: 530px; 
-  overflow: hidden;
   flex: 1;
   min-width: 300px;
   max-width: 340px;
+  transition: transform 0.4s ease;
 }
 
-.portfolio__card--expanded-mode {
-  max-height: none;
-  transform: scale(1.03);
-  box-shadow: 0 4px 8px rgba(0,0,0,.15);
+/* CAMBIO: En modo expandido, sí aplicamos padding y el borde redondeado específico */
+.portfolio-card__content.is-expanded-mode {
   z-index: 5;
   border-radius: 0.5rem 0 0 0.5rem;
+  background-color: var(--container-color);
+  padding: 1.5rem;
 }
 
-.portfolio__card:not(.portfolio__card--expanded-mode):hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,.15);
-  transform: scale(1.03);
-  z-index: 5;
-  max-height: 800px;
+@media screen and (min-width: 992px) {
+  .portfolio-card__content.is-expanded-mode {
+    padding: 1.6rem;
+  }
 }
 
 .portfolio__data {
@@ -208,19 +208,20 @@ export default {
   transition: opacity 0.4s ease-in-out;
 }
 
-.portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__description {
+/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
+.parent-is-hovered .portfolio__description {
   max-height: 200px;
 }
 
-.portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__description::after {
+.parent-is-hovered .portfolio__description::after {
   opacity: 0;
 }
 
-.portfolio__card--expanded-mode .portfolio__description {
+.is-expanded-mode .portfolio__description {
   max-height: none;
 }
 
-.portfolio__card--expanded-mode .portfolio__description::after {
+.is-expanded-mode .portfolio__description::after {
   display: none;
 }
 
@@ -258,7 +259,8 @@ export default {
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s, height 0.4s ease;
 }
 
-.portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__cta,
+/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
+.parent-is-hovered .portfolio__cta,
 .portfolio__cta--visible {
   opacity: 1;
   visibility: visible;
@@ -277,7 +279,7 @@ export default {
   50% { opacity: 0.6; }
 }
 
-/* ==================== BOTÓN "VER MÁS" ==================== */
+/* BOTÓN "VER MÁS" */
 .portfolio__expand-button {
   display: flex;
   align-items: center;
@@ -301,7 +303,8 @@ export default {
   background-color: #7c3aed;
 }
 
-.portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__expand-button {
+/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
+.parent-is-hovered .portfolio__expand-button {
   opacity: 0;
   height: 0;
   padding: 0;
@@ -315,13 +318,12 @@ export default {
   transition: transform .3s;
 }
 
-.portfolio__card:not(.portfolio__card--expanded-mode):hover .portfolio__expand-button i {
+/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
+.parent-is-hovered .portfolio__expand-button i {
   transform: translateY(5px);
 }
 
-@media screen and (min-width: 992px) {
-  .portfolio__card {
-    padding: 1.6rem;
-  }
+.is-expanded-mode .portfolio__description-container {
+  flex-grow: 0;
 }
 </style>

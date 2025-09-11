@@ -1,3 +1,5 @@
+// PortfolioExpandedDescription.vue
+
 <template>
   <div class="portfolio-expanded">
     <div class="portfolio-expanded__header">
@@ -14,18 +16,13 @@
     <div class="portfolio-expanded__content" ref="scrollContainer">
       <div class="portfolio-expanded__description" v-html="project.expandedDescription">
       </div>
-      
-      <div class="portfolio-expanded__actions">
-        <button 
-          @click="$emit('close')" 
-          class="portfolio-expanded__read-less"
-        >
-          <i class="uil uil-arrow-left"></i>
-          Leer menos
-        </button>
-      </div>
     </div>
-    
+
+    <button @click="$emit('close')" class="portfolio-expanded__read-less">
+      <i class="uil uil-arrow-left"></i>
+      Leer menos
+    </button>
+
     <!-- Indicador de scroll si es necesario -->
     <div 
       v-if="showScrollIndicator" 
@@ -82,11 +79,10 @@ export default {
 <style scoped>
 .portfolio-expanded {
   flex: 1;
-  max-width: 50%;
   min-width: 300px;
   background-color: var(--container-color);
   border-left: 2px solid #8b5cf6;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 5rem;
   margin-left: 1rem;
   border-radius: 0 0.5rem 0.5rem 0;
   display: flex;
@@ -135,8 +131,8 @@ export default {
 .portfolio-expanded__content {
   flex: 1;
   overflow-y: auto;
-  padding-right: 0.5rem;
-  margin-right: -0.5rem;
+  padding-right: 1.5rem;
+  margin-right: -1.5rem;
   scrollbar-width: thin;
   scrollbar-color: #8b5cf6 transparent;
 }
@@ -202,15 +198,15 @@ export default {
   color: #8b5cf6;
 }
 
-.portfolio-expanded__actions {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: flex-start;
-}
 
 .portfolio-expanded__read-less {
+  /* Posicionamiento Fijo */
+  position: absolute;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 10;
+
+  /* Estilos que ya tenía */
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -277,16 +273,11 @@ export default {
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  .portfolio-expanded {
-    max-width: 55%;
-  }
-}
+
 
 @media screen and (min-width: 992px) {
   .portfolio-expanded {
-    max-width: 60%;
-    padding: 2rem;
+    padding: 2rem 2rem 6rem;
   }
   
   .portfolio-expanded__content {

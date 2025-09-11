@@ -1,3 +1,4 @@
+// Portfolio.vue
 <template>
   <section class="portfolio section" id="portfolio">
     <h2 class="section__title">Portfolio</h2>

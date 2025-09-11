@@ -114,7 +114,9 @@ export default {
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s, height 0.4s ease;
 }
 
-.portfolio__card:hover .portfolio__buttons {
+/* CAMBIO: Este selector ahora busca la clase que le pasa su padre (PortfolioCard)
+   en lugar de buscar la clase del abuelo (.portfolio__card:hover) */
+.portfolio__buttons.is-visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -122,7 +124,9 @@ export default {
   transition: opacity 0.4s ease .2s, transform 0.4s ease .2s, visibility 0s .2s, height 0.4s ease .2s;
 }
 
-/* CORREGIDO: ¿Qué le pasa al 4to botón si se hace hover en el 1ro? */
+/* ... el resto de los estilos de PortfolioActionButtons.vue permanecen igual ... */
+/* ========================================================================= */
+
 .portfolio__buttons.demo-hover .portfolio__button:nth-child(4) {
   flex-basis: 100%;
   width: 2.25rem !important;
@@ -215,7 +219,6 @@ export default {
   padding-left: 0.5rem;
 }
 
-/* CORREGIDO: La transición de colapso ahora apunta al 4to hijo */
 .portfolio__button--animated:not(:hover),
 .portfolio__buttons:not(.demo-hover) .portfolio__button--animated:first-child,
 .portfolio__buttons:not(.presentation-hover) .portfolio__button--animated:nth-child(4) {
@@ -324,6 +327,11 @@ export default {
 .portfolio__buttons:not(.presentation-hover):not(.delayed-reorder) .portfolio__button:nth-child(1) {
   animation: button-disappear-reappear 1.4s cubic-bezier(0.55, 0, 0.2, 1) forwards;
 }
+
+.portfolio__buttons.is-expanded-mode {
+  margin-top: 0;
+}
+
 @keyframes arrow-bounce-in {
   0% { transform: translateX(0rem); }
   50% { transform: translateX(.4rem); }
@@ -349,4 +357,5 @@ export default {
     transform: scale(1) translateY(0);
   }
 }
+
 </style>

@@ -1,14 +1,18 @@
 <template>
   <div 
-    class="portfolio-wrapper" 
+    class="portfolio-card-container" 
     :class="{ 
-      'portfolio-wrapper--expanded': isExpanded,
-      'portfolio-wrapper--animating': isAnimating 
+      'is-expanded': isExpanded,
+      'is-hovered': isHovered && !isExpanded,
+      'is-animating': isAnimating 
     }"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
   >
     <PortfolioCard 
       :project="project"
       :is-expanded="isExpanded"
+      :is-hovered="isHovered"
       @toggle-expand="toggleExpand"
     />
     
@@ -45,57 +49,82 @@ export default {
   data() {
     return {
       isExpanded: false,
-      isAnimating: false
+      isAnimating: false,
+      // CAMBIO: Añadido estado para el hover
+      isHovered: false,
     };
   },
   methods: {
     toggleExpand() {
       this.isExpanded = !this.isExpanded;
+      // CAMBIO: Asegurarse que el estado hover se reinicie al expandir/contraer
+      this.isHovered = false;
     },
     onEnter() {
       this.isAnimating = true;
     },
     onLeave() {
-      this.isAnimating = false;
+      // CAMBIO: Quitar isAnimating después de que termine la animación
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 500);
+    },
+    // CAMBIO: Métodos para manejar el hover
+    handleMouseEnter() {
+      if (!this.isExpanded) {
+        this.isHovered = true;
+      }
+    },
+    handleMouseLeave() {
+      this.isHovered = false;
     }
   }
 }
 </script>
 
 <style scoped>
-.portfolio-wrapper {
+/* CAMBIO: La clase base ahora define la apariencia de la card */
+.portfolio-card-container {
   display: flex;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   z-index: 1;
-}
-
-.portfolio-wrapper--expanded {
-  grid-column: 1 / -1; /* Ocupa toda la fila */
-  z-index: 10;
   background-color: var(--container-color);
-  border-radius: 0.5rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-  margin: 0 -1rem;
-  padding: 0 1rem;
+  padding: 1.5rem;
+  border-radius: .5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,.15);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease, box-shadow .3s, max-height 0.5s ease-in-out;
+  max-height: 530px;
+  overflow: hidden;
 }
 
-.portfolio-wrapper--animating {
+/* CAMBIO: Estilos de hover que antes estaban en el hijo */
+.portfolio-card-container.is-hovered {
+  box-shadow: 0 4px 8px rgba(0,0,0,.15);
+  transform: scale(1.03);
+  z-index: 5;
+  max-height: 800px;
+}
+
+.portfolio-card-container.is-expanded {
+  grid-column: 1 / -1;
+  z-index: 10;
+  margin: 0 -1rem;
+  padding: 0; /* El padding ahora lo gestionan los hijos */
+  max-height: 1000px; /* Suficiente altura para el contenido expandido */
+  overflow: visible; /* Permite que el box-shadow se vea bien */
+}
+
+.is-animating {
   overflow: visible;
 }
 
-/* Transición para la descripción expandida */
+/* Transición para la descripción expandida (sin cambios) */
 .expand-description-enter-active,
 .expand-description-leave-active {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.expand-description-enter-from {
-  opacity: 0;
-  transform: translateX(30px);
-  width: 0;
-}
-
+.expand-description-enter-from,
 .expand-description-leave-to {
   opacity: 0;
   transform: translateX(30px);
@@ -110,10 +139,9 @@ export default {
 
 /* Responsividad */
 @media screen and (max-width: 567px) {
-  .portfolio-wrapper--expanded {
+  .portfolio-card-container.is-expanded {
     flex-direction: column;
     margin: 0;
-    padding: 0;
   }
   
   .expand-description-enter-from,
@@ -123,9 +151,11 @@ export default {
 }
 
 @media screen and (min-width: 992px) {
-  .portfolio-wrapper--expanded {
+  .portfolio-card-container {
+    padding: 1.6rem;
+  }
+  .portfolio-card-container.is-expanded {
     margin: 0 -2rem;
-    padding: 0 2rem;
   }
 }
 </style>
