@@ -51,7 +51,7 @@ export default {
       {
         id: 1,
         title: 'Sigepro',
-        description: 'Prototipé en Figma y desarrollé una SPA de gestión de proyectos con una UI adaptativa basada en roles (Admin / Cliente / Colaborador), lo construí con Vue 3, Pinia y Tailwind CSS y lo conecté al backend con APIRESTful.',
+        description: 'Prototipé en Figma y desarrollé una SPA de gestión de proyectos con una UI adaptativa basada en roles (Admin / Cliente  Cliente/ Colaborador), lo construí con Vue 3, Pinia y Tailwind CSS y lo conecté al backend con APIRESTful.',
         expandedDescription: `<h3>Proyecto: SIGEPRO (Sistema de Gestión de Proyectos)</h3>
 <p>SIGEPRO es una aplicación web SPA (Single Page Application) robusta y moderna, diseñada para la gestión integral de proyectos de investigación académica. Desarrollada como parte de la asignatura de Ingeniería de Software, esta plataforma permite a estudiantes y administradores gestionar todo el ciclo de vida de un proyecto, desde la solicitud inicial hasta el seguimiento detallado de tareas.</p>
 
@@ -86,7 +86,7 @@ export default {
 <p>Desde el punto de vista del <strong>Diseño Gráfico</strong>, desarrollé una identidad visual sólida que incluye logotipo, paleta de colores, tipografías corporativas y elementos gráficos complementarios. Cada elemento fue diseñado pensando en su aplicación multi-plataforma y escalabilidad.</p>
 
 <p>En el <strong>Desarrollo Web</strong>, implementé la identidad visual en una plataforma digital robusta utilizando Vue 3, Pinia para la gestión del estado y Tailwind CSS para un diseño consistente y responsivo.</p>`,
-        tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+        tags: ["Proyecto Personal", "Desarrollo Frontend"],
         techBadge: ['figma', 'vue'],
         buttons: this.createProjectButtons([
           { type: 'demo', url: 'http://67.205.133.92/app/' },

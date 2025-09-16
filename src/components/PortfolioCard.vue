@@ -149,8 +149,7 @@ export default {
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-width: 300px;
-  max-width: 340px;
+
   transition: transform 0.4s ease;
 }
 

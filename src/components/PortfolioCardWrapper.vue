@@ -6,7 +6,8 @@
       'is-hovered': isHovered && !isExpanded,
       'is-animating': isAnimating 
     }"
-    @mouseenter="handleMouseEnter"
+    :style="expandedCardStyle"
+    @mouseenter="handleMouseEnter($event)"
     @mouseleave="handleMouseLeave"
   >
     <PortfolioCard 
@@ -52,7 +53,19 @@ export default {
       isAnimating: false,
       // CAMBIO: Añadido estado para el hover
       isHovered: false,
+      hoveredCardHeight: null,
+      measureTimeout: null,
     };
+  },
+  // CAMBIO: Añadimos una computed property
+  computed: {
+    expandedCardStyle() {
+      // Si la tarjeta está expandida y hemos medido una altura, la aplicamos
+      if (this.isExpanded && this.hoveredCardHeight) {
+        return { 'max-height': `${this.hoveredCardHeight}px` };
+      }
+      return {}; // Si no, no aplicamos ningún estilo
+    }
   },
   methods: {
     toggleExpand() {
@@ -70,12 +83,31 @@ export default {
       }, 500);
     },
     // CAMBIO: Métodos para manejar el hover
-    handleMouseEnter() {
+    handleMouseEnter(event) {
+      // Limpiamos cualquier medición anterior que pudiera estar pendiente
+      if (this.measureTimeout) {
+        clearTimeout(this.measureTimeout);
+      }
+      
       if (!this.isExpanded) {
         this.isHovered = true;
+        
+        // Creamos un temporizador para esperar a que terminen las animaciones de CSS
+        this.measureTimeout = setTimeout(() => {
+          // Usamos this.$el para referirnos al elemento raíz del componente,
+          // que es más seguro dentro de un setTimeout.
+          if (this.$el) {
+            this.hoveredCardHeight = this.$el.scrollHeight;
+          }
+        }, 500); // 500ms = 0.5s, la duración de la transición de max-height
       }
     },
+
     handleMouseLeave() {
+      // Si el usuario quita el ratón antes de que midamos, cancelamos la medición
+      if (this.measureTimeout) {
+        clearTimeout(this.measureTimeout);
+      }
       this.isHovered = false;
     }
   }
@@ -92,11 +124,17 @@ export default {
   padding: 1.5rem;
   border-radius: .5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,.15);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease, box-shadow .3s, max-height 0.5s ease-in-out;
-  max-height: 530px;
+  max-height: 530px; 
   overflow: hidden;
+  
+  /* --- LÓGICA DE ANCHO CORREGIDA --- */
+  
+  /* 1. Crucial para que el padding se incluya en el cálculo del width */
+  box-sizing: border-box;
+  
+  /* 2. Por defecto (estado normal), el card tiene un ancho fijo */
+  width: 340px; 
 }
-
 /* CAMBIO: Estilos de hover que antes estaban en el hijo */
 .portfolio-card-container.is-hovered {
   box-shadow: 0 4px 8px rgba(0,0,0,.15);
@@ -109,8 +147,8 @@ export default {
   grid-column: 1 / -1;
   z-index: 10;
   margin: 0 -1rem;
+  width: auto;
   padding: 0; /* El padding ahora lo gestionan los hijos */
-  max-height: 1000px; /* Suficiente altura para el contenido expandido */
   overflow: visible; /* Permite que el box-shadow se vea bien */
 }
 
