@@ -3,7 +3,7 @@
     <div class="footer__bg">
       <div class="footer__container container grid">
         <div>
-          <h1 class="footer__title">Alexa</h1>
+          <h1 class="footer__title">Henry Galvez</h1>
           <span class="footer__subtitle">Frontend developer</span>
         </div>
         <ul class="footer__links">
@@ -29,7 +29,7 @@
           </a>
         </div>
       </div>
-      <p class="footer__copy">&#169; CodeWithPankaj. All right reserved</p>
+      <p class="footer__copy">&#169; HenryGalvezDev. All right reserved</p>
     </div>
   </footer>
 </template>

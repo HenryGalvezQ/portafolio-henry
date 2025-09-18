@@ -9,21 +9,21 @@
           <i class="uil uil-phone contact__icon"></i>
           <div>
             <h3 class="contact__title">Call Me</h3>
-            <span class="contact__subtitle">999-777-666</span>
+            <span class="contact__subtitle">+51 970675529</span>
           </div>
         </div>
         <div class="contact__information">
           <i class="uil uil-envelope contact__icon"></i>
           <div>
             <h3 class="contact__title">Email</h3>
-            <span class="contact__subtitle">alexa@email.com</span>
+            <span class="contact__subtitle">henrygalvezquilla@gmail.com</span>
           </div>
         </div>
         <div class="contact__information">
           <i class="uil uil-map-marker contact__icon"></i>
           <div>
             <h3 class="contact__title">Location</h3>
-            <span class="contact__subtitle">Peru - Lima Av. Bolivar #123</span>
+            <span class="contact__subtitle">Peru - Arequipa</span>
           </div>
         </div>
       </div>

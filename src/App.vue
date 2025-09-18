@@ -14,7 +14,7 @@
     <Services />
     <Portfolio />
     <Project />
-    <Testimonial />
+    <!--<Testimonial />-->
     <Contact />
   </main>
   
