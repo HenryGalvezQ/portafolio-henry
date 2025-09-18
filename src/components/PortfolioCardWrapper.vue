@@ -15,6 +15,7 @@
       :is-expanded="isExpanded"
       :is-hovered="isHovered"
       @toggle-expand="toggleExpand"
+      @resize="handleCardResize"
     />
     
     <Transition 
@@ -32,86 +33,90 @@
 </template>
 
 <script>
-import PortfolioCard from './PortfolioCard.vue';
-import PortfolioExpandedDescription from './PortfolioExpandedDescription.vue';
+  import PortfolioCard from './PortfolioCard.vue';
+  import PortfolioExpandedDescription from './PortfolioExpandedDescription.vue';
 
-export default {
-  name: 'PortfolioCardWrapper',
-  components: {
-    PortfolioCard,
-    PortfolioExpandedDescription
-  },
-  props: {
-    project: {
-      type: Object,
-      required: true
-    }
-  },
-  data() {
-    return {
-      isExpanded: false,
-      isAnimating: false,
-      // CAMBIO: Añadido estado para el hover
-      isHovered: false,
-      hoveredCardHeight: null,
-      measureTimeout: null,
-    };
-  },
-  // CAMBIO: Añadimos una computed property
-  computed: {
-    expandedCardStyle() {
-      // Si la tarjeta está expandida y hemos medido una altura, la aplicamos
-      if (this.isExpanded && this.hoveredCardHeight) {
-        return { 'max-height': `${this.hoveredCardHeight}px` };
-      }
-      return {}; // Si no, no aplicamos ningún estilo
-    }
-  },
-  methods: {
-    toggleExpand() {
-      this.isExpanded = !this.isExpanded;
-      // CAMBIO: Asegurarse que el estado hover se reinicie al expandir/contraer
-      this.isHovered = false;
+  export default {
+    name: 'PortfolioCardWrapper',
+    components: {
+      PortfolioCard,
+      PortfolioExpandedDescription
     },
-    onEnter() {
-      this.isAnimating = true;
-    },
-    onLeave() {
-      // CAMBIO: Quitar isAnimating después de que termine la animación
-      setTimeout(() => {
-        this.isAnimating = false;
-      }, 500);
-    },
-    // CAMBIO: Métodos para manejar el hover
-    handleMouseEnter(event) {
-      // Limpiamos cualquier medición anterior que pudiera estar pendiente
-      if (this.measureTimeout) {
-        clearTimeout(this.measureTimeout);
-      }
-      
-      if (!this.isExpanded) {
-        this.isHovered = true;
-        
-        // Creamos un temporizador para esperar a que terminen las animaciones de CSS
-        this.measureTimeout = setTimeout(() => {
-          // Usamos this.$el para referirnos al elemento raíz del componente,
-          // que es más seguro dentro de un setTimeout.
-          if (this.$el) {
-            this.hoveredCardHeight = this.$el.scrollHeight;
-          }
-        }, 500); // 500ms = 0.5s, la duración de la transición de max-height
+    props: {
+      project: {
+        type: Object,
+        required: true
       }
     },
+    data() {
+      return {
+        isExpanded: false,
+        isAnimating: false,
+        isHovered: false,
+        // La altura "maestra" que viene directamente del PortfolioCard.
+        cardHeight: null,
+        // Temporizador para la medición inicial.
+        measureTimeout: null,
+      };
+    },
+    computed: {
+      expandedCardStyle() {
+        if (this.isExpanded && this.cardHeight) {
+          // La altura del wrapper SIEMPRE será la altura del card.
+          return { 'max-height': `${this.cardHeight}px` };
+        }
+        return {};
+      }
+    },
+    methods: {
+      /**
+       * Se activa con el evento @resize de PortfolioCard.
+       */
+      handleCardResize(height) {
+        this.cardHeight = height;
+      },
 
-    handleMouseLeave() {
-      // Si el usuario quita el ratón antes de que midamos, cancelamos la medición
-      if (this.measureTimeout) {
-        clearTimeout(this.measureTimeout);
+      toggleExpand() {
+        this.isExpanded = !this.isExpanded;
+        this.isHovered = false;
+      },
+
+      onEnter() {
+        this.isAnimating = true;
+      },
+
+      onLeave() {
+        setTimeout(() => {
+          this.isAnimating = false;
+        }, 500);
+      },
+
+      /**
+       * Mide la altura inicial en el hover para la animación.
+       */
+      handleMouseEnter(event) {
+        if (this.measureTimeout) {
+          clearTimeout(this.measureTimeout);
+        }
+        if (!this.isExpanded) {
+          this.isHovered = true;
+          this.measureTimeout = setTimeout(() => {
+            if (this.$el) {
+              // Establecemos la altura inicial del card.
+              this.cardHeight = this.$el.scrollHeight;
+            }
+          }, 500);
+        }
+      },
+
+      handleMouseLeave() {
+        if (this.measureTimeout) {
+          clearTimeout(this.measureTimeout);
+        }
+        this.isHovered = false;
       }
-      this.isHovered = false;
     }
   }
-}
 </script>
 
 <style scoped>

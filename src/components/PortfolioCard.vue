@@ -82,22 +82,44 @@ export default {
       type: Boolean,
       default: false
     },
-    // CAMBIO: Nueva prop para recibir el estado hover del padre
     isHovered: {
       type: Boolean,
       default: false
     }
   },
-  emits: ['toggle-expand'],
+  emits: ['toggle-expand', 'resize'],
   data() {
     return {
       hoveredButton: null,
       lockHover: false,
-      showCarouselHint: false
+      showCarouselHint: false,
+      resizeObserver: null,
+      // 1. AÑADIMOS ESTA VARIABLE PARA GUARDAR LA ÚLTIMA ALTURA REPORTADA
+      lastReportedHeight: 0,
     };
   },
+  mounted() {
+    this.resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        // 2. AÑADIMOS LA LÓGICA PARA ROMPER EL BUCLE
+        // Redondeamos la nueva altura para ignorar cambios de sub-píxeles.
+        const newHeight = Math.round(entry.contentRect.height);
+        
+        // Solo emitimos el evento si la nueva altura redondeada es
+        // diferente a la última que reportamos.
+        if (newHeight !== this.lastReportedHeight) {
+          this.lastReportedHeight = newHeight;
+          this.$emit('resize', newHeight);
+        }
+      }
+    });
+
+    this.resizeObserver.observe(this.$el);
+  },
+  beforeUnmount() {
+    this.resizeObserver.disconnect();
+  },
   methods: {
-    // CAMBIO: Eliminados handleCardEnter y handleCardLeave. La lógica se mueve al watcher.
     handleCarouselHintShown() {
       this.showCarouselHint = true;
       setTimeout(() => {
@@ -106,7 +128,7 @@ export default {
     },
     handleButtonHover(buttonId) {
       if (this.lockHover) return;
-      this.hoveredButton = buttonId; 
+      this.hoveredButton = buttonId;
 
       if (this.project.buttons.length === 4 && (buttonId === 1 || buttonId === 4)) {
         this.lockHover = true;
@@ -122,12 +144,9 @@ export default {
   },
   watch: {
     isExpanded(newVal) {
-      if (!newVal) {
-        this.hoveredButton = null;
-        this.lockHover = false;
-      }
+      this.hoveredButton = null;
+      this.lockHover = false;
     },
-    // CAMBIO: Observamos la prop `isHovered` para manejar la lógica interna
     isHovered(newVal) {
       if (newVal) {
         if (this.$refs.carousel) {
@@ -159,6 +178,9 @@ export default {
   border-radius: 0.5rem 0 0 0.5rem;
   background-color: var(--container-color);
   padding: 1.5rem;
+  flex: none;          /* 1. Anula el 'flex: 1' de la clase base. ESTO ES LO MÁS IMPORTANTE. */
+  width: 340px;        /* 2. Mantiene el ancho original que tenía la tarjeta. */
+  box-sizing: border-box; /* 3. Asegura que el padding se incluya dentro de los 340px. */
 }
 
 @media screen and (min-width: 992px) {
