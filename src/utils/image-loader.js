@@ -10,7 +10,8 @@ const projectsImages = {};
 for (const path in imageModules) {
   // Extraemos el nombre de la carpeta del proyecto desde la ruta del archivo.
   // Ejemplo: de '/src/assets/img/portafolio/Sigepro/img1.jpg' extraemos 'Sigepro'.
-  const folderName = path.split('/')[5];
+  const match = path.match(/portafolio\/(.*?)\//);
+  const folderName = match ? match[1] : null;
 
   if (folderName) {
     // Si es la primera vez que vemos esta carpeta, creamos un array para ella.

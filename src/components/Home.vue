@@ -31,7 +31,7 @@
           </svg>
         </div>
         <div class="home__data">
-          <h1 class="home__title">Hi, I'am Henry</h1>
+          <h1 class="home__title">Hi, I'm Henry Galvez</h1>
           <h3 class="home__subtitle">  <span>Ingeniero de Sistemas</span><br><span>Frontend Developer - UX/UI Designer</span></h3>
           <p class="home__discription">Experiencia de alto nivel en diseño y desarrollo web, produciendo
             trabajos de calidad.</p>
