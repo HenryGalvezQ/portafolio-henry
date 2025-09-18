@@ -2,7 +2,7 @@
 
 // 1. Usamos la función mágica de Vite para importar todos los archivos
 //    de imagen que estén dentro de cualquier subcarpeta de /portafolio/.
-const imageModules = import.meta.glob('/src/assets/img/portafolio/**/*.+(png|jpg|jpeg|gif|svg|webp)');
+const imageModules = import.meta.glob('/src/assets/img/portafolio/**/*.+(png|jpg|jpeg|gif|svg|webp)', { eager: true });
 
 const projectsImages = {};
 
@@ -21,7 +21,8 @@ for (const path in imageModules) {
     // Añadimos la URL de la imagen al array correspondiente.
     // Usamos new URL(path, import.meta.url).href para obtener la ruta correcta
     // que Vue utilizará en el build final.
-    projectsImages[folderName].push(new URL(path, import.meta.url).href);
+    projectsImages[folderName].push(imageModules[path].default);
+
   }
 }
 
