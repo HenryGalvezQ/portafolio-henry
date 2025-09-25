@@ -6,24 +6,22 @@
       'parent-is-hovered': isHovered && !isExpanded
     }"
   >
-    
     <PortfolioTags :tags="project.tags" />
-    
-    <PortfolioImageCarousel
-      ref="carousel"
-      :images="project.images"
-      :alt="project.title"
-      :tech-badges="project.techBadge"
-      :is-expanded="isExpanded"
-      @carousel-hint-shown="handleCarouselHintShown"
-    />
-
+    <div class="carousel-wrapper">
+      <PortfolioImageCarousel
+        ref="carousel"
+        :images="project.images"
+        :alt="project.title"
+        :tech-badges="project.techBadge"
+        :is-expanded="isExpanded"
+        @carousel-hint-shown="handleCarouselHintShown"
+      />
+    </div>
     <div class="portfolio__data">
       <h3 class="portfolio__title">{{ project.title }}</h3>
       <div class="portfolio__description-container">
         <p class="portfolio__description">
           {{ project.description }}
-          
           <button 
             v-if="project.expandedDescription"
             @click="$emit('toggle-expand')"
@@ -33,12 +31,10 @@
           </button>
         </p>
       </div>
-
       <div class="portfolio__cta" :class="{ 'portfolio__cta--visible': isExpanded }">
         <i class="uil uil-rocket"></i>
         <span>Explora el proyecto aquí <i class="uil uil-arrow-down"></i></span> 
       </div>
-
       <PortfolioActionButtons
         :buttons="project.buttons"
         :hover-state="{ 
@@ -48,9 +44,9 @@
         :class="{ 'is-visible': (isHovered && !isExpanded) || isExpanded,'is-expanded-mode': isExpanded }"
         @button-hover="handleButtonHover"
         @button-leave="handleButtonLeave"
+        @height-change="measureAndEmitHeight"
       />
     </div>
-    
     <div 
       v-if="!isExpanded"
       class="portfolio__expand-button"
@@ -94,47 +90,48 @@ export default {
       lockHover: false,
       showCarouselHint: false,
       resizeObserver: null,
-      // 1. AÑADIMOS ESTA VARIABLE PARA GUARDAR LA ÚLTIMA ALTURA REPORTADA
       lastReportedHeight: 0,
     };
   },
   mounted() {
-    this.resizeObserver = new ResizeObserver(entries => {
-      for (let entry of entries) {
-        // 2. AÑADIMOS LA LÓGICA PARA ROMPER EL BUCLE
-        // Redondeamos la nueva altura para ignorar cambios de sub-píxeles.
-        const newHeight = Math.round(entry.contentRect.height);
-        
-        // Solo emitimos el evento si la nueva altura redondeada es
-        // diferente a la última que reportamos.
-        if (newHeight !== this.lastReportedHeight) {
-          this.lastReportedHeight = newHeight;
-          this.$emit('resize', newHeight);
-        }
-      }
+    // Este observer sirve como fallback para otros cambios de tamaño.
+    this.resizeObserver = new ResizeObserver(() => {
+        this.measureAndEmitHeight();
     });
-
     this.resizeObserver.observe(this.$el);
   },
   beforeUnmount() {
-    this.resizeObserver.disconnect();
+    if (this.resizeObserver) this.resizeObserver.disconnect();
   },
   methods: {
+    measureAndEmitHeight() {
+      this.$nextTick(() => {
+        let newHeight = Math.round(this.$el.scrollHeight);
+
+        // Condición: ¿Está el mouse sobre el botón 1 o 4?
+        const isHoveringWrapButton = this.hoveredButton === 1 || this.hoveredButton === 4;
+
+        // Si es así, añade el margen de seguridad. Si no, no hagas nada.
+        if (isHoveringWrapButton) {
+          newHeight += 35; // <-- ESTA ES LA "ALTURA AÑADIDA"
+        }
+
+        if (newHeight > 0 && newHeight !== this.lastReportedHeight) {
+          this.lastReportedHeight = newHeight;
+          this.$emit('resize', newHeight);
+        }
+      });
+    },
     handleCarouselHintShown() {
       this.showCarouselHint = true;
-      setTimeout(() => {
-        this.showCarouselHint = false;
-      }, 1000);
+      setTimeout(() => { this.showCarouselHint = false; }, 1000);
     },
     handleButtonHover(buttonId) {
       if (this.lockHover) return;
       this.hoveredButton = buttonId;
-
       if (this.project.buttons.length === 4 && (buttonId === 1 || buttonId === 4)) {
         this.lockHover = true;
-        setTimeout(() => {
-          this.lockHover = false;
-        }, 350);
+        setTimeout(() => { this.lockHover = false; }, 350);
       }
     },
     handleButtonLeave() {
@@ -148,11 +145,7 @@ export default {
       this.lockHover = false;
     },
     isHovered(newVal) {
-      if (newVal) {
-        if (this.$refs.carousel) {
-          this.$refs.carousel.showCarouselHintOnHover();
-        }
-      } else {
+      if (!newVal) {
         this.hoveredButton = null;
         this.lockHover = false;
         this.showCarouselHint = false;
@@ -163,24 +156,23 @@ export default {
 </script>
 
 <style scoped>
-/* CAMBIO: Esta clase ya no es una "card", es solo un contenedor de contenido. */
+/* Esta clase ya no es una "card", es solo un contenedor de contenido. */
 .portfolio-card__content {
   display: flex;
   flex-direction: column;
   flex: 1;
-
   transition: transform 0.4s ease;
 }
 
-/* CAMBIO: En modo expandido, sí aplicamos padding y el borde redondeado específico */
+/* En modo expandido, sí aplicamos padding y el borde redondeado específico */
 .portfolio-card__content.is-expanded-mode {
   z-index: 5;
   border-radius: 0.5rem 0 0 0.5rem;
   background-color: var(--container-color);
   padding: 1.5rem;
-  flex: none;          /* 1. Anula el 'flex: 1' de la clase base. ESTO ES LO MÁS IMPORTANTE. */
-  width: 340px;        /* 2. Mantiene el ancho original que tenía la tarjeta. */
-  box-sizing: border-box; /* 3. Asegura que el padding se incluya dentro de los 340px. */
+  flex: none;         /* Anula el 'flex: 1' de la clase base. */
+  width: 340px;       /* Mantiene el ancho original que tenía la tarjeta. */
+  box-sizing: border-box; /* Asegura que el padding se incluya dentro de los 340px. */
 }
 
 @media screen and (min-width: 992px) {
@@ -189,12 +181,15 @@ export default {
   }
 }
 
+.carousel-wrapper {
+  flex-shrink: 0;
+}
+
 .portfolio__data {
   padding: 0 .5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  overflow: hidden;
 }
 
 .portfolio__title {
@@ -229,7 +224,6 @@ export default {
   transition: opacity 0.4s ease-in-out;
 }
 
-/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
 .parent-is-hovered .portfolio__description {
   max-height: 200px;
 }
@@ -280,7 +274,6 @@ export default {
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s, height 0.4s ease;
 }
 
-/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
 .parent-is-hovered .portfolio__cta,
 .portfolio__cta--visible {
   opacity: 1;
@@ -300,7 +293,6 @@ export default {
   50% { opacity: 0.6; }
 }
 
-/* BOTÓN "VER MÁS" */
 .portfolio__expand-button {
   display: flex;
   align-items: center;
@@ -324,7 +316,6 @@ export default {
   background-color: #7c3aed;
 }
 
-/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
 .parent-is-hovered .portfolio__expand-button {
   opacity: 0;
   height: 0;
@@ -339,7 +330,6 @@ export default {
   transition: transform .3s;
 }
 
-/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
 .parent-is-hovered .portfolio__expand-button i {
   transform: translateY(5px);
 }

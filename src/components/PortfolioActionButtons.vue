@@ -1,5 +1,3 @@
-// PortfolioActionButtons.vue:
-
 <template>
   <div ref="buttonsContainer" class="portfolio__buttons"
        :class="{ ...hoverState, 'delayed-reorder': delayedButtonReorder }"
@@ -17,9 +15,7 @@
     >
       <SvgIcon v-if="button.isSvg" :name="button.icon" />
       <i v-else :class="button.icon" class="button__icon"></i>
-
       <span class="button__text">{{ button.text }}</span>
-
       <i v-if="button.arrow" class="uil uil-arrow-right button__icon button__arrow"></i>
     </a>
   </div>
@@ -43,20 +39,20 @@ export default {
       required: true
     }
   },
-  emits: ['button-hover', 'button-leave'],
+  emits: ['button-hover', 'button-leave', 'height-change'],
   data() {
     return {
       delayedButtonReorder: false,
-      collapseTimeout: null
+      collapseTimeout: null,
+      resizeObserver: null,
+      lastHeight: 0
     }
   },
   watch: {
     'hoverState.presentation-hover'(newValue, oldValue) {
       if (oldValue && !newValue) {
         this.delayedButtonReorder = true;
-        if (this.collapseTimeout) {
-          clearTimeout(this.collapseTimeout);
-        }
+        if (this.collapseTimeout) clearTimeout(this.collapseTimeout);
         this.collapseTimeout = setTimeout(() => {
           this.delayedButtonReorder = false;
         }, 0);
@@ -71,12 +67,21 @@ export default {
   },
   mounted() {
     document.addEventListener('mousemove', this.handleGlobalMouseMove);
+    // Le ponemos un observador a este componente.
+    this.resizeObserver = new ResizeObserver(entries => {
+      const newHeight = Math.round(entries[0].contentRect.height);
+      if (newHeight > 0 && newHeight !== this.lastHeight) {
+        this.lastHeight = newHeight;
+        // Solo avisamos que hemos cambiado. No enviamos datos.
+        this.$emit('height-change');
+      }
+    });
+    this.resizeObserver.observe(this.$el);
   },
   beforeUnmount() {
     document.removeEventListener('mousemove', this.handleGlobalMouseMove);
-    if (this.collapseTimeout) {
-      clearTimeout(this.collapseTimeout);
-    }
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    if (this.collapseTimeout) clearTimeout(this.collapseTimeout);
   },
   methods: {
     handleGlobalMouseMove(event) {
@@ -114,8 +119,7 @@ export default {
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s, height 0.4s ease;
 }
 
-/* CAMBIO: Este selector ahora busca la clase que le pasa su padre (PortfolioCard)
-   en lugar de buscar la clase del abuelo (.portfolio__card:hover) */
+/* Este selector ahora busca la clase que le pasa su padre (PortfolioCard) */
 .portfolio__buttons.is-visible {
   opacity: 1;
   visibility: visible;
@@ -123,9 +127,6 @@ export default {
   height: auto;
   transition: opacity 0.4s ease .2s, transform 0.4s ease .2s, visibility 0s .2s, height 0.4s ease .2s;
 }
-
-/* ... el resto de los estilos de PortfolioActionButtons.vue permanecen igual ... */
-/* ========================================================================= */
 
 .portfolio__buttons.demo-hover .portfolio__button:nth-child(4) {
   flex-basis: 100%;
@@ -357,5 +358,4 @@ export default {
     transform: scale(1) translateY(0);
   }
 }
-
 </style>

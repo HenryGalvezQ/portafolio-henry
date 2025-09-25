@@ -17,7 +17,6 @@
       @toggle-expand="toggleExpand"
       @resize="handleCardResize"
     />
-    
     <Transition 
       name="expand-description"
       @enter="onEnter"
@@ -33,94 +32,75 @@
 </template>
 
 <script>
-  import PortfolioCard from './PortfolioCard.vue';
-  import PortfolioExpandedDescription from './PortfolioExpandedDescription.vue';
+import PortfolioCard from './PortfolioCard.vue';
+import PortfolioExpandedDescription from './PortfolioExpandedDescription.vue';
 
-  export default {
-    name: 'PortfolioCardWrapper',
-    components: {
-      PortfolioCard,
-      PortfolioExpandedDescription
-    },
-    props: {
-      project: {
-        type: Object,
-        required: true
+export default {
+  name: 'PortfolioCardWrapper',
+  components: {
+    PortfolioCard,
+    PortfolioExpandedDescription
+  },
+  props: {
+    project: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      isExpanded: false,
+      isAnimating: false,
+      isHovered: false,
+      cardHeight: null,
+      measureTimeout: null,
+    };
+  },
+  computed: {
+    expandedCardStyle() {
+      if (this.isExpanded && this.cardHeight) {
+        return { 'max-height': `${this.cardHeight}px` };
       }
+      return {};
+    }
+  },
+  methods: {
+    handleCardResize(height) {
+      this.cardHeight = height;
     },
-    data() {
-      return {
-        isExpanded: false,
-        isAnimating: false,
-        isHovered: false,
-        // La altura "maestra" que viene directamente del PortfolioCard.
-        cardHeight: null,
-        // Temporizador para la medición inicial.
-        measureTimeout: null,
-      };
+    toggleExpand() {
+      this.isExpanded = !this.isExpanded;
+      this.isHovered = false;
     },
-    computed: {
-      expandedCardStyle() {
-        if (this.isExpanded && this.cardHeight) {
-          // La altura del wrapper SIEMPRE será la altura del card.
-          return { 'max-height': `${this.cardHeight}px` };
-        }
-        return {};
-      }
+    onEnter() {
+      this.isAnimating = true;
     },
-    methods: {
-      /**
-       * Se activa con el evento @resize de PortfolioCard.
-       */
-      handleCardResize(height) {
-        this.cardHeight = height;
-      },
-
-      toggleExpand() {
-        this.isExpanded = !this.isExpanded;
-        this.isHovered = false;
-      },
-
-      onEnter() {
-        this.isAnimating = true;
-      },
-
-      onLeave() {
-        setTimeout(() => {
-          this.isAnimating = false;
+    onLeave() {
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 500);
+    },
+    handleMouseEnter(event) {
+      if (this.measureTimeout) clearTimeout(this.measureTimeout);
+      if (!this.isExpanded) {
+        this.isHovered = true;
+        this.measureTimeout = setTimeout(() => {
+          if (this.$el) {
+            this.cardHeight = this.$el.scrollHeight;
+          }
         }, 500);
-      },
-
-      /**
-       * Mide la altura inicial en el hover para la animación.
-       */
-      handleMouseEnter(event) {
-        if (this.measureTimeout) {
-          clearTimeout(this.measureTimeout);
-        }
-        if (!this.isExpanded) {
-          this.isHovered = true;
-          this.measureTimeout = setTimeout(() => {
-            if (this.$el) {
-              // Establecemos la altura inicial del card.
-              this.cardHeight = this.$el.scrollHeight;
-            }
-          }, 500);
-        }
-      },
-
-      handleMouseLeave() {
-        if (this.measureTimeout) {
-          clearTimeout(this.measureTimeout);
-        }
-        this.isHovered = false;
       }
+    },
+    handleMouseLeave() {
+      if (this.measureTimeout) clearTimeout(this.measureTimeout);
+      this.isHovered = false;
     }
   }
+}
 </script>
 
 <style scoped>
-/* CAMBIO: La clase base ahora define la apariencia de la card */
+/* La clase base ahora define la apariencia de la card */
 .portfolio-card-container {
   display: flex;
   position: relative;
@@ -140,7 +120,7 @@
   /* 2. Por defecto (estado normal), el card tiene un ancho fijo */
   width: 340px; 
 }
-/* CAMBIO: Estilos de hover que antes estaban en el hijo */
+/* Estilos de hover que antes estaban en el hijo */
 .portfolio-card-container.is-hovered {
   box-shadow: 0 4px 8px rgba(0,0,0,.15);
   transform: scale(1.03);
