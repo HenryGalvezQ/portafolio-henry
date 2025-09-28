@@ -1,3 +1,4 @@
+// PortfolioCardWrapper.vue
 <template>
   <div 
     class="portfolio-card-container" 
@@ -25,6 +26,7 @@
       <PortfolioExpandedDescription 
         v-if="isExpanded"
         :project="project"
+        :wrapper-height="cardHeight"
         @close="toggleExpand"
       />
     </Transition>

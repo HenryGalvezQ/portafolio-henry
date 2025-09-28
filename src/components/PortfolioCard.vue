@@ -1,3 +1,4 @@
+// PortfolioCard.vue
 <template>
   <div 
     class="portfolio-card__content" 
@@ -108,11 +109,11 @@ export default {
       this.$nextTick(() => {
         let newHeight = Math.round(this.$el.scrollHeight);
 
-        // Condición: ¿Está el mouse sobre el botón 1 o 4?
-        const isHoveringWrapButton = this.hoveredButton === 1 || this.hoveredButton === 4;
-
+        //// Condición: ¿Está el mouse sobre el botón 1 o 4?
+       // const isHoveringWrapButton = this.hoveredButton === 1 || this.hoveredButton === 4;
+          const isHoveringAnyButton = this.hoveredButton !== null;
         // Si es así, añade el margen de seguridad. Si no, no hagas nada.
-        if (isHoveringWrapButton) {
+        if (isHoveringAnyButton) {
           newHeight += 35; // <-- ESTA ES LA "ALTURA AÑADIDA"
         }
 
@@ -133,10 +134,18 @@ export default {
         this.lockHover = true;
         setTimeout(() => { this.lockHover = false; }, 350);
       }
+      // Forzar medición después de hover
+      this.$nextTick(() => {
+        this.measureAndEmitHeight();
+      });
     },
     handleButtonLeave() {
       if (this.lockHover) return;
       this.hoveredButton = null;
+      // Forzar medición después de leave
+      this.$nextTick(() => {
+        this.measureAndEmitHeight();
+      });
     },
   },
   watch: {

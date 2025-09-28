@@ -1,7 +1,7 @@
 // PortfolioExpandedDescription.vue
 
 <template>
-  <div class="portfolio-expanded">
+  <div class="portfolio-expanded" ref="expandedContainer">
     <div class="portfolio-expanded__header">
       <h3 class="portfolio-expanded__title">Detalles del Proyecto</h3>
       <button 
@@ -13,7 +13,7 @@
       </button>
     </div>
     
-    <div class="portfolio-expanded__content" ref="scrollContainer">
+    <div class="portfolio-expanded__content" ref="scrollContainer" :style="contentStyle">
       <div class="portfolio-expanded__description" v-html="project.expandedDescription">
       </div>
     </div>
@@ -41,21 +41,127 @@ export default {
     project: {
       type: Object,
       required: true
+    },
+    wrapperHeight: {
+      type: Number,
+      default: null
     }
   },
   data() {
     return {
-      showScrollIndicator: false
+      showScrollIndicator: false,
+      calculatedMaxHeight: 450, // Altura base para desktop
+      originalMaxHeight: null, // Almacena la altura original antes del hover
+      isButtonHovered: false // Detecta si hay botones en hover
     };
+  },
+  computed: {
+    contentStyle() {
+      return {
+        maxHeight: `${this.calculatedMaxHeight}px`,
+        transition: 'max-height 0.3s ease'
+      };
+    }
+  },
+  watch: {
+    wrapperHeight: {
+      handler(newHeight, oldHeight) {
+        if (newHeight && oldHeight) {
+          // Si la altura aumentó, significa que los botones están en hover
+          if (newHeight > oldHeight) {
+            // Almacenamos la altura original si no la tenemos
+            if (!this.originalMaxHeight) {
+              this.originalMaxHeight = this.calculatedMaxHeight;
+            }
+            this.isButtonHovered = true;
+            this.calculateContentHeight(newHeight);
+          } 
+          // Si la altura disminuyó, significa que se quitó el hover
+          else if (newHeight < oldHeight && this.originalMaxHeight) {
+            this.isButtonHovered = false;
+            // Restauramos la altura original
+            this.calculatedMaxHeight = this.originalMaxHeight;
+            this.originalMaxHeight = null; // Limpiamos para el próximo ciclo
+          }
+        } else if (newHeight && !oldHeight) {
+          // Primera vez que recibimos altura
+          this.calculateContentHeight(newHeight);
+        }
+        
+        // Recalculamos el indicador de scroll
+        this.$nextTick(() => {
+          this.checkScrollIndicator();
+        });
+      },
+      immediate: true
+    }
   },
   mounted() {
     this.checkScrollIndicator();
     this.$refs.scrollContainer?.addEventListener('scroll', this.handleScroll);
+    
+    // Si no tenemos wrapperHeight inicial, calculamos una altura base
+    if (!this.wrapperHeight) {
+      this.$nextTick(() => {
+        this.calculateInitialHeight();
+      });
+    }
   },
   beforeUnmount() {
     this.$refs.scrollContainer?.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    calculateContentHeight(wrapperHeight) {
+      // Solo calculamos nueva altura si los botones están en hover
+      if (!this.isButtonHovered) {
+        return;
+      }
+      
+      this.$nextTick(() => {
+        const expandedContainer = this.$refs.expandedContainer;
+        if (!expandedContainer) return;
+
+        // Obtenemos las alturas de los elementos fijos
+        const header = expandedContainer.querySelector('.portfolio-expanded__header');
+        const readLessButton = expandedContainer.querySelector('.portfolio-expanded__read-less');
+        
+        const headerHeight = header ? header.offsetHeight : 0;
+        const buttonHeight = readLessButton ? readLessButton.offsetHeight : 0;
+        const containerPadding = 80; // padding del contenedor + márgenes
+        
+        // Calculamos la altura disponible para el contenido
+        let availableHeight = wrapperHeight - headerHeight - buttonHeight - containerPadding;
+        
+        // Establecemos límites según el viewport
+        const minHeight = 200;
+        let maxHeight;
+        
+        if (window.innerWidth >= 992) {
+          maxHeight = 500; // Aumentamos un poco el límite para hover
+        } else if (window.innerWidth <= 567) {
+          maxHeight = 350;
+        } else {
+          maxHeight = 450;
+        }
+        
+        // Aplicamos los límites
+        this.calculatedMaxHeight = Math.max(minHeight, Math.min(availableHeight, maxHeight));
+      });
+    },
+    
+    calculateInitialHeight() {
+      // Altura inicial basada en viewport cuando no hay wrapperHeight
+      if (window.innerWidth >= 992) {
+        this.calculatedMaxHeight = 500;
+      } else if (window.innerWidth <= 567) {
+        this.calculatedMaxHeight = 300;
+      } else {
+        this.calculatedMaxHeight = 400;
+      }
+      
+      this.checkScrollIndicator();
+    },
+    
     checkScrollIndicator() {
       this.$nextTick(() => {
         const container = this.$refs.scrollContainer;
@@ -64,6 +170,7 @@ export default {
         }
       });
     },
+    
     handleScroll(event) {
       const container = event.target;
       const isNearBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 10;
@@ -97,6 +204,7 @@ export default {
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 
 .portfolio-expanded__title {
@@ -198,15 +306,13 @@ export default {
   color: #8b5cf6;
 }
 
-
 .portfolio-expanded__read-less {
-  /* Posicionamiento Fijo */
   position: absolute;
   left: 1.5rem;
   bottom: 1.5rem;
   z-index: 10;
+  flex-shrink: 0;
 
-  /* Estilos que ya tenía */
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -267,21 +373,11 @@ export default {
     border-top: 2px solid #8b5cf6;
     border-radius: 0.5rem;
   }
-  
-  .portfolio-expanded__content {
-    max-height: 300px;
-  }
 }
-
-
 
 @media screen and (min-width: 992px) {
   .portfolio-expanded {
     padding: 2rem 2rem 6rem;
-  }
-  
-  .portfolio-expanded__content {
-    max-height: 500px;
   }
 }
 </style>
