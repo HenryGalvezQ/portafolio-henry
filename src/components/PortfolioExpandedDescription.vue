@@ -1,7 +1,11 @@
 // PortfolioExpandedDescription.vue
 
 <template>
-  <div class="portfolio-expanded" ref="expandedContainer">
+  <div 
+    class="portfolio-expanded" 
+    :class="{ 'scrolled-to-bottom': isScrolledToBottom }"
+    ref="expandedContainer"
+  >
     <div class="portfolio-expanded__header">
       <h3 class="portfolio-expanded__title">Detalles del Proyecto</h3>
       <button 
@@ -13,7 +17,11 @@
       </button>
     </div>
     
-    <div class="portfolio-expanded__content" ref="scrollContainer" :style="contentStyle">
+    <div 
+      class="portfolio-expanded__content" 
+      ref="scrollContainer" 
+      :style="contentStyle"
+    >
       <div class="portfolio-expanded__description" v-html="project.expandedDescription">
       </div>
     </div>
@@ -51,8 +59,9 @@ export default {
     return {
       showScrollIndicator: false,
       calculatedMaxHeight: 450, // Altura base para desktop
-      originalMaxHeight: null, // Almacena la altura original antes del hover
-      isButtonHovered: false // Detecta si hay botones en hover
+      originalMaxHeight: null,  // Almacena la altura original antes del hover
+      isButtonHovered: false, // Detecta si hay botones en hover
+      isScrolledToBottom: false
     };
   },
   computed: {
@@ -68,15 +77,17 @@ export default {
       handler(newHeight, oldHeight) {
         if (newHeight && oldHeight) {
           // Si la altura aumentó, significa que los botones están en hover
+
           if (newHeight > oldHeight) {
             // Almacenamos la altura original si no la tenemos
+
             if (!this.originalMaxHeight) {
               this.originalMaxHeight = this.calculatedMaxHeight;
             }
             this.isButtonHovered = true;
             this.calculateContentHeight(newHeight);
-          } 
-          // Si la altura disminuyó, significa que se quitó el hover
+          }
+          // Si la altura disminuyó, significa que se quitó el hover 
           else if (newHeight < oldHeight && this.originalMaxHeight) {
             this.isButtonHovered = false;
             // Restauramos la altura original
@@ -175,6 +186,8 @@ export default {
       const container = event.target;
       const isNearBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 10;
       
+      this.isScrolledToBottom = isNearBottom;
+      
       if (isNearBottom && this.showScrollIndicator) {
         this.showScrollIndicator = false;
       }
@@ -195,6 +208,24 @@ export default {
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+.portfolio-expanded::before {
+  content: '';
+  position: absolute;
+  bottom: 5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 3em;
+  background: linear-gradient(transparent, var(--container-color));
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.portfolio-expanded.scrolled-to-bottom::before {
+  opacity: 0;
 }
 
 .portfolio-expanded__header {
@@ -373,11 +404,22 @@ export default {
     border-top: 2px solid #8b5cf6;
     border-radius: 0.5rem;
   }
+  
+  .portfolio-expanded::before {
+    left: 1.5rem;
+    right: 1.5rem;
+  }
 }
 
 @media screen and (min-width: 992px) {
   .portfolio-expanded {
     padding: 2rem 2rem 6rem;
+  }
+  
+  .portfolio-expanded::before {
+    bottom: 6rem;
+    left: 2rem;
+    right: 2rem;
   }
 }
 </style>
