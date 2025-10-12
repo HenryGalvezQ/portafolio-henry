@@ -56,6 +56,8 @@ export default {
       isHovered: false,
       cardHeight: null,
       measureTimeout: null,
+      scrollYBeforeExpand: 0 // Para guardar la posición del scroll
+
     };
   },
   computed: {
@@ -71,9 +73,33 @@ export default {
       this.cardHeight = height;
     },
     toggleExpand() {
+      const isOpening = !this.isExpanded;
+
+      if (isOpening) {
+        // 1. Si vamos a abrir, guardamos la posición ACTUAL del scroll
+        this.scrollYBeforeExpand = window.scrollY;
+      }
+
       this.isExpanded = !this.isExpanded;
       this.isHovered = false;
+
+      this.$nextTick(() => {
+        if (isOpening) {
+          // 2. Centramos la tarjeta en la vista
+          this.$el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        } else {
+          // 3. Si cerramos, volvemos a la posición guardada
+          window.scrollTo({
+            top: this.scrollYBeforeExpand,
+            behavior: 'smooth'
+          });
+        }
+      });
     },
+    
     onEnter() {
       this.isAnimating = true;
     },
