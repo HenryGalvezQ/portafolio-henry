@@ -131,12 +131,16 @@ export default {
 }
 
 .portfolio-card-container.is-expanded {
-  grid-column: 1 / -1;
+  grid-column: 1 / -1; /* Mantenemos esto para que pueda centrarse */
   z-index: 10;
-  margin: 0 -1rem;
+  margin: 0; /* Cambiamos el margin para un mejor centrado */
   width: auto;
-  padding: 0; /* El padding ahora lo gestionan los hijos */
-  overflow: visible; /* Permite que el box-shadow se vea bien */
+  padding: 0; 
+  overflow: visible;
+
+  /* --- AÑADE ESTAS DOS LÍNEAS --- */
+  max-width: 1100px; /* Elige el ancho máximo que desees */
+  justify-self: center; /* Esto centra el contenedor en el espacio de la grilla */
 }
 
 .is-animating {

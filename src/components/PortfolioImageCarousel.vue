@@ -190,7 +190,7 @@ export default {
 
 .portfolio-carousel__button {
   position: absolute;
-  top: 50%;
+  top: calc(50% - 12px);
   transform: translateY(-50%);
   z-index: 2;
   color: var(--title-color);
