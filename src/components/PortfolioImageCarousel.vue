@@ -152,6 +152,11 @@ export default {
   border-radius: .5rem;
   margin-bottom: var(--mb-0);
   cursor: pointer;
+
+}
+
+.portfolio__img-carousel:hover {
+  z-index: 5;
 }
 
 .portfolio__img {
@@ -162,6 +167,13 @@ export default {
   object-fit: cover;
   height: auto;
   max-height: 200px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.15);
+  transition: transform 0.4s ease;
+}
+
+/* AÑADIDO: El efecto de hover ahora se aplica a la imagen directamente */
+.portfolio__img-carousel:hover .portfolio__img {
+  transform: scale(1.03);
 }
 
 .portfolio__img-container {

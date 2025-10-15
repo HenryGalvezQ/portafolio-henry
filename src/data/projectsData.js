@@ -31,21 +31,25 @@ export const projectsData = [
   },
   {
     id: 2,
-    title: 'Diseño de Marca',
-    description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
-    expandedDescription: `<h3>Proyecto: Sistema de Diseño de Marca</h3>
-<p>Este proyecto se enfocó en crear una identidad visual completa y coherente, desarrollando desde el concepto inicial hasta la implementación digital final. El trabajo abarcó tanto la creación de elementos gráficos como su traducción a una experiencia web interactiva y funcional.</p>
+    title: 'Portal Web Municipalidad de La Joya',
+    description: 'Modernicé el portal web municipal, desarrollando un chatbot con PHP y JS, integrando visores de PDF para documentos oficiales y reforzando la seguridad del panel de administrador con autenticación de Google (OAuth).',
+    expandedDescription: `<h3>Proyecto: Modernización del Portal Web de la Municipalidad Distrital de La Joya</h3>
+<p>Durante mis prácticas pre-profesionales, lideré una serie de mejoras clave en el portal web de la Municipalidad Distrital de La Joya, con el objetivo de optimizar tanto la experiencia del ciudadano como la eficiencia de la gestión interna. El proyecto abarcó desarrollo de nuevas funcionalidades, mejoras en la interfaz y el refuerzo de la seguridad.</p>
 
-<p>Desde el punto de vista del <strong>Diseño Gráfico</strong>, desarrollé una identidad visual sólida que incluye logotipo, paleta de colores, tipografías corporativas y elementos gráficos complementarios. Cada elemento fue diseñado pensando en su aplicación multi-plataforma y escalabilidad.</p>
+<p>Mi contribución principal fue el <strong>desarrollo e implementación de un chatbot conversacional</strong>. Utilizando <strong>JavaScript para el frontend y PHP con MySQL para el backend</strong>, creé un asistente virtual capaz de guiar a los usuarios a través de consultas frecuentes, como los costos de procedimientos TUPA y otros servicios municipales. El flujo de la conversación se gestiona dinámicamente desde la base de datos, permitiendo al personal administrativo actualizar las respuestas sin necesidad de modificar el código.</p>
 
-<p>En el <strong>Desarrollo Web</strong>, implementé la identidad visual en una plataforma digital robusta utilizando Vue 3, Pinia para la gestión del estado y Tailwind CSS para un diseño consistente y responsivo.</p>`,
-    tags: ["Proyecto Personal", "Desarrollo Frontend"],
-    techBadge: ['figma', 'vue'],
+<p>En el ámbito de la <strong>seguridad y la administración</strong>, reforcé el acceso al panel de control implementando la <strong>autenticación mediante Google OAuth</strong>. Esta modernización eliminó el sistema de credenciales tradicional, ofreciendo un método de inicio de sesión más seguro y robusto para los funcionarios, validando sus cuentas de correo institucionales contra la base de datos de usuarios autorizados.</p>
+
+<h4>Mejoras Adicionales de UX/UI:</h4>
+<ul>
+<li><strong>Visor de Documentos PDF:</strong> Implementé un visor de PDF interactivo directamente en las páginas de transparencia, como "Obras por Impuesto" y "CODISEC". Esto permite a los ciudadanos consultar resoluciones, actas y otros documentos oficiales sin necesidad de descargas, mejorando significativamente la accesibilidad a la información pública.</li>
+<li><strong>Contenido Dinámico y Gestión de Banners:</strong> Desarrollé un sistema CRUD completo en el panel de administrador para gestionar los banners de la página de inicio[cite: 4306], permitiendo al equipo de prensa actualizar anuncios y noticias de forma autónoma. [cite_start]También mejoré la interfaz del carrusel de noticias y comunicados en la página principal.</li>
+<li><strong>Interfaz de Usuario Optimizada:</strong> Realicé ajustes en la usabilidad del portal, como la mejora del menú de navegación para hacerlo más dinámico, la adición de un logo de carga para mejorar la percepción del rendimiento [cite: 4204] [cite_start]y la integración de nuevos canales de comunicación como TikTok en el encabezado y pie de página.</li>
+</ul>`,
+    tags: ["Prácticas Pre-profesionales", "Desarrollo Fullstack"],
+    techBadge: ['php', 'javascript', 'mysql'],
     buttons: [
-      { type: 'demo', url: 'http://67.205.133.92/app/' },
-      { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
-      { type: 'presentation', url: '#' },
-      { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
+      { type: 'demo', url: 'https://www.municipalidadlajoya.gob.pe/' }
     ]
   },
   {
