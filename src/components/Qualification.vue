@@ -32,7 +32,7 @@
                 <span class="qualification__subtitle">Univ. Nacional de San Agustín</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Abril 2021 - Presente
+                  Abril 2021 - Diciembre 2025
                 </div>
               </div>
             </div>
@@ -173,10 +173,12 @@ import certificadoCoderhouse1 from '@/assets/img/certificado_coderhouse1.png';
 import certificadoCoderhouse2 from '@/assets/img/certificado_coderhouse2.png';
 
 // Imágenes actualizadas y nuevas
+import constancia_egresado from '@/assets/img/constancia_egresado.jpg';
 import constancia_ranking from '@/assets/img/constancia_ranking.jpg';
 import libreta_notas from '@/assets/img/libreta_notas.jpg';
 import certificado_oracle from '@/assets/img/certificado_oracle.jpg';
 import certificado_muni from '@/assets/img/certificado_muni.jpg';
+import certificado_innovaciencia from '@/assets/img/certificado_innovaciencia.jpg';
 import certificado_cisco1 from '@/assets/img/certificado_cisco1.jpg';
 import certificado_cisco2 from '@/assets/img/certificado_cisco2.jpg';
 import certificado_cisco3 from '@/assets/img/certificado_cisco3.jpg';
@@ -192,12 +194,12 @@ const activeModalId = ref(null);
 
 // --- Datos de los Modales (Actualizado) ---
 const modalData = {
-  unsa: [constancia_ranking, libreta_notas],
+  unsa: [constancia_egresado, constancia_ranking],
   support: [], // Array vacío para que el click no haga nada
   coderhouse: [certificadoCoderhouse1, certificadoCoderhouse2],
   municipalidad: [certificado_muni],
   oracle: [certificado_oracle],
-  innovaciencia: [], // Array vacío para que el click no haga nada
+  innovaciencia: [certificado_innovaciencia],
   cisco: [
     certificado_cisco1, certificado_cisco2, certificado_cisco3,
     certificado_cisco4, certificado_cisco5, certificado_cisco6,
@@ -211,7 +213,7 @@ const currentModalImages = computed(() => {
   return activeModalId.value ? modalData[activeModalId.value] : [];
 });
 const isModalVertical = computed(() => {
-  const verticalIds = ['unsa', 'municipalidad'];
+  const verticalIds = ['unsa', 'municipalidad', 'innovaciencia'];
   return verticalIds.includes(activeModalId.value);
 });
 // --- Métodos ---
