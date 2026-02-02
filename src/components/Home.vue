@@ -19,6 +19,10 @@
             <i class="uil uil-whatsapp"></i>
             <span class="home__social-text">WhatsApp</span>
           </a>
+          <a href="https://www.facebook.com/henry.galvez.quilla" aria-label="Facebook" target="_blank" class="home__social-icon">
+            <i class="uil uil-facebook-f"></i>
+            <span class="home__social-text">Facebook</span>
+          </a>
           <a href="#contact" aria-label="Email" class="home__social-icon">
             <i class="uil uil-envelope-alt"></i>
             <span class="home__social-text">Email</span>

@@ -23,10 +23,10 @@ export const projectsData = [
     tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
     techBadge: ['figma', 'vue'],
     buttons: [
-      { type: 'demo', url: 'http://67.205.133.92/app/' },
+      { type: 'demo', url: 'http://138.68.254.39/app/' },
       { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
-      { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' },
-      { type: 'presentation', url: '#' }
+      { type: 'github', url: 'https://github.com/HenryGalvezQ/phaseflow' },
+      { type: 'presentation', url: 'https://www.canva.com/design/DAG75rU1odw/JxcqLztKz2kCwu3wimlAxA/edit?utm_content=DAG75rU1odw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton' }
     ]
   },
   {
@@ -83,10 +83,10 @@ export const projectsData = [
     tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
     techBadge: ['figma', 'vue'],
     buttons: [
-      { type: 'demo', url: 'http://67.205.133.92/app/' },
+      { type: 'demo', url: 'http://138.68.254.39/app/' },
       { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
       { type: 'presentation', url: '#' },
-      { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
+      { type: 'github', url: 'https://github.com/HenryGalvezQ/phaseflow' }
     ]
   },
   {

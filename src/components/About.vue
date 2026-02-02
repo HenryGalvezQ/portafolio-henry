@@ -1,7 +1,7 @@
 <template>
   <section class="about section" id="about">
-    <h2 class="section__title">About me</h2>
-    <span class="section__subtitle">My introduction</span>
+    <h2 class="section__title">Acerca de mí</h2>
+    <span class="section__subtitle">Mi introducción</span>
 
     <div class="about__container container grid">
       <img src="@/assets/img/about.jpg" alt="about" class="about__img">
@@ -12,11 +12,11 @@
         <div class="about__info">
           <div>
             <span class="about__info-title">02+</span>
-            <span class="about__info-name">Years <br> experience</span>
+            <span class="about__info-name">Años <br> de experiencia</span>
           </div>
           <div>
             <span class="about__info-title">10+</span>
-            <span class="about__info-name">Completed <br> project</span>
+            <span class="about__info-name">Proyectos <br> completados</span>
           </div>
           <div>
             <span class="about__info-title">05+</span>
@@ -24,7 +24,11 @@
           </div>
         </div>
         <div class="about__buttons">
-          <a href="@/assets/img/CV Henry Galvez.pdf" download class="button button--flex">
+          <a href="/cv-henry-galvez.pdf" target="_blank" rel="noopener noreferrer" class="button button--flex">
+            Ver CV<i class="uil uil-eye button__icon"></i>
+          </a>
+          
+          <a href="/cv-henry-galvez.pdf" download="CV_Henry_Galvez.pdf" class="button button--flex button--outline">
             Descargar CV<i class="uil uil-download-alt button__icon"></i>
           </a>
         </div>
@@ -78,6 +82,21 @@ export default {
 .about__buttons {
   display: flex;
   justify-content: center;
+  gap: 1rem; /* Separación entre botones */
+  flex-wrap: wrap; /* Para que se adapten en móviles */
+}
+
+/* Botón con estilo invertido (outline) */
+.button--outline {
+  background-color: var(--body-color, #fff);
+  color: var(--first-color, #6E57E0);
+  border: 1px solid var(--first-color, #6E57E0);
+}
+
+.button--outline:hover {
+  background-color: var(--first-color, #6E57E0);
+  color: #fff;
+  border-color: var(--first-color, #6E57E0);
 }
 
 /* ==================== MEDIA QUERIES ==================== */
@@ -101,7 +120,7 @@ export default {
     justify-content: space-between;
   }
   .about__buttons {
-    justify-content: initial;
+    justify-content: center; /* Cambiado de initial a center */
   }
 }
 </style>

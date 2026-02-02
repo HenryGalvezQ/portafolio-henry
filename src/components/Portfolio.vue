@@ -1,7 +1,7 @@
 // Portfolio.vue
 <template>
   <section class="portfolio section" id="portfolio">
-    <h2 class="section__title">Portfolio</h2>
+    <h2 class="section__title">Portafolio</h2>
     <span class="section__subtitle">Trabajos más recientes</span>
 
     <div class="portfolio__container container grid">
