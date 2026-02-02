@@ -37,6 +37,7 @@
         </ul>
         <i class="uil uil-times nav__close" id="nav-close" @click="closeMenu"></i>
       </div>
+      <!--
       <div class="nav__btns">
         <i 
           @click="$emit('toggle-theme')" 
@@ -49,6 +50,7 @@
           <i class="uil uil-apps"></i>
         </div>
       </div>
+      -->
     </nav>
   </header>
 </template>

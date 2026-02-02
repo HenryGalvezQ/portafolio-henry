@@ -13,7 +13,7 @@
     <Qualification />
     <Services />
     <Portfolio />
-    <Project />
+    <!--<Project />-->
     <!--<Testimonial />-->
     <Contact />
   </main>

@@ -125,7 +125,7 @@
                 <span class="qualification__subtitle">Innovaciencia Peru</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Abril 2025 - Julio 2025
+                  Abril 2025 - Noviembre 2025
                 </div>
               </div>
               <img src="@/assets/img/logo_innovaciencia.png" alt="Logo Innovaciencia" class="qualification__logo">

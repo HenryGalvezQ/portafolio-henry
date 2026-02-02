@@ -7,11 +7,11 @@
       <img src="@/assets/img/about.jpg" alt="about" class="about__img">
       <div class="about__data">
         <p class="about__description">
-          Desarrollador web, con conocimiento y experiencia, trabajando en tecnologías web y diseño UX / UI, entregando un trabajo de calidad.
+          Ingeniero de Sistemas especializado en desarrollo Frontend y Mobile, con enfoque en diseño UX/UI. Creo interfaces escalables, accesibles y centradas en el usuario utilizando arquitecturas modernas y mejores prácticas de desarrollo.
         </p>
         <div class="about__info">
           <div>
-            <span class="about__info-title">04+</span>
+            <span class="about__info-title">02+</span>
             <span class="about__info-name">Years <br> experience</span>
           </div>
           <div>

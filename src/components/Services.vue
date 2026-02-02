@@ -12,8 +12,8 @@
         <div class="services__header" @click="toggleService()">
           <i class="uil uil-web-grid services__icon"></i>
           <div>
-            <h3 class="services__title">Diseñador <br> Ui/Ux</h3>
-            <span class="services__subtitle">Diseño de interfaces y experiencia</span>
+            <h3 class="services__title">Diseñador <br> UI/UX</h3>
+            <span class="services__subtitle">Diseño de interfaces y experiencia de usuario</span>
           </div>
           <i class="uil uil-angle-down services__arrow"></i>
         </div>
@@ -26,7 +26,7 @@
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Creación de prototipos y wireframes.</p>
+              <p>Creación de prototipos y wireframes en Figma.</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
@@ -34,7 +34,7 @@
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Posicionamiento de la marca de tu empresa.</p>
+              <p>Investigación de usuarios y pruebas de usabilidad.</p>
             </li>
           </ul>
         </div>
@@ -53,7 +53,7 @@
           <i class="uil uil-arrow services__icon"></i>
           <div>
             <h3 class="services__title">Desarrollador <br> Frontend</h3>
-            <span class="services__subtitle">Implementación de diseños web</span>
+            <span class="services__subtitle">Desarrollo de diseños y aplicaciones web</span>
           </div>
           <i class="uil uil-angle-down services__arrow"></i>
         </div>
@@ -62,19 +62,19 @@
           <ul class="services__list-ul">
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Desarrollo de SPAs con Vue.js, Nuxt y React.js</p>
+            </li>
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
               <p>Maquetación de sitios web responsivos.</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Desarrollo con frameworks modernos como Vue.js.</p>
+              <p>Consumo de APIs REST y autenticación OAuth/JWT</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Creación de interacciones dinámicas.</p>
-            </li>
-            <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Optimización del rendimiento y la velocidad de carga.</p>
+              <p>Creación rápida de MVPs</p>
             </li>
           </ul>
         </div>
@@ -85,15 +85,15 @@
         </span>
       </div>
 
-      <div :class="['services__content', servicesState.branding ? 'services__open' : 'services__close']" data-service="branding">
+      <div :class="['services__content', servicesState.mobile ? 'services__open' : 'services__close']" data-service="mobile">
 
-        <img src="@/assets/img/wordpress_captura.png" alt="Captura de Desarrollo WordPress" class="services__img">
+        <img src="@/assets/img/diseno_captura.png" alt="Captura de Desarrollo Mobile" class="services__img">
 
         <div class="services__header" @click="toggleService()">
-           <i class="uil uil-pen services__icon"></i>
+          <i class="uil uil-mobile-android services__icon"></i>
           <div>
-            <h3 class="services__title">Desarrollo <br> WordPress</h3>
-             <span class="services__subtitle">Soluciones con el CMS líder</span>
+            <h3 class="services__title">Desarrollador <br> Mobile</h3>
+            <span class="services__subtitle">Aplicaciones nativas e híbridas multiplataforma</span>
           </div>
           <i class="uil uil-angle-down services__arrow"></i>
         </div>
@@ -102,19 +102,19 @@
           <ul class="services__list-ul">
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Creación de temas personalizados desde cero.</p>
+              <p>Desarrollo nativo Android con Kotlin y Jetpack Compose</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Desarrollo de plugins a medida.</p>
+              <p>Apps híbridas con Flutter y React Native</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Mantenimiento y optimización de sitios existentes.</p>
+              <p>Arquitectura MVVM, Clean Architecture e inyección de dependencias</p>
             </li>
-             <li class="services__list-item">
+            <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Integración con APIs y servicios de terceros.</p>
+              <p>Integración con APIs REST, Firebase y sincronización offline</p>
             </li>
           </ul>
         </div>
@@ -136,7 +136,7 @@ export default {
       servicesState: {
         ui: false,
         frontend: false,
-        branding: false,
+        mobile: false,
       },
       observer: null,
       userHasClicked: false,
