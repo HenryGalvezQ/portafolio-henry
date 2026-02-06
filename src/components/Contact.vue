@@ -241,6 +241,9 @@ const openWhatsApp = () => {
 
 <style scoped>
 /* ==================== CONTACT ME ==================== */
+.contact {
+  padding-bottom: 4.5rem; /* Ajusta este valor según cuánto espacio desees */
+}
 .contact__container {
   row-gap: 3rem;
   position: relative;
@@ -265,7 +268,7 @@ const openWhatsApp = () => {
 
 .contact__subtitle {
   font-size: var(--small-font-size);
-  color: var(--text-color-light);
+  color: var(--text-color-darker);
 }
 
 .contact__content {

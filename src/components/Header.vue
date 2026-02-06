@@ -11,46 +11,46 @@
           </li>
           <li class="nav__item">
             <a href="#about" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'about' }">
-              <i class="uil uil-user nav__icon"></i> About
+              <i class="uil uil-user nav__icon"></i> Acerca de mí
             </a>
           </li>
           <li class="nav__item">
             <a href="#skills" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'skills' }">
-              <i class="uil uil-file-alt nav__icon"></i> Skills
+              <i class="uil uil-file-alt nav__icon"></i> Habilidades
             </a>
           </li>
           <li class="nav__item">
             <a href="#services" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'services' }">
-              <i class="uil uil-briefcase-alt nav__icon"></i> Services
+              <i class="uil uil-briefcase-alt nav__icon"></i> Servicios
             </a>
           </li>
           <li class="nav__item">
             <a href="#portfolio" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'portfolio' }">
-              <i class="uil uil-scenery nav__icon"></i> Portfolio
+              <i class="uil uil-scenery nav__icon"></i> Portafolio
             </a>
           </li>
           <li class="nav__item">
             <a href="#contact" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'contact' }">
-              <i class="uil uil-message nav__icon"></i> ContactMe
+              <i class="uil uil-message nav__icon"></i> Contáctame
             </a>
           </li>
         </ul>
         <i class="uil uil-times nav__close" id="nav-close" @click="closeMenu"></i>
       </div>
-      <!--
       <div class="nav__btns">
+        <!--
         <i 
           @click="$emit('toggle-theme')" 
           class="uil change-theme" 
           id="theme-button"
           :class="currentTheme === 'dark' ? 'uil-sun' : 'uil-moon'"
         ></i>
+        -->
 
-        <div class="nav__toggle" id="nav-toggle" @click="openMenu">
+        <div class="nav__toggle" id="nav-toggle" @click="toggleMenu">
           <i class="uil uil-apps"></i>
         </div>
       </div>
-      -->
     </nav>
   </header>
 </template>
@@ -60,7 +60,7 @@ import { ref } from 'vue';
 
 // Lógica del menú móvil
 const isMenuOpen = ref(false);
-const openMenu = () => isMenuOpen.value = true;
+const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value;
 const closeMenu = () => isMenuOpen.value = false;
 
 // Declaramos las props y los emits
@@ -124,6 +124,7 @@ defineEmits(['toggle-theme']);
   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
   border-radius: 1.5rem 1.5rem 0 0;
   transition: .3s;
+  z-index: var(--z-fixed);
 }
 
 /* Clase para mostrar el menú */
@@ -146,9 +147,12 @@ defineEmits(['toggle-theme']);
   font-weight: var(--font-medium);
 }
 
-/* Al estar dentro del menú, el active-link solo cambia de color */
-.nav__menu .active-link {
+/* Al estar dentro del menú desplegable, el active-link solo cambia de color */
+.show-menu .active-link {
    color: var(--first-color);
+   background-color: transparent;
+   box-shadow: none;
+   animation: none;
 }
 
 .nav__icon {
@@ -186,6 +190,7 @@ defineEmits(['toggle-theme']);
 }
 
 /* --- Active link en la barra inferior (con animación) --- */
+/* Solo se aplica cuando el menú NO está desplegado */
 .active-link {
   color: white;
   background-color: hsl(var(--hue-color), 65%, 65%);
@@ -215,14 +220,12 @@ defineEmits(['toggle-theme']);
 
 
 /* ==================== ESTILOS PARA TABLET Y SUPERIOR (>= 768px) ==================== */
-/* ==================== ESTILOS PARA TABLET Y SUPERIOR (>= 768px) ==================== */
 @media screen and (min-width: 768px) {
   .header {
     top: 0; /* Header arriba */
     bottom: initial;
     padding: 0 1rem;
-    /* [!code --] background-color: var(--body-color); */
-    background-color: var(--first-color-3); /* [!code ++] Mantenemos el color púrpura */
+    background-color: var(--first-color-3); /* Mantenemos el color púrpura */
   }
 
   .nav {
@@ -248,8 +251,7 @@ defineEmits(['toggle-theme']);
 
   .nav__link {
     flex-direction: row;
-    /* [!code --] color: var(--title-color); */
-    color: white; /* [!code ++] Letras de los enlaces en blanco */
+    color: white; /* Letras de los enlaces en blanco */
     transition: transform 0.3s ease;
   }
   
@@ -260,7 +262,6 @@ defineEmits(['toggle-theme']);
     display: none;
   }
 
-/* --- [!code ++] ESTA ES LA PARTE CORREGIDA --- */
   .nav__link:hover {
     /* Al pasar el mouse, solo cambiamos el tamaño. Hereda el color blanco. */
     transform: scale(1.2);
@@ -274,19 +275,19 @@ defineEmits(['toggle-theme']);
     box-shadow: none;
     animation: none;
   }
-  /* --- [!code --] FIN DE LA CORRECCIÓN --- */
   
   .change-theme {
     margin: 0;
     color: white;
   }
+
   .nav__logo {
      color: white; /* Logo en blanco */
-     transition: transform 0.3s ease; /* [!code ++] Añadimos también transición al logo */
+     transition: transform 0.3s ease; /* Añadimos también transición al logo */
   }
 
   .nav__logo:hover {
-    transform: scale(1.05); /* [!code update] Agrandamos un poco el logo al pasar el mouse */
+    transform: scale(1.05); /* Agrandamos un poco el logo al pasar el mouse */
     color: white; /* Mantenemos el color */
   }
 }

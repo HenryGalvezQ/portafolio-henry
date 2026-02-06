@@ -235,8 +235,6 @@ const closeModal = () => {
 </script>
 
 <style scoped>
-/* ESTILOS ORIGINALES RESTAURADOS COMPLETAMENTE */
-
 /* ==================== QUALIFICATION ==================== */
 .qualification__tabs {
   display: flex;
@@ -274,7 +272,7 @@ const closeModal = () => {
   grid-template-columns: 1fr max-content 1fr;
   column-gap: 1.5rem;
   transition: transform 0.4s ease;
-  cursor: pointer; /* RESTAURADO: El cursor es clickeable en todos por defecto */
+  cursor: pointer;
 }
 
 .qualification__item-content {
@@ -344,7 +342,6 @@ const closeModal = () => {
   transform: scale(0.95);
 }
 
-/* RESTAURADO: El efecto hover se aplica a todos los items .qualification__data */
 .qualification__content .qualification__data:hover {
   transform: scale(1.08);
   position: relative;
@@ -354,7 +351,67 @@ const closeModal = () => {
 /* ==================== MEDIA QUERIES ==================== */
 @media screen and (max-width: 350px) {
   .qualification__data {
-    gap: .5rem;
+    column-gap: 0.5rem;
+  }
+  
+  .qualification__logo {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .qualification__title {
+    font-size: var(--small-font-size);
+  }
+  
+  .qualification__subtitle {
+    font-size: var(--smaller-font-size);
+  }
+  
+  .qualification__calendar {
+    font-size: 0.625rem;
+  }
+  
+  .qualification__item-content {
+    gap: 0.5rem;
+  }
+}
+
+/* Ajustes para pantallas pequeñas sin romper la estructura */
+@media screen and (max-width: 567px) {
+  .qualification__data {
+    column-gap: 0.75rem;
+  }
+  
+  .qualification__logo {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .qualification__title {
+    font-size: var(--small-font-size);
+    line-height: 1.2;
+  }
+  
+  .qualification__subtitle {
+    font-size: var(--smaller-font-size);
+    margin-bottom: var(--mb-0-5);
+  }
+  
+  .qualification__calendar {
+    font-size: var(--smaller-font-size);
+  }
+  
+  .qualification__item-content {
+    gap: 0.5rem;
+  }
+  
+  .qualification__rounder {
+    width: 11px;
+    height: 11px;
+  }
+  
+  .qualification__line {
+    transform: translate(5px, -7px);
   }
 }
 

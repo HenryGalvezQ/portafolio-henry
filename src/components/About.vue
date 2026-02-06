@@ -5,10 +5,12 @@
 
     <div class="about__container container grid">
       <img src="@/assets/img/about.jpg" alt="about" class="about__img">
+      
       <div class="about__data">
         <p class="about__description">
           Ingeniero de Sistemas especializado en desarrollo Frontend y Mobile, con enfoque en diseño UX/UI. Creo interfaces escalables, accesibles y centradas en el usuario utilizando arquitecturas modernas y mejores prácticas de desarrollo.
         </p>
+        
         <div class="about__info">
           <div>
             <span class="about__info-title">02+</span>
@@ -23,6 +25,7 @@
             <span class="about__info-name">Certificados <br> obtenidos</span>
           </div>
         </div>
+
         <div class="about__buttons">
           <a href="/cv-henry-galvez.pdf" target="_blank" rel="noopener noreferrer" class="button button--flex">
             Ver CV<i class="uil uil-eye button__icon"></i>
@@ -32,6 +35,14 @@
             Descargar CV<i class="uil uil-download-alt button__icon"></i>
           </a>
         </div>
+      </div>
+
+      <div class="about__scroll">
+        <a href="#portfolio" class="about__scroll-button button--flex">
+          <i class="uil uil-mouse-alt about__scroll-mouse"></i>
+          <span class="about__scroll-name">Ir a Portafolio</span>
+          <i class="uil uil-arrow-down"></i>
+        </a>
       </div>
     </div>
   </section>
@@ -82,8 +93,8 @@ export default {
 .about__buttons {
   display: flex;
   justify-content: center;
-  gap: 1rem; /* Separación entre botones */
-  flex-wrap: wrap; /* Para que se adapten en móviles */
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 /* Botón con estilo invertido (outline) */
@@ -97,6 +108,45 @@ export default {
   background-color: var(--first-color, #6E57E0);
   color: #fff;
   border-color: var(--first-color, #6E57E0);
+}
+
+.about__container {
+  position: relative;
+}
+
+:global(section#portfolio) {
+  scroll-margin-bottom: 300px; 
+}
+
+/* ==================== SCROLL DOWN REPLICADO ==================== */
+.about__scroll {
+  display: none;
+  position: absolute;
+  right: 0; /* Lo pega al borde derecho del contenedor */
+  z-index: 10;
+}
+
+.about__scroll-button {
+  color: var(--first-color);
+  transition: .3s;
+  display: flex;
+  align-items: center;
+  column-gap: .5rem;
+  text-decoration: none;
+}
+
+.about__scroll-button:hover {
+  transform: translateY(.25rem);
+}
+
+.about__scroll-mouse {
+  font-size: 2rem;
+}
+
+.about__scroll-name {
+  font-size: var(--small-font-size);
+  color: var(--title-color);
+  font-weight: var(--font-medium);
 }
 
 /* ==================== MEDIA QUERIES ==================== */
@@ -120,7 +170,41 @@ export default {
     justify-content: space-between;
   }
   .about__buttons {
-    justify-content: center; /* Cambiado de initial a center */
+    justify-content: center;
+    position: relative; /* Necesario para posicionar el scroll relativamente */
+  }
+  
+  /* Mostrar el scroll en desktop, alineado con los botones */
+  .about__scroll {
+    display: block;
+    position: static; /* Cambia a static para que fluya con el contenido */
+    margin-left: auto; /* Lo empuja totalmente a la derecha */
+  }
+  
+  /* Contenedor wrapper para alinear botones y scroll */
+  .about__data {
+    position: relative;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .about__scroll {
+    position: absolute;
+    right: -8rem; /* Sale del contenedor hacia la derecha */
+    top: auto;
+    bottom: 0;
+  }
+  
+  /* Alinear con la altura de los botones */
+  .about__buttons {
+    position: relative;
+  }
+}
+
+/* Para pantallas muy grandes */
+@media screen and (min-width: 1200px) {
+  .about__scroll {
+    right: -12rem; /* Más espacio en pantallas grandes */
   }
 }
 </style>

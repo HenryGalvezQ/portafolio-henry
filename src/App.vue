@@ -73,12 +73,14 @@ const handleScroll = () => {
   // Lógica para el botón de scroll
   showScrollBtn.value = window.scrollY >= 560;
   isHeaderScrolled.value = window.scrollY >= 80;
+  
   // Lógica para la sección activa
   const scrollY = window.scrollY;
   const sections = document.querySelectorAll('section[id]');
+  
   sections.forEach(current => {
     const sectionHeight = current.offsetHeight;
-    const sectionTop = current.offsetTop - 58;
+    const sectionTop = current.offsetTop - 200; // Cambiado de -58 a -200 para mejor detección
     const sectionId = current.getAttribute('id');
 
     if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
@@ -90,6 +92,9 @@ const handleScroll = () => {
 // 8. En onMounted, ahora también leemos el tema guardado en localStorage
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  // Llamamos a handleScroll inmediatamente para detectar la sección inicial
+  handleScroll();
+  
   const savedTheme = localStorage.getItem('selected-theme');
   if (savedTheme) {
     theme.value = savedTheme;

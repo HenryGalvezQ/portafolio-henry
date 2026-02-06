@@ -66,7 +66,7 @@
       <div class="home__scroll">
         <a href="#about" class="home__scroll-button button--flex">
           <i class="uil uil-mouse-alt home__scroll-mouse"></i>
-          <span class="home__scroll-name">Scroll down</span>
+          <span class="home__scroll-name">Scroll a CV</span>
           <i class="uil uil-arrow-down"></i>
         </a>
       </div>
@@ -88,7 +88,6 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  /* Este es el espacio de separación que mencionas */
   column-gap: 2rem; 
 }
 
@@ -97,8 +96,8 @@
   grid-template-columns: max-content max-content;
   column-gap: 2rem;
   align-items: center;
-  flex: initial; /* Cambiado de 1 a initial para que no ocupe espacio extra */
-  max-width: fit-content; /* Asegura que el grid solo mida lo que mide su contenido */
+  flex: initial;
+  max-width: fit-content;
 }
 
 .home__social {
@@ -106,7 +105,6 @@
   flex-direction: column;
   gap: 1.2rem;
   flex-shrink: 0;
-  /* RESERVAMOS EL ESPACIO: 180px es suficiente para el icono + texto expandido */
   width: 150px;
   align-items: flex-start;
   margin-top: 6.5rem;
@@ -220,7 +218,6 @@
   color: black;
 }
 
-/* Animación del botón de contacto */
 .button--animated {
   border: none;
   outline: none;
@@ -270,30 +267,168 @@
   font-size: 1.25rem;
 }
 
-/* Media Queries para Home */
+/* ==================== MOBILE FIXES ==================== */
+/* Pantallas muy pequeñas (max-width: 350px) */
 @media screen and (max-width: 350px) {
-  .home__wrapper {
-    flex-direction: column;
-    gap: 1.5rem;
+  .home__container {
+    padding-top: 5.5rem;
   }
+  
+  .home__wrapper {
+    flex-direction: column-reverse; /* Cambiado: primero contenido, luego redes */
+    gap: 3rem;
+    align-items: center;
+  }
+  
+  /* Redes sociales en mobile */
   .home__social {
     flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
     width: 100%;
-    margin-left: 0;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 0;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
   }
+  
+  /* Iconos sociales solo muestran el ícono en mobile */
+  .home__social-icon {
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    width: auto;
+  }
+  
+  /* Ocultar texto en mobile */
+  .home__social-text {
+    display: none;
+  }
+  
+  .home__social-icon:hover .home__social-text {
+    display: none;
+  }
+  
+  /* Grid del contenido principal */
   .home__content {
     grid-template-columns: 1fr;
+    justify-content: center;
+    row-gap: 2.25rem;
+    padding-top: 0;
   }
+  
+  .home__img {
+    order: -1; /* Imagen primero */
+    justify-self: center;
+    margin-bottom: 0.5rem;
+  }
+  
   .home__blob {
     width: 180px;
   }
-  .home__social-icon {
-    font-size: 1.3rem;
+  
+  .home__data {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .home__title {
+    font-size: 1.75rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .home__subtitle {
+    font-size: 0.9rem;
+    text-align: left;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  .home__discription {
+    font-size: 0.85rem;
+    text-align: left;
+    margin-bottom: 1.75rem;
+    width: 100%;
   }
 }
 
+/* Pantallas pequeñas (min-width: 351px y max-width: 567px) */
+@media screen and (min-width: 351px) and (max-width: 567px) {
+  .home__container {
+    padding-top: 5.5rem;
+  }
+  
+  .home__wrapper {
+    flex-direction: column-reverse;
+    gap: 3rem;
+    align-items: center;
+  }
+  
+  .home__social {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0;
+    flex-wrap: wrap;
+  }
+  
+  .home__social-icon {
+    font-size: 1.3rem;
+    padding: 0.5rem;
+  }
+  
+  .home__social-text {
+    display: none;
+  }
+  
+  .home__social-icon:hover .home__social-text {
+    display: none;
+  }
+  
+  .home__content {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    row-gap: 2.25rem;
+  }
+  
+  .home__img {
+    order: -1;
+    justify-self: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .home__blob {
+    width: 200px;
+  }
+  
+  .home__data {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .home__title {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .home__subtitle {
+    text-align: left;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  .home__discription {
+    text-align: left;
+    margin-bottom: 1.75rem;
+    width: 100%;
+  }
+}
+
+/* Tablets pequeñas (min-width: 568px) */
 @media screen and (min-width: 568px) {
   .home__wrapper {
     gap: 0;
@@ -301,14 +436,14 @@
   .home__social {
     width: 160px;
     margin-left: 0;
+    margin-top: 0;
   }
   .home__content {
     grid-template-columns: max-content max-content;
-    
-    /* CAMBIO AQUÍ: De center a flex-start */
     justify-content: flex-start; 
     column-gap: 1rem;
     margin-left: 1rem;
+    padding-top: 0;
   }
   .home__data {
     grid-column: initial;
@@ -320,6 +455,7 @@
   }
 }
 
+/* Tablets (min-width: 768px) */
 @media screen and (min-width: 768px) {
   .home__container {
     row-gap: 5rem;
@@ -331,8 +467,8 @@
     column-gap: 1.5rem;
   }
   .home__social {
-    /* Reduce de 200px */
     width: 160px;
+    margin-top: 6.5rem;
   }
   .home__content {
     padding-top: 5.5rem;
@@ -353,6 +489,7 @@
   }
 }
 
+/* Desktop (min-width: 1024px) - PERFECTO, NO TOCAR */
 @media screen and (min-width: 1024px) {
   .home__container {
     padding-left: 3rem;
@@ -362,7 +499,6 @@
     width: 320px;
   }
   .home__wrapper {
-    /* Ajusta este valor si quieres que Henry esté más o menos cerca de los iconos */
     column-gap: 2rem; 
   }
   .home__social {
@@ -370,9 +506,9 @@
   }
   .home__content {
     grid-template-columns: max-content max-content;
-    column-gap: 3rem;   /* Espacio entre Henry y la Foto */
+    column-gap: 3rem;
     justify-content: center;
-    margin-left: 0;     /* Quitamos el margen izquierdo que pediste reducir */
+    margin-left: 0;
   }
   .home__social-icon {
     font-size: 1.7rem;
