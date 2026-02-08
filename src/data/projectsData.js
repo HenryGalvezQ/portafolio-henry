@@ -4,7 +4,7 @@ export const projectsData = [
   {
     id: 1,
     title: 'Sigepro',
-    description: 'Prototipé en Figma y desarrollé una SPA de gestión de proyectos con una UI adaptativa basada en roles (Admin / Cliente  Cliente/ Colaborador), lo construí con Vue 3, Pinia y Tailwind CSS y lo conecté al backend con APIRESTful.',
+    description: 'Prototipé en Figma y desarrollé una SPA de gestión de proyectos con una UI adaptativa basada en roles (Admin / Cliente / Colaborador), lo construí con Vue 3, Pinia y Tailwind CSS y lo conecté al backend con APIRESTful.',
     expandedDescription: `<h3>Proyecto: SIGEPRO (Sistema de Gestión de Proyectos)</h3>
 <p>SIGEPRO es una aplicación web SPA (Single Page Application) robusta y moderna, diseñada para la gestión integral de proyectos de investigación académica. Desarrollada como parte de la asignatura de Ingeniería de Software, esta plataforma permite a estudiantes y administradores gestionar todo el ciclo de vida de un proyecto, desde la solicitud inicial hasta el seguimiento detallado de tareas.</p>
 
@@ -20,7 +20,7 @@ export const projectsData = [
 <li><strong>Gestión CRUD Intuitiva:</strong> Interfaces claras para la administración completa de clientes, proyectos y tareas, utilizando modales y formularios con validaciones en tiempo real.</li>
 <li><strong>Asistente de Configuración Guiado:</strong> Un "wizard" multi-paso para que los administradores formalicen un proyecto, definan sus tareas iniciales con validación de fechas secuencial y organicen el cronograma por fases.</li>
 </ul>`,
-    tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+    tags: ["Prácticas Pre-profesionales", "Desarrollo Frontend"],
     techBadge: ['figma', 'vue'],
     buttons: [
       { type: 'demo', url: 'http://138.68.254.39/app/' },
@@ -43,8 +43,8 @@ export const projectsData = [
 <h4>Mejoras Adicionales de UX/UI:</h4>
 <ul>
 <li><strong>Visor de Documentos PDF:</strong> Implementé un visor de PDF interactivo directamente en las páginas de transparencia, como "Obras por Impuesto" y "CODISEC". Esto permite a los ciudadanos consultar resoluciones, actas y otros documentos oficiales sin necesidad de descargas, mejorando significativamente la accesibilidad a la información pública.</li>
-<li><strong>Contenido Dinámico y Gestión de Banners:</strong> Desarrollé un sistema CRUD completo en el panel de administrador para gestionar los banners de la página de inicio[cite: 4306], permitiendo al equipo de prensa actualizar anuncios y noticias de forma autónoma. [cite_start]También mejoré la interfaz del carrusel de noticias y comunicados en la página principal.</li>
-<li><strong>Interfaz de Usuario Optimizada:</strong> Realicé ajustes en la usabilidad del portal, como la mejora del menú de navegación para hacerlo más dinámico, la adición de un logo de carga para mejorar la percepción del rendimiento [cite: 4204] [cite_start]y la integración de nuevos canales de comunicación como TikTok en el encabezado y pie de página.</li>
+<li><strong>Contenido Dinámico y Gestión de Banners:</strong> Desarrollé un sistema CRUD completo en el panel de administrador para gestionar los banners de la página de inicio, permitiendo al equipo de prensa actualizar anuncios y noticias de forma autónoma. También mejoré la interfaz del carrusel de noticias y comunicados en la página principal.</li>
+<li><strong>Interfaz de Usuario Optimizada:</strong> Realicé ajustes en la usabilidad del portal, como la mejora del menú de navegación para hacerlo más dinámico, la adición de un logo de carga para mejorar la percepción del rendimiento y la integración de nuevos canales de comunicación como TikTok en el encabezado y pie de página.</li>
 </ul>`,
     tags: ["Prácticas Pre-profesionales", "Desarrollo Fullstack"],
     techBadge: ['php', 'javascript', 'mysql'],
@@ -54,69 +54,178 @@ export const projectsData = [
   },
   {
     id: 3,
-    title: 'Tienda Online',
-    description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
-    expandedDescription: `<h3>Tienda Online - E-commerce Moderno</h3>
-<p>Desarrollo completo de una tienda online con enfoque en la experiencia del usuario y conversión. Este proyecto integra un sistema de gestión de productos, carrito de compras y procesamiento de pagos.</p>
-<p>Las características incluyen diseño responsivo, animaciones fluidas y optimización para dispositivos móviles.</p>`,
+    title: 'SafeBank ID',
+    description: 'Desarrollé un SDK de autenticación biométrica facial "On-Device" para Android, utilizando Kotlin y Google ML Kit para detección de vida (liveness) y cifrado local, eliminando la dependencia de servidores externos.',
+    expandedDescription: `<h3>SafeBank ID - Seguridad Biométrica On-Device</h3>
+<p>SafeBank ID es una solución de seguridad móvil innovadora diseñada para combatir el fraude financiero post-robo. A diferencia de las apps bancarias tradicionales que dependen del PIN o la huella del sistema operativo, SafeBank ID es un <strong>SDK de autenticación biométrica independiente</strong> que se integra directamente en las aplicaciones, verificando la identidad del usuario en tiempo real mediante reconocimiento facial activo.</p>
+
+<p>Técnicamente, el proyecto fue desarrollado nativamente en <strong>Android con Kotlin y Jetpack Compose</strong>. El núcleo de la inteligencia artificial utiliza <strong>Google ML Kit</strong> para la detección de rostros y landmarks, implementando algoritmos personalizados para la prueba de vida (liveness detection) mediante análisis de parpadeo, lo que previene ataques de suplantación (anti-spoofing) con fotos o videos. Para la gestión de la cámara y el procesamiento de imágenes de alta velocidad se utilizó <strong>CameraX</strong>.</p>
+
+<p>Lo que distingue a este proyecto es su arquitectura <strong>100% Local (On-Device)</strong>. No envía datos biométricos a la nube, garantizando la privacidad del usuario y reduciendo los costos de infraestructura para las entidades financieras. Las plantillas biométricas se cifran con estándares avanzados (AES-256) utilizando <strong>EncryptedSharedPreferences</strong>, asegurando que la información sensible nunca salga del dispositivo.</p>
+
+<h4>Características Clave:</h4>
+<ul>
+<li><strong>Liveness Detection Activo:</strong> Sistema anti-spoofing que requiere interacción del usuario (parpadeo) para validar que es una persona real y no una grabación.</li>
+<li><strong>Privacidad y Cero Latencia:</strong> Verificación instantánea (< 0.5s) y funcionamiento offline, alineado con estándares de seguridad ISO 27001.</li>
+<li><strong>Integración SDK:</strong> Diseño modular pensado para ser consumido fácilmente por otras aplicaciones fintech como una librería de seguridad.</li>
+</ul>`,
+    tags: ["Mobile Development", "Ciberseguridad", "Inteligencia Artificial"],
+    techBadge: ['android', 'kotlin', 'java'], // Asumo Java/Kotlin por el entorno Android
     buttons: [
-      { type: 'demo-simple', url: '#' }
+       // He puesto un placeholder, asegúrate de poner el link a tu video demo o al PDF si lo subes a un drive
+      { type: 'presentation', url: 'https://www.canva.com/design/DAHAxIOo06U/zfwtahyrOhM7jw0lZV559A/edit?utm_content=DAHAxIOo06U&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton' }, 
+      { type: 'github', url: 'https://github.com/HenryGalvezQ' } // Enlace general a tu GitHub si no es público
     ]
   },
   {
     id: 4,
-    title: 'App de E-commerce',
-    description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
-    expandedDescription: `<h3>Aplicación E-commerce Avanzada</h3>
-<p>Aplicación web progresiva (PWA) para comercio electrónico, diseñada con tecnologías modernas y enfoque mobile-first.</p>
-<p>Incluye funcionalidades avanzadas como búsqueda inteligente, recomendaciones personalizadas y integración con múltiples métodos de pago.</p>`,
+    title: 'Portafolio Personal',
+    description: 'Diseñé y desarrollé mi sitio web personal utilizando Vue 3 y Vite, implementando una arquitectura de componentes modular, con un diseño responsive enfocado en la experiencia de usuario.',
+    expandedDescription: `<h3>Portafolio Profesional - Identidad Digital</h3>
+<p>Este portafolio es una representación de mis habilidades como Desarrollador Frontend y Diseñador UX/UI. Fue construido desde cero con el objetivo de crear una interfaz limpia, moderna y altamente performante que sirva como escaparate para mis proyectos y experiencia profesional.</p>
+
+<p>La arquitectura técnica se basa en <strong>Vue 3 (Composition API)</strong> potenciado por <strong>Vite</strong>, lo que asegura una carga instantánea y una gestión eficiente de los recursos. Implementé una estructura de componentes reutilizables y un manejo de estado reactivo para funcionalidades globales como el cambio de tema (Dark/Light Mode) y la navegación activa (Scroll Spy), mejorando la interactividad sin comprometer el rendimiento.</p>
+
+<p>El diseño visual sigue principios de <strong>Mobile-First</strong> y diseño adaptativo, asegurando una visualización perfecta en cualquier dispositivo. Utilicé CSS moderno para las animaciones y transiciones suaves, y organicé la información (como estos datos de proyectos) en módulos JS independientes para facilitar la escalabilidad y el mantenimiento del contenido a largo plazo.</p>
+
+<h4>Características Destacadas:</h4>
+<ul>
+<li><strong>Arquitectura Basada en Componentes:</strong> Estructura modular (Header, Hero, Projects, Contact) que facilita la reutilización y el mantenimiento del código.</li>
+<li><strong>Gestión de Tema Dinámico:</strong> Sistema de modo oscuro/claro con persistencia en el almacenamiento local (LocalStorage) para recordar las preferencias del usuario.</li>
+<li><strong>Optimización y Performance:</strong> Uso de carga perezosa (lazy loading) para recursos y optimización de assets para maximizar la velocidad del sitio.</li>
+</ul>`,
+    tags: ["Desarrollo Frontend", "Diseño UX/UI"],
+    techBadge: ['vue', 'javascript'],
     buttons: [
-      { type: 'demo-simple', url: '#' }
+      { type: 'github', url: 'https://github.com/HenryGalvezQ/portafolio-henry' }, // Tu repo del portafolio
+      { type: 'demo', url: 'https://henrygalvez-frontend.netlify.app/' } // La URL donde está desplegado este mismo portafolio
     ]
   },
-  {
+{
     id: 5,
-    title: 'Diseño de Marca',
-    description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
-    expandedDescription: `<h3>Proyecto: Sistema de Identidad Corporativa</h3>
-<p>Desarrollo integral de identidad corporativa que abarca desde el diseño conceptual hasta la implementación digital. Este proyecto se centró en crear una presencia de marca coherente y memorable.</p>`,
-    tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
-    techBadge: ['figma', 'vue'],
+    title: 'ReMarket',
+    description: 'Aplicación nativa Android para compraventa segura, desarrollada con Kotlin y Jetpack Compose. Implementa arquitectura MVVM Clean, sincronización offline (Room/WorkManager) y chat en tiempo real.',
+    expandedDescription: `<h3>ReMarket - Marketplace Seguro y Offline-First</h3>
+<p>ReMarket es una aplicación móvil nativa diseñada para combatir el comercio informal de dispositivos electrónicos. El proyecto destaca por su ingeniería frontend avanzada, ofreciendo una experiencia de usuario robusta incluso en entornos sin conexión a internet, priorizando la seguridad y la integridad de los datos.</p>
+
+<p>En el <strong>Frontend (Android)</strong>, implementé una arquitectura moderna basada en <strong>MVVM y Clean Architecture</strong> utilizando <strong>Kotlin y Jetpack Compose</strong>. La interfaz de usuario es totalmente declarativa, gestionando estados complejos de UI de forma reactiva con StateFlow. Para garantizar una experiencia fluida (UX), desarrollé una estrategia de <strong>"Offline-First"</strong>: la aplicación utiliza Room Database como única fuente de verdad, permitiendo a los usuarios crear productos y navegar sin internet. La sincronización con el backend se maneja en segundo plano mediante <strong>WorkManager</strong> una vez que se recupera la conexión.</p>
+
+<p>A nivel de <strong>Diseño y UX/UI</strong>, prototipé la aplicación en Figma enfocándome en flujos diferenciados por roles (Administrador vs. Cliente). La aplicación incluye características interactivas avanzadas como un chat en tiempo real (integrado con Firestore), gestión de estados de carga y error, y un sistema de validación de identidad seguro. La inyección de dependencias con <strong>Hilt</strong> asegura que el código sea modular, escalable y fácilmente testeable.</p>
+
+<h4>Características Técnicas Frontend:</h4>
+<ul>
+<li><strong>Arquitectura Reactiva y Limpia:</strong> Separación estricta de capas (UI, Domain, Data) usando Jetpack Compose para la UI y Coroutines/Flow para el manejo asíncrono de datos.</li>
+<li><strong>Sincronización Offline (Background Sync):</strong> Persistencia local con Room y colas de trabajo con WorkManager para subir imágenes y datos automáticamente cuando hay red.</li>
+<li><strong>Gestión de Estado Avanzada:</strong> Uso de ViewModels y StateFlow para comunicar cambios de datos a la UI en tiempo real (ej. nuevos mensajes de chat o actualizaciones de estado de venta).</li>
+<li><strong>Seguridad e Integración:</strong> Implementación de autenticación segura con Tokens JWT e interceptores de Retrofit, integrando servicios de Firebase y Cloudinary de forma transparente al usuario.</li>
+</ul>`,
+    tags: ["Android Development", "Jetpack Compose", "Offline-First"],
+    techBadge: ['android', 'kotlin', 'firebase'],
     buttons: [
-      { type: 'demo', url: 'http://138.68.254.39/app/' },
-      { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
-      { type: 'presentation', url: '#' },
-      { type: 'github', url: 'https://github.com/HenryGalvezQ/phaseflow' }
+      { type: 'figma', url: 'https://www.figma.com/design/NCiaj1TCaKbz3j24Zw5hzG/Marketplace?node-id=0-1&t=caPV8ReaIRql9K12-1' },
+      { type: 'presentation', url: 'https://docs.google.com/presentation/d/1EVbWNegmOR5PqxnBDhOR_0beXEWSdEH6/edit?usp=sharing&ouid=114415674854887529375&rtpof=true&sd=true' },
+      { type: 'github', url: 'https://github.com/dhuamanilu/ReMarket' }
     ]
   },
   {
     id: 6,
-    title: 'Diseño de Marca',
-    description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
-    expandedDescription: `<h3>Proyecto: Branding Digital Completo</h3>
-<p>Creación de una identidad de marca digital completa que incluye diseño web, aplicaciones móviles y material promocional. El proyecto se desarrolló siguiendo metodologías de design thinking.</p>`,
-    tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
-    techBadge: ['figma', 'vue'],
+    title: 'ReMarket App Multiplataforma',
+    description: 'Migración del marketplace ReMarket a un entorno multiplataforma utilizando Flutter y Dart. UI optimizada mediante el patrón BFF (Backend-For-Frontend) para mejorar la velocidad de carga y fluidez en iOS y Android.',
+    expandedDescription: `<h3>ReMarket Multiplataforma - Migración a Flutter</h3>
+<p>Como parte de un proyecto académico para la asignatura de Plataformas Emergentes, participé en la migración de la aplicación nativa ReMarket hacia un entorno de desarrollo multiplataforma. El desafío principal fue unificar la base de código para sistemas operativos móviles manteniendo un alto estándar en la fluidez de la interfaz y la experiencia de usuario (UX).</p>
+
+<p>Desde la perspectiva del <strong>Desarrollo Frontend</strong>, la aplicación fue reescrita completamente utilizando <strong>Flutter y Dart</strong>. Aproveché la arquitectura basada en widgets de Flutter para crear una interfaz de usuario altamente componetizada, reactiva y adaptable a diferentes tamaños de pantalla. La gestión del estado se optimizó para garantizar transiciones suaves entre las pantallas de catálogo, detalles del producto y flujos de compra/venta, evitando bloqueos en el hilo principal de la UI.</p>
+
+<p>En cuanto a la <strong>Arquitectura y Experiencia de Usuario</strong>, la aplicación consume servicios a través de un patrón <strong>BFF (Backend-For-Frontend)</strong>. Aunque es una implementación de lado del servidor, su impacto es netamente frontend: permite que la aplicación móvil solicite y reciba cargas de datos (payloads) hechas a medida para las pantallas exactas que el usuario está viendo, reduciendo drásticamente los tiempos de carga, el consumo de datos móviles y mejorando la percepción de rendimiento general.</p>
+
+<h4>Características Destacadas de la UI/UX:</h4>
+<ul>
+<li><strong>Experiencia Unificada (Cross-Platform):</strong> Diseño y desarrollo de interfaces consistentes que se sienten naturales tanto en dispositivos Android como iOS utilizando el catálogo de widgets de Material Design y Cupertino.</li>
+<li><strong>Optimización de Carga con BFF:</strong> Integración con una capa intermedia que estructura los datos específicamente para la vista móvil, mejorando la velocidad de renderizado de las listas de productos y galerías de imágenes.</li>
+<li><strong>Formularios y Validaciones Fluidas:</strong> Implementación de flujos de registro y publicación de productos con retroalimentación visual en tiempo real y manejo de errores amigable para el usuario.</li>
+</ul>`,
+    tags: ["Mobile Development", "Multiplataforma", "Flutter"],
+    techBadge: ['flutter', 'dart'],
     buttons: [
-      { type: 'demo', url: 'http://67.205.133.92/app/' },
-      { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
-      { type: 'presentation', url: '#' },
-      { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
+      { type: 'github', url: 'https://github.com/HenryGalvezQ/PE-Lab04' },
+      { type : 'presentation', url: 'https://docs.google.com/document/d/1WWqDpdJtigqhOI0Xb6xgOAzqZ22y2bXnCtbRHFBsXPc/edit?usp=sharing' },
+      { type: 'figma', url: 'https://www.figma.com/design/NCiaj1TCaKbz3j24Zw5hzG/Marketplace?node-id=0-1&t=caPV8ReaIRql9K12-1' } // He mantenido el enlace de Figma del proyecto original, ya que el diseño base es el mismo.
     ]
   },
   {
     id: 7,
-    title: 'Diseño de Marca',
-    description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
-    expandedDescription: `<h3>Proyecto: Rediseño de Identidad Corporativa</h3>
-<p>Modernización completa de la identidad visual de una empresa establecida, incluyendo la migración de sistemas legacy y actualización de todos los materiales de marca.</p>`,
-    tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
-    techBadge: ['figma', 'vue'],
+    title: 'UNSA Park',
+    description: 'Lideré el desarrollo de una aplicación móvil IoT para la gestión de estacionamientos universitarios. Construida con React Native y TypeScript, integra mapas interactivos y visualización de disponibilidad en tiempo real.',
+    expandedDescription: `<h3>UNSA Park - Smart Campus & IoT</h3>
+<p>UNSA Park es una solución móvil integral desarrollada bajo el concepto de "Smart Cities" para optimizar el control de acceso y la gestión de estacionamientos en el campus universitario. Como <strong>Lead Mobile Developer & Architect</strong>, diseñé una aplicación capaz de procesar datos de sensores IoT y presentarlos al usuario de manera instantánea y amigable.</p>
+
+<p>En el <strong>Frontend Móvil</strong>, utilicé <strong>React Native con TypeScript</strong> para crear una arquitectura de componentes reutilizables y tipados, asegurando la escalabilidad y el mantenimiento del código. Implementé el motor <strong>Hermes</strong> para optimizar el tiempo de inicio de la app y reducir el tamaño del bundle, garantizando un rendimiento fluido incluso en dispositivos de gama media/baja. La interfaz se comunica con un backend IoT mediante protocolos eficientes para reflejar el estado de los espacios físicos sin latencia perceptible.</p>
+
+<p>La <strong>Experiencia de Usuario (UX)</strong> se centra en la visualización geoespacial. Integré <strong>react-native-maps</strong> para renderizar un mapa interactivo del campus donde los conductores pueden ver la disponibilidad de espacios en tiempo real (libres/ocupados) mediante indicadores visuales codificados por colores. Además, diseñé un sistema de <strong>trazado de rutas (routing)</strong> que guía al usuario desde su posición actual hasta la puerta de ingreso seleccionada, reduciendo el tiempo de búsqueda de estacionamiento y la congestión vehicular interna.</p>
+
+<h4>Características Técnicas Destacadas:</h4>
+<ul>
+<li><strong>Mapas Interactivos y Geolocalización:</strong> Visualización dinámica de zonas de parqueo sobre mapas reales con marcadores de estado en vivo.</li>
+<li><strong>Arquitectura Optimizada:</strong> Uso de TypeScript para una lógica de negocio robusta y Hermes para un rendimiento nativo superior en Android.</li>
+<li><strong>Integración IoT en Frontend:</strong> Consumo de flujos de datos en tiempo real para actualizar la UI instantáneamente cuando un sensor detecta la entrada o salida de un vehículo.</li>
+<li><strong>Sistema de Navegación:</strong> Flujos de usuario intuitivos para consulta de historial de accesos y guía de navegación asistida.</li>
+</ul>`,
+    tags: ["Mobile Development", "IoT", "Smart Cities"],
+    techBadge: ['react', 'typescript', 'android'], 
     buttons: [
-      { type: 'demo', url: 'http://67.205.133.92/app/' },
-      { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
-      { type: 'presentation', url: '#' },
-      { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
+      { type: 'presentation', url: '#' }, // Enlace a tus diapositivas o video demo
+      { type: 'github', url: 'https://github.com/HenryGalvezQ' } // Tu perfil o repo si es público
+    ]
+  },
+  {
+    id: 8,
+    title: 'Symmetry Applicant Showcase',
+    description: 'Superé los requerimientos de una prueba técnica avanzada desarrollando una app Flutter con arquitectura "Offline-First", sincronización bidireccional (Store-and-Forward) y un sistema de diseño adaptable (Dark/Light Mode).',
+    expandedDescription: `<h3>Symmetry App - Ingeniería de Software aplicada a Mobile</h3>
+<p>Este proyecto fue desarrollado como respuesta a un desafío técnico de alto nivel, donde el objetivo no era solo cumplir con los requisitos funcionales, sino demostrar excelencia en ingeniería de software. Adopté un enfoque de <strong>Producto Mínimo Viable (MVP)</strong> listo para producción, priorizando la escalabilidad, la robustez de los datos y una experiencia de usuario pulida.</p>
+
+<p>A nivel de <strong>Arquitectura y Backend Local</strong>, implementé una estrategia estricta de <strong>Clean Architecture</strong> con separación de capas (Domain, Data, Presentation) y el patrón <strong>BLoC</strong> para la gestión de estado reactivo. El núcleo del sistema es un motor de sincronización personalizado ("Store-and-Forward") que utiliza <strong>Floor (SQLite)</strong> como fuente de verdad local y <strong>Firebase</strong> como respaldo en la nube. Resolví desafíos complejos de concurrencia ("Race Conditions") mediante semáforos y estrategias de fusión de estados, garantizando que los datos nunca se pierdan, incluso si el usuario edita contenido sin conexión a internet.</p>
+
+<p>En el <strong>Frontend y UX/UI</strong>, fui más allá de los requisitos básicos ("Maximally Overdeliver"). Diseñé un sistema de temas dinámico (Dark/Light Mode) con persistencia de preferencias y componentes de marca adaptativos. Implementé un motor de búsqueda y filtrado en memoria para una respuesta instantánea, y aseguré la privacidad de los datos mediante un aislamiento estricto de sesiones (Row-Level Security) en la base de datos local, limpiando información sensible al cerrar sesión.</p>
+
+<h4>Características Técnicas Avanzadas:</h4>
+<ul>
+<li><strong>Motor de Sincronización Bidireccional:</strong> Algoritmo personalizado que gestiona colas de subida y descarga, resolviendo conflictos de datos y permitiendo operaciones CRUD completas en modo offline.</li>
+<li><strong>Optimistic UI:</strong> La interfaz responde inmediatamente a las acciones del usuario (likes, guardados, creación de artículos) mientras las operaciones se procesan en segundo plano.</li>
+<li><strong>Soft Deletes & Data Integrity:</strong> Implementación de borrado lógico para sincronización segura y manejo de transiciones de estado complejas entre local y remoto.</li>
+<li><strong>Seguridad y Aislamiento:</strong> Arquitectura diseñada para entornos multi-usuario en un mismo dispositivo, asegurando que los datos cacheados sean inaccesibles entre diferentes sesiones.</li>
+</ul>`,
+    tags: ["Flutter", "Clean Architecture", "Offline-First"],
+    techBadge: ['flutter', 'dart', 'firebase'],
+    buttons: [
+      { type: 'github', url: 'https://github.com/HenryGalvezQ/starter-project/tree/main' },
+      { type: 'demo', url: '#' } // Si tienes el video en YouTube o Drive, pon el link aquí.
+    ]
+  },
+  {
+    id: 9,
+    title: 'MiMedioPasaje',
+    description: 'Aplicación móvil ganadora del 1er Puesto en la Feria de Proyectos UNSA. Desarrollada en Flutter, automatiza denuncias de transporte público mediante geolocalización y captura de evidencia multimedia.',
+    expandedDescription: `<h3>MiMedioPasaje - Tecnología con Impacto Social</h3>
+<p>Galardonada con el <strong>Primer Puesto en la Feria de Proyectos de la UNSA</strong>, esta aplicación aborda una problemática social crítica: el incumplimiento del medio pasaje universitario. Mi rol se centró en diseñar una solución tecnológica que empoderara a los estudiantes, transformando un trámite burocrático engorroso en una acción digital inmediata y accesible.</p>
+
+<p>En el frente de <strong>Ingeniería Móvil con Flutter</strong>, desarrollé una aplicación nativa optimizada para la velocidad de respuesta, factor crucial en situaciones de conflicto en el transporte. Implementé la integración con APIs de hardware para la <strong>captura de evidencia multimedia (foto/video/audio)</strong> y servicios de <strong>Geolocalización (Google Maps API)</strong> para registrar las coordenadas exactas de la infracción automáticamente. La arquitectura maneja el almacenamiento de estas pruebas en la nube, asegurando su integridad para el reporte.</p>
+
+<p>El desafío de <strong>UX/UI</strong> fue simplificar la carga cognitiva del usuario bajo estrés. Diseñé un flujo de "Denuncia en 3 Pasos" que permite registrar un incidente en menos de un minuto. La interfaz prioriza botones de acción grandes y claros, y un sistema de feedback visual que confirma al estudiante que su reporte ha sido generado exitosamente, brindando una sensación de seguridad y respaldo.</p>
+
+<h4>Logros y Tecnologías:</h4>
+<ul>
+<li><strong>Reconocimiento Académico:</strong> Proyecto ganador del 1er Lugar por su innovación y viabilidad técnica.</li>
+<li><strong>Integración de Hardware:</strong> Manejo eficiente de cámara, micrófono y GPS dentro del ciclo de vida de la app.</li>
+<li><strong>Automatización de Procesos:</strong> Digitalización completa del flujo de reclamos ante INDECOPI.</li>
+</ul>`,
+    tags: ["Mobile Development", "Flutter", "Social Impact"],
+    techBadge: ['flutter', 'dart'],
+    buttons: [
+      { type: 'figma', url: 'https://www.figma.com/design/FArnBNdsQ20gifkbbXM41o/MiPasaje?t=caPV8ReaIRql9K12-1' },
+      { type: 'github', url: 'https://github.com/francoCarMar/MiMedioPasaje-Frontend' },
+      // He puesto el enlace al documento como 'presentation' para que sea accesible como documentación técnica
+      { type: 'presentation', url: 'https://docs.google.com/document/d/13SZJP68qrJpc-c3_Kotq1mlo4phvbQ9x/edit?usp=sharing&ouid=114415674854887529375&rtpof=true&sd=true' }
     ]
   }
 ];

@@ -14,8 +14,8 @@ App.vue:
     <Qualification />
     <Services />
     <Portfolio />
-    <Project />
-    <Testimonial />
+    <!--<Project />-->
+    <!--<Testimonial />-->
     <Contact />
   </main>
   
@@ -74,12 +74,14 @@ const handleScroll = () => {
   // Lógica para el botón de scroll
   showScrollBtn.value = window.scrollY >= 560;
   isHeaderScrolled.value = window.scrollY >= 80;
+  
   // Lógica para la sección activa
   const scrollY = window.scrollY;
   const sections = document.querySelectorAll('section[id]');
+  
   sections.forEach(current => {
     const sectionHeight = current.offsetHeight;
-    const sectionTop = current.offsetTop - 58;
+    const sectionTop = current.offsetTop - 200; // Cambiado de -58 a -200 para mejor detección
     const sectionId = current.getAttribute('id');
 
     if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
@@ -91,6 +93,9 @@ const handleScroll = () => {
 // 8. En onMounted, ahora también leemos el tema guardado en localStorage
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  // Llamamos a handleScroll inmediatamente para detectar la sección inicial
+  handleScroll();
+  
   const savedTheme = localStorage.getItem('selected-theme');
   if (savedTheme) {
     theme.value = savedTheme;
@@ -261,6 +266,7 @@ global.css:
   --title-color: hsl(var(--hue-color), 8%, 15%);
   --text-color: hsl(var(--hue-color), 8%, 45%);
   --text-color-light: hsl(var(--hue-color), 8%, 65%);
+  --text-color-darker: hsl(var(--hue-color), 8%, 40%);
   --input-color: hsl(var(--hue-color), 70%, 96%);
   --body-color: hsl(var(--hue-color), 60%, 99%);
   --container-color: #fff;
@@ -484,6 +490,19 @@ img {
   }
 }
 
+@media screen and (max-width: 567px) {
+  body::after {
+    display: none;
+  }
+}
+
+/* MOSTRAR OLAS EN TABLET Y DESKTOP */
+@media screen and (min-width: 568px) {
+  body::after {
+    display: block;
+  }
+}
+
 /* For medium devices */
 @media screen and (min-width: 768px) {
   body {
@@ -524,34 +543,49 @@ img {
 About.vue:
 <template>
   <section class="about section" id="about">
-    <h2 class="section__title">About me</h2>
-    <span class="section__subtitle">My introduction</span>
+    <h2 class="section__title">Acerca de mí</h2>
+    <span class="section__subtitle">Mi introducción</span>
 
     <div class="about__container container grid">
       <img src="@/assets/img/about.jpg" alt="about" class="about__img">
+      
       <div class="about__data">
         <p class="about__description">
-          Desarrollador web, con conocimiento y experiencia, trabajando en tecnologías web y diseño UX / UI, entregando un trabajo de calidad.
+          Ingeniero de Sistemas especializado en desarrollo Frontend y Mobile, con enfoque en diseño UX/UI. Creo interfaces escalables, accesibles y centradas en el usuario utilizando arquitecturas modernas y mejores prácticas de desarrollo.
         </p>
+        
         <div class="about__info">
           <div>
-            <span class="about__info-title">04+</span>
-            <span class="about__info-name">Years <br> experience</span>
+            <span class="about__info-title">02+</span>
+            <span class="about__info-name">Años <br> de experiencia</span>
           </div>
           <div>
             <span class="about__info-title">10+</span>
-            <span class="about__info-name">Completed <br> project</span>
+            <span class="about__info-name">Proyectos <br> completados</span>
           </div>
           <div>
             <span class="about__info-title">05+</span>
             <span class="about__info-name">Certificados <br> obtenidos</span>
           </div>
         </div>
+
         <div class="about__buttons">
-          <a href="@/assets/img/CV Henry Galvez.pdf" download class="button button--flex">
+          <a href="/cv-henry-galvez.pdf" target="_blank" rel="noopener noreferrer" class="button button--flex">
+            Ver CV<i class="uil uil-eye button__icon"></i>
+          </a>
+          
+          <a href="/cv-henry-galvez.pdf" download="CV_Henry_Galvez.pdf" class="button button--flex button--outline">
             Descargar CV<i class="uil uil-download-alt button__icon"></i>
           </a>
         </div>
+      </div>
+
+      <div class="about__scroll">
+        <a href="#portfolio" class="about__scroll-button button--flex">
+          <i class="uil uil-mouse-alt about__scroll-mouse"></i>
+          <span class="about__scroll-name">Ir a Portafolio</span>
+          <i class="uil uil-arrow-down"></i>
+        </a>
       </div>
     </div>
   </section>
@@ -602,6 +636,60 @@ export default {
 .about__buttons {
   display: flex;
   justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Botón con estilo invertido (outline) */
+.button--outline {
+  background-color: var(--body-color, #fff);
+  color: var(--first-color, #6E57E0);
+  border: 1px solid var(--first-color, #6E57E0);
+}
+
+.button--outline:hover {
+  background-color: var(--first-color, #6E57E0);
+  color: #fff;
+  border-color: var(--first-color, #6E57E0);
+}
+
+.about__container {
+  position: relative;
+}
+
+:global(section#portfolio) {
+  scroll-margin-bottom: 300px; 
+}
+
+/* ==================== SCROLL DOWN REPLICADO ==================== */
+.about__scroll {
+  display: none;
+  position: absolute;
+  right: 0; /* Lo pega al borde derecho del contenedor */
+  z-index: 10;
+}
+
+.about__scroll-button {
+  color: var(--first-color);
+  transition: .3s;
+  display: flex;
+  align-items: center;
+  column-gap: .5rem;
+  text-decoration: none;
+}
+
+.about__scroll-button:hover {
+  transform: translateY(.25rem);
+}
+
+.about__scroll-mouse {
+  font-size: 2rem;
+}
+
+.about__scroll-name {
+  font-size: var(--small-font-size);
+  color: var(--title-color);
+  font-weight: var(--font-medium);
 }
 
 /* ==================== MEDIA QUERIES ==================== */
@@ -625,7 +713,41 @@ export default {
     justify-content: space-between;
   }
   .about__buttons {
-    justify-content: initial;
+    justify-content: center;
+    position: relative; /* Necesario para posicionar el scroll relativamente */
+  }
+  
+  /* Mostrar el scroll en desktop, alineado con los botones */
+  .about__scroll {
+    display: block;
+    position: static; /* Cambia a static para que fluya con el contenido */
+    margin-left: auto; /* Lo empuja totalmente a la derecha */
+  }
+  
+  /* Contenedor wrapper para alinear botones y scroll */
+  .about__data {
+    position: relative;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .about__scroll {
+    position: absolute;
+    right: -8rem; /* Sale del contenedor hacia la derecha */
+    top: auto;
+    bottom: 0;
+  }
+  
+  /* Alinear con la altura de los botones */
+  .about__buttons {
+    position: relative;
+  }
+}
+
+/* Para pantallas muy grandes */
+@media screen and (min-width: 1200px) {
+  .about__scroll {
+    right: -12rem; /* Más espacio en pantallas grandes */
   }
 }
 </style>
@@ -955,66 +1077,104 @@ onUnmounted(() => {
 Contact.vue:
 <template>
   <section class="contact section" id="contact">
-    <h2 class="section__title">Contact Me</h2>
-    <span class="section__subtitle">Get in touch</span>
+    <h2 class="section__title">Contáctame</h2>
+    <span class="section__subtitle">Ponte en contacto</span>
 
     <div class="contact__container container grid">
       <div>
         <div class="contact__information">
           <i class="uil uil-phone contact__icon"></i>
           <div>
-            <h3 class="contact__title">Call Me</h3>
-            <span class="contact__subtitle">999-777-666</span>
+            <h3 class="contact__title">Llámame</h3>
+            <span class="contact__subtitle">+51 970675529</span>
           </div>
         </div>
         <div class="contact__information">
           <i class="uil uil-envelope contact__icon"></i>
           <div>
             <h3 class="contact__title">Email</h3>
-            <span class="contact__subtitle">alexa@email.com</span>
+            <span class="contact__subtitle">henrygalvezquilla@gmail.com</span>
           </div>
         </div>
         <div class="contact__information">
           <i class="uil uil-map-marker contact__icon"></i>
           <div>
-            <h3 class="contact__title">Location</h3>
-            <span class="contact__subtitle">Peru - Lima Av. Bolivar #123</span>
+            <h3 class="contact__title">Ubicación</h3>
+            <span class="contact__subtitle">Perú - Arequipa</span>
           </div>
         </div>
       </div>
 
       <form @submit.prevent="handleSubmit" class="contact__form grid">
         <div class="contact__inputs grid">
-          <div class="contact__content">
-            <label for="name" class="contact__label">Name</label>
-            <input type="text" id="name" class="contact__input" v-model="formData.name">
+          <div class="contact__content" :class="{ 'input-error': errors.name }" @click="focusInput('name')">
+            <label for="name" class="contact__label">Nombre</label>
+            <textarea 
+              id="name" 
+              rows="1"
+              class="contact__input contact__input--auto" 
+              v-model="formData.name"
+              @input="adjustHeight"
+              ref="nameInput"></textarea>
           </div>
-          <div class="contact__content">
+          <div class="contact__content" :class="{ 'input-error': errors.email }" @click="focusInput('email')">
             <label for="email" class="contact__label">Email</label>
-            <input type="email" id="email" class="contact__input" v-model="formData.email">
+            <textarea 
+              id="email" 
+              rows="1"
+              class="contact__input contact__input--auto" 
+              v-model="formData.email"
+              @input="adjustHeight"
+              ref="emailInput"></textarea>
           </div>
-          <div class="contact__content">
-            <label for="project" class="contact__label">Project</label>
-            <input type="text" id="project" class="contact__input" v-model="formData.project">
+          <div class="contact__content contact__content--reduced" @click="focusInput('project')">
+            <label for="project" class="contact__label">Asunto</label>
+            <textarea 
+              id="project" 
+              rows="1"
+              class="contact__input contact__input--auto" 
+              v-model="formData.project"
+              @input="adjustHeight"
+              ref="projectInput"></textarea>
           </div>
-          <div class="contact__content">
-            <label for="message" class="contact__label">Message</label>
-            <textarea id="message" cols="0" rows="7" class="contact__input" v-model="formData.message"></textarea>
-          </div>
-          <div>
-            <button type="submit" class="button button--flex">
-              Send Message
-              <i class="uil uil-message button__icon"></i>
-            </button>
+          <div class="contact__content contact__content--reduced" :class="{ 'input-error': errors.message }" @click="focusInput('message')">
+            <label for="message" class="contact__label">Mensaje</label>
+            <textarea 
+              id="message" 
+              rows="4" 
+              class="contact__input contact__input--auto" 
+              v-model="formData.message"
+              @input="adjustHeight"
+              ref="messageInput"></textarea>
           </div>
         </div>
       </form>
+      
+      <div class="contact__buttons">
+        <button type="button" @click="openWhatsApp" class="button button--flex button--whatsapp">
+          WhatsApp
+          <i class="uil uil-whatsapp button__icon"></i>
+        </button>
+        <button type="submit" @click="handleSubmit" class="button button--flex" :disabled="isSubmitting">
+          {{ isSubmitting ? 'Enviando...' : 'Enviar Mensaje' }}
+          <i class="uil uil-message button__icon"></i>
+        </button>
+      </div>
     </div>
+
+    <!-- Toast Notification -->
+    <transition name="toast">
+      <div v-if="toast.show" :class="['toast', `toast--${toast.type}`]">
+        <i :class="['toast__icon', toast.type === 'success' ? 'uil uil-check-circle' : 'uil uil-exclamation-triangle']"></i>
+        <span class="toast__message">{{ toast.message }}</span>
+      </div>
+    </transition>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, nextTick, onMounted } from 'vue';
+import emailjs from '@emailjs/browser';
 
 const formData = ref({
   name: '',
@@ -1023,18 +1183,147 @@ const formData = ref({
   message: ''
 });
 
-const handleSubmit = () => {
-  console.log('Form data submitted:', formData.value);
-  alert('Mensaje enviado (revisa la consola para ver los datos).');
-  // Opcional: limpiar el formulario después de enviar
-  formData.value = { name: '', email: '', project: '', message: '' };
+const errors = ref({
+  name: false,
+  email: false,
+  message: false
+});
+
+const isSubmitting = ref(false);
+
+const toast = ref({
+  show: false,
+  message: '',
+  type: 'success'
+});
+
+// Referencias a los inputs
+const nameInput = ref(null);
+const emailInput = ref(null);
+const projectInput = ref(null);
+const messageInput = ref(null);
+
+const showToast = (message, type = 'success') => {
+  toast.value = {
+    show: true,
+    message,
+    type
+  };
+  
+  setTimeout(() => {
+    toast.value.show = false;
+  }, 4000);
+};
+
+const clearErrors = () => {
+  errors.value = {
+    name: false,
+    email: false,
+    message: false
+  };
+};
+
+// Función para enfocar el input cuando se hace click en cualquier parte del contenedor
+const focusInput = (fieldName) => {
+  const inputMap = {
+    name: nameInput,
+    email: emailInput,
+    project: projectInput,
+    message: messageInput
+  };
+  
+  if (inputMap[fieldName] && inputMap[fieldName].value) {
+    inputMap[fieldName].value.focus();
+  }
+};
+
+// Función para ajustar la altura dinámicamente
+const adjustHeight = async (event) => {
+  await nextTick();
+  const element = event.target;
+  
+  // Resetear la altura para obtener el scrollHeight correcto
+  element.style.height = 'auto';
+  
+  // Ajustar la altura según el contenido
+  element.style.height = element.scrollHeight + 'px';
+};
+
+// Inicializar alturas al montar el componente
+onMounted(() => {
+  // Ajustar altura inicial si hay contenido pre-cargado
+  [nameInput, emailInput, projectInput, messageInput].forEach(input => {
+    if (input.value && input.value.value) {
+      input.value.style.height = 'auto';
+      input.value.style.height = input.value.scrollHeight + 'px';
+    }
+  });
+});
+
+const handleSubmit = async () => {
+  clearErrors();
+  
+  // Validación básica
+  if (!formData.value.name || !formData.value.email || !formData.value.message) {
+    if (!formData.value.name) errors.value.name = true;
+    if (!formData.value.email) errors.value.email = true;
+    if (!formData.value.message) errors.value.message = true;
+    
+    showToast('Por favor, completa todos los campos requeridos', 'error');
+    return;
+  }
+
+  isSubmitting.value = true;
+
+  try {
+    await emailjs.send(
+      'service_vcnwfaw',
+      'template_7lts8u5',
+      {
+        name: formData.value.name,
+        email: formData.value.email,
+        message: formData.value.message,
+        project: formData.value.project
+      },
+      'D3S-rSMXgov-Ijdfg'
+    );
+
+    showToast('¡Mensaje enviado exitosamente! Te contactaré pronto', 'success');
+    
+    // Limpiar el formulario
+    formData.value = { name: '', email: '', project: '', message: '' };
+    
+    await nextTick();
+    // Resetear alturas de todos los elementos
+    [nameInput, emailInput, projectInput, messageInput].forEach(input => {
+      if (input.value) {
+        input.value.style.height = 'auto';
+      }
+    });
+  } catch (error) {
+    console.error('Error al enviar el mensaje:', error);
+    showToast('Hubo un error al enviar el mensaje. Por favor, intenta contactarme por WhatsApp', 'error');
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+
+const openWhatsApp = () => {
+  const phoneNumber = '51970675529';
+  const message = encodeURIComponent('Hola, quiero contactarte por tus servicios.');
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+  window.open(whatsappUrl, '_blank');
 };
 </script>
 
 <style scoped>
 /* ==================== CONTACT ME ==================== */
+.contact {
+  padding-bottom: 4.5rem; /* Ajusta este valor según cuánto espacio desees */
+}
 .contact__container {
   row-gap: 3rem;
+  position: relative;
 }
 
 .contact__information {
@@ -1056,22 +1345,42 @@ const handleSubmit = () => {
 
 .contact__subtitle {
   font-size: var(--small-font-size);
-  color: var(--text-color-light);
+  color: var(--text-color-darker);
 }
 
 .contact__content {
   background-color: var(--input-color);
   border-radius: .5rem;
   padding: .75rem 1rem .25rem;
+  transition: all 0.3s ease;
+  cursor: text;
+  display: flex;
+  flex-direction: column;
 }
 
-.contact__content>textarea {
-  resize: vertical;
+/* Altura reducida para Asunto y Mensaje */
+.contact__content--reduced {
+  padding: .5rem 1rem .2rem;
+}
+
+.contact__content.input-error {
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
 
 .contact__label {
   font-size: var(--smaller-font-size);
   color: var(--title-color);
+  margin-bottom: 0.25rem;
+  cursor: text;
+  pointer-events: none;
 }
 
 .contact__input {
@@ -1083,12 +1392,149 @@ const handleSubmit = () => {
   border: none;
   outline: none;
   padding: .25rem .5rem .5rem 0;
+  resize: none;
+  overflow: hidden;
+  min-height: auto;
+  line-height: 1.5;
+}
+
+.contact__input--auto {
+  transition: height 0.1s ease;
+  overflow-y: hidden;
+  display: block;
+}
+
+.contact__buttons {
+  display: flex;
+  gap: 3.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.contact__buttons button {
+  flex: 0 1 auto;
+  min-width: 200px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.contact__buttons button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.contact__buttons button:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.button--whatsapp {
+  background-color: #25D366;
+  order: 1;
+}
+
+.button--whatsapp:hover {
+  background-color: #128C7E;
+}
+
+.button--flex:not(.button--whatsapp) {
+  order: 2;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: scale(1) !important;
+}
+
+.button__icon {
+  margin-left: 0.5rem;
+  font-size: 1.3rem;
+}
+
+/* ==================== TOAST NOTIFICATION ==================== */
+.toast {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 400px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.toast--success {
+  background-color: #10b981;
+  color: white;
+}
+
+.toast--error {
+  background-color: #ef4444;
+  color: white;
+}
+
+.toast__icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.toast__message {
+  flex: 1;
+}
+
+.toast-enter-active {
+  animation: slideIn 0.3s ease;
+}
+
+.toast-leave-active {
+  animation: slideOut 0.3s ease;
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(400px);
+    opacity: 0;
+  }
 }
 
 /* ==================== MEDIA QUERIES ==================== */
 @media screen and (min-width: 568px) {
   .contact__container {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .contact__buttons {
+    grid-column: 1 / -1;
   }
 }
 
@@ -1098,7 +1544,16 @@ const handleSubmit = () => {
   }
   .contact__inputs {
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 1.5rem; /* Añadido para espaciar los inputs */
+    column-gap: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .toast {
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
   }
 }
 </style>
@@ -1109,56 +1564,64 @@ Footer.vue:
     <div class="footer__bg">
       <div class="footer__container container grid">
         <div>
-          <h1 class="footer__title">Alexa</h1>
+          <h1 class="footer__title">Henry Galvez</h1>
           <span class="footer__subtitle">Frontend developer</span>
         </div>
         <ul class="footer__links">
           <li>
-            <a href="#services" class="footer__link">Services</a>
+            <a href="#services" class="footer__link">Servicios</a>
           </li>
           <li>
-            <a href="#portfolio" class="footer__link">Portfolio</a>
+            <a href="#portfolio" class="footer__link">Portafolio</a>
           </li>
           <li>
-            <a href="#contact" class="footer__link">Contactme</a>
+            <a href="#contact" class="footer__link">Contacto</a>
           </li>
         </ul>
         <div class="footer__socials">
-          <a href="https://www.facebook.com/" aria-label="footer social facebook" target="_blank" class="footer__social">
+          <a href="https://www.linkedin.com/in/henry-galvez-quilla-26367b281" aria-label="footer social linkedin" target="_blank" class="footer__social">
+            <i class="uil uil-linkedin-alt"></i>
+          </a>
+          <a href="https://github.com/HenryGalvezQ" aria-label="footer social github" target="_blank" class="footer__social">
+            <i class="uil uil-github-alt"></i>
+          </a>
+          <a href="https://www.facebook.com/henry.galvez.quilla" aria-label="footer social facebook" target="_blank" class="footer__social">
             <i class="uil uil-facebook-f"></i>
           </a>
-          <a href="https://www.instagram.com/" aria-label="footer social instagram" target="_blank" class="footer__social">
-            <i class="uil uil-instagram"></i>
-          </a>
-          <a href="https://twitter.com/" aria-label="footer social twitter" target="_blank" class="footer__social">
-            <i class="uil uil-twitter-alt"></i>
+          <a href="https://wa.me/51970675529?text=Hola,%20quiero%20contactarte%20por%20tus%20servicios." aria-label="footer social whatsapp" target="_blank" class="footer__social">
+            <i class="uil uil-whatsapp"></i>
           </a>
         </div>
       </div>
-      <p class="footer__copy">&#169; CodeWithPankaj. All right reserved</p>
+      <p class="footer__copy">&#169; {{ currentYear }} Henry Galvez. All rights reserved</p>
     </div>
   </footer>
 </template>
 
 <script>
 export default {
-  name: 'Footer'
+  name: 'Footer',
+  data() {
+    return {
+      currentYear: new Date().getFullYear()
+    }
+  }
 }
 </script>
 
 <style scoped>
 /* ==================== FOOTER ==================== */
 .footer {
-  padding-top: 2rem;
+  padding-top: 0.5rem; /* Reducido aún más */
 }
 
 .footer__container {
-  row-gap: 3.5rem;
+  row-gap: 1.5rem; /* Reducido de 2rem */
 }
 
 .footer__bg {
   background-color: var(--first-color-second);
-  padding: 2rem 0 3rem;
+  padding: 1.25rem 0 1.5rem; /* Reducido de 1.5rem 0 2rem */
 }
 
 .footer__title {
@@ -1173,7 +1636,7 @@ export default {
 .footer__links {
   display: flex;
   flex-direction: column;
-  row-gap: 1.5rem;
+  row-gap: 0.75rem; /* Reducido de 1rem */
 }
 
 .footer__link:hover {
@@ -1193,7 +1656,7 @@ export default {
   font-size: var(--smaller-font-size);
   text-align: center;
   color: var(--text-color-light);
-  margin-top: var(--mb-3);
+  margin-top: var(--mb-1-5); /* Reducido de var(--mb-2) */
 }
 
 .footer__title,
@@ -1214,10 +1677,10 @@ export default {
   .footer__container {
     padding: 0 1rem;
     grid-template-columns: repeat(3, 1fr);
-    align-items: center; /* Añadido para mejor alineación vertical */
+    align-items: center;
   }
   .footer__bg {
-    padding: 3rem 0 3.5rem;
+    padding: 1.5rem 0 2rem; /* Reducido de 2rem 0 2.5rem */
   }
   .footer__links {
     flex-direction: row;
@@ -1227,7 +1690,7 @@ export default {
     justify-self: flex-end;
   }
   .footer__copy {
-    margin-top: 4.5rem;
+    margin-top: 2rem; /* Reducido de 2.5rem */
   }
 }
 
@@ -1252,41 +1715,43 @@ Header.vue:
           </li>
           <li class="nav__item">
             <a href="#about" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'about' }">
-              <i class="uil uil-user nav__icon"></i> About
+              <i class="uil uil-user nav__icon"></i> Acerca de mí
             </a>
           </li>
           <li class="nav__item">
             <a href="#skills" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'skills' }">
-              <i class="uil uil-file-alt nav__icon"></i> Skills
+              <i class="uil uil-file-alt nav__icon"></i> Habilidades
             </a>
           </li>
           <li class="nav__item">
             <a href="#services" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'services' }">
-              <i class="uil uil-briefcase-alt nav__icon"></i> Services
+              <i class="uil uil-briefcase-alt nav__icon"></i> Servicios
             </a>
           </li>
           <li class="nav__item">
             <a href="#portfolio" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'portfolio' }">
-              <i class="uil uil-scenery nav__icon"></i> Portfolio
+              <i class="uil uil-scenery nav__icon"></i> Portafolio
             </a>
           </li>
           <li class="nav__item">
             <a href="#contact" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'contact' }">
-              <i class="uil uil-message nav__icon"></i> ContactMe
+              <i class="uil uil-message nav__icon"></i> Contáctame
             </a>
           </li>
         </ul>
         <i class="uil uil-times nav__close" id="nav-close" @click="closeMenu"></i>
       </div>
       <div class="nav__btns">
+        <!--
         <i 
           @click="$emit('toggle-theme')" 
           class="uil change-theme" 
           id="theme-button"
           :class="currentTheme === 'dark' ? 'uil-sun' : 'uil-moon'"
         ></i>
+        -->
 
-        <div class="nav__toggle" id="nav-toggle" @click="openMenu">
+        <div class="nav__toggle" id="nav-toggle" @click="toggleMenu">
           <i class="uil uil-apps"></i>
         </div>
       </div>
@@ -1299,7 +1764,7 @@ import { ref } from 'vue';
 
 // Lógica del menú móvil
 const isMenuOpen = ref(false);
-const openMenu = () => isMenuOpen.value = true;
+const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value;
 const closeMenu = () => isMenuOpen.value = false;
 
 // Declaramos las props y los emits
@@ -1363,6 +1828,7 @@ defineEmits(['toggle-theme']);
   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
   border-radius: 1.5rem 1.5rem 0 0;
   transition: .3s;
+  z-index: var(--z-fixed);
 }
 
 /* Clase para mostrar el menú */
@@ -1385,9 +1851,12 @@ defineEmits(['toggle-theme']);
   font-weight: var(--font-medium);
 }
 
-/* Al estar dentro del menú, el active-link solo cambia de color */
-.nav__menu .active-link {
+/* Al estar dentro del menú desplegable, el active-link solo cambia de color */
+.show-menu .active-link {
    color: var(--first-color);
+   background-color: transparent;
+   box-shadow: none;
+   animation: none;
 }
 
 .nav__icon {
@@ -1425,6 +1894,7 @@ defineEmits(['toggle-theme']);
 }
 
 /* --- Active link en la barra inferior (con animación) --- */
+/* Solo se aplica cuando el menú NO está desplegado */
 .active-link {
   color: white;
   background-color: hsl(var(--hue-color), 65%, 65%);
@@ -1454,14 +1924,12 @@ defineEmits(['toggle-theme']);
 
 
 /* ==================== ESTILOS PARA TABLET Y SUPERIOR (>= 768px) ==================== */
-/* ==================== ESTILOS PARA TABLET Y SUPERIOR (>= 768px) ==================== */
 @media screen and (min-width: 768px) {
   .header {
     top: 0; /* Header arriba */
     bottom: initial;
     padding: 0 1rem;
-    /* [!code --] background-color: var(--body-color); */
-    background-color: var(--first-color-3); /* [!code ++] Mantenemos el color púrpura */
+    background-color: var(--first-color-3); /* Mantenemos el color púrpura */
   }
 
   .nav {
@@ -1487,8 +1955,7 @@ defineEmits(['toggle-theme']);
 
   .nav__link {
     flex-direction: row;
-    /* [!code --] color: var(--title-color); */
-    color: white; /* [!code ++] Letras de los enlaces en blanco */
+    color: white; /* Letras de los enlaces en blanco */
     transition: transform 0.3s ease;
   }
   
@@ -1499,7 +1966,6 @@ defineEmits(['toggle-theme']);
     display: none;
   }
 
-/* --- [!code ++] ESTA ES LA PARTE CORREGIDA --- */
   .nav__link:hover {
     /* Al pasar el mouse, solo cambiamos el tamaño. Hereda el color blanco. */
     transform: scale(1.2);
@@ -1513,19 +1979,19 @@ defineEmits(['toggle-theme']);
     box-shadow: none;
     animation: none;
   }
-  /* --- [!code --] FIN DE LA CORRECCIÓN --- */
   
   .change-theme {
     margin: 0;
     color: white;
   }
+
   .nav__logo {
      color: white; /* Logo en blanco */
-     transition: transform 0.3s ease; /* [!code ++] Añadimos también transición al logo */
+     transition: transform 0.3s ease; /* Añadimos también transición al logo */
   }
 
   .nav__logo:hover {
-    transform: scale(1.05); /* [!code update] Agrandamos un poco el logo al pasar el mouse */
+    transform: scale(1.05); /* Agrandamos un poco el logo al pasar el mouse */
     color: white; /* Mantenemos el color */
   }
 }
@@ -1535,49 +2001,72 @@ Home.vue:
 <template>
   <section class="home section" id="home">
     <div class="home__container container grid">
-      <div class="home__content grid">
+      <div class="home__wrapper">
         <div class="home__social">
-          <a href="https://www.linkedin.com/in/henry-galvez-quilla-26367b281" aria-label="home__social-icon" target="_blank" class="home__social-icon">
+          <a href="https://www.linkedin.com/in/henry-galvez-quilla-26367b281" aria-label="LinkedIn" target="_blank" class="home__social-icon">
             <i class="uil uil-linkedin-alt"></i>
+            <span class="home__social-text">LinkedIn</span>
           </a>
-          <a href="https://dribbble.com/" aria-label="home__social-icon" target="_blank" class="home__social-icon">
+          <a href="https://www.credly.com/users/henry-quilla" aria-label="Credly" target="_blank" class="home__social-icon">
             <i class="uil uil-dribbble"></i>
+            <span class="home__social-text">Credly</span>
           </a>
-          <a href="https://github.com/HenryGalvezQ" aria-label="home__social-icon" target="_blank" class="home__social-icon">
+          <a href="https://github.com/HenryGalvezQ" aria-label="GitHub" target="_blank" class="home__social-icon">
             <i class="uil uil-github-alt"></i>
+            <span class="home__social-text">GitHub</span>
+          </a>
+          <a href="https://wa.me/51970675529?text=Hola,%20quiero%20contactarte%20por%20tus%20servicios." aria-label="WhatsApp" target="_blank" class="home__social-icon">
+            <i class="uil uil-whatsapp"></i>
+            <span class="home__social-text">WhatsApp</span>
+          </a>
+          <a href="https://www.facebook.com/henry.galvez.quilla" aria-label="Facebook" target="_blank" class="home__social-icon">
+            <i class="uil uil-facebook-f"></i>
+            <span class="home__social-text">Facebook</span>
+          </a>
+          <a href="#contact" aria-label="Email" class="home__social-icon">
+            <i class="uil uil-envelope-alt"></i>
+            <span class="home__social-text">Email</span>
           </a>
         </div>
-        <div class="home__img">
-          <svg class="home__blob" viewBox="0 0 200 187" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <mask id="mask0" mask-type="alpha">
-              <path d="M190.312 36.4879C206.582 62.1187 201.309 102.826 182.328 134.186C163.346 165.547 
-                            130.807 187.559 100.226 186.353C69.6454 185.297 41.0228 161.023 21.7403 129.362C2.45775 
-                            97.8511 -7.48481 59.1033 6.67581 34.5279C20.9871 10.1032 59.7028 -0.149132 97.9666 
-                            0.00163737C136.23 0.303176 174.193 10.857 190.312 36.4879Z" />
-            </mask>
-            <g mask="url(#mask0)">
-              <path d="M190.312 36.4879C206.582 62.1187 201.309 102.826 182.328 134.186C163.346 
-                            165.547 130.807 187.559 100.226 186.353C69.6454 185.297 41.0228 161.023 21.7403 
-                            129.362C2.45775 97.8511 -7.48481 59.1033 6.67581 34.5279C20.9871 10.1032 59.7028 
-                            -0.149132 97.9666 0.00163737C136.23 0.303176 174.193 10.857 190.312 36.4879Z" />
-              <image class="home__blob-img" x="12" y="18" href="@/assets/img/perfil.png" />
-            </g>
-          </svg>
-        </div>
-        <div class="home__data">
-          <h1 class="home__title">Hi, I'am Henry</h1>
-          <h3 class="home__subtitle">  <span>Ingeniero de Sistemas</span><br><span>Frontend Developer - UX/UI Designer</span></h3>
-          <p class="home__discription">Experiencia de alto nivel en diseño y desarrollo web, produciendo
-            trabajos de calidad.</p>
-          <a href="#contact" class="button button--flex">
-            Contacto<i class="uil uil-message button__icon"></i>
-          </a>
+        
+        <div class="home__content grid">
+          <div class="home__img">
+            <svg class="home__blob" viewBox="0 0 200 187" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <mask id="mask0" mask-type="alpha">
+                <path d="M190.312 36.4879C206.582 62.1187 201.309 102.826 182.328 134.186C163.346 165.547 
+                              130.807 187.559 100.226 186.353C69.6454 185.297 41.0228 161.023 21.7403 129.362C2.45775 
+                              97.8511 -7.48481 59.1033 6.67581 34.5279C20.9871 10.1032 59.7028 -0.149132 97.9666 
+                              0.00163737C136.23 0.303176 174.193 10.857 190.312 36.4879Z" />
+              </mask>
+              <g mask="url(#mask0)">
+                <path d="M190.312 36.4879C206.582 62.1187 201.309 102.826 182.328 134.186C163.346 
+                              165.547 130.807 187.559 100.226 186.353C69.6454 185.297 41.0228 161.023 21.7403 
+                              129.362C2.45775 97.8511 -7.48481 59.1033 6.67581 34.5279C20.9871 10.1032 59.7028 
+                              -0.149132 97.9666 0.00163737C136.23 0.303176 174.193 10.857 190.312 36.4879Z" />
+                <image class="home__blob-img" x="12" y="18" href="@/assets/img/perfil.png" />
+              </g>
+            </svg>
+          </div>
+          <div class="home__data">
+            <h1 class="home__title">Hi, I'm Henry Galvez</h1>
+            <h3 class="home__subtitle">
+              <span>Ingeniero de Sistemas</span><br>
+              <span>Frontend/Mobile Developer</span><br>
+              <span>UX/UI Designer</span>
+            </h3>
+            <p class="home__discription">Experiencia de alto nivel en diseño y desarrollo web, produciendo
+              trabajos de calidad.</p>
+            <a href="#contact" class="button button--flex button--animated">
+              Contacto<i class="uil uil-message button__icon"></i>
+            </a>
+          </div>
         </div>
       </div>
+      
       <div class="home__scroll">
         <a href="#about" class="home__scroll-button button--flex">
           <i class="uil uil-mouse-alt home__scroll-mouse"></i>
-          <span class="home__scroll-name">Scroll down</span>
+          <span class="home__scroll-name">Scroll a CV</span>
           <i class="uil uil-arrow-down"></i>
         </a>
       </div>
@@ -1588,105 +2077,403 @@ Home.vue:
 <style scoped>
 .home__container {
   gap: 1rem;
-  position: relative; /* [!code update] Se añade la posición relativa */
+  position: relative;
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
-.home__content {
-  grid-template-columns: .5fr 3fr;
-  padding-top: 3.5rem;
+
+.home__wrapper {
+  display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  column-gap: 2rem; 
 }
-.home__social {
+
+.home__content {
   display: grid;
-  grid-template-columns: max-content;
-  row-gap: 1rem;
+  grid-template-columns: max-content max-content;
+  column-gap: 2rem;
+  align-items: center;
+  flex: initial;
+  max-width: fit-content;
 }
+
+.home__social {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  flex-shrink: 0;
+  width: 150px;
+  align-items: flex-start;
+  margin-top: 6.5rem;
+}
+
 .home__social-icon {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   color: var(--first-color);
+  display: flex;
+  align-items: center;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: relative;
+  overflow: hidden;
+  width: fit-content;
+  text-decoration: none;
 }
+
+.home__social-icon i {
+  z-index: 2;
+  position: relative;
+  transition: transform 0.3s ease;
+  min-width: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home__social-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--title-color);
+  margin-left: 0;
+  max-width: 0;
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 2;
+  position: relative;
+}
+
+.home__social-icon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: var(--first-color);
+  transition: width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 1;
+  border-radius: 0.5rem;
+}
+
 .home__social-icon:hover {
-  color: var(--first-color-alt);
+  background-color: transparent;
+  padding-right: 1rem;
 }
+
+.home__social-icon:hover::before {
+  width: 100%;
+}
+
+.home__social-icon:hover i {
+  color: white;
+  transform: scale(1.1);
+}
+
+.home__social-icon:hover .home__social-text {
+  max-width: 150px;
+  opacity: 1;
+  margin-left: 0.6rem;
+  color: white;
+}
+
 .home__blob {
   width: 200px;
-  fill: var(--first-color-2); /* [!code update] Corregido al color original */
+  fill: var(--first-color-2);
 }
+
 .home__blob-img {
   width: 170px;
 }
+
 .home__data {
-  grid-column: 1/3;
+  max-width: 400px;
 }
+
+.home__img {
+  justify-self: center; 
+  display: flex;
+  align-items: center;
+}
+
 .home__title {
   font-size: var(--big-font-size);
 }
+
 .home__subtitle {
   font-size: var(--h3-font-size);
   color: var(--text-color);
   font-weight: var(--font-medium);
   margin-bottom: var(--mb-0-75);
 }
+
 .home__discription {
   margin-bottom: var(--mb-2);
   color: black;
 }
+
+.button--animated {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.button--animated:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.button--animated:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
 .home__scroll {
   display: none;
   position: absolute;
-  top: 495px;      /* [!code update] Se añade la propiedad 'top' que faltaba */
-  right: 1.5rem;   /* [!code update] Se corrige el valor de 'right' */
+  top: 495px;
+  right: 13.5rem;
   bottom: 4rem;
- 
 }
+
 .home__scroll-button {
   color: var(--first-color);
   transition: .3s;
 }
+
 .home__scroll-button:hover {
   transform: translateY(.25rem);
 }
+
 .home__scroll-mouse {
   font-size: 2rem;
 }
+
 .home__scroll-name {
   font-size: var(--small-font-size);
   color: var(--title-color);
   font-weight: var(--font-medium);
   margin-right: var(--mb-0-25);
 }
+
 .home__scroll-arrow {
   font-size: 1.25rem;
 }
 
-/* Media Queries para Home */
+/* ==================== MOBILE FIXES ==================== */
+/* Pantallas muy pequeñas (max-width: 350px) */
 @media screen and (max-width: 350px) {
-  .home__content {
-    grid-template-columns: .25fr 3fr;
+  .home__container {
+    padding-top: 5.5rem;
   }
+  
+  .home__wrapper {
+    flex-direction: column-reverse; /* Cambiado: primero contenido, luego redes */
+    gap: 3rem;
+    align-items: center;
+  }
+  
+  /* Redes sociales en mobile */
+  .home__social {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 0;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Iconos sociales solo muestran el ícono en mobile */
+  .home__social-icon {
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    width: auto;
+  }
+  
+  /* Ocultar texto en mobile */
+  .home__social-text {
+    display: none;
+  }
+  
+  .home__social-icon:hover .home__social-text {
+    display: none;
+  }
+  
+  /* Grid del contenido principal */
+  .home__content {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    row-gap: 2.25rem;
+    padding-top: 0;
+  }
+  
+  .home__img {
+    order: -1; /* Imagen primero */
+    justify-self: center;
+    margin-bottom: 0.5rem;
+  }
+  
   .home__blob {
     width: 180px;
   }
+  
+  .home__data {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .home__title {
+    font-size: 1.75rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .home__subtitle {
+    font-size: 0.9rem;
+    text-align: left;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  .home__discription {
+    font-size: 0.85rem;
+    text-align: left;
+    margin-bottom: 1.75rem;
+    width: 100%;
+  }
 }
-@media screen and (min-width: 568px) {
+
+/* Pantallas pequeñas (min-width: 351px y max-width: 567px) */
+@media screen and (min-width: 351px) and (max-width: 567px) {
+  .home__container {
+    padding-top: 5.5rem;
+  }
+  
+  .home__wrapper {
+    flex-direction: column-reverse;
+    gap: 3rem;
+    align-items: center;
+  }
+  
+  .home__social {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0;
+    flex-wrap: wrap;
+  }
+  
+  .home__social-icon {
+    font-size: 1.3rem;
+    padding: 0.5rem;
+  }
+  
+  .home__social-text {
+    display: none;
+  }
+  
+  .home__social-icon:hover .home__social-text {
+    display: none;
+  }
+  
   .home__content {
-    grid-template-columns: max-content 1fr 1fr;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    row-gap: 2.25rem;
+  }
+  
+  .home__img {
+    order: -1;
+    justify-self: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .home__blob {
+    width: 200px;
+  }
+  
+  .home__data {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .home__title {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .home__subtitle {
+    text-align: left;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  .home__discription {
+    text-align: left;
+    margin-bottom: 1.75rem;
+    width: 100%;
+  }
+}
+
+/* Tablets pequeñas (min-width: 568px) */
+@media screen and (min-width: 568px) {
+  .home__wrapper {
+    gap: 0;
+  }
+  .home__social {
+    width: 160px;
+    margin-left: 0;
+    margin-top: 0;
+  }
+  .home__content {
+    grid-template-columns: max-content max-content;
+    justify-content: flex-start; 
+    column-gap: 1rem;
+    margin-left: 1rem;
+    padding-top: 0;
   }
   .home__data {
     grid-column: initial;
+    max-width: 400px;
   }
   .home__img {
     order: 1;
-    justify-self: center;
+    justify-self: end;
   }
 }
+
+/* Tablets (min-width: 768px) */
 @media screen and (min-width: 768px) {
   .home__container {
     row-gap: 5rem;
     padding-top: 4rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .home__wrapper {
+    column-gap: 1.5rem;
+  }
+  .home__social {
+    width: 160px;
+    margin-top: 6.5rem;
   }
   .home__content {
     padding-top: 5.5rem;
-    column-gap: 2rem;
+    column-gap: 1rem;
+    grid-template-columns: 1.5fr 1fr;
   }
   .home__blob {
     width: 270px;
@@ -1697,15 +2484,35 @@ Home.vue:
   .home__scroll-button {
     margin-left: 3rem;
   }
+  .home__social-icon {
+    font-size: 1.6rem;
+  }
 }
+
+/* Desktop (min-width: 1024px) - PERFECTO, NO TOCAR */
 @media screen and (min-width: 1024px) {
+  .home__container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
   .home__blob {
     width: 320px;
   }
-  .home__social {
-    transform: translateX(-6rem);
+  .home__wrapper {
+    column-gap: 2rem; 
   }
-
+  .home__social {
+    width: 170px;
+  }
+  .home__content {
+    grid-template-columns: max-content max-content;
+    column-gap: 3rem;
+    justify-content: center;
+    margin-left: 0;
+  }
+  .home__social-icon {
+    font-size: 1.7rem;
+  }
 }
 </style>
 
@@ -1713,7 +2520,7 @@ Portfolio.vue:
 // Portfolio.vue
 <template>
   <section class="portfolio section" id="portfolio">
-    <h2 class="section__title">Portfolio</h2>
+    <h2 class="section__title">Portafolio</h2>
     <span class="section__subtitle">Trabajos más recientes</span>
 
     <div class="portfolio__container container grid">
@@ -1732,7 +2539,7 @@ import PortfolioCardWrapper from './PortfolioCardWrapper.vue'; // Nuevo wrapper
 import { buttonTemplates } from '@/config/button-config.js';
 // ¡NUEVO! Importar nuestro cargador de imágenes
 import projectsImages from '@/utils/image-loader.js';
-
+import { projectsData } from '@/data/projectsData.js';
 export default {
   name: 'Portfolio',
   components: {
@@ -1755,134 +2562,18 @@ export default {
           id: index + 1,
         };
       });
+    },
+
+    processProjects() {
+      return projectsData.map(project => ({
+        ...project,
+        images: projectsImages[project.title] || [],
+        buttons: this.createProjectButtons(project.buttons)
+      }));
     }
   },
   created() {
-    // Los datos "en crudo" ahora incluyen descripción expandida
-    const projectsData = [
-      {
-        id: 1,
-        title: 'Sigepro',
-        description: 'Prototipé en Figma y desarrollé una SPA de gestión de proyectos con una UI adaptativa basada en roles (Admin / Cliente  Cliente/ Colaborador), lo construí con Vue 3, Pinia y Tailwind CSS y lo conecté al backend con APIRESTful.',
-        expandedDescription: `<h3>Proyecto: SIGEPRO (Sistema de Gestión de Proyectos)</h3>
-<p>SIGEPRO es una aplicación web SPA (Single Page Application) robusta y moderna, diseñada para la gestión integral de proyectos de investigación académica. Desarrollada como parte de la asignatura de Ingeniería de Software, esta plataforma permite a estudiantes y administradores gestionar todo el ciclo de vida de un proyecto, desde la solicitud inicial hasta el seguimiento detallado de tareas.</p>
-
-<p>Desde la perspectiva del <strong>Desarrollo Frontend</strong>, construí una arquitectura reactiva y eficiente utilizando <strong>Vue 3 y Vite</strong>, garantizando una experiencia de usuario fluida y tiempos de carga mínimos. La gestión del estado global se maneja con <strong>Pinia</strong>, centralizando la autenticación y los datos del usuario de forma segura. La interfaz, diseñada con <strong>Tailwind CSS</strong>, es completamente responsiva y sigue un enfoque de diseño utilitario para un desarrollo ágil. La comunicación con el backend se realiza a través de una API REST, gestionada con Axios, implementando un sistema de autenticación seguro basado en tokens JWT.</p>
-
-<p>En el ámbito del <strong>Diseño UX/UI</strong>, el enfoque principal fue crear flujos de usuario intuitivos y adaptados a distintos perfiles. El sistema distingue tres roles claros (<strong>Administrador, Colaborador y Cliente</strong>), y la interfaz se transforma dinámicamente para mostrar únicamente las herramientas y la información relevante para cada uno. Diseñé procesos complejos como el asistente de configuración de proyectos, un flujo multi-paso que guía al administrador a través de la creación y asignación de tareas de manera ordenada y sin fricciones. La experiencia de usuario se enriquece con un sistema de notificaciones en tiempo real que ofrece feedback inmediato sobre las acciones realizadas.</p>
-
-<h4>Características Destacadas:</h4>
-<ul>
-<li><strong>Autenticación y Seguridad por Roles:</strong> Implementación de un sistema de acceso seguro con JWT que personaliza la experiencia y los permisos para Administradores, Colaboradores y Clientes.</li>
-<li><strong>Flujo de Aprobación de Proyectos:</strong> Un ciclo de vida completo donde los clientes crean solicitudes que los administradores revisan, configuran y aprueban a través de un panel de gestión centralizado.</li>
-<li><strong>Dashboard Dinámico y Adaptativo:</strong> La pantalla principal (HomeView) actúa como un centro de control que renderiza componentes específicos según el rol del usuario, optimizando su flujo de trabajo.</li>
-<li><strong>Gestión CRUD Intuitiva:</strong> Interfaces claras para la administración completa de clientes, proyectos y tareas, utilizando modales y formularios con validaciones en tiempo real.</li>
-<li><strong>Asistente de Configuración Guiado:</strong> Un "wizard" multi-paso para que los administradores formalicen un proyecto, definan sus tareas iniciales con validación de fechas secuencial y organicen el cronograma por fases.</li>
-</ul>`,
-        tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
-        techBadge: ['figma', 'vue'],
-        buttons: this.createProjectButtons([
-          { type: 'demo', url: 'http://67.205.133.92/app/' },
-          { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
-          { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' },
-          { type: 'presentation', url: '#' }
-        ])
-      },
-      {
-        id: 2,
-        title: 'Diseño de Marca',
-        description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
-        expandedDescription: `<h3>Proyecto: Sistema de Diseño de Marca</h3>
-<p>Este proyecto se enfocó en crear una identidad visual completa y coherente, desarrollando desde el concepto inicial hasta la implementación digital final. El trabajo abarcó tanto la creación de elementos gráficos como su traducción a una experiencia web interactiva y funcional.</p>
-
-<p>Desde el punto de vista del <strong>Diseño Gráfico</strong>, desarrollé una identidad visual sólida que incluye logotipo, paleta de colores, tipografías corporativas y elementos gráficos complementarios. Cada elemento fue diseñado pensando en su aplicación multi-plataforma y escalabilidad.</p>
-
-<p>En el <strong>Desarrollo Web</strong>, implementé la identidad visual en una plataforma digital robusta utilizando Vue 3, Pinia para la gestión del estado y Tailwind CSS para un diseño consistente y responsivo.</p>`,
-        tags: ["Proyecto Personal", "Desarrollo Frontend"],
-        techBadge: ['figma', 'vue'],
-        buttons: this.createProjectButtons([
-          { type: 'demo', url: 'http://67.205.133.92/app/' },
-          { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
-          { type: 'presentation', url: '#' },
-          { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
-        ])
-      },
-      {
-        id: 3,
-        title: 'Tienda Online',
-        description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
-        expandedDescription: `<h3>Tienda Online - E-commerce Moderno</h3>
-<p>Desarrollo completo de una tienda online con enfoque en la experiencia del usuario y conversión. Este proyecto integra un sistema de gestión de productos, carrito de compras y procesamiento de pagos.</p>
-<p>Las características incluyen diseño responsivo, animaciones fluidas y optimización para dispositivos móviles.</p>`,
-        buttons: this.createProjectButtons([
-          { type: 'demo-simple', url: '#' }
-        ])
-      },
-      {
-        id: 4,
-        title: 'App de E-commerce',
-        description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
-        expandedDescription: `<h3>Aplicación E-commerce Avanzada</h3>
-<p>Aplicación web progresiva (PWA) para comercio electrónico, diseñada con tecnologías modernas y enfoque mobile-first.</p>
-<p>Incluye funcionalidades avanzadas como búsqueda inteligente, recomendaciones personalizadas y integración con múltiples métodos de pago.</p>`,
-        buttons: this.createProjectButtons([
-          { type: 'demo-simple', url: '#' }
-        ])
-      },
-      {
-        id: 5,
-        title: 'Diseño de Marca',
-        description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
-        expandedDescription: `<h3>Proyecto: Sistema de Identidad Corporativa</h3>
-<p>Desarrollo integral de identidad corporativa que abarca desde el diseño conceptual hasta la implementación digital. Este proyecto se centró en crear una presencia de marca coherente y memorable.</p>`,
-        tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
-        techBadge: ['figma', 'vue'],
-        buttons: this.createProjectButtons([
-          { type: 'demo', url: 'http://67.205.133.92/app/' },
-          { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
-          { type: 'presentation', url: '#' },
-          { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
-        ])
-      },
-      {
-        id: 6,
-        title: 'Diseño de Marca',
-        description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
-        expandedDescription: `<h3>Proyecto: Branding Digital Completo</h3>
-<p>Creación de una identidad de marca digital completa que incluye diseño web, aplicaciones móviles y material promocional. El proyecto se desarrolló siguiendo metodologías de design thinking.</p>`,
-        tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
-        techBadge: ['figma', 'vue'],
-        buttons: this.createProjectButtons([
-          { type: 'demo', url: 'http://67.205.133.92/app/' },
-          { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
-          { type: 'presentation', url: '#' },
-          { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
-        ])
-      },
-      {
-        id: 7,
-        title: 'Diseño de Marca',
-        description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
-        expandedDescription: `<h3>Proyecto: Rediseño de Identidad Corporativa</h3>
-<p>Modernización completa de la identidad visual de una empresa establecida, incluyendo la migración de sistemas legacy y actualización de todos los materiales de marca.</p>`,
-        tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
-        techBadge: ['figma', 'vue'],
-        buttons: this.createProjectButtons([
-          { type: 'demo', url: 'http://67.205.133.92/app/' },
-          { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
-          { type: 'presentation', url: '#' },
-          { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
-        ])
-      }
-    ];
-    
-    // ¡MAGIA! Procesamos los datos para añadir las imágenes automáticamente.
-    this.projects = projectsData.map(project => ({
-      ...project,
-      // Busca en nuestro objeto de imágenes usando el título del proyecto como clave.
-      // Si no encuentra nada, devuelve un array vacío para evitar errores.
-      images: projectsImages[project.title] || []
-    }));
+    this.projects = this.processProjects();
   }
 }
 </script>
@@ -1918,8 +2609,6 @@ export default {
 </style>
 
 PortfolioActionButtons.vue:
-// PortfolioActionButtons.vue:
-
 <template>
   <div ref="buttonsContainer" class="portfolio__buttons"
        :class="{ ...hoverState, 'delayed-reorder': delayedButtonReorder }"
@@ -1937,9 +2626,7 @@ PortfolioActionButtons.vue:
     >
       <SvgIcon v-if="button.isSvg" :name="button.icon" />
       <i v-else :class="button.icon" class="button__icon"></i>
-
       <span class="button__text">{{ button.text }}</span>
-
       <i v-if="button.arrow" class="uil uil-arrow-right button__icon button__arrow"></i>
     </a>
   </div>
@@ -1963,20 +2650,20 @@ export default {
       required: true
     }
   },
-  emits: ['button-hover', 'button-leave'],
+  emits: ['button-hover', 'button-leave', 'height-change'],
   data() {
     return {
       delayedButtonReorder: false,
-      collapseTimeout: null
+      collapseTimeout: null,
+      resizeObserver: null,
+      lastHeight: 0
     }
   },
   watch: {
     'hoverState.presentation-hover'(newValue, oldValue) {
       if (oldValue && !newValue) {
         this.delayedButtonReorder = true;
-        if (this.collapseTimeout) {
-          clearTimeout(this.collapseTimeout);
-        }
+        if (this.collapseTimeout) clearTimeout(this.collapseTimeout);
         this.collapseTimeout = setTimeout(() => {
           this.delayedButtonReorder = false;
         }, 0);
@@ -1991,12 +2678,21 @@ export default {
   },
   mounted() {
     document.addEventListener('mousemove', this.handleGlobalMouseMove);
+    // Le ponemos un observador a este componente.
+    this.resizeObserver = new ResizeObserver(entries => {
+      const newHeight = Math.round(entries[0].contentRect.height);
+      if (newHeight > 0 && newHeight !== this.lastHeight) {
+        this.lastHeight = newHeight;
+        // Solo avisamos que hemos cambiado. No enviamos datos.
+        this.$emit('height-change');
+      }
+    });
+    this.resizeObserver.observe(this.$el);
   },
   beforeUnmount() {
     document.removeEventListener('mousemove', this.handleGlobalMouseMove);
-    if (this.collapseTimeout) {
-      clearTimeout(this.collapseTimeout);
-    }
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    if (this.collapseTimeout) clearTimeout(this.collapseTimeout);
   },
   methods: {
     handleGlobalMouseMove(event) {
@@ -2034,8 +2730,7 @@ export default {
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s, height 0.4s ease;
 }
 
-/* CAMBIO: Este selector ahora busca la clase que le pasa su padre (PortfolioCard)
-   en lugar de buscar la clase del abuelo (.portfolio__card:hover) */
+/* Este selector ahora busca la clase que le pasa su padre (PortfolioCard) */
 .portfolio__buttons.is-visible {
   opacity: 1;
   visibility: visible;
@@ -2043,9 +2738,6 @@ export default {
   height: auto;
   transition: opacity 0.4s ease .2s, transform 0.4s ease .2s, visibility 0s .2s, height 0.4s ease .2s;
 }
-
-/* ... el resto de los estilos de PortfolioActionButtons.vue permanecen igual ... */
-/* ========================================================================= */
 
 .portfolio__buttons.demo-hover .portfolio__button:nth-child(4) {
   flex-basis: 100%;
@@ -2277,10 +2969,10 @@ export default {
     transform: scale(1) translateY(0);
   }
 }
-
 </style>
 
 PortfolioCard.vue:
+// PortfolioCard.vue
 <template>
   <div 
     class="portfolio-card__content" 
@@ -2289,24 +2981,22 @@ PortfolioCard.vue:
       'parent-is-hovered': isHovered && !isExpanded
     }"
   >
-    
     <PortfolioTags :tags="project.tags" />
-    
-    <PortfolioImageCarousel
-      ref="carousel"
-      :images="project.images"
-      :alt="project.title"
-      :tech-badges="project.techBadge"
-      :is-expanded="isExpanded"
-      @carousel-hint-shown="handleCarouselHintShown"
-    />
-
+    <div class="carousel-wrapper">
+      <PortfolioImageCarousel
+        ref="carousel"
+        :images="project.images"
+        :alt="project.title"
+        :tech-badges="project.techBadge"
+        :is-expanded="isExpanded"
+        @carousel-hint-shown="handleCarouselHintShown"
+      />
+    </div>
     <div class="portfolio__data">
       <h3 class="portfolio__title">{{ project.title }}</h3>
       <div class="portfolio__description-container">
         <p class="portfolio__description">
           {{ project.description }}
-          
           <button 
             v-if="project.expandedDescription"
             @click="$emit('toggle-expand')"
@@ -2316,12 +3006,10 @@ PortfolioCard.vue:
           </button>
         </p>
       </div>
-
       <div class="portfolio__cta" :class="{ 'portfolio__cta--visible': isExpanded }">
         <i class="uil uil-rocket"></i>
         <span>Explora el proyecto aquí <i class="uil uil-arrow-down"></i></span> 
       </div>
-
       <PortfolioActionButtons
         :buttons="project.buttons"
         :hover-state="{ 
@@ -2331,9 +3019,9 @@ PortfolioCard.vue:
         :class="{ 'is-visible': (isHovered && !isExpanded) || isExpanded,'is-expanded-mode': isExpanded }"
         @button-hover="handleButtonHover"
         @button-leave="handleButtonLeave"
+        @height-change="measureAndEmitHeight"
       />
     </div>
-    
     <div 
       v-if="!isExpanded"
       class="portfolio__expand-button"
@@ -2365,58 +3053,82 @@ export default {
       type: Boolean,
       default: false
     },
-    // CAMBIO: Nueva prop para recibir el estado hover del padre
     isHovered: {
       type: Boolean,
       default: false
     }
   },
-  emits: ['toggle-expand'],
+  emits: ['toggle-expand', 'resize'],
   data() {
     return {
       hoveredButton: null,
       lockHover: false,
-      showCarouselHint: false
+      showCarouselHint: false,
+      resizeObserver: null,
+      lastReportedHeight: 0,
     };
   },
+  mounted() {
+    // Este observer sirve como fallback para otros cambios de tamaño.
+    this.resizeObserver = new ResizeObserver(() => {
+        this.measureAndEmitHeight();
+    });
+    this.resizeObserver.observe(this.$el);
+  },
+  beforeUnmount() {
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+  },
   methods: {
-    // CAMBIO: Eliminados handleCardEnter y handleCardLeave. La lógica se mueve al watcher.
+    measureAndEmitHeight() {
+      this.$nextTick(() => {
+        let newHeight = Math.round(this.$el.scrollHeight);
+
+        //// Condición: ¿Está el mouse sobre el botón 1 o 4?
+       // const isHoveringWrapButton = this.hoveredButton === 1 || this.hoveredButton === 4;
+          const isHoveringAnyButton = this.hoveredButton !== null;
+        // Si es así, añade el margen de seguridad. Si no, no hagas nada.
+        if (isHoveringAnyButton) {
+          newHeight += 35; // <-- ESTA ES LA "ALTURA AÑADIDA"
+        }
+
+        if (newHeight > 0 && newHeight !== this.lastReportedHeight) {
+          this.lastReportedHeight = newHeight;
+          this.$emit('resize', newHeight);
+        }
+      });
+    },
     handleCarouselHintShown() {
       this.showCarouselHint = true;
-      setTimeout(() => {
-        this.showCarouselHint = false;
-      }, 1000);
+      setTimeout(() => { this.showCarouselHint = false; }, 1000);
     },
     handleButtonHover(buttonId) {
       if (this.lockHover) return;
-      this.hoveredButton = buttonId; 
-
+      this.hoveredButton = buttonId;
       if (this.project.buttons.length === 4 && (buttonId === 1 || buttonId === 4)) {
         this.lockHover = true;
-        setTimeout(() => {
-          this.lockHover = false;
-        }, 350);
+        setTimeout(() => { this.lockHover = false; }, 350);
       }
+      // Forzar medición después de hover
+      this.$nextTick(() => {
+        this.measureAndEmitHeight();
+      });
     },
     handleButtonLeave() {
       if (this.lockHover) return;
       this.hoveredButton = null;
+      // Forzar medición después de leave
+      this.$nextTick(() => {
+        this.measureAndEmitHeight();
+      });
     },
   },
   watch: {
     isExpanded(newVal) {
-      if (!newVal) {
-        this.hoveredButton = null;
-        this.lockHover = false;
-      }
+      this.hoveredButton = null;
+      this.lockHover = false;
     },
-    // CAMBIO: Observamos la prop `isHovered` para manejar la lógica interna
     isHovered(newVal) {
-      if (newVal) {
-        if (this.$refs.carousel) {
-          this.$refs.carousel.showCarouselHintOnHover();
-        }
-      } else {
+      if (!newVal) {
         this.hoveredButton = null;
         this.lockHover = false;
         this.showCarouselHint = false;
@@ -2427,21 +3139,23 @@ export default {
 </script>
 
 <style scoped>
-/* CAMBIO: Esta clase ya no es una "card", es solo un contenedor de contenido. */
+/* Esta clase ya no es una "card", es solo un contenedor de contenido. */
 .portfolio-card__content {
   display: flex;
   flex-direction: column;
   flex: 1;
-
   transition: transform 0.4s ease;
 }
 
-/* CAMBIO: En modo expandido, sí aplicamos padding y el borde redondeado específico */
+/* En modo expandido, sí aplicamos padding y el borde redondeado específico */
 .portfolio-card__content.is-expanded-mode {
   z-index: 5;
   border-radius: 0.5rem 0 0 0.5rem;
   background-color: var(--container-color);
   padding: 1.5rem;
+  flex: none;         /* Anula el 'flex: 1' de la clase base. */
+  width: 340px;       /* Mantiene el ancho original que tenía la tarjeta. */
+  box-sizing: border-box; /* Asegura que el padding se incluya dentro de los 340px. */
 }
 
 @media screen and (min-width: 992px) {
@@ -2450,12 +3164,15 @@ export default {
   }
 }
 
+.carousel-wrapper {
+  flex-shrink: 0;
+}
+
 .portfolio__data {
   padding: 0 .5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  overflow: hidden;
 }
 
 .portfolio__title {
@@ -2490,7 +3207,6 @@ export default {
   transition: opacity 0.4s ease-in-out;
 }
 
-/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
 .parent-is-hovered .portfolio__description {
   max-height: 200px;
 }
@@ -2541,7 +3257,6 @@ export default {
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s, height 0.4s ease;
 }
 
-/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
 .parent-is-hovered .portfolio__cta,
 .portfolio__cta--visible {
   opacity: 1;
@@ -2561,7 +3276,6 @@ export default {
   50% { opacity: 0.6; }
 }
 
-/* BOTÓN "VER MÁS" */
 .portfolio__expand-button {
   display: flex;
   align-items: center;
@@ -2585,7 +3299,6 @@ export default {
   background-color: #7c3aed;
 }
 
-/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
 .parent-is-hovered .portfolio__expand-button {
   opacity: 0;
   height: 0;
@@ -2600,7 +3313,6 @@ export default {
   transition: transform .3s;
 }
 
-/* CAMBIO: El selector ahora usa la clase del estado hover del padre */
 .parent-is-hovered .portfolio__expand-button i {
   transform: translateY(5px);
 }
@@ -2611,6 +3323,7 @@ export default {
 </style>
 
 PortfolioCardWrapper.vue:
+// PortfolioCardWrapper.vue
 <template>
   <div 
     class="portfolio-card-container" 
@@ -2628,8 +3341,8 @@ PortfolioCardWrapper.vue:
       :is-expanded="isExpanded"
       :is-hovered="isHovered"
       @toggle-expand="toggleExpand"
+      @resize="handleCardResize"
     />
-    
     <Transition 
       name="expand-description"
       @enter="onEnter"
@@ -2638,6 +3351,7 @@ PortfolioCardWrapper.vue:
       <PortfolioExpandedDescription 
         v-if="isExpanded"
         :project="project"
+        :wrapper-height="cardHeight"
         @close="toggleExpand"
       />
     </Transition>
@@ -2664,63 +3378,74 @@ export default {
     return {
       isExpanded: false,
       isAnimating: false,
-      // CAMBIO: Añadido estado para el hover
       isHovered: false,
-      hoveredCardHeight: null,
+      cardHeight: null,
       measureTimeout: null,
+      scrollYBeforeExpand: 0 // Para guardar la posición del scroll
+
     };
   },
-  // CAMBIO: Añadimos una computed property
   computed: {
     expandedCardStyle() {
-      // Si la tarjeta está expandida y hemos medido una altura, la aplicamos
-      if (this.isExpanded && this.hoveredCardHeight) {
-        return { 'max-height': `${this.hoveredCardHeight}px` };
+      if (this.isExpanded && this.cardHeight) {
+        return { 'max-height': `${this.cardHeight}px` };
       }
-      return {}; // Si no, no aplicamos ningún estilo
+      return {};
     }
   },
   methods: {
-    toggleExpand() {
-      this.isExpanded = !this.isExpanded;
-      // CAMBIO: Asegurarse que el estado hover se reinicie al expandir/contraer
-      this.isHovered = false;
+    handleCardResize(height) {
+      this.cardHeight = height;
     },
+    toggleExpand() {
+      const isOpening = !this.isExpanded;
+
+      if (isOpening) {
+        // 1. Si vamos a abrir, guardamos la posición ACTUAL del scroll
+        this.scrollYBeforeExpand = window.scrollY;
+      }
+
+      this.isExpanded = !this.isExpanded;
+      this.isHovered = false;
+
+      this.$nextTick(() => {
+        if (isOpening) {
+          // 2. Centramos la tarjeta en la vista
+          this.$el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        } else {
+          // 3. Si cerramos, volvemos a la posición guardada
+          window.scrollTo({
+            top: this.scrollYBeforeExpand,
+            behavior: 'smooth'
+          });
+        }
+      });
+    },
+    
     onEnter() {
       this.isAnimating = true;
     },
     onLeave() {
-      // CAMBIO: Quitar isAnimating después de que termine la animación
       setTimeout(() => {
         this.isAnimating = false;
       }, 500);
     },
-    // CAMBIO: Métodos para manejar el hover
     handleMouseEnter(event) {
-      // Limpiamos cualquier medición anterior que pudiera estar pendiente
-      if (this.measureTimeout) {
-        clearTimeout(this.measureTimeout);
-      }
-      
+      if (this.measureTimeout) clearTimeout(this.measureTimeout);
       if (!this.isExpanded) {
         this.isHovered = true;
-        
-        // Creamos un temporizador para esperar a que terminen las animaciones de CSS
         this.measureTimeout = setTimeout(() => {
-          // Usamos this.$el para referirnos al elemento raíz del componente,
-          // que es más seguro dentro de un setTimeout.
           if (this.$el) {
-            this.hoveredCardHeight = this.$el.scrollHeight;
+            this.cardHeight = this.$el.scrollHeight;
           }
-        }, 500); // 500ms = 0.5s, la duración de la transición de max-height
+        }, 500);
       }
     },
-
     handleMouseLeave() {
-      // Si el usuario quita el ratón antes de que midamos, cancelamos la medición
-      if (this.measureTimeout) {
-        clearTimeout(this.measureTimeout);
-      }
+      if (this.measureTimeout) clearTimeout(this.measureTimeout);
       this.isHovered = false;
     }
   }
@@ -2728,7 +3453,7 @@ export default {
 </script>
 
 <style scoped>
-/* CAMBIO: La clase base ahora define la apariencia de la card */
+/* La clase base ahora define la apariencia de la card */
 .portfolio-card-container {
   display: flex;
   position: relative;
@@ -2748,7 +3473,7 @@ export default {
   /* 2. Por defecto (estado normal), el card tiene un ancho fijo */
   width: 340px; 
 }
-/* CAMBIO: Estilos de hover que antes estaban en el hijo */
+/* Estilos de hover que antes estaban en el hijo */
 .portfolio-card-container.is-hovered {
   box-shadow: 0 4px 8px rgba(0,0,0,.15);
   transform: scale(1.03);
@@ -2757,12 +3482,16 @@ export default {
 }
 
 .portfolio-card-container.is-expanded {
-  grid-column: 1 / -1;
+  grid-column: 1 / -1; /* Mantenemos esto para que pueda centrarse */
   z-index: 10;
-  margin: 0 -1rem;
+  margin: 0; /* Cambiamos el margin para un mejor centrado */
   width: auto;
-  padding: 0; /* El padding ahora lo gestionan los hijos */
-  overflow: visible; /* Permite que el box-shadow se vea bien */
+  padding: 0; 
+  overflow: visible;
+
+  /* --- AÑADE ESTAS DOS LÍNEAS --- */
+  max-width: 1100px; /* Elige el ancho máximo que desees */
+  justify-self: center; /* Esto centra el contenedor en el espacio de la grilla */
 }
 
 .is-animating {
@@ -2815,7 +3544,11 @@ PortfolioExpandedDescription.vue:
 // PortfolioExpandedDescription.vue
 
 <template>
-  <div class="portfolio-expanded">
+  <div 
+    class="portfolio-expanded" 
+    :class="{ 'scrolled-to-bottom': isScrolledToBottom }"
+    ref="expandedContainer"
+  >
     <div class="portfolio-expanded__header">
       <h3 class="portfolio-expanded__title">Detalles del Proyecto</h3>
       <button 
@@ -2827,7 +3560,11 @@ PortfolioExpandedDescription.vue:
       </button>
     </div>
     
-    <div class="portfolio-expanded__content" ref="scrollContainer">
+    <div 
+      class="portfolio-expanded__content" 
+      ref="scrollContainer" 
+      :style="contentStyle"
+    >
       <div class="portfolio-expanded__description" v-html="project.expandedDescription">
       </div>
     </div>
@@ -2855,21 +3592,130 @@ export default {
     project: {
       type: Object,
       required: true
+    },
+    wrapperHeight: {
+      type: Number,
+      default: null
     }
   },
   data() {
     return {
-      showScrollIndicator: false
+      showScrollIndicator: false,
+      calculatedMaxHeight: 450, // Altura base para desktop
+      originalMaxHeight: null,  // Almacena la altura original antes del hover
+      isButtonHovered: false, // Detecta si hay botones en hover
+      isScrolledToBottom: false
     };
+  },
+  computed: {
+    contentStyle() {
+      return {
+        maxHeight: `${this.calculatedMaxHeight}px`,
+        transition: 'max-height 0.3s ease'
+      };
+    }
+  },
+  watch: {
+    wrapperHeight: {
+      handler(newHeight, oldHeight) {
+        if (newHeight && oldHeight) {
+          // Si la altura aumentó, significa que los botones están en hover
+
+          if (newHeight > oldHeight) {
+            // Almacenamos la altura original si no la tenemos
+
+            if (!this.originalMaxHeight) {
+              this.originalMaxHeight = this.calculatedMaxHeight;
+            }
+            this.isButtonHovered = true;
+            this.calculateContentHeight(newHeight);
+          }
+          // Si la altura disminuyó, significa que se quitó el hover 
+          else if (newHeight < oldHeight && this.originalMaxHeight) {
+            this.isButtonHovered = false;
+            // Restauramos la altura original
+            this.calculatedMaxHeight = this.originalMaxHeight;
+            this.originalMaxHeight = null; // Limpiamos para el próximo ciclo
+          }
+        } else if (newHeight && !oldHeight) {
+          // Primera vez que recibimos altura
+          this.calculateContentHeight(newHeight);
+        }
+        
+        // Recalculamos el indicador de scroll
+        this.$nextTick(() => {
+          this.checkScrollIndicator();
+        });
+      },
+      immediate: true
+    }
   },
   mounted() {
     this.checkScrollIndicator();
     this.$refs.scrollContainer?.addEventListener('scroll', this.handleScroll);
+    
+    // Si no tenemos wrapperHeight inicial, calculamos una altura base
+    if (!this.wrapperHeight) {
+      this.$nextTick(() => {
+        this.calculateInitialHeight();
+      });
+    }
   },
   beforeUnmount() {
     this.$refs.scrollContainer?.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    calculateContentHeight(wrapperHeight) {
+      // Solo calculamos nueva altura si los botones están en hover
+      if (!this.isButtonHovered) {
+        return;
+      }
+      
+      this.$nextTick(() => {
+        const expandedContainer = this.$refs.expandedContainer;
+        if (!expandedContainer) return;
+
+        // Obtenemos las alturas de los elementos fijos
+        const header = expandedContainer.querySelector('.portfolio-expanded__header');
+        const readLessButton = expandedContainer.querySelector('.portfolio-expanded__read-less');
+        
+        const headerHeight = header ? header.offsetHeight : 0;
+        const buttonHeight = readLessButton ? readLessButton.offsetHeight : 0;
+        const containerPadding = 80; // padding del contenedor + márgenes
+        
+        // Calculamos la altura disponible para el contenido
+        let availableHeight = wrapperHeight - headerHeight - buttonHeight - containerPadding;
+        
+        // Establecemos límites según el viewport
+        const minHeight = 200;
+        let maxHeight;
+        
+        if (window.innerWidth >= 992) {
+          maxHeight = 500; // Aumentamos un poco el límite para hover
+        } else if (window.innerWidth <= 567) {
+          maxHeight = 350;
+        } else {
+          maxHeight = 450;
+        }
+        
+        // Aplicamos los límites
+        this.calculatedMaxHeight = Math.max(minHeight, Math.min(availableHeight, maxHeight));
+      });
+    },
+    
+    calculateInitialHeight() {
+      // Altura inicial basada en viewport cuando no hay wrapperHeight
+      if (window.innerWidth >= 992) {
+        this.calculatedMaxHeight = 500;
+      } else if (window.innerWidth <= 567) {
+        this.calculatedMaxHeight = 300;
+      } else {
+        this.calculatedMaxHeight = 400;
+      }
+      
+      this.checkScrollIndicator();
+    },
+    
     checkScrollIndicator() {
       this.$nextTick(() => {
         const container = this.$refs.scrollContainer;
@@ -2878,9 +3724,12 @@ export default {
         }
       });
     },
+    
     handleScroll(event) {
       const container = event.target;
       const isNearBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 10;
+      
+      this.isScrolledToBottom = isNearBottom;
       
       if (isNearBottom && this.showScrollIndicator) {
         this.showScrollIndicator = false;
@@ -2904,6 +3753,24 @@ export default {
   position: relative;
 }
 
+.portfolio-expanded::before {
+  content: '';
+  position: absolute;
+  bottom: 5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 3em;
+  background: linear-gradient(transparent, var(--container-color));
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.portfolio-expanded.scrolled-to-bottom::before {
+  opacity: 0;
+}
+
 .portfolio-expanded__header {
   display: flex;
   justify-content: space-between;
@@ -2911,6 +3778,7 @@ export default {
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 
 .portfolio-expanded__title {
@@ -3012,15 +3880,13 @@ export default {
   color: #8b5cf6;
 }
 
-
 .portfolio-expanded__read-less {
-  /* Posicionamiento Fijo */
   position: absolute;
   left: 1.5rem;
   bottom: 1.5rem;
   z-index: 10;
+  flex-shrink: 0;
 
-  /* Estilos que ya tenía */
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -3082,20 +3948,21 @@ export default {
     border-radius: 0.5rem;
   }
   
-  .portfolio-expanded__content {
-    max-height: 300px;
+  .portfolio-expanded::before {
+    left: 1.5rem;
+    right: 1.5rem;
   }
 }
-
-
 
 @media screen and (min-width: 992px) {
   .portfolio-expanded {
     padding: 2rem 2rem 6rem;
   }
   
-  .portfolio-expanded__content {
-    max-height: 500px;
+  .portfolio-expanded::before {
+    bottom: 6rem;
+    left: 2rem;
+    right: 2rem;
   }
 }
 </style>
@@ -3255,6 +4122,11 @@ export default {
   border-radius: .5rem;
   margin-bottom: var(--mb-0);
   cursor: pointer;
+
+}
+
+.portfolio__img-carousel:hover {
+  z-index: 5;
 }
 
 .portfolio__img {
@@ -3265,6 +4137,13 @@ export default {
   object-fit: cover;
   height: auto;
   max-height: 200px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.15);
+  transition: transform 0.4s ease;
+}
+
+/* AÑADIDO: El efecto de hover ahora se aplica a la imagen directamente */
+.portfolio__img-carousel:hover .portfolio__img {
+  transform: scale(1.03);
 }
 
 .portfolio__img-container {
@@ -3293,7 +4172,7 @@ export default {
 
 .portfolio-carousel__button {
   position: absolute;
-  top: 50%;
+  top: calc(50% - 12px);
   transform: translateY(-50%);
   z-index: 2;
   color: var(--title-color);
@@ -3725,7 +4604,7 @@ Qualification.vue:
                 <span class="qualification__subtitle">Univ. Nacional de San Agustín</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Abril 2021 - Presente
+                  Abril 2021 - Diciembre 2025
                 </div>
               </div>
             </div>
@@ -3818,7 +4697,7 @@ Qualification.vue:
                 <span class="qualification__subtitle">Innovaciencia Peru</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Abril 2025 - Julio 2025
+                  Abril 2025 - Noviembre 2025
                 </div>
               </div>
               <img src="@/assets/img/logo_innovaciencia.png" alt="Logo Innovaciencia" class="qualification__logo">
@@ -3866,10 +4745,12 @@ import certificadoCoderhouse1 from '@/assets/img/certificado_coderhouse1.png';
 import certificadoCoderhouse2 from '@/assets/img/certificado_coderhouse2.png';
 
 // Imágenes actualizadas y nuevas
+import constancia_egresado from '@/assets/img/constancia_egresado.jpg';
 import constancia_ranking from '@/assets/img/constancia_ranking.jpg';
 import libreta_notas from '@/assets/img/libreta_notas.jpg';
 import certificado_oracle from '@/assets/img/certificado_oracle.jpg';
 import certificado_muni from '@/assets/img/certificado_muni.jpg';
+import certificado_innovaciencia from '@/assets/img/certificado_innovaciencia.jpg';
 import certificado_cisco1 from '@/assets/img/certificado_cisco1.jpg';
 import certificado_cisco2 from '@/assets/img/certificado_cisco2.jpg';
 import certificado_cisco3 from '@/assets/img/certificado_cisco3.jpg';
@@ -3885,12 +4766,12 @@ const activeModalId = ref(null);
 
 // --- Datos de los Modales (Actualizado) ---
 const modalData = {
-  unsa: [constancia_ranking, libreta_notas],
+  unsa: [constancia_egresado, constancia_ranking],
   support: [], // Array vacío para que el click no haga nada
   coderhouse: [certificadoCoderhouse1, certificadoCoderhouse2],
   municipalidad: [certificado_muni],
   oracle: [certificado_oracle],
-  innovaciencia: [], // Array vacío para que el click no haga nada
+  innovaciencia: [certificado_innovaciencia],
   cisco: [
     certificado_cisco1, certificado_cisco2, certificado_cisco3,
     certificado_cisco4, certificado_cisco5, certificado_cisco6,
@@ -3904,7 +4785,7 @@ const currentModalImages = computed(() => {
   return activeModalId.value ? modalData[activeModalId.value] : [];
 });
 const isModalVertical = computed(() => {
-  const verticalIds = ['unsa', 'municipalidad'];
+  const verticalIds = ['unsa', 'municipalidad', 'innovaciencia'];
   return verticalIds.includes(activeModalId.value);
 });
 // --- Métodos ---
@@ -3926,8 +4807,6 @@ const closeModal = () => {
 </script>
 
 <style scoped>
-/* ESTILOS ORIGINALES RESTAURADOS COMPLETAMENTE */
-
 /* ==================== QUALIFICATION ==================== */
 .qualification__tabs {
   display: flex;
@@ -3965,7 +4844,7 @@ const closeModal = () => {
   grid-template-columns: 1fr max-content 1fr;
   column-gap: 1.5rem;
   transition: transform 0.4s ease;
-  cursor: pointer; /* RESTAURADO: El cursor es clickeable en todos por defecto */
+  cursor: pointer;
 }
 
 .qualification__item-content {
@@ -4035,7 +4914,6 @@ const closeModal = () => {
   transform: scale(0.95);
 }
 
-/* RESTAURADO: El efecto hover se aplica a todos los items .qualification__data */
 .qualification__content .qualification__data:hover {
   transform: scale(1.08);
   position: relative;
@@ -4045,7 +4923,67 @@ const closeModal = () => {
 /* ==================== MEDIA QUERIES ==================== */
 @media screen and (max-width: 350px) {
   .qualification__data {
-    gap: .5rem;
+    column-gap: 0.5rem;
+  }
+  
+  .qualification__logo {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .qualification__title {
+    font-size: var(--small-font-size);
+  }
+  
+  .qualification__subtitle {
+    font-size: var(--smaller-font-size);
+  }
+  
+  .qualification__calendar {
+    font-size: 0.625rem;
+  }
+  
+  .qualification__item-content {
+    gap: 0.5rem;
+  }
+}
+
+/* Ajustes para pantallas pequeñas sin romper la estructura */
+@media screen and (max-width: 567px) {
+  .qualification__data {
+    column-gap: 0.75rem;
+  }
+  
+  .qualification__logo {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .qualification__title {
+    font-size: var(--small-font-size);
+    line-height: 1.2;
+  }
+  
+  .qualification__subtitle {
+    font-size: var(--smaller-font-size);
+    margin-bottom: var(--mb-0-5);
+  }
+  
+  .qualification__calendar {
+    font-size: var(--smaller-font-size);
+  }
+  
+  .qualification__item-content {
+    gap: 0.5rem;
+  }
+  
+  .qualification__rounder {
+    width: 11px;
+    height: 11px;
+  }
+  
+  .qualification__line {
+    transform: translate(5px, -7px);
   }
 }
 
@@ -4089,8 +5027,8 @@ Services.vue:
         <div class="services__header" @click="toggleService()">
           <i class="uil uil-web-grid services__icon"></i>
           <div>
-            <h3 class="services__title">Diseñador <br> Ui/Ux</h3>
-            <span class="services__subtitle">Diseño de interfaces y experiencia</span>
+            <h3 class="services__title">Diseñador <br> UI/UX</h3>
+            <span class="services__subtitle">Diseño de interfaces y experiencia de usuario</span>
           </div>
           <i class="uil uil-angle-down services__arrow"></i>
         </div>
@@ -4103,7 +5041,7 @@ Services.vue:
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Creación de prototipos y wireframes.</p>
+              <p>Creación de prototipos y wireframes en Figma.</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
@@ -4111,7 +5049,7 @@ Services.vue:
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Posicionamiento de la marca de tu empresa.</p>
+              <p>Investigación de usuarios y pruebas de usabilidad.</p>
             </li>
           </ul>
         </div>
@@ -4130,7 +5068,7 @@ Services.vue:
           <i class="uil uil-arrow services__icon"></i>
           <div>
             <h3 class="services__title">Desarrollador <br> Frontend</h3>
-            <span class="services__subtitle">Implementación de diseños web</span>
+            <span class="services__subtitle">Desarrollo de diseños y aplicaciones web</span>
           </div>
           <i class="uil uil-angle-down services__arrow"></i>
         </div>
@@ -4139,19 +5077,19 @@ Services.vue:
           <ul class="services__list-ul">
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
+              <p>Desarrollo de SPAs con Vue.js, Nuxt y React.js</p>
+            </li>
+            <li class="services__list-item">
+              <i class="uil uil-check-circle services__list-icon"></i>
               <p>Maquetación de sitios web responsivos.</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Desarrollo con frameworks modernos como Vue.js.</p>
+              <p>Consumo de APIs REST y autenticación OAuth/JWT</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Creación de interacciones dinámicas.</p>
-            </li>
-            <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Optimización del rendimiento y la velocidad de carga.</p>
+              <p>Creación rápida de MVPs</p>
             </li>
           </ul>
         </div>
@@ -4162,15 +5100,15 @@ Services.vue:
         </span>
       </div>
 
-      <div :class="['services__content', servicesState.branding ? 'services__open' : 'services__close']" data-service="branding">
+      <div :class="['services__content', servicesState.mobile ? 'services__open' : 'services__close']" data-service="mobile">
 
-        <img src="@/assets/img/wordpress_captura.png" alt="Captura de Desarrollo WordPress" class="services__img">
+        <img src="@/assets/img/diseno_captura.png" alt="Captura de Desarrollo Mobile" class="services__img">
 
         <div class="services__header" @click="toggleService()">
-           <i class="uil uil-pen services__icon"></i>
+          <i class="uil uil-mobile-android services__icon"></i>
           <div>
-            <h3 class="services__title">Desarrollo <br> WordPress</h3>
-             <span class="services__subtitle">Soluciones con el CMS líder</span>
+            <h3 class="services__title">Desarrollador <br> Mobile</h3>
+            <span class="services__subtitle">Aplicaciones nativas e híbridas multiplataforma</span>
           </div>
           <i class="uil uil-angle-down services__arrow"></i>
         </div>
@@ -4179,19 +5117,19 @@ Services.vue:
           <ul class="services__list-ul">
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Creación de temas personalizados desde cero.</p>
+              <p>Desarrollo nativo Android con Kotlin y Jetpack Compose</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Desarrollo de plugins a medida.</p>
+              <p>Apps híbridas con Flutter y React Native</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Mantenimiento y optimización de sitios existentes.</p>
+              <p>Arquitectura MVVM, Clean Architecture e inyección de dependencias</p>
             </li>
-             <li class="services__list-item">
+            <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Integración con APIs y servicios de terceros.</p>
+              <p>Integración con APIs REST, Firebase y sincronización offline</p>
             </li>
           </ul>
         </div>
@@ -4213,7 +5151,7 @@ export default {
       servicesState: {
         ui: false,
         frontend: false,
-        branding: false,
+        mobile: false,
       },
       observer: null,
       userHasClicked: false,
@@ -4434,16 +5372,34 @@ Skills.vue:
       
       <div :class="['skills__content', skillsState.frontend ? 'skills__open' : 'skills__close']" ref="frontendSkill" data-skill="frontend">
         <div class="skills__header" @click="toggleSkill('frontend')">
-          <i class="uil uil-swatchbook skills__icon"></i>
+          <i class="uil uil-brackets-curly skills__icon"></i>
           <div>
-            <h1 class="skills__title">Frontend y Diseño UX/UI</h1>
+            <h1 class="skills__title">Frontend Development</h1>
             <span class="skills__subtitle">Mi especialidad principal</span>
           </div>
           <i class="uil uil-angle-down skills__arrow"></i>
         </div>
 
-        <div class="skills__list skills__list--grid skills__list--4-cols grid">
+        <div class="skills__list skills__list--grid grid">
           <div v-for="skill in frontendSkills" :key="skill.name" class="skills__data skills__data--icon">
+            <SvgIcon :name="skill.iconName" />
+            <h3 class="skills__name">{{ skill.name }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div :class="['skills__content', skillsState.mobile ? 'skills__open' : 'skills__close']" ref="mobileSkill" data-skill="mobile">
+        <div class="skills__header" @click="toggleSkill('mobile')">
+          <i class="uil uil-mobile-android skills__icon"></i>
+          <div>
+            <h1 class="skills__title">Desarrollo Móvil</h1>
+            <span class="skills__subtitle">Aplicaciones Nativas & Híbridas</span>
+          </div>
+          <i class="uil uil-angle-down skills__arrow"></i>
+        </div>
+
+        <div class="skills__list skills__list--grid grid">
+          <div v-for="skill in mobileSkills" :key="skill.name" class="skills__data skills__data--icon">
             <SvgIcon :name="skill.iconName" />
             <h3 class="skills__name">{{ skill.name }}</h3>
           </div>
@@ -4455,7 +5411,7 @@ Skills.vue:
           <i class="uil uil-database skills__icon"></i>
           <div>
             <h1 class="skills__title">Backend y Bases de Datos</h1>
-            <span class="skills__subtitle">Lógica de servidor y gestión de datos</span>
+            <span class="skills__subtitle">Lógica de servidor y datos</span>
           </div>
           <i class="uil uil-angle-down skills__arrow"></i>
         </div>
@@ -4470,15 +5426,15 @@ Skills.vue:
 
       <div :class="['skills__content', skillsState.devops ? 'skills__open' : 'skills__close']" ref="devopsSkill" data-skill="devops">
         <div class="skills__header" @click="toggleSkill('devops')">
-          <i class="uil uil-brackets-curly skills__icon"></i>
+          <i class="uil uil-server-network skills__icon"></i>
           <div>
             <h1 class="skills__title">Programación y DevOps</h1>
-            <span class="skills__subtitle">Lógica, sistemas y herramientas</span>
+            <span class="skills__subtitle">Lenguajes y Arquitectura</span>
           </div>
           <i class="uil uil-angle-down skills__arrow"></i>
         </div>
         
-        <div class="skills__list skills__list--grid skills__list--6-cols grid">
+        <div class="skills__list skills__list--grid grid">
           <div v-for="skill in devopsSkills" :key="skill.name" class="skills__data skills__data--icon">
             <SvgIcon :name="skill.iconName" />
             <h3 class="skills__name">{{ skill.name }}</h3>
@@ -4500,18 +5456,24 @@ export default {
   },
   data() {
     return {
-      // SECCIÓN 1: Ahora con WordPress
+      // 1. Frontend
       frontendSkills: [
         { name: 'Figma', iconName: 'figma' },
         { name: 'HTML', iconName: 'html' },
         { name: 'CSS', iconName: 'css' },
         { name: 'JavaScript', iconName: 'javascript' },
+        { name: 'TypeScript', iconName: 'typescript' },
         { name: 'Vue.js', iconName: 'vue' },
-        { name: 'Vite', iconName: 'vite' },
-        { name: 'WordPress', iconName: 'wordpress' },
-        { name: 'Android', iconName: 'android' },
+        { name: 'React', iconName: 'react' },
+        { name: 'Nuxt', iconName: 'nuxt' },
       ],
-      // SECCIÓN 2
+      // 2. Mobile
+      mobileSkills: [
+        { name: 'Kotlin', iconName: 'kotlin' },
+        { name: 'Flutter', iconName: 'flutter' },
+        { name: 'React Native', iconName: 'react' },
+      ],
+      // 3. Backend
       backendSkills: [
         { name: 'PHP', iconName: 'php' },
         { name: 'Flask', iconName: 'flask' },
@@ -4519,7 +5481,7 @@ export default {
         { name: 'MySQL', iconName: 'mysql' },
         { name: 'PostgreSQL', iconName: 'postgresql' },
       ],
-      // SECCIÓN 3: Sin WordPress
+      // 4. DevOps
       devopsSkills: [
         { name: 'Python', iconName: 'python' },
         { name: 'Java', iconName: 'java' },
@@ -4527,48 +5489,52 @@ export default {
         { name: 'C++', iconName: 'cplusplus' },
         { name: 'AWS', iconName: 'aws' },
         { name: 'Docker', iconName: 'docker' },
-        { name: 'Linux', iconName: 'linux' },
-        { name: 'Bash', iconName: 'bash' },
-        { name: 'Git', iconName: 'git' },
-        { name: 'GitHub', iconName: 'github' },
-        { name: 'VSCode', iconName: 'vscode' },
-        { name: 'Unity', iconName: 'unity' },
       ],
       skillsState: {
         frontend: false,
+        mobile: false,
         backend: false,
         devops: false,
       },
       observer: null,
-      userHasClicked: false,
+      // Se eliminó userHasClicked para permitir que el scroll siempre funcione
     };
   },
   methods: {
     toggleSkill(skill) {
-      this.userHasClicked = true; 
-      const currentState = this.skillsState[skill];
-      Object.keys(this.skillsState).forEach(key => {
-        this.skillsState[key] = false;
-      });
-      this.skillsState[skill] = !currentState;
+      // Si el usuario hace click, simplemente invertimos el estado actual.
+      // El scroll se encargará de resetearlo si se aleja.
+      this.skillsState[skill] = !this.skillsState[skill];
     }
   },
   mounted() {
     const options = {
       root: null,
-      rootMargin: '0px 0px -35% 0px',
-      threshold: 0,
+      // Ajustamos el margen para que reaccione un poco antes de que el elemento salga del todo
+      rootMargin: '-10% 0px -10% 0px', 
+      threshold: 0.1, // Basta con que se vea un 10% para activarse
     };
+    
     this.observer = new IntersectionObserver((entries) => {
-      if (this.userHasClicked) return;
       entries.forEach(entry => {
         const skillName = entry.target.dataset.skill;
         if (skillName) {
-          this.skillsState[skillName] = entry.isIntersecting;
+            // LÓGICA CLAVE:
+            // Asigna directamente el estado de intersección.
+            // Si entra (isIntersecting = true) -> se abre.
+            // Si sale (isIntersecting = false) -> se cierra.
+            this.skillsState[skillName] = entry.isIntersecting;
         }
       });
     }, options);
-    const elementsToObserve = [this.$refs.frontendSkill, this.$refs.backendSkill, this.$refs.devopsSkill];
+
+    const elementsToObserve = [
+      this.$refs.frontendSkill, 
+      this.$refs.mobileSkill, 
+      this.$refs.backendSkill, 
+      this.$refs.devopsSkill
+    ];
+    
     elementsToObserve.forEach(element => {
       if (element) this.observer.observe(element);
     });
@@ -4641,7 +5607,7 @@ export default {
 /* === ESTILOS PARA LA CUADRÍCULA DE ICONOS === */
 .skills__list--grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem 1rem;
   padding-left: 0;
 }
@@ -4652,46 +5618,34 @@ export default {
   gap: 0.5rem;
 }
 .skills__data--icon :deep(svg) {
-  width: 50px;
-  height: 50px;
+  width: 40px; 
+  height: 40px;
   object-fit: contain;
 }
 .skills__data--icon .skills__name {
   margin-top: var(--mb-0-25);
+  font-size: 0.8rem; 
 }
 
-/* === RESPONSIVE Y ESTILOS ESPECIALES === */
+/* === RESPONSIVE === */
+@media screen and (max-width: 350px) {
+  .skills__list--grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media screen and (min-width: 568px) {
   .skills__container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem; 
-  }
-
-  .skills__content:last-child {
-    grid-column: 1 / -1;
+    column-gap: 2rem; 
+    align-items: start;
   }
 }
 
 @media screen and (min-width: 768px) {
   .skills__container {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  /* NUEVA REGLA: Frontend con 4 columnas */
-  .skills__list--4-cols {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  /* DevOps con 6 columnas */
-  .skills__list--6-cols {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-
-@media screen and (min-width: 992px) {
-    .skills__container {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 </style>
 
@@ -5077,6 +6031,59 @@ SvgIcon.vue:
         <path d="M185.432.063 96.44 17.501a3.268 3.268 0 0 0-2.634 3.014l-5.474 92.456a3.268 3.268 0 0 0 3.997 3.378l24.777-5.718c2.318-.535 4.413 1.507 3.936 3.838l-7.361 36.047c-.495 2.426 1.782 4.5 4.151 3.78l15.304-4.649c2.372-.72 4.652 1.36 4.15 3.788l-11.698 56.621c-.732 3.542 3.979 5.473 5.943 2.437l1.313-2.028 72.516-144.72c1.215-2.423-.88-5.186-3.54-4.672l-25.505 4.922c-2.396.462-4.435-1.77-3.759-4.114l16.646-57.705c.677-2.35-1.37-4.583-3.769-4.113Z" fill="url(#vitejs__b)"/>
     </svg>
   </div>
+
+  <div v-else-if="name === 'react'">
+    <svg viewBox="0 0 569 512" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g fill="none" fill-rule="evenodd">
+        <g fill="#087EA4" fill-rule="nonzero">
+          <path d="M285.5,201 C255.400481,201 231,225.400481 231,255.5 C231,285.599519 255.400481,310 285.5,310 C315.599519,310 340,285.599519 340,255.5 C340,225.400481 315.599519,201 285.5,201" id="react_light__Path"/>
+          <path d="M568.959856,255.99437 C568.959856,213.207656 529.337802,175.68144 466.251623,150.985214 C467.094645,145.423543 467.85738,139.922107 468.399323,134.521063 C474.621631,73.0415145 459.808523,28.6686204 426.709856,9.5541429 C389.677085,-11.8291748 337.36955,3.69129898 284.479928,46.0162134 C231.590306,3.69129898 179.282771,-11.8291748 142.25,9.5541429 C109.151333,28.6686204 94.3382249,73.0415145 100.560533,134.521063 C101.102476,139.922107 101.845139,145.443621 102.708233,151.02537 C97.4493791,153.033193 92.2908847,155.161486 87.3331099,157.39017 C31.0111824,182.708821 0,217.765415 0,255.99437 C0,298.781084 39.6220545,336.307301 102.708233,361.003527 C101.845139,366.565197 101.102476,372.066633 100.560533,377.467678 C94.3382249,438.947226 109.151333,483.32012 142.25,502.434597 C153.629683,508.887578 166.52439,512.186771 179.603923,511.991836 C210.956328,511.991836 247.567589,495.487529 284.479928,465.972527 C321.372196,495.487529 358.003528,511.991836 389.396077,511.991836 C402.475265,512.183856 415.36922,508.884856 426.75,502.434597 C459.848667,483.32012 474.661775,438.947226 468.439467,377.467678 C467.897524,372.066633 467.134789,366.565197 466.291767,361.003527 C529.377946,336.347457 569,298.761006 569,255.99437 M389.155214,27.1025182 C397.565154,26.899606 405.877839,28.9368502 413.241569,33.0055186 C436.223966,46.2772304 446.540955,82.2775015 441.522965,131.770345 C441.181741,135.143488 440.780302,138.556788 440.298575,141.990165 C414.066922,134.08804 387.205771,128.452154 360.010724,125.144528 C343.525021,103.224055 325.192524,82.7564475 305.214266,63.9661533 C336.586743,39.7116483 366.032313,27.1025182 389.135142,27.1025182 M378.356498,310.205598 C368.204912,327.830733 357.150626,344.919965 345.237759,361.405091 C325.045049,363.479997 304.758818,364.51205 284.459856,364.497299 C264.167589,364.51136 243.888075,363.479308 223.702025,361.405091 C211.820914,344.919381 200.80007,327.83006 190.683646,310.205598 C180.532593,292.629285 171.306974,274.534187 163.044553,255.99437 C171.306974,237.454554 180.532593,219.359455 190.683646,201.783142 C200.784121,184.229367 211.770999,167.201087 223.601665,150.764353 C243.824636,148.63809 264.145559,147.579168 284.479928,147.591877 C304.772146,147.579725 325.051559,148.611772 345.237759,150.68404 C357.109048,167.14607 368.136094,184.201112 378.27621,201.783142 C388.419418,219.363718 397.644825,237.458403 405.915303,255.99437 C397.644825,274.530337 388.419418,292.625022 378.27621,310.205598 M419.724813,290.127366 C426.09516,307.503536 431.324985,325.277083 435.380944,343.334682 C417.779633,348.823635 399.836793,353.149774 381.668372,356.285142 C388.573127,345.871232 395.263781,335.035679 401.740334,323.778483 C408.143291,312.655143 414.144807,301.431411 419.805101,290.207679 M246.363271,390.377981 C258.848032,391.140954 271.593728,391.582675 284.5,391.582675 C297.406272,391.582675 310.232256,391.140954 322.737089,390.377981 C310.880643,404.583418 298.10766,417.997563 284.5,430.534446 C270.921643,417.999548 258.18192,404.585125 246.363271,390.377981 Z M187.311556,356.244986 C169.137286,353.123646 151.187726,348.810918 133.578912,343.334682 C137.618549,325.305649 142.828222,307.559058 149.174827,290.207679 C154.754833,301.431411 160.736278,312.655143 167.239594,323.778483 C173.74291,334.901824 180.467017,345.864539 187.311556,356.285142 M149.174827,221.760984 C142.850954,204.473938 137.654787,186.794745 133.619056,168.834762 C151.18418,163.352378 169.085653,159.013101 187.211197,155.844146 C180.346585,166.224592 173.622478,176.986525 167.139234,188.210257 C160.65599,199.433989 154.734761,210.517173 149.074467,221.760984 M322.616657,121.590681 C310.131896,120.827708 297.3862,120.385987 284.379568,120.385987 C271.479987,120.385987 258.767744,120.787552 246.242839,121.590681 C258.061488,107.383537 270.801211,93.9691137 284.379568,81.4342157 C297.99241,93.9658277 310.765727,107.380324 322.616657,121.590681 Z M401.70019,188.210257 C395.196875,176.939676 388.472767,166.09743 381.527868,155.68352 C399.744224,158.819049 417.734224,163.151949 435.380944,168.654058 C431.331963,186.680673 426.122466,204.426664 419.785029,221.781062 C414.205023,210.55733 408.203506,199.333598 401.720262,188.230335 M127.517179,131.790423 C122.438973,82.3176579 132.816178,46.2973086 155.778503,33.0255968 C163.144699,28.9632474 171.455651,26.9264282 179.864858,27.1225964 C202.967687,27.1225964 232.413257,39.7317265 263.785734,63.9862316 C243.794133,82.7898734 225.448298,103.270812 208.949132,125.204763 C181.761691,128.528025 154.90355,134.14313 128.661281,141.990165 C128.199626,138.556788 127.778115,135.163566 127.456963,131.790423 M98.4529773,182.106474 C101.54406,180.767925 104.695358,179.429376 107.906872,178.090828 C114.220532,204.735668 122.781793,230.7969 133.498624,255.99437 C122.761529,281.241316 114.193296,307.357063 107.8868,334.058539 C56.7434387,313.076786 27.0971497,284.003505 27.0971497,255.99437 C27.0971497,229.450947 53.1907013,202.526037 98.4529773,182.106474 Z M155.778503,478.963143 C132.816178,465.691432 122.438973,429.671082 127.517179,380.198317 C127.838331,376.825174 128.259842,373.431953 128.721497,369.978497 C154.953686,377.878517 181.814655,383.514365 209.009348,386.824134 C225.500295,408.752719 243.832321,429.233234 263.805806,448.042665 C220.069,481.834331 180.105722,492.97775 155.838719,478.963143 M441.502893,380.198317 C446.520883,429.691161 436.203894,465.691432 413.221497,478.963143 C388.974566,493.017906 348.991216,481.834331 305.274481,448.042665 C325.241364,429.232737 343.566681,408.752215 360.050868,386.824134 C387.245915,383.516508 414.107066,377.880622 440.338719,369.978497 C440.820446,373.431953 441.221885,376.825174 441.563109,380.198317 M461.193488,334.018382 C454.869166,307.332523 446.294494,281.231049 435.561592,255.99437 C446.289797,230.744081 454.857778,204.629101 461.173416,177.930202 C512.216417,198.911955 541.942994,227.985236 541.942994,255.99437 C541.942994,284.003505 512.296705,313.076786 461.153344,334.058539" id="react_light__Shape"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div v-else-if="name === 'nuxt'">
+    <svg viewBox="0 0 256 168" preserveAspectRatio="xMidYMid">
+      <path fill="#00DC82" d="M143.618 167.029h95.166c3.023 0 5.992-.771 8.61-2.237a16.963 16.963 0 0 0 6.302-6.115 16.324 16.324 0 0 0 2.304-8.352c0-2.932-.799-5.811-2.312-8.35L189.778 34.6a16.966 16.966 0 0 0-6.301-6.113 17.626 17.626 0 0 0-8.608-2.238c-3.023 0-5.991.772-8.609 2.238a16.964 16.964 0 0 0-6.3 6.113l-16.342 27.473-31.95-53.724a16.973 16.973 0 0 0-6.304-6.112A17.638 17.638 0 0 0 96.754 0c-3.022 0-5.992.772-8.61 2.237a16.973 16.973 0 0 0-6.303 6.112L2.31 141.975A16.302 16.302 0 0 0 0 150.325c0 2.932.793 5.813 2.304 8.352a16.964 16.964 0 0 0 6.302 6.115 17.628 17.628 0 0 0 8.61 2.237h59.737c23.669 0 41.123-10.084 53.134-29.758l29.159-48.983 15.618-26.215 46.874 78.742h-62.492l-15.628 26.214Zm-67.64-26.24-41.688-.01L96.782 35.796l31.181 52.492-20.877 35.084c-7.976 12.765-17.037 17.416-31.107 17.416Z"/>
+    </svg>
+  </div>
+
+  <div v-else-if="name === 'flutter'">
+    <svg preserveAspectRatio="xMidYMid" viewBox="0 0 256 317">
+      <defs>
+        <linearGradient x1="4%" y1="27%" x2="75.9%" y2="52.9%" id="flutter__a">
+          <stop offset="0%"/>
+          <stop stop-opacity="0" offset="100%"/>
+        </linearGradient>
+      </defs>
+      <path fill="#47C5FB" d="M158 0 0 158l49 48L255 0zM157 145l-85 85 49 50 49-49 85-86z"/>
+      <path fill="#00569E" d="m121 280 37 37h97l-85-86z"/>
+      <path fill="#00B5F8" d="m72 230 48-48 50 49-49 49z"/>
+      <path fill-opacity=".8" fill="url(#flutter__a)" d="m121 280 41-14 4-31z"/>
+    </svg>
+  </div>
+
+  <div v-else-if="name === 'kotlin'">
+    <svg viewBox="0 0 256 256" preserveAspectRatio="xMidYMid">
+      <defs>
+        <linearGradient x1="99.991%" y1="-.011%" x2=".01%" y2="100.01%" id="kotlin__a">
+          <stop stop-color="#E44857" offset=".344%"/>
+          <stop stop-color="#C711E1" offset="46.89%"/>
+          <stop stop-color="#7F52FF" offset="100%"/>
+        </linearGradient>
+      </defs>
+      <path fill="url(#kotlin__a)" d="M256 256H0V0h256L128 127.949z"/>
+    </svg>
+  </div>
+
+  <div v-else-if="name === 'typescript'">
+    <svg viewBox="0 0 256 256" preserveAspectRatio="xMidYMid">
+      <path d="M20 0h216c11.046 0 20 8.954 20 20v216c0 11.046-8.954 20-20 20H20c-11.046 0-20-8.954-20-20V20C0 8.954 8.954 0 20 0Z" fill="#3178C6"/>
+      <path d="M150.518 200.475v27.62c4.492 2.302 9.805 4.028 15.938 5.179 6.133 1.151 12.597 1.726 19.393 1.726 6.622 0 12.914-.633 18.874-1.899 5.96-1.266 11.187-3.352 15.678-6.257 4.492-2.906 8.048-6.704 10.669-11.394 2.62-4.689 3.93-10.486 3.93-17.391 0-5.006-.749-9.394-2.246-13.163a30.748 30.748 0 0 0-6.479-10.055c-2.821-2.935-6.205-5.567-10.149-7.898-3.945-2.33-8.394-4.531-13.347-6.602-3.628-1.497-6.881-2.949-9.761-4.359-2.879-1.41-5.327-2.848-7.342-4.316-2.016-1.467-3.571-3.021-4.665-4.661-1.094-1.64-1.641-3.495-1.641-5.567 0-1.899.489-3.61 1.468-5.135s2.362-2.834 4.147-3.927c1.785-1.094 3.973-1.942 6.565-2.547 2.591-.604 5.471-.906 8.638-.906 2.304 0 4.737.173 7.299.518 2.563.345 5.14.877 7.732 1.597a53.669 53.669 0 0 1 7.558 2.719 41.7 41.7 0 0 1 6.781 3.797v-25.807c-4.204-1.611-8.797-2.805-13.778-3.582-4.981-.777-10.697-1.165-17.147-1.165-6.565 0-12.784.705-18.658 2.115-5.874 1.409-11.043 3.61-15.506 6.602-4.463 2.993-7.99 6.805-10.582 11.437-2.591 4.632-3.887 10.17-3.887 16.615 0 8.228 2.375 15.248 7.127 21.06 4.751 5.811 11.963 10.731 21.638 14.759a291.458 291.458 0 0 1 10.625 4.575c3.283 1.496 6.119 3.049 8.509 4.66 2.39 1.611 4.276 3.366 5.658 5.265 1.382 1.899 2.073 4.057 2.073 6.474a9.901 9.901 0 0 1-1.296 4.963c-.863 1.524-2.174 2.848-3.93 3.97-1.756 1.122-3.945 1.999-6.565 2.632-2.62.633-5.687.95-9.2.95-5.989 0-11.92-1.05-17.794-3.151-5.875-2.1-11.317-5.25-16.327-9.451Zm-46.036-68.733H140V109H41v22.742h35.345V233h28.137V131.742Z" fill="#FFF"/>
+    </svg>
+  </div>
+  
 </template>
 
 <script setup>
@@ -5304,12 +6311,136 @@ export const buttonTemplates = {
   }
 };
 
+projectsData.js:
+// src/data/projectsData.js
+
+export const projectsData = [
+  {
+    id: 1,
+    title: 'Sigepro',
+    description: 'Prototipé en Figma y desarrollé una SPA de gestión de proyectos con una UI adaptativa basada en roles (Admin / Cliente  Cliente/ Colaborador), lo construí con Vue 3, Pinia y Tailwind CSS y lo conecté al backend con APIRESTful.',
+    expandedDescription: `<h3>Proyecto: SIGEPRO (Sistema de Gestión de Proyectos)</h3>
+<p>SIGEPRO es una aplicación web SPA (Single Page Application) robusta y moderna, diseñada para la gestión integral de proyectos de investigación académica. Desarrollada como parte de la asignatura de Ingeniería de Software, esta plataforma permite a estudiantes y administradores gestionar todo el ciclo de vida de un proyecto, desde la solicitud inicial hasta el seguimiento detallado de tareas.</p>
+
+<p>Desde la perspectiva del <strong>Desarrollo Frontend</strong>, construí una arquitectura reactiva y eficiente utilizando <strong>Vue 3 y Vite</strong>, garantizando una experiencia de usuario fluida y tiempos de carga mínimos. La gestión del estado global se maneja con <strong>Pinia</strong>, centralizando la autenticación y los datos del usuario de forma segura. La interfaz, diseñada con <strong>Tailwind CSS</strong>, es completamente responsiva y sigue un enfoque de diseño utilitario para un desarrollo ágil. La comunicación con el backend se realiza a través de una API REST, gestionada con Axios, implementando un sistema de autenticación seguro basado en tokens JWT.</p>
+
+<p>En el ámbito del <strong>Diseño UX/UI</strong>, el enfoque principal fue crear flujos de usuario intuitivos y adaptados a distintos perfiles. El sistema distingue tres roles claros (<strong>Administrador, Colaborador y Cliente</strong>), y la interfaz se transforma dinámicamente para mostrar únicamente las herramientas y la información relevante para cada uno. Diseñé procesos complejos como el asistente de configuración de proyectos, un flujo multi-paso que guía al administrador a través de la creación y asignación de tareas de manera ordenada y sin fricciones. La experiencia de usuario se enriquece con un sistema de notificaciones en tiempo real que ofrece feedback inmediato sobre las acciones realizadas.</p>
+
+<h4>Características Destacadas:</h4>
+<ul>
+<li><strong>Autenticación y Seguridad por Roles:</strong> Implementación de un sistema de acceso seguro con JWT que personaliza la experiencia y los permisos para Administradores, Colaboradores y Clientes.</li>
+<li><strong>Flujo de Aprobación de Proyectos:</strong> Un ciclo de vida completo donde los clientes crean solicitudes que los administradores revisan, configuran y aprueban a través de un panel de gestión centralizado.</li>
+<li><strong>Dashboard Dinámico y Adaptativo:</strong> La pantalla principal (HomeView) actúa como un centro de control que renderiza componentes específicos según el rol del usuario, optimizando su flujo de trabajo.</li>
+<li><strong>Gestión CRUD Intuitiva:</strong> Interfaces claras para la administración completa de clientes, proyectos y tareas, utilizando modales y formularios con validaciones en tiempo real.</li>
+<li><strong>Asistente de Configuración Guiado:</strong> Un "wizard" multi-paso para que los administradores formalicen un proyecto, definan sus tareas iniciales con validación de fechas secuencial y organicen el cronograma por fases.</li>
+</ul>`,
+    tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+    techBadge: ['figma', 'vue'],
+    buttons: [
+      { type: 'demo', url: 'http://138.68.254.39/app/' },
+      { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
+      { type: 'github', url: 'https://github.com/HenryGalvezQ/phaseflow' },
+      { type: 'presentation', url: 'https://www.canva.com/design/DAG75rU1odw/JxcqLztKz2kCwu3wimlAxA/edit?utm_content=DAG75rU1odw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton' }
+    ]
+  },
+  {
+    id: 2,
+    title: 'Portal Web Municipalidad de La Joya',
+    description: 'Modernicé el portal web municipal, desarrollando un chatbot con PHP y JS, integrando visores de PDF para documentos oficiales y reforzando la seguridad del panel de administrador con autenticación de Google (OAuth).',
+    expandedDescription: `<h3>Proyecto: Modernización del Portal Web de la Municipalidad Distrital de La Joya</h3>
+<p>Durante mis prácticas pre-profesionales, lideré una serie de mejoras clave en el portal web de la Municipalidad Distrital de La Joya, con el objetivo de optimizar tanto la experiencia del ciudadano como la eficiencia de la gestión interna. El proyecto abarcó desarrollo de nuevas funcionalidades, mejoras en la interfaz y el refuerzo de la seguridad.</p>
+
+<p>Mi contribución principal fue el <strong>desarrollo e implementación de un chatbot conversacional</strong>. Utilizando <strong>JavaScript para el frontend y PHP con MySQL para el backend</strong>, creé un asistente virtual capaz de guiar a los usuarios a través de consultas frecuentes, como los costos de procedimientos TUPA y otros servicios municipales. El flujo de la conversación se gestiona dinámicamente desde la base de datos, permitiendo al personal administrativo actualizar las respuestas sin necesidad de modificar el código.</p>
+
+<p>En el ámbito de la <strong>seguridad y la administración</strong>, reforcé el acceso al panel de control implementando la <strong>autenticación mediante Google OAuth</strong>. Esta modernización eliminó el sistema de credenciales tradicional, ofreciendo un método de inicio de sesión más seguro y robusto para los funcionarios, validando sus cuentas de correo institucionales contra la base de datos de usuarios autorizados.</p>
+
+<h4>Mejoras Adicionales de UX/UI:</h4>
+<ul>
+<li><strong>Visor de Documentos PDF:</strong> Implementé un visor de PDF interactivo directamente en las páginas de transparencia, como "Obras por Impuesto" y "CODISEC". Esto permite a los ciudadanos consultar resoluciones, actas y otros documentos oficiales sin necesidad de descargas, mejorando significativamente la accesibilidad a la información pública.</li>
+<li><strong>Contenido Dinámico y Gestión de Banners:</strong> Desarrollé un sistema CRUD completo en el panel de administrador para gestionar los banners de la página de inicio[cite: 4306], permitiendo al equipo de prensa actualizar anuncios y noticias de forma autónoma. [cite_start]También mejoré la interfaz del carrusel de noticias y comunicados en la página principal.</li>
+<li><strong>Interfaz de Usuario Optimizada:</strong> Realicé ajustes en la usabilidad del portal, como la mejora del menú de navegación para hacerlo más dinámico, la adición de un logo de carga para mejorar la percepción del rendimiento [cite: 4204] [cite_start]y la integración de nuevos canales de comunicación como TikTok en el encabezado y pie de página.</li>
+</ul>`,
+    tags: ["Prácticas Pre-profesionales", "Desarrollo Fullstack"],
+    techBadge: ['php', 'javascript', 'mysql'],
+    buttons: [
+      { type: 'demo', url: 'https://www.municipalidadlajoya.gob.pe/' }
+    ]
+  },
+  {
+    id: 3,
+    title: 'Tienda Online',
+    description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
+    expandedDescription: `<h3>Tienda Online - E-commerce Moderno</h3>
+<p>Desarrollo completo de una tienda online con enfoque en la experiencia del usuario y conversión. Este proyecto integra un sistema de gestión de productos, carrito de compras y procesamiento de pagos.</p>
+<p>Las características incluyen diseño responsivo, animaciones fluidas y optimización para dispositivos móviles.</p>`,
+    buttons: [
+      { type: 'demo-simple', url: '#' }
+    ]
+  },
+  {
+    id: 4,
+    title: 'App de E-commerce',
+    description: 'Sitio web adaptable a todos los dispositivos, con componentes de UI e interacciones animadas.',
+    expandedDescription: `<h3>Aplicación E-commerce Avanzada</h3>
+<p>Aplicación web progresiva (PWA) para comercio electrónico, diseñada con tecnologías modernas y enfoque mobile-first.</p>
+<p>Incluye funcionalidades avanzadas como búsqueda inteligente, recomendaciones personalizadas y integración con múltiples métodos de pago.</p>`,
+    buttons: [
+      { type: 'demo-simple', url: '#' }
+    ]
+  },
+  {
+    id: 5,
+    title: 'Diseño de Marca',
+    description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
+    expandedDescription: `<h3>Proyecto: Sistema de Identidad Corporativa</h3>
+<p>Desarrollo integral de identidad corporativa que abarca desde el diseño conceptual hasta la implementación digital. Este proyecto se centró en crear una presencia de marca coherente y memorable.</p>`,
+    tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+    techBadge: ['figma', 'vue'],
+    buttons: [
+      { type: 'demo', url: 'http://138.68.254.39/app/' },
+      { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
+      { type: 'presentation', url: '#' },
+      { type: 'github', url: 'https://github.com/HenryGalvezQ/phaseflow' }
+    ]
+  },
+  {
+    id: 6,
+    title: 'Diseño de Marca',
+    description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
+    expandedDescription: `<h3>Proyecto: Branding Digital Completo</h3>
+<p>Creación de una identidad de marca digital completa que incluye diseño web, aplicaciones móviles y material promocional. El proyecto se desarrolló siguiendo metodologías de design thinking.</p>`,
+    tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+    techBadge: ['figma', 'vue'],
+    buttons: [
+      { type: 'demo', url: 'http://67.205.133.92/app/' },
+      { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
+      { type: 'presentation', url: '#' },
+      { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
+    ]
+  },
+  {
+    id: 7,
+    title: 'Diseño de Marca',
+    description: 'Sitio web diseñado en Figma y desarrollado en Vue 3, utiliza Pinia store y tailwindcss, está conectado al backend con ApiRESTFul y sigo hablando y hablando y hablandoooooo.',
+    expandedDescription: `<h3>Proyecto: Rediseño de Identidad Corporativa</h3>
+<p>Modernización completa de la identidad visual de una empresa establecida, incluyendo la migración de sistemas legacy y actualización de todos los materiales de marca.</p>`,
+    tags: ["Proyecto Personal", "Diseño UX/UI", "Desarrollo Frontend"],
+    techBadge: ['figma', 'vue'],
+    buttons: [
+      { type: 'demo', url: 'http://67.205.133.92/app/' },
+      { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
+      { type: 'presentation', url: '#' },
+      { type: 'github', url: 'https://gitlab.com/pisw2025-proyectos-investigacion/sigepro-frontend' }
+    ]
+  }
+];
+
 image-loader.js:
 // src/utils/image-loader.js
 
 // 1. Usamos la función mágica de Vite para importar todos los archivos
 //    de imagen que estén dentro de cualquier subcarpeta de /portafolio/.
-const imageModules = import.meta.glob('/src/assets/img/portafolio/**/*.+(png|jpg|jpeg|gif|svg|webp)');
+const imageModules = import.meta.glob('/src/assets/img/portafolio/**/*.+(png|jpg|jpeg|gif|svg|webp)', { eager: true });
 
 const projectsImages = {};
 
@@ -5317,7 +6448,8 @@ const projectsImages = {};
 for (const path in imageModules) {
   // Extraemos el nombre de la carpeta del proyecto desde la ruta del archivo.
   // Ejemplo: de '/src/assets/img/portafolio/Sigepro/img1.jpg' extraemos 'Sigepro'.
-  const folderName = path.split('/')[5];
+  const match = path.match(/portafolio\/(.*?)\//);
+  const folderName = match ? match[1] : null;
 
   if (folderName) {
     // Si es la primera vez que vemos esta carpeta, creamos un array para ella.
@@ -5327,7 +6459,8 @@ for (const path in imageModules) {
     // Añadimos la URL de la imagen al array correspondiente.
     // Usamos new URL(path, import.meta.url).href para obtener la ruta correcta
     // que Vue utilizará en el build final.
-    projectsImages[folderName].push(new URL(path, import.meta.url).href);
+    projectsImages[folderName].push(imageModules[path].default);
+
   }
 }
 
