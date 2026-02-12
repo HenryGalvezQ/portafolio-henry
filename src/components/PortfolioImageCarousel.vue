@@ -11,11 +11,13 @@
         v-for="(image, index) in images"
         :key="index"
         class="portfolio__img-container"
+        @click="$emit('open-modal')"
       >
         <img 
           :src="image" 
           :alt="alt + ' project screenshot'"
           class="portfolio__img"
+          style="cursor: zoom-in;"
         >
       </div>
     </div>
@@ -78,7 +80,7 @@ export default {
       default: true
     }
   },
-  emits: ['carousel-hint-shown'],
+  emits: ['carousel-hint-shown','open-modal'],
   data() {
     return {
       currentImageIndex: 0,

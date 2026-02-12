@@ -227,5 +227,112 @@ export const projectsData = [
       // He puesto el enlace al documento como 'presentation' para que sea accesible como documentación técnica
       { type: 'presentation', url: 'https://docs.google.com/document/d/13SZJP68qrJpc-c3_Kotq1mlo4phvbQ9x/edit?usp=sharing&ouid=114415674854887529375&rtpof=true&sd=true' }
     ]
+  },
+  {
+    id: 10,
+    title: 'DescubrAqp',
+    description: 'Aplicación nativa Android con arquitectura modular. Integra vistas panorámicas 360°, trazado de rutas GPS y reproducción de audio-guías en segundo plano mediante Foreground Services.',
+    expandedDescription: `<h3>DescubrAqp - Experiencia Turística Inmersiva</h3>
+<p>DescubrAqp es una aplicación móvil nativa diseñada para revitalizar el turismo en Arequipa mediante una experiencia digital interactiva. [cite_start]El proyecto se estructuró bajo una <strong>Arquitectura Modular</strong> organizada por capas (UI, Data, Domain), lo que facilitó la escalabilidad y el mantenimiento del código[cite: 13, 21].</p>
+
+<p>En el ámbito de <strong>Ingeniería Frontend Android</strong>, implementé características avanzadas que van más allá de un simple CRUD. [cite_start]Desarrollé un <strong>Sistema de Audio en Segundo Plano</strong> utilizando <em>Foreground Services</em> y notificaciones persistentes, permitiendo al usuario escuchar la historia del lugar mientras explora otras apps o bloquea el teléfono[cite: 301, 303]. [cite_start]Para la gestión de datos, integré <strong>Room Database</strong>, implementando el patrón Repository y DAOs para garantizar una experiencia <em>offline</em> fluida y una única fuente de verdad[cite: 135, 230].</p>
+
+<p>El enfoque en <strong>UX/UI e Interactividad</strong> es el núcleo del proyecto. [cite_start]Diseñé un módulo de <strong>Visualización 360°</strong> que procesa imágenes panorámicas y responde a gestos táctiles (inercia, zoom, rotación) para una inmersión total[cite: 451, 480]. [cite_start]Además, integré la API de Google Maps y Open Route Service para trazar <strong>rutas de navegación óptimas</strong> (Polylines) en tiempo real desde la ubicación del usuario hasta el destino turístico[cite: 519, 522].</p>
+
+<h4>Características Técnicas Destacadas:</h4>
+<ul>
+[cite_start]<li><strong>Vista Inmersiva 360°:</strong> Renderizado de panoramas esféricos con control gestual y gestión eficiente del ciclo de vida del fragmento para optimizar memoria[cite: 455, 500].</li>
+[cite_start]<li><strong>Servicios Background:</strong> Reproducción de audio continua mediante <code>startForeground</code> y gestión de notificaciones multimedia personalizadas[cite: 361, 377].</li>
+[cite_start]<li><strong>Mapas y Geolocalización:</strong> Integración de marcadores dinámicos y cálculo de rutas paso a paso utilizando servicios REST externos[cite: 50, 577].</li>
+[cite_start]<li><strong>Persistencia Local (Room):</strong> Base de datos relacional para cachear edificaciones, comentarios y mapas internos de los recintos[cite: 230, 248].</li>
+</ul>`,
+    tags: ["Android Native", "Google Maps API", "UX/UI Inmersivo"],
+    techBadge: ['android', 'java', 'figma'], // El código del PDF muestra sintaxis Java
+    buttons: [
+      { type: 'github', url: 'https://github.com/Triplerush/DescubrAqp' },
+      { type: 'figma', url: 'https://www.figma.com/design/d8d1HZCj0g86ZdbPPJjJck/Aqp?node-id=0-1&t=2thgBg5euWGxAW6o-1' },
+      { type: 'presentation', url: 'https://www.canva.com/design/DAHA-KoswWw/7WyGo_4CmJCDQfaFZksegw/edit?utm_content=DAHA-KoswWw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton' } 
+    ]
+  },
+  {
+    id: 11,
+    title: 'For-UNSA',
+    description: 'Diseñé la experiencia de usuario (UX) e interfaz (UI) completa de esta plataforma académica. Entregué prototipos de alta fidelidad en Figma y definí la guía de estilos para el equipo de desarrollo.',
+    expandedDescription: `<h3>For-UNSA - Diseño de Experiencia Académica</h3>
+<p>For-UNSA es una plataforma colaborativa diseñada para centralizar recursos académicos. En este proyecto, mi rol fue exclusivamente el de <strong>Lead UX/UI Designer</strong>, trabajando en estrecha colaboración con el equipo de desarrollo bajo una metodología ágil (SCRUM).</p>
+
+<p>Mi responsabilidad principal fue traducir los requerimientos funcionales en una interfaz intuitiva y atractiva. Utilicé <strong>Figma</strong> para crear todo el sistema de diseño, desde los wireframes de baja fidelidad hasta los prototipos interactivos de alta fidelidad (High-Fidelity). Me enfoqué en resolver la arquitectura de la información para que los estudiantes pudieran navegar entre facultades, escuelas y cursos sin fricción, priorizando la legibilidad y la facilidad de acceso a los documentos.</p>
+
+<p>Definí la <strong>Identidad Visual</strong> del proyecto (paleta de colores, tipografía y componentes UI), asegurando la consistencia en todas las vistas. Además, realicé el "Hand-off" (entrega) de los diseños a los desarrolladores, proporcionando especificaciones claras sobre comportamientos, estados de los botones y flujos de navegación, lo que facilitó la implementación del frontend en React.</p>
+
+<h4>Aportes de Diseño:</h4>
+<ul>
+<li><strong>Prototipado Completo:</strong> Diseño de todas las vistas clave (Login, Feed, Perfil, Detalle de Curso) en Figma.</li>
+<li><strong>Sistema de Diseño (Design System):</strong> Creación de una guía de estilos y componentes reutilizables para mantener la coherencia visual.</li>
+<li><strong>Flujo de Usuario (User Flow):</strong> Optimización de la navegación para reducir el número de clics necesarios para encontrar un sílabo o recurso.</li>
+</ul>`,
+    tags: ["UX/UI Design", "Prototyping", "Figma"],
+    techBadge: ['figma'], // Eliminamos React/Python para ser fieles a tu rol
+    buttons: [
+      { type: 'figma', url: 'https://www.figma.com/design/yR3jjtWpHpcrZeAFD8g5ye/Prototipo--Copia-?node-id=0-1&t=qeyHyAst2IBwDw4b-1' },
+      { type: 'presentation', url: 'https://docs.google.com/presentation/d/1CTQ12oEVfDb43T7HHMNFHRVAe42OfOzzwQgP9V5Tf3c/edit?usp=sharing' },
+      // Mantenemos el repo por si quieren ver el resultado final del equipo, pero priorizamos Figma
+      { type: 'github', url: 'https://github.com/atn25042002/ForUnsa' }
+    ]
+  },
+  {
+    id: 12,
+    title: 'MiCombi - UX Caso de Estudio',
+    description: 'Caso de estudio completo de UX/UI para una app de transporte público. Abarqué desde la investigación de usuarios y arquitectura de información hasta el prototipado en alta fidelidad y validación con métricas de usabilidad.',
+    expandedDescription: `<h3>MiCombi - Diseño Centrado en el Usuario</h3>
+<p>Desarrollado como proyecto final para la certificación de <strong>UX/UI Avanzado en Coderhouse</strong>, "MiCombi" nace para solucionar la caótica experiencia de navegar el transporte público informal en ciudades peruanas. Este proyecto no se limitó al diseño visual, sino que siguió rigurosamente la metodología del <strong>Design Thinking</strong>.</p>
+
+<p>En la fase de <strong>UX Research</strong>, realicé un benchmarking competitivo (analizando TuRuta, Rumbo, Google Maps) y entrevistas con usuarios reales para definir <em>User Personas</em> y <em>Journey Maps</em>. Identifiqué que la principal fricción no era la falta de rutas, sino la incertidumbre y la ansiedad del usuario al no saber dónde bajar. Con estos hallazgos, definí la arquitectura de la información y los flujos de usuario (User Flows).</p>
+
+<p>Para el <strong>Diseño de Interacción (IxD) y UI</strong>, iteré a través de tres niveles de fidelidad: bocetos en papel (Low-Fi), wireframes estructurales (Mid-Fi) y finalmente un prototipo interactivo en Alta Fidelidad (High-Fi) en <strong>Figma</strong>. Implementé un sistema de diseño atómico para garantizar la consistencia visual y la escalabilidad del producto.</p>
+
+<p>Lo más destacado fue la fase de <strong>Validación y Testing</strong>. Llevé a cabo pruebas de usabilidad moderadas con usuarios potenciales, midiendo el éxito de la tarea y la satisfacción mediante métricas estandarizadas como el <strong>SEQ (Single Ease Question)</strong> y la escala <strong>SUS (System Usability Scale)</strong>, iterando el diseño final basándome en estos resultados cuantitativos y cualitativos.</p>
+
+<h4>Entregables y Técnicas:</h4>
+<ul>
+<li><strong>Investigación:</strong> Benchmarking, Entrevistas, User Personas, Empathy Maps.</li>
+<li><strong>Diseño:</strong> Wireframing (Baja/Media/Alta fidelidad), Prototipado Interactivo, Design System.</li>
+<li><strong>Métricas de Usabilidad:</strong> Pruebas con usuarios reales, medición de Tasa de Éxito, SEQ y SUS.</li>
+</ul>`,
+    tags: ["UX Research", "UI Design", "Usability Testing", "Case Study"],
+    techBadge: ['figma'], // Asumo Miro o similar para la parte de investigación, es estándar.
+    buttons: [
+      { type: 'figma', url: 'https://www.figma.com/file/IjraYwcUMkE7xSmGn3lPjx/MiCombi-UX%2FUI?type=design&node-id=247%3A4052&t=GpJAVXUknP2p2qRe-1' },
+      { type: 'demo', url: 'https://www.figma.com/proto/IjraYwcUMkE7xSmGn3lPjx/MiCombi-UX%2FUI?type=design&node-id=247-4743&scaling=scale-down&page-id=247%3A4052&starting-point-node-id=247%3A4743' }, // Link directo al prototipo funcional
+      // Si quieres incluir el PDF como un "Case Study" descargable:
+      { type: 'presentation', url: 'https://docs.google.com/presentation/d/1sTodpTIea1VuydorGpjw8gmAA24KXMM5TTV3sz0kU3I/edit?usp=sharing' } 
+    ]
+  },
+  {
+    id: 13,
+    title: 'Cinepolis - Caso de Estudio UX-UI',
+    description: 'Caso de estudio de rediseño de la experiencia de compra de entradas. Enfoque en la optimización del flujo de usuario (User Flow), prototipado interactivo en Figma y validación mediante pruebas de usabilidad moderadas.',
+    expandedDescription: `<h3>Cinepolis - Optimización de la Experiencia de Compra</h3>
+<p>Este proyecto consistió en un rediseño integral del flujo de adquisición de boletos para la cadena de cines Cinepolis, realizado como parte de una especialización en UX/UI. El objetivo principal fue identificar y eliminar los puntos de fricción (pain points) que causaban el abandono del carrito durante el proceso de compra digital.</p>
+
+<p>La fase de <strong>Investigación y Estrategia (UX Research)</strong> comenzó con un análisis heurístico de la aplicación actual y entrevistas a usuarios frecuentes. Desarrollé artefactos clave como <em>User Personas</em> y <em>Customer Journey Maps</em> para mapear las emociones del usuario en cada etapa. Los hallazgos del "Reporte de Insights" revelaron problemas críticos en la selección de butacas y la claridad de los costos finales, lo que guió la nueva arquitectura de información.</p>
+
+<p>Para la etapa de <strong>Diseño y Prototipado</strong>, utilicé <strong>Figma</strong> para iterar desde wireframes de baja fidelidad hasta un prototipo de alta fidelidad (High-Fi) totalmente interactivo. Implementé mejoras visuales y de interacción, como un selector de asientos más intuitivo y un desglose de precios transparente. El diseño final fue sometido a <strong>Pruebas de Usabilidad</strong> con usuarios reales, permitiéndome validar las hipótesis de mejora y ajustar el producto basándome en métricas de éxito y tiempos de ejecución de tareas.</p>
+
+<h4>Entregables Clave:</h4>
+<ul>
+<li><strong>Reporte de Insights:</strong> Documentación detallada de hallazgos cualitativos y cuantitativos tras las pruebas con usuarios.</li>
+<li><strong>Prototipo Navegable:</strong> Simulación completa del flujo de compra ("Happy Path") con micro-interacciones.</li>
+<li><strong>Iteración Basada en Datos:</strong> Ajustes de diseño realizados post-testing para maximizar la usabilidad.</li>
+</ul>`,
+    tags: ["UX/UI Design", "Redesign", "Usability Testing", "Figma"],
+    techBadge: ['figma'],
+    buttons: [
+      { type: 'figma', url: 'https://www.figma.com/file/tG9evssbIGB63QkJgJbpEs/PrototipoCinepolis-Henry?type=design&node-id=0%3A1&mode=design&t=avEtrFq5IL6MLtwo-1' },
+      { type: 'demo', url: 'https://www.figma.com/proto/tG9evssbIGB63QkJgJbpEs/PrototipoCinepolis-Henry?node-id=9-657&t=UBkL5c4JQ9h17qFs-1&scaling=min-zoom&content-scaling=fixed&page-id=4%3A2&starting-point-node-id=9%3A657&show-proto-sidebar=1' },
+      // He vinculado los reportes PDF que subiste como documentación adicional si decides alojarlos en algún lugar público, 
+      // o puedes mantenerlos como parte de tu explicación en entrevistas.
+      { type: 'presentation', url: 'https://docs.google.com/presentation/d/1ub7yW99RkIxHOC7Wu-7UhsJ-JQkqZMIP-5fD6w9Nap4/edit?usp=sharing' } 
+    ]
   }
 ];

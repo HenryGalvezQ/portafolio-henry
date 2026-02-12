@@ -16,8 +16,18 @@
         :tech-badges="project.techBadge"
         :is-expanded="isExpanded"
         @carousel-hint-shown="handleCarouselHintShown"
+        @open-modal="showModal = true"
       />
     </div>
+    <Teleport to="body">
+      <CertificateModal 
+        v-if="showModal"
+        :show="showModal" 
+        :images="project.images"
+        :is-vertical="false"
+        @close="showModal = false"
+      />
+    </Teleport>
     <div class="portfolio__data">
       <h3 class="portfolio__title">{{ project.title }}</h3>
       <div class="portfolio__description-container">
@@ -62,13 +72,15 @@
 import PortfolioTags from './PortfolioTags.vue';
 import PortfolioImageCarousel from './PortfolioImageCarousel.vue';
 import PortfolioActionButtons from './PortfolioActionButtons.vue';
+import CertificateModal from './CertificateModal.vue';
 
 export default {
   name: 'PortfolioCard',
   components: {
     PortfolioTags,
     PortfolioImageCarousel,
-    PortfolioActionButtons
+    PortfolioActionButtons,
+    CertificateModal
   },
   props: {
     project: {
@@ -90,6 +102,7 @@ export default {
       hoveredButton: null,
       lockHover: false,
       showCarouselHint: false,
+      showModal: false,
       resizeObserver: null,
       lastReportedHeight: 0,
     };
@@ -149,6 +162,13 @@ export default {
     },
   },
   watch: {
+    showModal(value) {
+      if (value) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    },
     isExpanded(newVal) {
       this.hoveredButton = null;
       this.lockHover = false;
