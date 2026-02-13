@@ -146,6 +146,26 @@
             </div>
             <div>
               <span class="qualification__rounder"></span>
+              <span class="qualification__line"></span>
+            </div>
+          </div>
+
+          <!-- NUEVO: Symmetry Club LLC -->
+          <div class="qualification__data qualification__data-work" @click="openModal('symmetry')">
+            <div></div>
+            <div>
+              <span class="qualification__rounder"></span>
+            </div>
+            <div class="qualification__item-content qualification__item-content--right">
+              <div class="qualification__text-content">
+                <h3 class="qualification__title">Frontend Developer (Freelance)</h3>
+                <span class="qualification__subtitle">Symmetry Club LLC • Fitness App</span>
+                <div class="qualification__calendar">
+                  <i class="uil uil-calendar-alt"></i>
+                  Diciembre 2025
+                </div>
+              </div>
+              <img src="@/assets/img/symmetry_logo.png" alt="Logo Symmetry" class="qualification__logo">
             </div>
           </div>
     
@@ -157,6 +177,7 @@
       :show="activeModalId !== null" 
       :images="currentModalImages"
       :is-vertical="isModalVertical"
+      :modal-id="activeModalId"
       @close="closeModal"
     />
   </section>
@@ -167,12 +188,8 @@ import { ref, computed } from 'vue';
 import CertificateModal from './CertificateModal.vue';
 
 // --- Importación de todas las imágenes ---
-
-// Coderhouse (sin cambios)
 import certificadoCoderhouse1 from '@/assets/img/certificado_coderhouse1.png';
 import certificadoCoderhouse2 from '@/assets/img/certificado_coderhouse2.png';
-
-// Imágenes actualizadas y nuevas
 import constancia_egresado from '@/assets/img/constancia_egresado.jpg';
 import constancia_ranking from '@/assets/img/constancia_ranking.jpg';
 import libreta_notas from '@/assets/img/libreta_notas.jpg';
@@ -192,10 +209,10 @@ import certificado_cisco8 from '@/assets/img/certificado_cisco8.jpg';
 const activeTab = ref('education');
 const activeModalId = ref(null);
 
-// --- Datos de los Modales (Actualizado) ---
+// --- Datos de los Modales ---
 const modalData = {
   unsa: [constancia_egresado, constancia_ranking],
-  support: [], // Array vacío para que el click no haga nada
+  support: [],
   coderhouse: [certificadoCoderhouse1, certificadoCoderhouse2],
   municipalidad: [certificado_muni],
   oracle: [certificado_oracle],
@@ -205,28 +222,29 @@ const modalData = {
     certificado_cisco4, certificado_cisco5, certificado_cisco6,
     certificado_cisco7, certificado_cisco8
   ],
+  symmetry: [], // Array vacío porque usa el componente SymmetryTestimonial
 };
 
 // --- Propiedades Computadas ---
 const currentModalImages = computed(() => {
-  // Devuelve las imágenes del modal activo, o un array vacío si no hay ninguno.
   return activeModalId.value ? modalData[activeModalId.value] : [];
 });
+
 const isModalVertical = computed(() => {
-  const verticalIds = ['unsa', 'municipalidad', 'innovaciencia'];
+  const verticalIds = ['unsa', 'municipalidad', 'innovaciencia', 'symmetry'];
   return verticalIds.includes(activeModalId.value);
 });
+
 // --- Métodos ---
 const setActiveTab = (tabName) => {
   activeTab.value = tabName;
 };
 
-// MODIFICADO: Solo abre el modal si el ID corresponde a un array con imágenes.
 const openModal = (modalId) => {
-  if (modalData[modalId] && modalData[modalId].length > 0) {
+  // MODIFICADO: Permite abrir modal de Symmetry aunque tenga array vacío
+  if (modalId === 'symmetry' || (modalData[modalId] && modalData[modalId].length > 0)) {
     activeModalId.value = modalId;
   }
-  // Si no hay imágenes (array vacío), la función simplemente termina y no hace nada.
 };
 
 const closeModal = () => {
@@ -376,7 +394,6 @@ const closeModal = () => {
   }
 }
 
-/* Ajustes para pantallas pequeñas sin romper la estructura */
 @media screen and (max-width: 567px) {
   .qualification__data {
     column-gap: 0.75rem;

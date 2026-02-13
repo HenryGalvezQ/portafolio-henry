@@ -334,5 +334,55 @@ export const projectsData = [
       // o puedes mantenerlos como parte de tu explicación en entrevistas.
       { type: 'presentation', url: 'https://docs.google.com/presentation/d/1ub7yW99RkIxHOC7Wu-7UhsJ-JQkqZMIP-5fD6w9Nap4/edit?usp=sharing' } 
     ]
+  },
+  {
+    id: 14,
+    title: 'Helpy',
+    description: 'Diseñé y prototipé una aplicación móvil de asistencia médica geriátrica. Me enfoqué en la accesibilidad para el adulto mayor y validé la usabilidad del diseño mediante pruebas comparativas (método SUS) frente a competidores.',
+    expandedDescription: `<h3>Helpy - Salud y Accesibilidad Digital</h3>
+<p>Presentado en la <strong>Feria de Proyectos 2022</strong>, Helpy es una solución móvil diseñada para abordar la problemática de la adherencia al tratamiento médico en adultos mayores. El objetivo fue crear una herramienta digital que permitiera a este grupo demográfico gestionar sus recordatorios de medicación y monitorear signos vitales de manera autónoma y sencilla.</p>
+
+<p>Mi rol principal fue el de <strong>Diseñador de Producto y UX/UI</strong>. El desafío central fue diseñar una interfaz con altos estándares de <strong>accesibilidad</strong>, adaptada a las limitaciones visuales y cognitivas propias de la tercera edad. Diseñé flujos de navegación simplificados, utilicé tipografía de alto contraste y botones de gran tamaño para asegurar una interacción sin fricción. El prototipo permite configurar alarmas de medicamentos, registrar presión arterial/glucosa y conectar con cuidadores o médicos.</p>
+
+<p>Para validar la propuesta, lideré una fase de <strong>Investigación y Testing</strong> rigurosa. Realicé un estudio comparativo (Benchmarking) contra líderes del mercado como <em>Medisafe</em> y ejecuté pruebas de usabilidad con usuarios reales mayores de 50 años. Utilicé la escala <strong>SUS (System Usability Scale)</strong> para medir cuantitativamente la satisfacción, demostrando que la interfaz de Helpy reducía la carga cognitiva y mejoraba la experiencia de uso frente a la competencia.</p>
+
+<h4>Aportes de Diseño e Investigación:</h4>
+<ul>
+<li><strong>Diseño Inclusivo:</strong> Interfaz gráfica optimizada para adultos mayores (UI Geriátrica).</li>
+<li><strong>Validación Científica:</strong> Uso de la metodología SUS para respaldar las decisiones de diseño con datos cuantitativos.</li>
+<li><strong>Prototipado Funcional:</strong> Creación de flujos completos para la gestión de tratamientos y alertas médicas.</li>
+</ul>`,
+    tags: ["UX/UI Design", "Accessibility", "HealthTech", "Figma"],
+    techBadge: ['figma'], 
+    buttons: [
+      { type: 'figma', url: 'https://www.figma.com/design/xTNEM1O2k9DXR0TT4iqxFH/Helpy?node-id=0-1&t=Uvg2YkNJB1jzOhIH-1' },
+      { type: 'demo', url: 'https://www.figma.com/proto/xTNEM1O2k9DXR0TT4iqxFH/Helpy?node-id=18-481&t=ppQjiazUjlvGGxTY-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=8%3A61' },
+      { type: 'presentation', url: '#' } // Puedes vincular aquí el PDF de la Feria si lo deseas
+    ]
+  },
+  {
+    id: 15,
+    title: 'MOOC Gamificado - Emprendimiento',
+    description: 'Diseñé y prototipé en Figma una plataforma educativa gamificada. Integré narrativas de emprendimiento y mecánicas de juego (insignias, XP) para validar un modelo de aprendizaje basado en retos sin necesidad de backend.',
+    expandedDescription: `<h3>MOOC Gamificado - Experiencia de Aprendizaje Inmersiva</h3>
+<p>Este proyecto consistió en el diseño UX/UI de una plataforma MOOC (Massive Open Online Course) centrada en la enseñanza del emprendimiento. El objetivo fue validar un modelo pedagógico que combina <strong>Design Thinking y Gamificación</strong>, integrados de manera orgánica para que el usuario perciba una narrativa de negocio ("Innova, Lanza y Escala") en lugar de una lección teórica tradicional.</p>
+
+<p>En la fase de <strong>Prototipado en Figma</strong>, diseñé un sistema de interacción basado en "Misiones". En lugar de módulos estáticos, el estudiante elige un reto (ej. "La Revolución del Café") y avanza desbloqueando niveles ("Novato", "Innovador", "Visionario"). Implementé mecánicas de <strong>feedback inmediato</strong>, donde cada acción del usuario genera puntos de experiencia (XP) o insignias temáticas, reforzando la motivación y la retención del estudiante.</p>
+
+<p>El diseño visual se iteró para eliminar tecnicismos pedagógicos, adoptando una estética profesional. Además, integré una funcionalidad de <strong>"Malla Receptora"</strong> dentro del mismo prototipo, permitiendo capturar feedback cualitativo de los usuarios evaluadores en tiempo real directamente sobre las pantallas del curso, facilitando la validación temprana del producto.</p>
+
+<h4>Características de Diseño:</h4>
+<ul>
+<li><strong>Gamificación Estructural:</strong> Sistema de progreso por niveles, barras de experiencia (XP) y recompensas visuales (insignias de "Detective", "Visionario").</li>
+<li><strong>Narrativa Inmersiva:</strong> Flujos de usuario diseñados como "misiones" de emprendimiento real para aumentar el compromiso.</li>
+<li><strong>Herramientas de Validación:</strong> Integración de componentes para la recolección de feedback de usabilidad (malla receptora) dentro de la interfaz.</li>
+</ul>`,
+    tags: ["UX/UI Design", "Gamification", "EdTech", "Figma"],
+    techBadge: ['figma'],
+    buttons: [
+      { type: 'figma', url: 'https://www.figma.com/design/O4SnOC5EE59PGSLuyLOkkL/MOOC-Gamificado-Prototipo?node-id=1-143&t=Wo8A54PoJOTl67Qi-1' },
+      // He añadido un botón extra para ver el flujo específico si el link lo permite, o puedes usar el mismo para Demo
+      { type: 'demo', url: 'https://www.figma.com/proto/O4SnOC5EE59PGSLuyLOkkL/MOOC-Gamificado-Prototipo?node-id=1-143&t=gS6RWhjIiza8qQA4-1' } 
+    ]
   }
 ];

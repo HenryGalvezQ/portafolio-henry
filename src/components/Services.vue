@@ -87,7 +87,7 @@
 
       <div :class="['services__content', servicesState.mobile ? 'services__open' : 'services__close']" data-service="mobile">
 
-        <img src="@/assets/img/diseno_captura.png" alt="Captura de Desarrollo Mobile" class="services__img">
+        <img src="@/assets/img/mobile_captura.jpg" alt="Captura de Desarrollo Mobile" class="services__img">
 
         <div class="services__header" @click="toggleService()">
           <i class="uil uil-mobile-android services__icon"></i>

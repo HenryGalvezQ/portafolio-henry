@@ -6,39 +6,47 @@
 
         <i @click="closeModal" class="uil uil-times qualification__modal-close"></i>
 
-        <i v-if="isCarousel" @click.stop="prevImage" class="uil uil-angle-left-b carousel__button carousel__button--left"></i>
-
-        <div class="qualification__modal-content">
-          <div v-if="!isCarousel" class="carousel__wrapper">
-            <img v-if="images.length > 0" 
-                 :src="images[0]" 
-                 alt="Certificado" 
-                 class="qualification__modal-img">
-          </div>
-          
-          <div v-else class="carousel">
-            <div class="carousel__wrapper">
-              <div class="carousel__track" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
-                <div v-for="(image, index) in images" :key="index" class="carousel__slide">
-                  <img :src="image" 
-                       :alt="`Certificado ${index + 1}`" 
-                       class="qualification__modal-img">
-                </div>
-              </div>
-            </div>
-            <div class="carousel__pagination">
-              <span 
-                v-for="(_, index) in images" 
-                :key="index" 
-                class="carousel__dot" 
-                :class="{ 'carousel__dot--active': index === currentImageIndex }" 
-                @click.stop="goToSlide(index)"
-              ></span>
-            </div>
-          </div>
+        <!-- NUEVO: Mostrar testimonial si es Symmetry -->
+        <div v-if="showSymmetryTestimonial" class="qualification__modal-content qualification__modal-content--testimonial">
+          <SymmetryTestimonial />
         </div>
 
-        <i v-if="isCarousel" @click.stop="nextImage" class="uil uil-angle-right-b carousel__button carousel__button--right"></i>
+        <!-- EXISTENTE: Lógica normal de imágenes para otros modales -->
+        <template v-else>
+          <i v-if="isCarousel" @click.stop="prevImage" class="uil uil-angle-left-b carousel__button carousel__button--left"></i>
+
+          <div class="qualification__modal-content">
+            <div v-if="!isCarousel" class="carousel__wrapper">
+              <img v-if="images.length > 0" 
+                   :src="images[0]" 
+                   alt="Certificado" 
+                   class="qualification__modal-img">
+            </div>
+            
+            <div v-else class="carousel">
+              <div class="carousel__wrapper">
+                <div class="carousel__track" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
+                  <div v-for="(image, index) in images" :key="index" class="carousel__slide">
+                    <img :src="image" 
+                         :alt="`Certificado ${index + 1}`" 
+                         class="qualification__modal-img">
+                  </div>
+                </div>
+              </div>
+              <div class="carousel__pagination">
+                <span 
+                  v-for="(_, index) in images" 
+                  :key="index" 
+                  class="carousel__dot" 
+                  :class="{ 'carousel__dot--active': index === currentImageIndex }" 
+                  @click.stop="goToSlide(index)"
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <i v-if="isCarousel" @click.stop="nextImage" class="uil uil-angle-right-b carousel__button carousel__button--right"></i>
+        </template>
 
       </div>
     </div>
@@ -48,9 +56,9 @@
 
 <script setup>
 import { ref, computed, watch, onUnmounted } from 'vue';
+import SymmetryTestimonial from './SymmetryTestimonial.vue';
 
 // --- Props y Emits ---
-// Se simplifica: Ya no necesitamos el 'modalId'
 const props = defineProps({
   show: {
     type: Boolean,
@@ -60,9 +68,13 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
-  isVertical: { // <-- AÑADE ESTO
+  isVertical: {
     type: Boolean,
     default: false
+  },
+  modalId: { // NUEVO: Para detectar si es Symmetry
+    type: String,
+    default: null
   }
 });
 
@@ -75,7 +87,8 @@ let autoSlideInterval = null;
 // --- Propiedades Computadas ---
 const isCarousel = computed(() => props.images && props.images.length > 1);
 
-// Ya no necesitamos 'isVerticalDocument', la nueva lógica CSS es universal.
+// NUEVO: Detectar si debe mostrar el testimonial de Symmetry
+const showSymmetryTestimonial = computed(() => props.modalId === 'symmetry');
 
 // --- Métodos (sin cambios) ---
 const clearAutoSlide = () => {
@@ -116,7 +129,7 @@ const closeModal = () => {
 watch(() => props.show, (isNowVisible) => {
   if (isNowVisible) {
     currentImageIndex.value = 0;
-    if (isCarousel.value) {
+    if (isCarousel.value && !showSymmetryTestimonial.value) { // MODIFICADO: No autoplay para testimonial
       startAutoSlide();
     }
   } else {
@@ -169,6 +182,14 @@ onUnmounted(() => {
   border-radius: .5rem;
   width: 100%;
 }
+
+/* NUEVO: Estilo especial para el modal de testimonial */
+.qualification__modal-content--testimonial {
+  padding: 0;
+  background-color: transparent;
+  max-width: 650px;
+}
+
 .qualification__modal-close {
   position: absolute;
   top: 1rem;
@@ -179,33 +200,23 @@ onUnmounted(() => {
   z-index: 15;
 }
 
-/* ==================== LÓGICA DE ESTILOS PARA IMÁGENES (LA CLAVE DE LA CORRECCIÓN) ==================== */
-
-/* REGLA UNIVERSAL PARA TODAS LAS IMÁGENES */
-/* Esta única regla se encarga de ajustar correctamente tanto imágenes horizontales como verticales. */
+/* ==================== LÓGICA DE ESTILOS PARA IMÁGENES ==================== */
 .qualification__modal-img {
   display: block;
-  /* La imagen no puede ser más ancha que su contenedor. */
   max-width: 100%;
-  /* La imagen no puede ser más alta que el 85% de la ventana. */
   max-height: 85vh;
-  /* El ancho y alto se ajustan automáticamente para mantener la proporción. */
   width: auto;
   height: auto;
-  /* Se centra la imagen si su 'width' es 'auto' (caso vertical en desktop) */
   margin: 0 auto;
 }
-/* NUEVA REGLA ESPECÍFICA para los certificados de Municipalidad/UNSA */
 .qualification__modal-img.qualification__modal-img--vertical {
-  /* En pantallas de escritorio, le damos un ancho fijo para que no se vea demasiado grande */
   width: 390px; 
 }
-/* NUEVO: El contenedor también reduce su ancho en desktop para imágenes verticales */
 .carousel-container.carousel-container--vertical {
-    max-width: 420px; /* Un poco más que la imagen para darle margen */
+    max-width: 420px;
 }
 
-/* ==================== ESTILOS DEL CARRUSEL (AJUSTADOS) ==================== */
+/* ==================== ESTILOS DEL CARRUSEL ==================== */
 .carousel__button {
   position: absolute;
   top: 50%;
@@ -252,19 +263,13 @@ onUnmounted(() => {
   display: flex;
   transition: transform 0.5s ease-in-out;
 }
-
-/* NUEVO: Contenedor de cada imagen en el carrusel */
 .carousel__slide {
-  /* Ocupa el 100% del ancho del 'wrapper' */
   width: 100%;
-  /* No se encoge, fundamental para el cálculo del transform */
   flex-shrink: 0;
-  /* Centra la imagen (que ahora tiene 'width: auto') en su interior */
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .carousel__pagination {
   position: absolute;
   left: 0;
@@ -287,10 +292,10 @@ onUnmounted(() => {
 .carousel__dot--active {
   background-color: var(--first-color);
 }
+
 /* ==================== MEDIA QUERIES ==================== */
 @media screen and (max-width: 568px) {
   .qualification__modal-img.qualification__modal-img--vertical {
-    /* En móvil, usamos un porcentaje para que sea fluido y no un ancho fijo */
     width: 85%;
   }
 }
