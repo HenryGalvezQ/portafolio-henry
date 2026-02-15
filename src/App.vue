@@ -68,19 +68,23 @@ watch(theme, (newTheme) => {
   }
 });
 
-// 7. Modificamos la función de scroll para que haga ambas cosas
+// 7. Función de scroll MEJORADA con mejor offset
 const handleScroll = () => {
   // Lógica para el botón de scroll
   showScrollBtn.value = window.scrollY >= 560;
   isHeaderScrolled.value = window.scrollY >= 80;
   
-  // Lógica para la sección activa
+  // Lógica para la sección activa con MEJOR OFFSET
   const scrollY = window.scrollY;
   const sections = document.querySelectorAll('section[id]');
   
+  // Calculamos el offset del header (diferente en mobile vs desktop)
+  const isMobile = window.innerWidth < 768;
+  const headerOffset = isMobile ? 100 : 150; // Offset más grande para compensar desplegables
+  
   sections.forEach(current => {
     const sectionHeight = current.offsetHeight;
-    const sectionTop = current.offsetTop - 200; // Cambiado de -58 a -200 para mejor detección
+    const sectionTop = current.offsetTop - headerOffset;
     const sectionId = current.getAttribute('id');
 
     if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {

@@ -61,7 +61,41 @@ import { ref } from 'vue';
 // Lógica del menú móvil
 const isMenuOpen = ref(false);
 const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value;
-const closeMenu = () => isMenuOpen.value = false;
+
+// Función mejorada para cerrar menú y hacer scroll suave con recalculación INTELIGENTE
+const closeMenu = (event) => {
+  isMenuOpen.value = false;
+  
+  // Si el clic viene de un enlace con hash (#)
+  const href = event.target.closest('a')?.getAttribute('href');
+  if (href && href.startsWith('#')) {
+    event.preventDefault(); // Prevenimos el scroll por defecto
+    
+    const targetId = href.substring(1);
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      // Secciones que NO tienen desplegables (scroll simple)
+      const sectionsWithoutCollapse = ['home', 'about'];
+      
+      // Scroll inicial para TODAS las secciones
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // Solo recalcular para secciones CON desplegables (skills, services, portfolio, qualification)
+      if (!sectionsWithoutCollapse.includes(targetId)) {
+        // Recalcular posición después de que las animaciones se completen
+        setTimeout(() => {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 600); // 600ms para dar tiempo a que los desplegables se animen
+        
+        // Recalculación final para mayor precisión
+        setTimeout(() => {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 1000);
+      }
+    }
+  }
+};
 
 // Declaramos las props y los emits
 defineProps({

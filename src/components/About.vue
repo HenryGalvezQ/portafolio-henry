@@ -38,7 +38,7 @@
       </div>
 
       <div class="about__scroll">
-        <a href="#portfolio" class="about__scroll-button button--flex">
+        <a href="#portfolio" class="about__scroll-button button--flex" @click="scrollToPortfolio">
           <i class="uil uil-mouse-alt about__scroll-mouse"></i>
           <span class="about__scroll-name">Ir a Portafolio</span>
           <i class="uil uil-arrow-down"></i>
@@ -50,7 +50,29 @@
 
 <script>
 export default {
-  name: 'About'
+  name: 'About',
+  methods: {
+    scrollToPortfolio(event) {
+      event.preventDefault(); // Prevenir el scroll por defecto
+      
+      const targetElement = document.getElementById('portfolio');
+      
+      if (targetElement) {
+        // Scroll inicial
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // Recalcular después de que las animaciones se completen
+        setTimeout(() => {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 600);
+        
+        // Recalculación final para mayor precisión
+        setTimeout(() => {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 1000);
+      }
+    }
+  }
 }
 </script>
 
@@ -133,6 +155,7 @@ export default {
   align-items: center;
   column-gap: .5rem;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .about__scroll-button:hover {

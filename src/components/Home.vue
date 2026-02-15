@@ -1,3 +1,4 @@
+// Home.vue
 <template>
   <section class="home section" id="home">
     <div class="home__container container grid">
@@ -238,7 +239,7 @@
 .home__scroll {
   display: none;
   position: absolute;
-  top: 495px;
+  top: 450px;
   right: 13.5rem;
   bottom: 4rem;
 }
@@ -271,7 +272,7 @@
 /* Pantallas muy pequeñas (max-width: 350px) */
 @media screen and (max-width: 350px) {
   .home__container {
-    padding-top: 1.5rem;
+    padding-top: 1.2rem;
   }
   
   .home__wrapper {
@@ -349,7 +350,7 @@
   .home__discription {
     font-size: 0.85rem;
     text-align: left;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.4rem;
     width: 100%;
   }
 }
@@ -357,7 +358,7 @@
 /* Pantallas pequeñas (min-width: 351px y max-width: 567px) */
 @media screen and (min-width: 351px) and (max-width: 567px) {
   .home__container {
-    padding-top: 1.5rem;
+    padding-top: 1.25rem;
   }
   
   .home__wrapper {
@@ -425,7 +426,7 @@
   
   .home__discription {
     text-align: left;
-    margin-bottom: 1.65rem;
+    margin-bottom: 1.5rem;
     width: 100%;
   }
 }
@@ -463,6 +464,7 @@
   .home__container {
     row-gap: 5rem;
     padding-top: 0rem;
+    margin-top: -0.5rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
