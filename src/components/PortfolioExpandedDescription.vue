@@ -399,10 +399,10 @@ export default {
   .portfolio-expanded {
     max-width: 100%;
     margin-left: 0;
-    margin-top: 1rem;
+    margin-top: 0; /* Eliminar separación */
     border-left: none;
     border-top: 2px solid #8b5cf6;
-    border-radius: 0.5rem;
+    border-radius: 0 0 0.5rem 0.5rem; /* Solo esquinas inferiores redondeadas */
   }
   
   .portfolio-expanded::before {

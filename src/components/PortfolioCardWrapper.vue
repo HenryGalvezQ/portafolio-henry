@@ -76,7 +76,6 @@ export default {
       const isOpening = !this.isExpanded;
 
       if (isOpening) {
-        // 1. Si vamos a abrir, guardamos la posición ACTUAL del scroll
         this.scrollYBeforeExpand = window.scrollY;
       }
 
@@ -85,16 +84,18 @@ export default {
 
       this.$nextTick(() => {
         if (isOpening) {
-          // 2. Centramos la tarjeta en la vista
           this.$el.scrollIntoView({
             behavior: 'smooth',
             block: 'center'
           });
         } else {
-          // 3. Si cerramos, volvemos a la posición guardada
-          window.scrollTo({
-            top: this.scrollYBeforeExpand,
-            behavior: 'smooth'
+          // FIX: Forzar reseteo completo del estado
+          this.isAnimating = false;
+          this.$nextTick(() => {
+            window.scrollTo({
+              top: this.scrollYBeforeExpand,
+              behavior: 'smooth'
+            });
           });
         }
       });
@@ -164,9 +165,9 @@ export default {
   padding: 0; 
   overflow: visible;
 
-  /* --- AÑADE ESTAS DOS LÍNEAS --- */
   max-width: 1100px; /* Elige el ancho máximo que desees */
   justify-self: center; /* Esto centra el contenedor en el espacio de la grilla */
+  margin-bottom: 2rem; /* Añadir esta línea para dar espacio */
 }
 
 .is-animating {
@@ -196,7 +197,7 @@ export default {
 @media screen and (max-width: 567px) {
   .portfolio-card-container.is-expanded {
     flex-direction: column;
-    margin: 0;
+    margin: 0 0 38rem 0; 
   }
   
   .expand-description-enter-from,

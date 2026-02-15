@@ -76,6 +76,7 @@ export default {
     justify-content: center;
   }
 }
+
 @media screen and (min-width: 568px) {
   .portfolio__container {
     grid-template-columns: repeat(2, 1fr);

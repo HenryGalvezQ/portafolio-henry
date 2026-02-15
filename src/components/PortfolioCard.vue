@@ -61,6 +61,7 @@
     <div 
       v-if="!isExpanded"
       class="portfolio__expand-button"
+      @click.stop="$emit('toggle-expand')"
     >
       <span>Ver más</span>
       <i class="uil uil-arrow-down"></i>
@@ -202,6 +203,12 @@ export default {
   flex: none;         /* Anula el 'flex: 1' de la clase base. */
   width: 340px;       /* Mantiene el ancho original que tenía la tarjeta. */
   box-sizing: border-box; /* Asegura que el padding se incluya dentro de los 340px. */
+}
+
+@media screen and (max-width: 567px) {
+  .portfolio-card__content.is-expanded-mode {
+    border-radius: 0.5rem 0.5rem 0 0; /* Solo esquinas superiores redondeadas */
+  }
 }
 
 @media screen and (min-width: 992px) {

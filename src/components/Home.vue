@@ -271,12 +271,12 @@
 /* Pantallas muy pequeñas (max-width: 350px) */
 @media screen and (max-width: 350px) {
   .home__container {
-    padding-top: 5.5rem;
+    padding-top: 1.5rem;
   }
   
   .home__wrapper {
     flex-direction: column-reverse; /* Cambiado: primero contenido, luego redes */
-    gap: 3rem;
+    gap: 2rem;
     align-items: center;
   }
   
@@ -285,7 +285,7 @@
     flex-direction: row;
     width: 100%;
     justify-content: center;
-    gap: 0.8rem;
+    gap: 0.4rem;
     margin-top: 0;
     flex-wrap: wrap;
     margin-bottom: 1.5rem;
@@ -311,18 +311,18 @@
   .home__content {
     grid-template-columns: 1fr;
     justify-content: center;
-    row-gap: 2.25rem;
+    row-gap: 1rem;
     padding-top: 0;
   }
   
   .home__img {
     order: -1; /* Imagen primero */
     justify-self: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
   }
   
   .home__blob {
-    width: 180px;
+    width: 170px;
   }
   
   .home__data {
@@ -336,6 +336,7 @@
     font-size: 1.75rem;
     text-align: center;
     margin-bottom: 1rem;
+    white-space: nowrap;
   }
   
   .home__subtitle {
@@ -348,7 +349,7 @@
   .home__discription {
     font-size: 0.85rem;
     text-align: left;
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
     width: 100%;
   }
 }
@@ -356,12 +357,12 @@
 /* Pantallas pequeñas (min-width: 351px y max-width: 567px) */
 @media screen and (min-width: 351px) and (max-width: 567px) {
   .home__container {
-    padding-top: 5.5rem;
+    padding-top: 1.5rem;
   }
   
   .home__wrapper {
     flex-direction: column-reverse;
-    gap: 3rem;
+    gap: 2rem;
     align-items: center;
   }
   
@@ -369,7 +370,7 @@
     flex-direction: row;
     width: 100%;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.6rem;
     margin-top: 0;
     flex-wrap: wrap;
   }
@@ -390,17 +391,17 @@
   .home__content {
     grid-template-columns: 1fr;
     justify-content: center;
-    row-gap: 2.25rem;
+    row-gap: 1.25rem;
   }
   
   .home__img {
     order: -1;
     justify-self: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
   }
   
   .home__blob {
-    width: 200px;
+    width: 180px;
   }
   
   .home__data {
@@ -413,6 +414,7 @@
   .home__title {
     text-align: center;
     margin-bottom: 1rem;
+    white-space: nowrap;
   }
   
   .home__subtitle {
@@ -423,7 +425,7 @@
   
   .home__discription {
     text-align: left;
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.65rem;
     width: 100%;
   }
 }
@@ -455,11 +457,12 @@
   }
 }
 
+
 /* Tablets (min-width: 768px) */
 @media screen and (min-width: 768px) {
   .home__container {
     row-gap: 5rem;
-    padding-top: 4rem;
+    padding-top: 0rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }

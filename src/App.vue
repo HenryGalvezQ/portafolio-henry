@@ -109,7 +109,7 @@ onUnmounted(() => {
 <style scoped>
 .main {
   overflow-x: hidden; /* Opcional, si es necesario */
-  margin-top: -4rem; /* <--- Añade esta línea para subir todo */
+  margin-top: 0; /* <--- Añade esta línea para subir todo */
 }
 
 .scrollup {
@@ -134,7 +134,7 @@ onUnmounted(() => {
 }
 
 .show-scroll {
-  bottom: 3rem;
+  bottom: 3.6rem;
 }
 
 /* Media Queries para el botón de scroll */
