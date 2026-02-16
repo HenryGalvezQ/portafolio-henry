@@ -37,21 +37,22 @@
               rows="1"
               class="contact__input contact__input--auto" 
               v-model="formData.name"
-              @input="adjustHeight"
+              @input="handleInput('name', $event)"
               ref="nameInput"></textarea>
           </div>
           <div class="contact__content" :class="{ 'input-error': errors.email }" @click="focusInput('email')">
-            <label for="email" class="contact__label">Email</label>
+            <label for="email" class="contact__label">Email o Celular</label>
             <textarea 
               id="email" 
               rows="1"
               class="contact__input contact__input--auto" 
               v-model="formData.email"
-              @input="adjustHeight"
+              @input="handleInput('email', $event)"
+              placeholder="ejemplo@email.com o +51 999999999"
               ref="emailInput"></textarea>
           </div>
           <div class="contact__content contact__content--reduced" @click="focusInput('project')">
-            <label for="project" class="contact__label">Asunto</label>
+            <label for="project" class="contact__label">Asunto (opcional)</label>
             <textarea 
               id="project" 
               rows="1"
@@ -67,7 +68,7 @@
               rows="4" 
               class="contact__input contact__input--auto" 
               v-model="formData.message"
-              @input="adjustHeight"
+              @input="handleInput('message', $event)"
               ref="messageInput"></textarea>
           </div>
         </div>
@@ -146,6 +147,21 @@ const clearErrors = () => {
   };
 };
 
+// Validar si es un email válido
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+// Validar si es un número de teléfono válido (formato flexible)
+const isValidPhone = (phone) => {
+  // Acepta números con o sin +, espacios, guiones, paréntesis
+  // Mínimo 9 dígitos para ser considerado válido
+  const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+  const phoneRegex = /^\+?[0-9]{9,15}$/;
+  return phoneRegex.test(cleanPhone);
+};
+
 // Función para enfocar el input cuando se hace click en cualquier parte del contenedor
 const focusInput = (fieldName) => {
   const inputMap = {
@@ -157,6 +173,17 @@ const focusInput = (fieldName) => {
   
   if (inputMap[fieldName] && inputMap[fieldName].value) {
     inputMap[fieldName].value.focus();
+  }
+};
+
+// Función para manejar el input y ajustar altura
+const handleInput = async (fieldName, event) => {
+  // Ajustar la altura
+  await adjustHeight(event);
+  
+  // Si el campo tiene contenido y tenía error, quitar el error
+  if (formData.value[fieldName] && formData.value[fieldName].trim() !== '') {
+    errors.value[fieldName] = false;
   }
 };
 
@@ -186,7 +213,7 @@ onMounted(() => {
 const handleSubmit = async () => {
   clearErrors();
   
-  // Validación básica
+  // Validación básica de campos vacíos
   if (!formData.value.name || !formData.value.email || !formData.value.message) {
     if (!formData.value.name) errors.value.name = true;
     if (!formData.value.email) errors.value.email = true;
@@ -196,18 +223,39 @@ const handleSubmit = async () => {
     return;
   }
 
+  // Validar que sea email o teléfono válido
+  const contactValue = formData.value.email.trim();
+  const isEmail = isValidEmail(contactValue);
+  const isPhone = isValidPhone(contactValue);
+
+  if (!isEmail && !isPhone) {
+    errors.value.email = true;
+    showToast('Por favor, ingresa un email válido o un número de celular', 'error');
+    return;
+  }
+
   isSubmitting.value = true;
 
   try {
+    let emailData = {
+      name: formData.value.name,
+      project: formData.value.project,
+      message: formData.value.message
+    };
+
+    // Si es email, usarlo normalmente
+    if (isEmail) {
+      emailData.email = contactValue;
+    } else {
+      // Si es teléfono, usar un email genérico y agregar el teléfono al mensaje
+      emailData.email = 'noreply@contactform.com'; // Email genérico para que EmailJS funcione
+      emailData.message = `📱 Celular de contacto: ${contactValue}\n\n${formData.value.message}`;
+    }
+
     await emailjs.send(
       'service_vcnwfaw',
       'template_7lts8u5',
-      {
-        name: formData.value.name,
-        email: formData.value.email,
-        message: formData.value.message,
-        project: formData.value.project
-      },
+      emailData,
       'D3S-rSMXgov-Ijdfg'
     );
 
@@ -242,7 +290,7 @@ const openWhatsApp = () => {
 <style scoped>
 /* ==================== CONTACT ME ==================== */
 .contact {
-  padding-bottom: 4.5rem; /* Ajusta este valor según cuánto espacio desees */
+  padding-bottom: 4.5rem;
 }
 .contact__container {
   row-gap: 3rem;
@@ -272,7 +320,7 @@ const openWhatsApp = () => {
 }
 
 .contact__content {
-  background-color: var(--input-color);
+  background-color: hsl(240, 100%, 95%);
   border-radius: .5rem;
   padding: .75rem 1rem .25rem;
   transition: all 0.3s ease;
@@ -281,7 +329,6 @@ const openWhatsApp = () => {
   flex-direction: column;
 }
 
-/* Altura reducida para Asunto y Mensaje */
 .contact__content--reduced {
   padding: .5rem 1rem .2rem;
 }
@@ -308,7 +355,7 @@ const openWhatsApp = () => {
 
 .contact__input {
   width: 100%;
-  background-color: var(--input-color);
+  background-color: hsl(240, 100%, 95%);
   color: var(--text-color);
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
@@ -325,6 +372,12 @@ const openWhatsApp = () => {
   transition: height 0.1s ease;
   overflow-y: hidden;
   display: block;
+}
+
+.contact__input::placeholder {
+  color: var(--text-color-light);
+  opacity: 0.6;
+  font-size: var(--small-font-size);
 }
 
 .contact__buttons {
@@ -459,6 +512,10 @@ const openWhatsApp = () => {
   .contact__buttons {
     grid-column: 1 / -1;
   }
+
+  .contact__input {
+      min-height: 3.5rem;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -471,7 +528,29 @@ const openWhatsApp = () => {
   }
 }
 
-@media screen and (max-width: 568px) {
+/* Ajustes específicos para mobile */
+@media screen and (max-width: 567px) {
+  .contact__container {
+    row-gap: 1.5rem;
+  }
+  
+  .contact__buttons {
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  
+  .contact__buttons button {
+    min-width: 0;
+    flex: 1;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .button__icon {
+    margin-left: 0.25rem;
+    font-size: 1.1rem;
+  }
+  
   .toast {
     top: 1rem;
     right: 1rem;
