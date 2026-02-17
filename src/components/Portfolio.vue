@@ -82,6 +82,13 @@ export default {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+@media screen and (min-width: 768px) {
+  .portfolio.section { /* o .qualification, .services, .portfolio */
+    padding: 7rem 0 1rem; /* 7rem arriba, 1rem abajo */
+  }
+} 
+
 @media screen and (min-width: 992px) {
   .portfolio__container {
     grid-template-columns: repeat(3, 340px);

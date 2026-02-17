@@ -526,12 +526,18 @@ const openWhatsApp = () => {
     grid-template-columns: repeat(2, 1fr);
     column-gap: 1.5rem;
   }
+  .contact.section {
+    padding: 7rem 0 5.5rem; /* 7rem arriba (+1rem), 2rem abajo (original) */
+  }
+  .section__subtitle {
+    margin-bottom: 4rem; /* 4rem en desktop (valor original) */
+  }
 }
 
 /* Ajustes específicos para mobile */
 @media screen and (max-width: 567px) {
   .contact__container {
-    row-gap: 1.5rem;
+    row-gap: 1rem;
   }
   
   .contact__buttons {
@@ -558,4 +564,5 @@ const openWhatsApp = () => {
     max-width: none;
   }
 }
+
 </style>

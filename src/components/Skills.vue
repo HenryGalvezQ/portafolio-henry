@@ -281,5 +281,9 @@ export default {
   .skills__container {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .skills.section { /* o .qualification, .services, .portfolio */
+    padding: 7rem 0 1rem; /* 7rem arriba, 1rem abajo */
+  }
 }
 </style>

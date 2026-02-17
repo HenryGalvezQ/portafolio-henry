@@ -454,5 +454,8 @@ const closeModal = () => {
     width: 85px;
     height: 85px;
   }
+  .qualification.section { /* o .qualification, .services, .portfolio */
+    padding: 7rem 0 1rem; /* 7rem arriba, 1rem abajo */
+  }
 }
 </style>

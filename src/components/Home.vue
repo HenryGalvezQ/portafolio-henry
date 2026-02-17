@@ -492,6 +492,9 @@
   .home__social-icon {
     font-size: 1.6rem;
   }
+  .home.section {
+    padding: 6rem 0 1rem; /* 6rem arriba, 1rem abajo (reducido -1rem) */
+  }
 }
 
 /* Desktop (min-width: 1024px) - PERFECTO, NO TOCAR */

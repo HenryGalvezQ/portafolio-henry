@@ -208,6 +208,10 @@ export default {
   .about__data {
     position: relative;
   }
+
+  .about.section {
+    padding: 7rem 0 1rem; /* 7rem arriba (+1rem), 1rem abajo (-1rem) */
+  }
 }
 
 @media screen and (min-width: 1024px) {

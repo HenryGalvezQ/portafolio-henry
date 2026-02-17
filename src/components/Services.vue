@@ -338,6 +338,9 @@ export default {
   .services__content {
     padding: 2rem 1.5rem 3rem 1.5rem;
   }
+  .services.section { /* o .qualification, .services, .portfolio */
+    padding: 7rem 0 1rem; /* 7rem arriba, 1rem abajo */
+  }
 }
 
 @media screen and (min-width: 1024px) {
