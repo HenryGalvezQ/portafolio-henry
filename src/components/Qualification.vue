@@ -1,7 +1,9 @@
+// Qualification.vue
+
 <template>
   <section class="qualification section" id="qualification">
     <h2 class="section__title">Experiencia</h2>
-    <span class="section__subtitle">My personal journey</span>
+    <span class="section__subtitle">Mi experiencia educativa y de trabajo</span>
 
     <div class="qualification__container container">
       <div class="qualification__tabs">
@@ -28,8 +30,8 @@
             <div class="qualification__item-content">
               <img src="@/assets/img/logo-unsa.png" alt="Logo UNSA" class="qualification__logo">
               <div class="qualification__text-content">
-                <h3 class="qualification__title">Ingeniería de Sistemas</h3>
-                <span class="qualification__subtitle">Univ. Nacional de San Agustín</span>
+                <h3 class="qualification__title">Ingeniería de Sistemas (Egresado)</h3>
+                <span class="qualification__subtitle">Universidad Nacional de San Agustín</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
                   Abril 2021 - Diciembre 2025
@@ -41,42 +43,8 @@
               <span class="qualification__line"></span>
             </div>
           </div>
-          
-          <div class="qualification__data qualification__data-work" @click="openModal('support')">
-            <div></div>
-            <div>
-              <span class="qualification__rounder"></span>
-              <span class="qualification__line"></span>
-            </div>
-            <div>
-              <h3 class="qualification__title">Soporte TI</h3>
-              <span class="qualification__subtitle">Particulares</span>
-              <div class="qualification__calendar">
-                <i class="uil uil-calendar-alt"></i>
-                Enero 2022 - Diciembre 2024
-              </div>
-            </div>
-          </div>
-    
-          <div class="qualification__data qualification__data-education" @click="openModal('coderhouse')">
-            <div class="qualification__item-content">
-              <img src="@/assets/img/logo-coderhouse.png" alt="Logo Coderhouse" class="qualification__logo">
-              <div class="qualification__text-content">
-                <h3 class="qualification__title">Carrera UX/UI</h3>
-                <span class="qualification__subtitle">Coderhouse</span>
-                <div class="qualification__calendar">
-                  <i class="uil uil-calendar-alt"></i>
-                  Abril 2023 - Diciembre 2023
-                </div>
-              </div>
-            </div>
-            <div>
-              <span class="qualification__rounder"></span>
-              <span class="qualification__line"></span>
-            </div>
-          </div>
-    
-          <div class="qualification__data qualification__data-work" @click="openModal('municipalidad')">
+
+          <div class="qualification__data qualification__data-work" @click="openModal('symmetry')">
             <div></div>
             <div>
               <span class="qualification__rounder"></span>
@@ -84,26 +52,26 @@
             </div>
             <div class="qualification__item-content qualification__item-content--right">
               <div class="qualification__text-content">
-                <h3 class="qualification__title">Soporte Informática (Prácticas pre-profesionales)</h3>
-                <span class="qualification__subtitle">Municipalidad Distrital de La Joya</span>
+                <h3 class="qualification__title">Frontend Developer (Freelance)</h3>
+                <span class="qualification__subtitle">Symmetry Club LLC • Fitness App</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Enero 2025 - Marzo 2025
+                  Diciembre 2025
                 </div>
               </div>
-              <img src="@/assets/img/logo-muni.png" alt="Logo Municipalidad" class="qualification__logo">
+              <img src="@/assets/img/symmetry_logo2.png" alt="Logo Symmetry" class="qualification__logo">
             </div>
           </div>
-          
-          <div class="qualification__data qualification__data-education" @click="openModal('oracle')">
+
+          <div class="qualification__data qualification__data-education" @click="openModal('ingles')">
             <div class="qualification__item-content">
-              <img src="@/assets/img/logo-oracle.png" alt="Logo Oracle" class="qualification__logo">
+              <img src="@/assets/img/logo_idiomas.png" alt="Logo UNSA" class="qualification__logo">
               <div class="qualification__text-content">
-                <h3 class="qualification__title">Oracle Cloud APEX Developer</h3>
-                <span class="qualification__subtitle">Oracle</span>
+                <h3 class="qualification__title">Idioma Inglés Intermedio</h3>
+                <span class="qualification__subtitle">Centro de Idiomas UNSA</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Agosto 2023 - Setiembre 2023
+                  Noviembre 2024 - Octubre 2025
                 </div>
               </div>
             </div>
@@ -112,7 +80,7 @@
               <span class="qualification__line"></span>
             </div>
           </div>
-    
+
           <div class="qualification__data qualification__data-work" @click="openModal('innovaciencia')">
             <div></div>
             <div>
@@ -150,29 +118,82 @@
             </div>
           </div>
 
-          <!-- NUEVO: Symmetry Club LLC -->
-          <div class="qualification__data qualification__data-work" @click="openModal('symmetry')">
+          <div class="qualification__data qualification__data-work" @click="openModal('municipalidad')">
             <div></div>
             <div>
               <span class="qualification__rounder"></span>
+              <span class="qualification__line"></span>
             </div>
             <div class="qualification__item-content qualification__item-content--right">
               <div class="qualification__text-content">
-                <h3 class="qualification__title">Frontend Developer (Freelance)</h3>
-                <span class="qualification__subtitle">Symmetry Club LLC • Fitness App</span>
+                <h3 class="qualification__title">Soporte Informática (Prácticas pre-profesionales)</h3>
+                <span class="qualification__subtitle">Municipalidad Distrital de La Joya</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Diciembre 2025
+                  Enero 2025 - Marzo 2025
                 </div>
               </div>
-              <img src="@/assets/img/symmetry_logo.png" alt="Logo Symmetry" class="qualification__logo">
+              <img src="@/assets/img/logo-muni.png" alt="Logo Municipalidad" class="qualification__logo">
             </div>
+          </div>
+
+          <div class="qualification__data qualification__data-education" @click="openModal('coderhouse')">
+            <div class="qualification__item-content">
+              <img src="@/assets/img/logo-coderhouse.png" alt="Logo Coderhouse" class="qualification__logo">
+              <div class="qualification__text-content">
+                <h3 class="qualification__title">Carrera UX/UI</h3>
+                <span class="qualification__subtitle">Coderhouse</span>
+                <div class="qualification__calendar">
+                  <i class="uil uil-calendar-alt"></i>
+                  Abril 2023 - Diciembre 2023
+                </div>
+              </div>
+            </div>
+            <div>
+              <span class="qualification__rounder"></span>
+              <span class="qualification__line"></span>
+            </div>
+          </div>
+
+          <div class="qualification__data qualification__data-work" @click="openModal('support')">
+            <div></div>
+            <div>
+              <span class="qualification__rounder"></span>
+              <span class="qualification__line"></span>
+            </div>
+            <div class="qualification__item-content qualification__item-content--right">
+              <div class="qualification__text-content">
+                <h3 class="qualification__title">Soporte TI</h3>
+                <span class="qualification__subtitle">Particulares</span>
+                <div class="qualification__calendar">
+                  <i class="uil uil-calendar-alt"></i>
+                  Enero 2022 - Diciembre 2024
+                </div>
+              </div>
+              </div>
+          </div>
+
+          <div class="qualification__data qualification__data-education" @click="openModal('oracle')">
+            <div class="qualification__item-content">
+              <img src="@/assets/img/logo-oracle.png" alt="Logo Oracle" class="qualification__logo">
+              <div class="qualification__text-content">
+                <h3 class="qualification__title">Oracle Cloud APEX Developer</h3>
+                <span class="qualification__subtitle">Oracle</span>
+                <div class="qualification__calendar">
+                  <i class="uil uil-calendar-alt"></i>
+                  Agosto 2023 - Setiembre 2023
+                </div>
+              </div>
+            </div>
+            <div>
+              <span class="qualification__rounder"></span>
+              </div>
           </div>
     
         </div>
       </div>
     </div>
-
+    
     <CertificateModal 
       :show="activeModalId !== null" 
       :images="currentModalImages"
@@ -204,6 +225,8 @@ import certificado_cisco5 from '@/assets/img/certificado_cisco5.jpg';
 import certificado_cisco6 from '@/assets/img/certificado_cisco6.jpg';
 import certificado_cisco7 from '@/assets/img/certificado_cisco7.jpg';
 import certificado_cisco8 from '@/assets/img/certificado_cisco8.jpg';
+import certificado_ingles from '@/assets/img/certificado_ingles1.jpg';
+import certificado_ingles2 from '@/assets/img/certificado_ingles2.jpg';
 
 // --- Estado del Componente ---
 const activeTab = ref('education');
@@ -223,6 +246,7 @@ const modalData = {
     certificado_cisco7, certificado_cisco8
   ],
   symmetry: [], // Array vacío porque usa el componente SymmetryTestimonial
+  ingles: [certificado_ingles, certificado_ingles2]
 };
 
 // --- Propiedades Computadas ---
@@ -231,7 +255,7 @@ const currentModalImages = computed(() => {
 });
 
 const isModalVertical = computed(() => {
-  const verticalIds = ['unsa', 'municipalidad', 'innovaciencia', 'symmetry'];
+  const verticalIds = ['unsa', 'municipalidad', 'innovaciencia', 'symmetry', 'ingles'];
   return verticalIds.includes(activeModalId.value);
 });
 
@@ -371,24 +395,19 @@ const closeModal = () => {
   .qualification__data {
     column-gap: 0.5rem;
   }
-  
   .qualification__logo {
     width: 25px;
     height: 25px;
   }
-  
   .qualification__title {
-    font-size: var(--small-font-size);
-  }
-  
-  .qualification__subtitle {
-    font-size: var(--smaller-font-size);
-  }
-  
-  .qualification__calendar {
     font-size: 0.625rem;
   }
-  
+  .qualification__subtitle {
+    font-size: 0.563rem;
+  }
+  .qualification__calendar {
+    font-size: 0.5rem;
+  }
   .qualification__item-content {
     gap: 0.5rem;
   }
@@ -398,35 +417,28 @@ const closeModal = () => {
   .qualification__data {
     column-gap: 0.75rem;
   }
-  
   .qualification__logo {
     width: 30px;
     height: 30px;
   }
-  
   .qualification__title {
-    font-size: var(--small-font-size);
+    font-size: 0.662rem;
     line-height: 1.2;
   }
-  
   .qualification__subtitle {
-    font-size: var(--smaller-font-size);
+    font-size: 0.625rem;
     margin-bottom: var(--mb-0-5);
   }
-  
   .qualification__calendar {
-    font-size: var(--smaller-font-size);
+    font-size: 0.563rem;
   }
-  
   .qualification__item-content {
     gap: 0.5rem;
   }
-  
   .qualification__rounder {
     width: 11px;
     height: 11px;
   }
-  
   .qualification__line {
     transform: translate(5px, -7px);
   }
@@ -441,21 +453,17 @@ const closeModal = () => {
 }
 
 @media screen and (min-width: 768px) {
-  .qualification__tabs {
-    justify-content: center;
-  }
-  .qualification__button {
-    margin: 0 var(--mb-1);
-  }
+  .qualification__tabs { justify-content: center; }
+  .qualification__button { margin: 0 var(--mb-1); }
   .qualification__sections {
-    grid-template-columns: .9fr;
+    grid-template-columns: 1fr;   /* antes era .9fr */
   }
-  .qualification__logo {
-    width: 85px;
-    height: 85px;
-  }
-  .qualification.section { /* o .qualification, .services, .portfolio */
-    padding: 7rem 0 1rem; /* 7rem arriba, 1rem abajo */
+  .qualification__logo { width: 85px; height: 85px; }
+  .qualification.section { padding: 7rem 0 1rem; }
+
+  /* ← ESTE ES EL CAMBIO CLAVE: rompe el techo del .container global */
+  .qualification__container {
+    max-width: 823px;
   }
 }
 </style>

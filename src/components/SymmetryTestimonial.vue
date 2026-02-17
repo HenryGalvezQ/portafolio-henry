@@ -63,8 +63,8 @@
 }
 
 .testimonial-logo {
-  width: 60px; /* Reducido de 80px */
-  height: 60px; /* Reducido de 80px */
+  width: 150px; /* Reducido de 80px */
+  height: 100px; /* Reducido de 80px */
   object-fit: contain;
 }
 
@@ -165,8 +165,8 @@
   }
   
   .testimonial-logo {
-    width: 50px; /* Reducido de 60px */
-    height: 50px; /* Reducido de 60px */
+    width: 100px;
+    height: 70px;
   }
   
   .testimonial-title {

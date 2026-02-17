@@ -1,3 +1,5 @@
+//Skills.vue
+
 <template>
   <section class="skills section" id="skills">
     <h2 class="section__title">Habilidades</h2>
@@ -82,16 +84,14 @@
 </template>
 
 <script>
+
 import SvgIcon from './SvgIcon.vue';
 
 export default {
   name: 'Skills',
-  components: {
-    SvgIcon
-  },
+  components: { SvgIcon },
   data() {
     return {
-      // 1. Frontend
       frontendSkills: [
         { name: 'Figma', iconName: 'figma' },
         { name: 'HTML', iconName: 'html' },
@@ -102,13 +102,11 @@ export default {
         { name: 'React', iconName: 'react' },
         { name: 'Nuxt', iconName: 'nuxt' },
       ],
-      // 2. Mobile
       mobileSkills: [
         { name: 'Kotlin', iconName: 'kotlin' },
         { name: 'Flutter', iconName: 'flutter' },
         { name: 'React Native', iconName: 'react' },
       ],
-      // 3. Backend
       backendSkills: [
         { name: 'PHP', iconName: 'php' },
         { name: 'Flask', iconName: 'flask' },
@@ -116,7 +114,6 @@ export default {
         { name: 'MySQL', iconName: 'mysql' },
         { name: 'PostgreSQL', iconName: 'postgresql' },
       ],
-      // 4. DevOps
       devopsSkills: [
         { name: 'Python', iconName: 'python' },
         { name: 'Java', iconName: 'java' },
@@ -132,55 +129,97 @@ export default {
         devops: false,
       },
       observer: null,
-      // Se eliminó userHasClicked para permitir que el scroll siempre funcione
+      // Flag para pausar el observer durante navegación al header a qualification
+      _observerPaused: false,
+      _resumeTimeout: null,
     };
   },
   methods: {
     toggleSkill(skill) {
-      // Si el usuario hace click, simplemente invertimos el estado actual.
-      // El scroll se encargará de resetearlo si se aleja.
       this.skillsState[skill] = !this.skillsState[skill];
-    }
+    },
+
+    // Llamado por el evento 'nav-to-qualification' del Header
+    // Desconecta el observer por 1.5s para que el scroll a qualification
+    // no sea interrumpido por la apertura automática de acordeones
+    _pauseObserver() {
+      if (this._resumeTimeout) clearTimeout(this._resumeTimeout);
+      
+      this._observerPaused = true;
+      if (this.observer) this.observer.disconnect();
+
+      // Reconectar después de que el scroll termine (1.5s es suficiente)
+      this._resumeTimeout = setTimeout(() => {
+        this._observerPaused = false;
+        this._reconnectObserver();
+      }, 1500);
+    },
+
+    _reconnectObserver() {
+      if (!this.observer) return;
+      const elements = [
+        this.$refs.frontendSkill,
+        this.$refs.mobileSkill,
+        this.$refs.backendSkill,
+        this.$refs.devopsSkill,
+      ];
+      elements.forEach(el => { if (el) this.observer.observe(el); });
+    },
+    _handleNavToSkills() {
+      // Reconectar el observer para que los acordeones se abran al llegar
+      if (this._resumeTimeout) clearTimeout(this._resumeTimeout);
+      this._observerPaused = false;
+      this._reconnectObserver();
+    },
   },
   mounted() {
+    // Escuchar el evento del Header para pausar el observer
+    this._navHandler = () => this._pauseObserver();
+    window.addEventListener('nav-to-qualification', this._navHandler);
+    this._navToSkillsHandler = () => this._handleNavToSkills();
+    window.addEventListener('nav-to-skills', this._navToSkillsHandler);
+
     const options = {
       root: null,
-      // Ajustamos el margen para que reaccione un poco antes de que el elemento salga del todo
-      rootMargin: '-10% 0px -10% 0px', 
-      threshold: 0.1, // Basta con que se vea un 10% para activarse
+      // top: -10% → el elemento debe aparecer un 10% desde arriba para abrirse
+      // bottom: -40% → el elemento debe salir un 40% por abajo antes de cerrarse
+      // Esto retrasa el colapso al hacer scroll hacia arriba de forma natural
+      rootMargin: '-10% 0px -15% 0px',
+      threshold: 0.1,
     };
-    
+
     this.observer = new IntersectionObserver((entries) => {
+      // Si el observer está pausado, ignorar todas las entradas
+      if (this._observerPaused) return;
+
       entries.forEach(entry => {
         const skillName = entry.target.dataset.skill;
         if (skillName) {
-            // LÓGICA CLAVE:
-            // Asigna directamente el estado de intersección.
-            // Si entra (isIntersecting = true) -> se abre.
-            // Si sale (isIntersecting = false) -> se cierra.
-            this.skillsState[skillName] = entry.isIntersecting;
+          this.skillsState[skillName] = entry.isIntersecting;
         }
       });
     }, options);
 
     const elementsToObserve = [
-      this.$refs.frontendSkill, 
-      this.$refs.mobileSkill, 
-      this.$refs.backendSkill, 
-      this.$refs.devopsSkill
+      this.$refs.frontendSkill,
+      this.$refs.mobileSkill,
+      this.$refs.backendSkill,
+      this.$refs.devopsSkill,
     ];
-    
-    elementsToObserve.forEach(element => {
-      if (element) this.observer.observe(element);
+
+    elementsToObserve.forEach(el => {
+      if (el) this.observer.observe(el);
     });
   },
   beforeUnmount() {
-    if (this.observer) {
-      this.observer.disconnect();
-    }
+    if (this.observer) this.observer.disconnect();
+    if (this._resumeTimeout) clearTimeout(this._resumeTimeout);
+    window.removeEventListener('nav-to-qualification', this._navHandler);
+    window.removeEventListener('nav-to-skills', this._navToSkillsHandler);
   },
-}
+};
 </script>
+
 
 <style scoped>
 .skills__container {

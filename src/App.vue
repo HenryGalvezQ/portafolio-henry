@@ -1,3 +1,5 @@
+// App.vue
+
 <template>
   <Header 
     :active-section="activeSection" 
