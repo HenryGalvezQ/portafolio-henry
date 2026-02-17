@@ -329,6 +329,12 @@ export default {
   }
 }
 
+@media screen and (max-width: 567px) {
+  .section__subtitle {
+    margin-bottom: var(--mb-1-5);
+  }
+}
+
 @media screen and (min-width: 768px) {
   .services__container {
     grid-template-columns: repeat(3, 340px);

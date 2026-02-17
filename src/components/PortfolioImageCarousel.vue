@@ -5,6 +5,9 @@
     :class="{ 'carousel-hint-active': showCarouselHint }"
     @mouseenter="clearAutoSlide"
     @mouseleave="startAutoSlide"
+    @touchstart.passive="onTouchStart"
+    @touchmove.passive="onTouchMove"
+    @touchend="onTouchEnd"
   >
     <div class="portfolio__img-track" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
       <div 
@@ -85,10 +88,55 @@ export default {
     return {
       currentImageIndex: 0,
       autoSlideInterval: null,
-      showCarouselHint: false
+      showCarouselHint: false,
+      // Touch swipe state
+      touchStartX: 0,
+      touchStartY: 0,
+      touchDeltaX: 0,
+      isSwiping: false
     };
   },
   methods: {
+    // ==================== SWIPE (touch) ====================
+    onTouchStart(e) {
+      const touch = e.touches[0];
+      this.touchStartX = touch.clientX;
+      this.touchStartY = touch.clientY;
+      this.touchDeltaX = 0;
+      this.isSwiping = false;
+      this.clearAutoSlide();
+    },
+    onTouchMove(e) {
+      if (!e.touches.length) return;
+      const touch = e.touches[0];
+      this.touchDeltaX = touch.clientX - this.touchStartX;
+      const deltaY = touch.clientY - this.touchStartY;
+
+      // Solo marcamos como swipe horizontal si el movimiento X es dominante
+      if (Math.abs(this.touchDeltaX) > Math.abs(deltaY)) {
+        this.isSwiping = true;
+      }
+    },
+    onTouchEnd() {
+      const SWIPE_THRESHOLD = 50; // px mínimos para considerar swipe
+
+      if (this.isSwiping && this.images.length > 1) {
+        if (this.touchDeltaX < -SWIPE_THRESHOLD) {
+          // Swipe izquierda → siguiente imagen
+          this.nextImage();
+        } else if (this.touchDeltaX > SWIPE_THRESHOLD) {
+          // Swipe derecha → imagen anterior
+          this.prevImage();
+        }
+      }
+
+      this.touchStartX = 0;
+      this.touchStartY = 0;
+      this.touchDeltaX = 0;
+      this.isSwiping = false;
+      this.startAutoSlide();
+    },
+    // ==================== CAROUSEL ====================
     showCarouselHintOnHover() {
       if (this.images && this.images.length > 1 && !this.isExpanded && this.showHintOnHover) {
         this.showCarouselHint = true;
@@ -154,7 +202,8 @@ export default {
   border-radius: .5rem;
   margin-bottom: var(--mb-0);
   cursor: pointer;
-
+  /* Mejora rendimiento de gestos táctiles */
+  touch-action: pan-y;
 }
 
 .portfolio__img-carousel:hover {
@@ -171,6 +220,9 @@ export default {
   max-height: 200px;
   box-shadow: 0 2px 4px rgba(0,0,0,.15);
   transition: transform 0.4s ease;
+  /* Evita que arrastrar la imagen interfiera con el swipe */
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 /* AÑADIDO: El efecto de hover ahora se aplica a la imagen directamente */
@@ -200,6 +252,13 @@ export default {
 .portfolio__img-carousel.carousel-hint-active .portfolio-carousel__button,
 .portfolio__img-carousel.carousel-hint-active .portfolio-carousel__pagination {
   opacity: 1;
+}
+
+/* En móvil, mostrar siempre la paginación para indicar que es deslizable */
+@media (max-width: 768px) {
+  .portfolio-carousel__pagination {
+    opacity: 1;
+  }
 }
 
 .portfolio-carousel__button {

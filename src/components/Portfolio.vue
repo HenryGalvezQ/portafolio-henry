@@ -1,40 +1,60 @@
-// Portfolio.vue
 <template>
   <section class="portfolio section" id="portfolio">
     <h2 class="section__title">Portafolio</h2>
     <span class="section__subtitle">Trabajos más recientes</span>
 
+    <div class="portfolio__filters-wrapper container">
+      <PortfolioFilters @filter-change="onFilterChange" />
+    </div>
+
     <div class="portfolio__container container grid">
       <PortfolioCardWrapper 
-        v-for="project in projects" 
+        v-for="project in filteredProjects" 
         :key="project.id" 
         :project="project"
       />
+
+      <!-- Estado vacío -->
+      <div v-if="filteredProjects.length === 0" class="portfolio__empty">
+        <i class="uil uil-search-slash portfolio__empty-icon"></i>
+        <p class="portfolio__empty-text">No se encontraron proyectos</p>
+        <span class="portfolio__empty-hint">Prueba con otros términos o cambia los filtros</span>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
-// 1. Importar componentes necesarios
-import PortfolioCardWrapper from './PortfolioCardWrapper.vue'; // Nuevo wrapper
+import PortfolioCardWrapper from './PortfolioCardWrapper.vue';
+import PortfolioFilters from './PortfolioFilters.vue';
 import { buttonTemplates } from '@/config/button-config.js';
-// ¡NUEVO! Importar nuestro cargador de imágenes
 import projectsImages from '@/utils/image-loader.js';
 import { projectsData } from '@/data/projectsData.js';
+
 export default {
   name: 'Portfolio',
   components: {
-    PortfolioCardWrapper // Ahora usamos el wrapper
+    PortfolioCardWrapper,
+    PortfolioFilters,
   },
   data() {
     return {
-      projects: []
+      projects: [],
+      filteredIds: null, // null = mostrar todos
     };
   },
+  computed: {
+    filteredProjects() {
+      if (!this.filteredIds) return this.projects;
+      return this.projects.filter(p => this.filteredIds.includes(p.id));
+    },
+  },
   methods: {
+    onFilterChange(ids) {
+      this.filteredIds = ids;
+    },
     createProjectButtons(buttonList) {
       if (!buttonList) return [];
-      
       return buttonList.map((buttonInfo, index) => {
         const template = buttonTemplates[buttonInfo.type] || {};
         return {
@@ -44,36 +64,81 @@ export default {
         };
       });
     },
-
     processProjects() {
       return projectsData.map(project => ({
         ...project,
         images: projectsImages[project.title] || [],
-        buttons: this.createProjectButtons(project.buttons)
+        buttons: this.createProjectButtons(project.buttons),
       }));
-    }
+    },
   },
   created() {
     this.projects = this.processProjects();
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-/* Aquí solo quedan los estilos que aplican al contenedor principal, 
-  no a las tarjetas individuales.
-*/
+/* ── Filtros ─────────────────────────────────────── */
+.portfolio__filters-wrapper {
+  /* Hereda los márgenes laterales del .container de global.css,
+     igual que el resto de secciones. Solo añadimos separación inferior
+     para que respire antes de la grilla de cards. */
+  margin-bottom: var(--mb-2-5);
+}
+
+/* ── Grid de cards ───────────────────────────────── */
 .portfolio__container {
   gap: 2.5rem;
   grid-template-columns: 1fr;
-  padding-top: 1rem;
+  padding-top: 0;        /* El filters-wrapper ya da el espacio superior */
   align-items: start;
 }
 
+/* ── Estado vacío ────────────────────────────────── */
+.portfolio__empty {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.portfolio__empty-icon {
+  font-size: 3rem;
+  color: var(--text-color-light);
+  margin-bottom: 0.5rem;
+}
+
+.portfolio__empty-text {
+  font-size: var(--h3-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+  margin: 0;
+}
+
+.portfolio__empty-hint {
+  font-size: var(--small-font-size);
+  color: var(--text-color-light);
+}
+
+/* ── Responsive (idéntico al original) ───────────── */
 @media screen and (max-width: 350px) {
   .portfolio__container {
     grid-template-columns: max-content;
     justify-content: center;
+  }
+}
+
+@media screen and (max-width: 567px) {
+  .section__subtitle {
+    margin-bottom: var(--mb-1-5);
+  }
+  .portfolio__filters-wrapper {
+    margin-bottom: var(--mb-2);
   }
 }
 
@@ -84,10 +149,10 @@ export default {
 }
 
 @media screen and (min-width: 768px) {
-  .portfolio.section { /* o .qualification, .services, .portfolio */
-    padding: 7rem 0 1rem; /* 7rem arriba, 1rem abajo */
+  .portfolio.section {
+    padding: 7rem 0 1rem;
   }
-} 
+}
 
 @media screen and (min-width: 992px) {
   .portfolio__container {

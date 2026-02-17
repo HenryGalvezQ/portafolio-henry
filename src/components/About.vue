@@ -173,6 +173,15 @@ export default {
 }
 
 /* ==================== MEDIA QUERIES ==================== */
+@media screen and (max-width: 567px) {
+  .about__description {
+    margin-bottom: var(--mb-1-5); /* usa una variable más pequeña */
+  }
+  .about__info {
+    margin-bottom: var(--mb-2);
+  }
+}
+
 @media screen and (min-width: 568px) {
   .about__container {
     grid-template-columns: repeat(2, 1fr);

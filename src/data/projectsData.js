@@ -20,7 +20,7 @@ export const projectsData = [
 <li><strong>Gestión CRUD Intuitiva:</strong> Interfaces claras para la administración completa de clientes, proyectos y tareas, utilizando modales y formularios con validaciones en tiempo real.</li>
 <li><strong>Asistente de Configuración Guiado:</strong> Un "wizard" multi-paso para que los administradores formalicen un proyecto, definan sus tareas iniciales con validación de fechas secuencial y organicen el cronograma por fases.</li>
 </ul>`,
-    tags: ["Prácticas Pre-profesionales", "Desarrollo Frontend"],
+    tags: ["Frontend Dev", "Diseño UX/UI", "Prácticas Pre-profesionales"],
     techBadge: ['figma', 'vue'],
     buttons: [
       { type: 'demo', url: 'http://138.68.254.39/app/' },
@@ -46,7 +46,7 @@ export const projectsData = [
 <li><strong>Contenido Dinámico y Gestión de Banners:</strong> Desarrollé un sistema CRUD completo en el panel de administrador para gestionar los banners de la página de inicio, permitiendo al equipo de prensa actualizar anuncios y noticias de forma autónoma. También mejoré la interfaz del carrusel de noticias y comunicados en la página principal.</li>
 <li><strong>Interfaz de Usuario Optimizada:</strong> Realicé ajustes en la usabilidad del portal, como la mejora del menú de navegación para hacerlo más dinámico, la adición de un logo de carga para mejorar la percepción del rendimiento y la integración de nuevos canales de comunicación como TikTok en el encabezado y pie de página.</li>
 </ul>`,
-    tags: ["Prácticas Pre-profesionales", "Desarrollo Fullstack"],
+    tags: ["Frontend Dev", "Fullstack", "Prácticas Pre-profesionales"],
     techBadge: ['php', 'javascript', 'mysql'],
     buttons: [
       { type: 'demo', url: 'https://www.municipalidadlajoya.gob.pe/' }
@@ -69,7 +69,7 @@ export const projectsData = [
 <li><strong>Privacidad y Cero Latencia:</strong> Verificación instantánea (< 0.5s) y funcionamiento offline, alineado con estándares de seguridad ISO 27001.</li>
 <li><strong>Integración SDK:</strong> Diseño modular pensado para ser consumido fácilmente por otras aplicaciones fintech como una librería de seguridad.</li>
 </ul>`,
-    tags: ["Mobile Development", "Ciberseguridad", "Inteligencia Artificial"],
+    tags: ["Mobile", "Frontend Dev", "Impacto Social"],
     techBadge: ['android', 'kotlin', 'java'], // Asumo Java/Kotlin por el entorno Android
     buttons: [
        // He puesto un placeholder, asegúrate de poner el link a tu video demo o al PDF si lo subes a un drive
@@ -94,7 +94,7 @@ export const projectsData = [
 <li><strong>Gestión de Tema Dinámico:</strong> Sistema de modo oscuro/claro con persistencia en el almacenamiento local (LocalStorage) para recordar las preferencias del usuario.</li>
 <li><strong>Optimización y Performance:</strong> Uso de carga perezosa (lazy loading) para recursos y optimización de assets para maximizar la velocidad del sitio.</li>
 </ul>`,
-    tags: ["Desarrollo Frontend", "Diseño UX/UI"],
+    tags: ["Frontend Dev", "Diseño UX/UI"],
     techBadge: ['vue', 'javascript'],
     buttons: [
       { type: 'github', url: 'https://github.com/HenryGalvezQ/portafolio-henry' }, // Tu repo del portafolio
@@ -119,7 +119,7 @@ export const projectsData = [
 <li><strong>Gestión de Estado Avanzada:</strong> Uso de ViewModels y StateFlow para comunicar cambios de datos a la UI en tiempo real (ej. nuevos mensajes de chat o actualizaciones de estado de venta).</li>
 <li><strong>Seguridad e Integración:</strong> Implementación de autenticación segura con Tokens JWT e interceptores de Retrofit, integrando servicios de Firebase y Cloudinary de forma transparente al usuario.</li>
 </ul>`,
-    tags: ["Android Development", "Jetpack Compose", "Offline-First"],
+    tags: ["Mobile", "Frontend Dev", "Diseño UX/UI"],
     techBadge: ['android', 'kotlin', 'firebase'],
     buttons: [
       { type: 'figma', url: 'https://www.figma.com/design/NCiaj1TCaKbz3j24Zw5hzG/Marketplace?node-id=0-1&t=caPV8ReaIRql9K12-1' },
@@ -144,7 +144,7 @@ export const projectsData = [
 <li><strong>Optimización de Carga con BFF:</strong> Integración con una capa intermedia que estructura los datos específicamente para la vista móvil, mejorando la velocidad de renderizado de las listas de productos y galerías de imágenes.</li>
 <li><strong>Formularios y Validaciones Fluidas:</strong> Implementación de flujos de registro y publicación de productos con retroalimentación visual en tiempo real y manejo de errores amigable para el usuario.</li>
 </ul>`,
-    tags: ["Mobile Development", "Multiplataforma", "Flutter"],
+    tags: ["Mobile", "Frontend Dev", "Diseño UX/UI"],
     techBadge: ['flutter', 'dart'],
     buttons: [
       { type: 'github', url: 'https://github.com/HenryGalvezQ/PE-Lab04' },
@@ -170,7 +170,7 @@ export const projectsData = [
 <li><strong>Integración IoT en Frontend:</strong> Consumo de flujos de datos en tiempo real para actualizar la UI instantáneamente cuando un sensor detecta la entrada o salida de un vehículo.</li>
 <li><strong>Sistema de Navegación:</strong> Flujos de usuario intuitivos para consulta de historial de accesos y guía de navegación asistida.</li>
 </ul>`,
-    tags: ["Mobile Development", "IoT", "Smart Cities"],
+    tags: ["Mobile", "Frontend Dev", "Impacto Social"],
     techBadge: ['react', 'typescript', 'android'], 
     buttons: [
       { type: 'presentation', url: '#' }, // Enlace a tus diapositivas o video demo
@@ -195,7 +195,7 @@ export const projectsData = [
 <li><strong>Soft Deletes & Data Integrity:</strong> Implementación de borrado lógico para sincronización segura y manejo de transiciones de estado complejas entre local y remoto.</li>
 <li><strong>Seguridad y Aislamiento:</strong> Arquitectura diseñada para entornos multi-usuario en un mismo dispositivo, asegurando que los datos cacheados sean inaccesibles entre diferentes sesiones.</li>
 </ul>`,
-    tags: ["Flutter", "Clean Architecture", "Offline-First"],
+    tags: ["Mobile", "Frontend Dev", "Fullstack"],
     techBadge: ['flutter', 'dart', 'firebase'],
     buttons: [
       { type: 'github', url: 'https://github.com/HenryGalvezQ/starter-project/tree/main' },
@@ -219,7 +219,7 @@ export const projectsData = [
 <li><strong>Integración de Hardware:</strong> Manejo eficiente de cámara, micrófono y GPS dentro del ciclo de vida de la app.</li>
 <li><strong>Automatización de Procesos:</strong> Digitalización completa del flujo de reclamos ante INDECOPI.</li>
 </ul>`,
-    tags: ["Mobile Development", "Flutter", "Social Impact"],
+    tags: ["Mobile", "Frontend Dev", "Diseño UX/UI"],
     techBadge: ['flutter', 'dart'],
     buttons: [
       { type: 'figma', url: 'https://www.figma.com/design/FArnBNdsQ20gifkbbXM41o/MiPasaje?t=caPV8ReaIRql9K12-1' },
@@ -246,7 +246,7 @@ export const projectsData = [
 [cite_start]<li><strong>Mapas y Geolocalización:</strong> Integración de marcadores dinámicos y cálculo de rutas paso a paso utilizando servicios REST externos[cite: 50, 577].</li>
 [cite_start]<li><strong>Persistencia Local (Room):</strong> Base de datos relacional para cachear edificaciones, comentarios y mapas internos de los recintos[cite: 230, 248].</li>
 </ul>`,
-    tags: ["Android Native", "Google Maps API", "UX/UI Inmersivo"],
+    tags: ["Mobile","Frontend Dev", "Diseño UX/UI"],
     techBadge: ['android', 'java', 'figma'], // El código del PDF muestra sintaxis Java
     buttons: [
       { type: 'github', url: 'https://github.com/Triplerush/DescubrAqp' },
@@ -271,7 +271,7 @@ export const projectsData = [
 <li><strong>Sistema de Diseño (Design System):</strong> Creación de una guía de estilos y componentes reutilizables para mantener la coherencia visual.</li>
 <li><strong>Flujo de Usuario (User Flow):</strong> Optimización de la navegación para reducir el número de clics necesarios para encontrar un sílabo o recurso.</li>
 </ul>`,
-    tags: ["UX/UI Design", "Prototyping", "Figma"],
+    tags: ["Diseño UX/UI", "Frontend Dev"],
     techBadge: ['figma'], // Eliminamos React/Python para ser fieles a tu rol
     buttons: [
       { type: 'figma', url: 'https://www.figma.com/design/yR3jjtWpHpcrZeAFD8g5ye/Prototipo--Copia-?node-id=0-1&t=qeyHyAst2IBwDw4b-1' },
@@ -299,7 +299,7 @@ export const projectsData = [
 <li><strong>Diseño:</strong> Wireframing (Baja/Media/Alta fidelidad), Prototipado Interactivo, Design System.</li>
 <li><strong>Métricas de Usabilidad:</strong> Pruebas con usuarios reales, medición de Tasa de Éxito, SEQ y SUS.</li>
 </ul>`,
-    tags: ["UX Research", "UI Design", "Usability Testing", "Case Study"],
+    tags: ["Diseño UX/UI", "Caso de Estudio", "Impacto Social"],
     techBadge: ['figma'], // Asumo Miro o similar para la parte de investigación, es estándar.
     buttons: [
       { type: 'figma', url: 'https://www.figma.com/file/IjraYwcUMkE7xSmGn3lPjx/MiCombi-UX%2FUI?type=design&node-id=247%3A4052&t=GpJAVXUknP2p2qRe-1' },
@@ -325,7 +325,7 @@ export const projectsData = [
 <li><strong>Prototipo Navegable:</strong> Simulación completa del flujo de compra ("Happy Path") con micro-interacciones.</li>
 <li><strong>Iteración Basada en Datos:</strong> Ajustes de diseño realizados post-testing para maximizar la usabilidad.</li>
 </ul>`,
-    tags: ["UX/UI Design", "Redesign", "Usability Testing", "Figma"],
+    tags: ["Diseño UX/UI", "Caso de Estudio"],
     techBadge: ['figma'],
     buttons: [
       { type: 'figma', url: 'https://www.figma.com/file/tG9evssbIGB63QkJgJbpEs/PrototipoCinepolis-Henry?type=design&node-id=0%3A1&mode=design&t=avEtrFq5IL6MLtwo-1' },
@@ -352,7 +352,7 @@ export const projectsData = [
 <li><strong>Validación Científica:</strong> Uso de la metodología SUS para respaldar las decisiones de diseño con datos cuantitativos.</li>
 <li><strong>Prototipado Funcional:</strong> Creación de flujos completos para la gestión de tratamientos y alertas médicas.</li>
 </ul>`,
-    tags: ["UX/UI Design", "Accessibility", "HealthTech", "Figma"],
+    tags: ["Diseño UX/UI", "Impacto Social"],
     techBadge: ['figma'], 
     buttons: [
       { type: 'figma', url: 'https://www.figma.com/design/xTNEM1O2k9DXR0TT4iqxFH/Helpy?node-id=0-1&t=Uvg2YkNJB1jzOhIH-1' },
@@ -377,7 +377,7 @@ export const projectsData = [
 <li><strong>Narrativa Inmersiva:</strong> Flujos de usuario diseñados como "misiones" de emprendimiento real para aumentar el compromiso.</li>
 <li><strong>Herramientas de Validación:</strong> Integración de componentes para la recolección de feedback de usabilidad (malla receptora) dentro de la interfaz.</li>
 </ul>`,
-    tags: ["UX/UI Design", "Gamification", "EdTech", "Figma"],
+    tags: ["Diseño UX/UI", "Caso de Estudio"],
     techBadge: ['figma'],
     buttons: [
       { type: 'figma', url: 'https://www.figma.com/design/O4SnOC5EE59PGSLuyLOkkL/MOOC-Gamificado-Prototipo?node-id=1-143&t=Wo8A54PoJOTl67Qi-1' },
