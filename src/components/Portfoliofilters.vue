@@ -95,12 +95,12 @@ export default {
   data() {
     return {
       searchQuery: '',
-      searchField: 'todos',
+      searchField: 'title',
       activeTag: 'Todos',
       listboxOpen: false,
       searchFieldOptions: [
         { value: 'todos',       label: 'Todos los campos', icon: 'uil uil-apps'        },
-        { value: 'title',       label: 'Título',           icon: 'uil uil-tag-alt'     },
+        { value: 'title',       label: 'Título',           icon: 'uil uil-sliders-v-alt'     },
         { value: 'description', label: 'Descripción',      icon: 'uil uil-file-alt'    },
         { value: 'tags',        label: 'Tags',             icon: 'uil uil-label'       },
         { value: 'techBadge',   label: 'Tecnología',       icon: 'uil uil-code-branch' },
@@ -114,7 +114,7 @@ export default {
       },
       searchFieldIcons: {
         todos:       'uil uil-apps',
-        title:       'uil uil-tag-alt',
+        title:       'uil uil-sliders-v-alt',
         description: 'uil uil-file-alt',
         tags:        'uil uil-label',
         techBadge:   'uil uil-code-branch',

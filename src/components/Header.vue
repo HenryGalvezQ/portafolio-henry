@@ -48,6 +48,7 @@
         </ul>
         <i class="uil uil-times nav__close" id="nav-close" @click="closeMenu"></i>
       </div>
+
       <div class="nav__btns">
         <!--
         <i 
@@ -57,8 +58,46 @@
           :class="currentTheme === 'dark' ? 'uil-sun' : 'uil-moon'"
         ></i>
         -->
+
+        <!-- Language Switcher -->
+        <div 
+          class="lang__switcher" 
+          :class="{ 'lang__switcher--active': isLangHovered }"
+          @click="toggleLang" 
+          @mouseenter="isLangHovered = true"
+          @mouseleave="isLangHovered = false"
+          @touchstart.passive="isLangHovered = true"
+          @touchend.passive="onTouchEnd"
+          @touchcancel.passive="isLangHovered = false"
+          ref="langSwitcher"
+        >
+          <i class="uil uil-english-to-chinese lang__icon"></i>
+          <span class="lang__label">{{ currentLang }}</span>
+          <i class="uil lang__arrow" :class="isLangOpen ? 'uil-angle-down' : 'uil-angle-up'"></i>
+
+          <div class="lang__dropdown" :class="{ 'lang__dropdown--open': isLangOpen }">
+            <div
+              class="lang__option"
+              :class="{ 'lang__option--active': currentLang === 'ES' }"
+              @click.stop="selectLang('ES')"
+            >
+              <span>ES</span>
+              <i v-if="currentLang === 'ES'" class="uil uil-check lang__check"></i>
+            </div>
+            <div
+              class="lang__option"
+              :class="{ 'lang__option--active': currentLang === 'EN' }"
+              @click.stop="selectLang('EN')"
+            >
+              <span>EN</span>
+              <i v-if="currentLang === 'EN'" class="uil uil-check lang__check"></i>
+            </div>
+          </div>
+        </div>
+        <!-- End Language Switcher -->
+
         <div class="nav__toggle" id="nav-toggle" @click="toggleMenu">
-          <i class="uil uil-apps"></i>
+          <i class="uil uil-list-ul"></i>
         </div>
       </div>
     </nav>
@@ -66,10 +105,42 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const isMenuOpen = ref(false);
 const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value;
+
+// Language switcher state
+const currentLang = ref('ES');
+const isLangOpen = ref(false);
+const isLangHovered = ref(false);
+const langSwitcher = ref(null);
+
+const toggleLang = () => {
+  isLangOpen.value = !isLangOpen.value;
+};
+
+const selectLang = (lang) => {
+  currentLang.value = lang;
+  isLangOpen.value = false;
+};
+
+const onTouchEnd = () => {
+  // Pequeño delay para que se vea el highlight antes de apagarse
+  setTimeout(() => {
+    isLangHovered.value = false;
+  }, 150);
+};
+
+// Close dropdown when clicking outside
+const handleClickOutside = (e) => {
+  if (langSwitcher.value && !langSwitcher.value.contains(e.target)) {
+    isLangOpen.value = false;
+  }
+};
+
+onMounted(() => document.addEventListener('click', handleClickOutside));
+onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside));
 
 let scrollTimeouts = [];
 
@@ -150,7 +221,7 @@ const closeMenu = (event) => {
         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
-// ─────────────────────────────────────────────────────────────────────────
+      // ─────────────────────────────────────────────────────────────────────────
       // Resto de secciones: lógica original sin cambios
       targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
@@ -204,7 +275,7 @@ defineEmits(['toggle-theme']);
 }
 .nav__logo:hover { color: white; }
 .nav__toggle {
-  font-size: 1.1rem;
+  font-size: 1.5rem; /* ← más grande en mobile */
   cursor: pointer;
 }
 .nav__toggle:hover { color: var(--first-color-lighter); }
@@ -253,6 +324,7 @@ defineEmits(['toggle-theme']);
 .nav__btns {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
 .change-theme {
   font-size: 1.25rem;
@@ -283,39 +355,130 @@ defineEmits(['toggle-theme']);
 }
 .scroll-header { box-shadow: 0 -1px 4px rgba(0, 0, 0, .15); }
 
+/* ── Language Switcher ─────────────────────────────────────── */
+.lang__switcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+  color: white;
+  user-select: none;
+}
+.lang__icon {
+  font-size: 1.25rem;
+}
+.lang__label {
+  font-size: 0.8rem;
+  font-weight: var(--font-medium);
+  letter-spacing: 0.03em;
+}
+.lang__arrow {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+.lang__switcher--active .lang__icon,
+.lang__switcher--active .lang__label,
+.lang__switcher--active .lang__arrow {
+  color: var(--first-color-lighter);
+}
+
+/* Dropdown — mobile: abre hacia arriba */
+.lang__dropdown {
+  position: absolute;
+  bottom: calc(100% + 8px); /* arriba del trigger en mobile */
+  left: 50%;
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: bottom center;
+  background-color: var(--body-color);
+  border: 1px solid hsl(var(--hue-color), 30%, 80%);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  min-width: 72px;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: calc(var(--z-fixed) + 10);
+}
+.lang__dropdown--open {
+  transform: translateX(-50%) scaleY(1);
+  opacity: 1;
+  pointer-events: all;
+}
+.lang__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+  transition: background-color 0.15s;
+}
+.lang__option:hover {
+  background-color: hsl(var(--hue-color), 65%, 94%);
+}
+.lang__option--active {
+  color: var(--first-color);
+}
+.lang__check {
+  font-size: 0.9rem;
+  color: var(--first-color);
+  margin-left: 0.4rem;
+}
+/* ─────────────────────────────────────────────────────────── */
+
 @media screen and (min-width: 768px) {
   .header {
     top: 0;
     bottom: initial;
-    padding: 0 1rem;
+    padding: 0 2rem;
     background-color: var(--first-color-3);
   }
+
+  /* Sobreescribir el max-width del .container global para que el nav sea más ancho */
   .nav {
+    max-width: 1110px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     height: calc(var(--header-height) + 1.5rem);
-    column-gap: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
+
   .nav__menu {
     position: static;
-    width: auto;
+    flex: 1;
+    display: flex;
+    justify-content: center;
     background-color: transparent;
     padding: 0;
     box-shadow: none;
     border-radius: 0;
   }
+
   .nav__list {
     display: flex;
     column-gap: 2rem;
-    margin-left: 8rem;
+    margin-left: 0;
   }
+
   .nav__link {
     flex-direction: row;
     color: white;
     transition: transform 0.3s ease;
+    white-space: nowrap;
   }
+
   .nav__icon,
   .nav__close,
   .nav__toggle { display: none; }
+
   .nav__link:hover { transform: scale(1.2); }
+
   .active-link {
     transform: scale(1.2);
     color: rgb(255, 255, 231) !important;
@@ -323,17 +486,38 @@ defineEmits(['toggle-theme']);
     box-shadow: none;
     animation: none;
   }
+
   .change-theme {
     margin: 0;
     color: white;
   }
+
   .nav__logo {
     color: white;
     transition: transform 0.3s ease;
+    flex-shrink: 0;
   }
   .nav__logo:hover {
     transform: scale(1.05);
     color: white;
+  }
+
+  .nav__btns {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Desktop: dropdown abre hacia abajo */
+  .lang__dropdown {
+    bottom: auto;
+    top: calc(100% + 8px);
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: top center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .lang__dropdown--open {
+    transform: translateX(-50%) scaleY(1);
   }
 }
 </style>
