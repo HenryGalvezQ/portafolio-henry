@@ -14,7 +14,7 @@
     <Skills />
     <Qualification />
     <Services />
-    <!--<Portfolio />-->
+    <Portfolio />
     <!--<Project />-->
     <!--<Testimonial />-->
     <Contact />
