@@ -1,9 +1,3 @@
-// ============================================================
-// CAMBIO 1: Header.vue  (reemplaza tu Header.vue completo)
-// ============================================================
-
-// header.vue
-
 <template>
   <header class="header" id="header" :class="{ 'scroll-header': isScrolled }">
     <nav class="nav container">
@@ -110,7 +104,6 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 const isMenuOpen = ref(false);
 const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value;
 
-// Language switcher state
 const currentLang = ref('ES');
 const isLangOpen = ref(false);
 const isLangHovered = ref(false);
@@ -126,13 +119,11 @@ const selectLang = (lang) => {
 };
 
 const onTouchEnd = () => {
-  // Pequeño delay para que se vea el highlight antes de apagarse
   setTimeout(() => {
     isLangHovered.value = false;
   }, 150);
 };
 
-// Close dropdown when clicking outside
 const handleClickOutside = (e) => {
   if (langSwitcher.value && !langSwitcher.value.contains(e.target)) {
     isLangOpen.value = false;
@@ -160,26 +151,12 @@ const closeMenu = (event) => {
     if (targetElement) {
       const sectionsWithoutCollapse = ['home', 'about'];
 
-      // ─── CASO ESPECIAL: qualification ────────────────────────────────────────
-      // El IntersectionObserver de Skills.vue abre los acordeones cuando skills
-      // está en el viewport. Esto ocurre tanto si ya están abiertos (desde skills)
-      // como si se abren DURANTE el scroll hacia qualification (desde home/about).
-      // En ambos casos el layout se infla ~457px y el destino queda incorrecto.
-      //
-      // Solución en dos pasos:
-      // 1. Disparar evento 'nav-to-qualification' para que Skills.vue desconecte
-      //    su IntersectionObserver temporalmente (ya no abrirá acordeones).
-      // 2. Colapsar los que estén abiertos, esperar su transición (420ms),
-      //    leer offsetTop estable y hacer el scroll.
-      // Skills.vue reconecta su observer 1.5s después (ya pasó el scroll).
       if (targetId === 'qualification') {
         window.dispatchEvent(new CustomEvent('nav-to-qualification'));
 
-        // ✅ QUIRÚRGICO: colapsar sin transición, forzando max-height:0 inline
         document.querySelectorAll('#skills .skills__open').forEach(el => {
           el.classList.remove('skills__open');
           el.classList.add('skills__close');
-          // Forzar max-height:0 instantáneo saltando la transición CSS
           const list = el.querySelector('.skills__list');
           if (list) {
             list.style.transition = 'none';
@@ -187,11 +164,9 @@ const closeMenu = (event) => {
           }
         });
 
-        // Forzar reflow para que el DOM refleje el colapso instantáneo
         void document.body.offsetHeight;
 
         scrollTimeouts.push(setTimeout(() => {
-          // Restaurar transiciones para uso futuro
           document.querySelectorAll('#skills .skills__list').forEach(el => {
             el.style.transition = '';
             el.style.maxHeight = '';
@@ -213,16 +188,13 @@ const closeMenu = (event) => {
 
         return;
       }
-      // ─────────────────────────────────────────────────────────────────────────
-      // ─── CASO ESPECIAL: skills (volver desde qualification) ──────────────────
+
       if (targetId === 'skills') {
         window.dispatchEvent(new CustomEvent('nav-to-skills'));
-        
         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
-      // ─────────────────────────────────────────────────────────────────────────
-      // Resto de secciones: lógica original sin cambios
+
       targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
       if (!sectionsWithoutCollapse.includes(targetId)) {
@@ -275,15 +247,17 @@ defineEmits(['toggle-theme']);
 }
 .nav__logo:hover { color: white; }
 .nav__toggle {
-  font-size: 1.5rem; /* ← más grande en mobile */
+  font-size: 1.5rem;
   cursor: pointer;
 }
 .nav__toggle:hover { color: var(--first-color-lighter); }
+
 .nav__menu {
   position: fixed;
   bottom: -100%;
   left: 0;
   width: 100%;
+  min-height: 228px;          /* ← valor A: alto del contenedor blanco */
   background-color: var(--body-color);
   padding: 2rem 1.5rem 4rem;
   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
@@ -292,11 +266,23 @@ defineEmits(['toggle-theme']);
   z-index: var(--z-fixed);
 }
 .show-menu { bottom: 0; }
-.nav__list {
-  display: grid;
+
+/* position absolute: los botones se anclan al fondo del panel independientemente */
+.nav__menu .nav__list {
+  position: absolute;
+  bottom: 1rem;             /* ← valor B: distancia de los botones respecto al × */
+  left: 1.5rem;
+  right: 1.5rem;
+  display: grid !important;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 1.5rem 2rem;
 }
+
+/* Centra Contáctame (7º item) en la columna del medio */
+.nav__item:last-child {
+  grid-column: 2;
+}
+
 .nav__link {
   display: flex;
   flex-direction: column;
@@ -365,9 +351,7 @@ defineEmits(['toggle-theme']);
   color: white;
   user-select: none;
 }
-.lang__icon {
-  font-size: 1.25rem;
-}
+.lang__icon { font-size: 1.25rem; }
 .lang__label {
   font-size: 0.8rem;
   font-weight: var(--font-medium);
@@ -382,11 +366,9 @@ defineEmits(['toggle-theme']);
 .lang__switcher--active .lang__arrow {
   color: var(--first-color-lighter);
 }
-
-/* Dropdown — mobile: abre hacia arriba */
 .lang__dropdown {
   position: absolute;
-  bottom: calc(100% + 8px); /* arriba del trigger en mobile */
+  bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%) scaleY(0);
   transform-origin: bottom center;
@@ -419,9 +401,7 @@ defineEmits(['toggle-theme']);
 .lang__option:hover {
   background-color: hsl(var(--hue-color), 65%, 94%);
 }
-.lang__option--active {
-  color: var(--first-color);
-}
+.lang__option--active { color: var(--first-color); }
 .lang__check {
   font-size: 0.9rem;
   color: var(--first-color);
@@ -429,6 +409,7 @@ defineEmits(['toggle-theme']);
 }
 /* ─────────────────────────────────────────────────────────── */
 
+/* ── DESKTOP: idéntico al original ─────────────────────────── */
 @media screen and (min-width: 768px) {
   .header {
     top: 0;
@@ -436,8 +417,6 @@ defineEmits(['toggle-theme']);
     padding: 0 2rem;
     background-color: var(--first-color-3);
   }
-
-  /* Sobreescribir el max-width del .container global para que el nav sea más ancho */
   .nav {
     max-width: 1110px;
     width: 100%;
@@ -448,7 +427,6 @@ defineEmits(['toggle-theme']);
     align-items: center;
     justify-content: space-between;
   }
-
   .nav__menu {
     position: static;
     flex: 1;
@@ -458,27 +436,33 @@ defineEmits(['toggle-theme']);
     padding: 0;
     box-shadow: none;
     border-radius: 0;
+    min-height: unset;
   }
-
-  .nav__list {
-    display: flex;
-    column-gap: 2rem;
+  .nav__menu .nav__list {
+    position: static !important;
+    bottom: unset !important;
+    left: unset !important;
+    right: unset !important;
+    display: flex !important;
+    flex-direction: row;
+    column-gap: 2rem !important;
+    gap: 0 2rem !important;
     margin-left: 0;
+    grid-template-columns: unset;
   }
-
+  .nav__item:last-child {
+    grid-column: unset;
+  }
   .nav__link {
     flex-direction: row;
     color: white;
     transition: transform 0.3s ease;
     white-space: nowrap;
   }
-
   .nav__icon,
   .nav__close,
   .nav__toggle { display: none; }
-
   .nav__link:hover { transform: scale(1.2); }
-
   .active-link {
     transform: scale(1.2);
     color: rgb(255, 255, 231) !important;
@@ -486,12 +470,10 @@ defineEmits(['toggle-theme']);
     box-shadow: none;
     animation: none;
   }
-
   .change-theme {
     margin: 0;
     color: white;
   }
-
   .nav__logo {
     color: white;
     transition: transform 0.3s ease;
@@ -501,14 +483,11 @@ defineEmits(['toggle-theme']);
     transform: scale(1.05);
     color: white;
   }
-
   .nav__btns {
     flex-shrink: 0;
     display: flex;
     justify-content: flex-end;
   }
-
-  /* Desktop: dropdown abre hacia abajo */
   .lang__dropdown {
     bottom: auto;
     top: calc(100% + 8px);
