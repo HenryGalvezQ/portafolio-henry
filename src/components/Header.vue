@@ -16,12 +16,12 @@
           </li>
           <li class="nav__item">
             <a href="#skills" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'skills' }">
-              <i class="uil uil-file-alt nav__icon"></i> Habilidades
+              <i class="uil uil-brackets-curly  nav__icon"></i> Habilidades
             </a>
           </li>
           <li class="nav__item">
             <a href="#qualification" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'qualification' }">
-              <i class="uil uil-file-alt nav__icon"></i> Experiencia
+              <i class="uil uil-history  nav__icon"></i> Experiencia
             </a>
           </li>
           <li class="nav__item">
@@ -44,22 +44,14 @@
       </div>
 
       <div class="nav__btns">
-        <!--
-        <i 
-          @click="$emit('toggle-theme')" 
-          class="uil change-theme" 
-          id="theme-button"
-          :class="currentTheme === 'dark' ? 'uil-sun' : 'uil-moon'"
-        ></i>
-        -->
 
         <!-- Language Switcher -->
-        <div 
-          class="lang__switcher" 
+        <div
+          class="lang__switcher"
           :class="{ 'lang__switcher--active': isLangHovered }"
-          @click="toggleLang" 
-          @mouseenter="isLangHovered = true"
-          @mouseleave="isLangHovered = false"
+          @click="toggleLang"
+          @mouseenter="isLangHovered = true; isLangOpen = true"
+          @mouseleave="isLangHovered = false; isLangOpen = false"
           @touchstart.passive="isLangHovered = true"
           @touchend.passive="onTouchEnd"
           @touchcancel.passive="isLangHovered = false"
@@ -90,9 +82,26 @@
         </div>
         <!-- End Language Switcher -->
 
+        <!-- Nav Toggle (mobile menu) -->
         <div class="nav__toggle" id="nav-toggle" @click="toggleMenu">
           <i class="uil uil-list-ul"></i>
         </div>
+
+        <!-- Theme Switch Button -->
+        <button
+          class="theme-switch"
+          :class="{ 'theme-switch--dark': currentTheme === 'dark' }"
+          @click="$emit('toggle-theme')"
+          :aria-label="currentTheme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'"
+        >
+          <span class="theme-switch__track">
+            <span class="theme-switch__thumb">
+              <i class="uil" :class="currentTheme === 'dark' ? 'uil-moon' : 'uil-sun'"></i>
+            </span>
+          </span>
+        </button>
+        <!-- End Theme Switch Button -->
+
       </div>
     </nav>
   </header>
@@ -257,7 +266,7 @@ defineEmits(['toggle-theme']);
   bottom: -100%;
   left: 0;
   width: 100%;
-  min-height: 228px;          /* ← valor A: alto del contenedor blanco */
+  min-height: 228px;
   background-color: var(--body-color);
   padding: 2rem 1.5rem 4rem;
   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
@@ -267,10 +276,9 @@ defineEmits(['toggle-theme']);
 }
 .show-menu { bottom: 0; }
 
-/* position absolute: los botones se anclan al fondo del panel independientemente */
 .nav__menu .nav__list {
   position: absolute;
-  bottom: 1rem;             /* ← valor B: distancia de los botones respecto al × */
+  bottom: 1rem;
   left: 1.5rem;
   right: 1.5rem;
   display: grid !important;
@@ -278,7 +286,6 @@ defineEmits(['toggle-theme']);
   gap: 1.5rem 2rem;
 }
 
-/* Centra Contáctame (7º item) en la columna del medio */
 .nav__item:last-child {
   grid-column: 2;
 }
@@ -307,18 +314,19 @@ defineEmits(['toggle-theme']);
   color: var(--first-color);
 }
 .nav__close:hover { color: var(--first-color-alt); }
+
+/* ── nav__btns: mobile order → lang | toggle | switch ──────── */
 .nav__btns {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
-.change-theme {
-  font-size: 1.25rem;
-  color: white;
-  margin-right: var(--mb-1);
-  cursor: pointer;
-}
-.change-theme:hover { color: var(--first-color-lighter); }
+
+/* Mobile order */
+.lang__switcher { order: 1; }
+.nav__toggle    { order: 2; }
+.theme-switch   { order: 3; }
+
 .active-link {
   color: white;
   background-color: hsl(var(--hue-color), 65%, 65%);
@@ -340,6 +348,73 @@ defineEmits(['toggle-theme']);
   }
 }
 .scroll-header { box-shadow: 0 -1px 4px rgba(0, 0, 0, .15); }
+
+/* ── Theme Switch Button ────────────────────────────────────── */
+.theme-switch {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.theme-switch__track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 18px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.theme-switch--dark .theme-switch__track {
+  background-color: rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-switch__thumb {
+  position: absolute;
+  left: -2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.35s ease;
+  transform: translateX(0);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.theme-switch--dark .theme-switch__thumb {
+  transform: translateX(17px);
+  background-color: hsl(var(--hue-color), 65%, 20%);
+}
+
+.theme-switch__thumb .uil {
+  font-size: 0.9rem;
+  line-height: 1;
+  color: hsl(var(--hue-color), 65%, 45%);
+  transition: color 0.35s ease;
+}
+
+.theme-switch--dark .theme-switch__thumb .uil {
+  color: hsl(var(--hue-color), 65%, 75%);
+}
+
+.theme-switch:hover .theme-switch__track {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+/* ─────────────────────────────────────────────────────────── */
 
 /* ── Language Switcher ─────────────────────────────────────── */
 .lang__switcher {
@@ -409,7 +484,7 @@ defineEmits(['toggle-theme']);
 }
 /* ─────────────────────────────────────────────────────────── */
 
-/* ── DESKTOP: idéntico al original ─────────────────────────── */
+/* ── DESKTOP ────────────────────────────────────────────────── */
 @media screen and (min-width: 768px) {
   .header {
     top: 0;
@@ -470,10 +545,6 @@ defineEmits(['toggle-theme']);
     box-shadow: none;
     animation: none;
   }
-  .change-theme {
-    margin: 0;
-    color: white;
-  }
   .nav__logo {
     color: white;
     transition: transform 0.3s ease;
@@ -486,8 +557,19 @@ defineEmits(['toggle-theme']);
   .nav__btns {
     flex-shrink: 0;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
+    gap: 0.75rem;
   }
+
+  /* Desktop order → lang | switch (con separación extra) */
+  .lang__switcher { order: 1; }
+  .nav__toggle    { order: 2; } /* oculto en desktop */
+  .theme-switch   {
+    order: 3;
+    margin-left: 0.75rem; /* separación extra entre lang y switch */
+  }
+
   .lang__dropdown {
     bottom: auto;
     top: calc(100% + 8px);
@@ -497,6 +579,14 @@ defineEmits(['toggle-theme']);
   }
   .lang__dropdown--open {
     transform: translateX(-50%) scaleY(1);
+  }
+  
+  .theme-switch__track {
+  /* ... tus estilos actuales ... */
+  transition: background-color 0.35s ease, border-color 0.35s ease, transform 0.3s ease;
+}
+  .theme-switch:hover .theme-switch__track {
+    transform: scale(1.2);
   }
 }
 </style>
