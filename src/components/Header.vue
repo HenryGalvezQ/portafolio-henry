@@ -48,20 +48,22 @@
         <!-- Language Switcher -->
         <div
           class="lang__switcher"
-          :class="{ 'lang__switcher--active': isLangHovered }"
-          @click="toggleLang"
-          @mouseenter="isLangHovered = true; isLangOpen = true"
-          @mouseleave="isLangHovered = false; isLangOpen = false"
-          @touchstart.passive="isLangHovered = true"
-          @touchend.passive="onTouchEnd"
-          @touchcancel.passive="isLangHovered = false"
+          :class="{ 'lang__switcher--active': isLangOpen }"
+          @mouseenter="onLangMouseEnter"
+          @mouseleave="onLangMouseLeave"
+          @click="onLangClick"
           ref="langSwitcher"
         >
           <i class="uil uil-english-to-chinese lang__icon"></i>
           <span class="lang__label">{{ currentLang }}</span>
           <i class="uil lang__arrow" :class="isLangOpen ? 'uil-angle-down' : 'uil-angle-up'"></i>
 
-          <div class="lang__dropdown" :class="{ 'lang__dropdown--open': isLangOpen }">
+          <div
+            class="lang__dropdown"
+            :class="{ 'lang__dropdown--open': isLangOpen }"
+            @mouseenter="onDropdownMouseEnter"
+            @mouseleave="onDropdownMouseLeave"
+          >
             <div
               class="lang__option"
               :class="{ 'lang__option--active': currentLang === 'ES' }"
@@ -115,32 +117,73 @@ const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value;
 
 const currentLang = ref('ES');
 const isLangOpen = ref(false);
-const isLangHovered = ref(false);
 const langSwitcher = ref(null);
 
-const toggleLang = () => {
+// Rastrear si el mouse está sobre el trigger o el dropdown
+const isOverTrigger = ref(false);
+const isOverDropdown = ref(false);
+
+const isDesktop = () => window.innerWidth >= 768;
+
+// ── Handlers de hover en desktop ────────────────────────────────────
+const onLangMouseEnter = () => {
+  if (!isDesktop()) return;
+  isOverTrigger.value = true;
+  isLangOpen.value = true;
+};
+
+const onLangMouseLeave = () => {
+  if (!isDesktop()) return;
+  isOverTrigger.value = false;
+  // Solo cerrar si el mouse tampoco está sobre el dropdown
+  if (!isOverDropdown.value) {
+    isLangOpen.value = false;
+  }
+};
+
+const onDropdownMouseEnter = () => {
+  if (!isDesktop()) return;
+  isOverDropdown.value = true;
+  isLangOpen.value = true;
+};
+
+const onDropdownMouseLeave = () => {
+  if (!isDesktop()) return;
+  isOverDropdown.value = false;
+  if (!isOverTrigger.value) {
+    isLangOpen.value = false;
+  }
+};
+
+// ── Handler de click en mobile ──────────────────────────────────────
+// En desktop se usa hover, en mobile se usa click para abrir/cerrar.
+// handleOutsideMouseDown usa 'mousedown' para dispararse antes que 'click',
+// evitando la condición de carrera en el primer tap al cargar la página.
+const onLangClick = () => {
+  if (isDesktop()) return; // en desktop se controla con hover
   isLangOpen.value = !isLangOpen.value;
 };
 
 const selectLang = (lang) => {
   currentLang.value = lang;
   isLangOpen.value = false;
+  isOverTrigger.value = false;
+  isOverDropdown.value = false;
 };
 
-const onTouchEnd = () => {
-  setTimeout(() => {
-    isLangHovered.value = false;
-  }, 150);
-};
-
-const handleClickOutside = (e) => {
+// Se usa 'mousedown' en lugar de 'click' para que este handler se ejecute
+// antes que el click del propio elemento, evitando que el primer tap en
+// mobile abra y cierre el dropdown en el mismo evento.
+const handleOutsideMouseDown = (e) => {
   if (langSwitcher.value && !langSwitcher.value.contains(e.target)) {
     isLangOpen.value = false;
+    isOverTrigger.value = false;
+    isOverDropdown.value = false;
   }
 };
 
-onMounted(() => document.addEventListener('click', handleClickOutside));
-onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside));
+onMounted(() => document.addEventListener('mousedown', handleOutsideMouseDown));
+onBeforeUnmount(() => document.removeEventListener('mousedown', handleOutsideMouseDown));
 
 let scrollTimeouts = [];
 
@@ -185,9 +228,9 @@ const closeMenu = (event) => {
           const headerEl = document.getElementById('header');
           if (!el) return;
 
-          const isDesktop = window.innerWidth >= 768;
-          const headerH = isDesktop && headerEl ? headerEl.offsetHeight : 0;
-          const extraOffset = isDesktop ? 72 : 0;
+          const isDesktopView = window.innerWidth >= 768;
+          const headerH = isDesktopView && headerEl ? headerEl.offsetHeight : 0;
+          const extraOffset = isDesktopView ? 72 : 0;
 
           window.scrollTo({
             top: el.offsetTop - headerH + extraOffset,
@@ -562,14 +605,15 @@ defineEmits(['toggle-theme']);
     gap: 0.75rem;
   }
 
-  /* Desktop order → lang | switch (con separación extra) */
+  /* Desktop order → lang | switch */
   .lang__switcher { order: 1; }
   .nav__toggle    { order: 2; } /* oculto en desktop */
   .theme-switch   {
     order: 3;
-    margin-left: 0.75rem; /* separación extra entre lang y switch */
+    margin-left: 0.75rem;
   }
 
+  /* ── Dropdown en desktop: se abre hacia abajo ── */
   .lang__dropdown {
     bottom: auto;
     top: calc(100% + 8px);
@@ -580,11 +624,28 @@ defineEmits(['toggle-theme']);
   .lang__dropdown--open {
     transform: translateX(-50%) scaleY(1);
   }
-  
+
+  /*
+   * Puente invisible entre el trigger y el dropdown.
+   * Cubre el hueco de 8px para que al mover el mouse del trigger al dropdown
+   * no se salga de ambas zonas hover al mismo tiempo y cierre el menú.
+   */
+  .lang__switcher::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    /* suficiente para cubrir el gap (8px) más un margen de seguridad */
+    height: 12px;
+    /* transparente — solo actúa como área de hit */
+    background: transparent;
+  }
+
   .theme-switch__track {
-  /* ... tus estilos actuales ... */
-  transition: background-color 0.35s ease, border-color 0.35s ease, transform 0.3s ease;
-}
+    transition: background-color 0.35s ease, border-color 0.35s ease, transform 0.3s ease;
+  }
   .theme-switch:hover .theme-switch__track {
     transform: scale(1.2);
   }
