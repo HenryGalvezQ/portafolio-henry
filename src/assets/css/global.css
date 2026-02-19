@@ -26,6 +26,7 @@
   --border-color: hsl(var(--hue-color), 30%, 80%);
   --text-color-solid: #000;
   --subtitle-color: var(--text-color);
+  --icon-color-social: var(--first-color);
 
   /* Font and typography */
   --body-font: "Poppins", sans-serif;
@@ -84,6 +85,8 @@ body.dark-theme {
   --border-color: hsl(var(--hue-color), 30%, 30%);
   --text-color-solid: hsl(var(--hue-color), 8%, 95%);
   --subtitle-color: hsl(var(--hue-color), 8%, 85%);
+  --icon-color-social: #d3d3d3;
+  --first-color-2: hsl(var(--hue-color), 40%, 60%);
 
 }
 /* Corrección para el menú móvil en modo oscuro */

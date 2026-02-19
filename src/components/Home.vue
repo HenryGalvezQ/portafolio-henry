@@ -113,7 +113,7 @@
 
 .home__social-icon {
   font-size: 1.5rem;
-  color: var(--first-color);
+  color: var(--icon-color-social);
   display: flex;
   align-items: center;
   padding: 0.6rem;
