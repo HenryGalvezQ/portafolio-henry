@@ -23,6 +23,9 @@
   --container-color: #fff;
   --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
   --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
+  --border-color: hsl(var(--hue-color), 30%, 80%);
+  --text-color-solid: #000;
+  --subtitle-color: var(--text-color);
 
   /* Font and typography */
   --body-font: "Poppins", sans-serif;
@@ -77,6 +80,33 @@ body.dark-theme {
   --container-color: hsl(var(--hue-color), 29%, 16%);
   --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
   --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
+  --first-color-3: hsl(var(--hue-color), 29%, 8%); /* header dark */
+  --border-color: hsl(var(--hue-color), 30%, 30%);
+  --text-color-solid: hsl(var(--hue-color), 8%, 95%);
+  --subtitle-color: hsl(var(--hue-color), 8%, 85%);
+
+}
+/* Corrección para el menú móvil en modo oscuro */
+body.dark-theme .nav__menu {
+  background-color: var(--first-color-3);
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.3); /* Sombra un poco más oscura para que combine */
+}
+/* Por esto, solo mobile */
+@media screen and (max-width: 767px) {
+  body.dark-theme .nav__menu {
+    box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.5);
+  }
+}
+
+body.dark-theme::before {
+background: linear-gradient(135deg, hsl(250, 30%, 8%) 0%, hsl(250, 30%, 15%) 100%);
+}
+
+body.dark-theme::after {
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%23261E4D' fill-opacity='0.6' d='M0,160L80,154.7C160,149,320,139,480,154.7C640,171,800,213,960,224C1120,235,1280,213,1360,202.7L1440,192L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'/></svg>") no-repeat center bottom,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='%23261E4D' fill-opacity='0.3' d='M0,224L60,234.7C120,245,240,267,360,266.7C480,267,600,245,720,213.3C840,181,960,139,1080,144C1200,149,1320,203,1380,229.3L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'/></svg>") no-repeat center bottom;
+  background-size: 100% 100%, 100% 100%;
 }
 
 /*==================== BASE ====================*/
@@ -184,6 +214,47 @@ img {
   padding: 1rem;
   border-radius: .5rem;
   font-weight: var(--font-medium);
+}
+/* ==================== BOTÓN OUTLINE (OPTIMIZADO) ==================== */
+
+/* 1. ESTILOS BASE (Modo Claro) */
+.button--outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: .5rem;
+  font-weight: var(--font-medium);
+  transition: .3s;
+  /* Colores Base */
+  background-color: #fff;
+  color: var(--first-color);            
+  border: 1px solid var(--first-color); 
+}
+
+/* El icono siempre es morado por defecto */
+.button--outline .button__icon {
+  color: var(--first-color);
+  transition: .3s;
+}
+
+/* 2. MODO OSCURO (Overrides) */
+/* Solo cambiamos lo que es diferente: fondo y color de texto */
+body.dark-theme .button--outline {
+  background-color: transparent;
+  color: #fff; 
+  /* El borde y el icono ya son morados por la regla base, no hay que repetirlos */
+}
+
+/* 3. HOVER (Unificado) */
+/* El selector 'body' al inicio le da fuerza para funcionar en ambos modos */
+body .button--outline:hover {
+  background-color: var(--first-color);
+  color: #fff;
+}
+
+body .button--outline:hover .button__icon {
+  color: #fff;
 }
 
 .button:hover {

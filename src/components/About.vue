@@ -78,6 +78,10 @@ export default {
 
 <style scoped>
 /* ==================== ABOUT ==================== */
+.section__subtitle {
+  color: var(--subtitle-color);
+}
+
 .about__img {
   width: 200px;
   border-radius: .5rem;
@@ -88,6 +92,7 @@ export default {
 .about__description {
   text-align: center;
   margin-bottom: var(--mb-2-5);
+  color: var(--text-color-solid);
 }
 
 .about__info {
@@ -104,6 +109,7 @@ export default {
 
 .about__info-name {
   font-size: var(--smaller-font-size);
+  color: var(--subtitle-color);
 }
 
 .about__info-title,
@@ -117,19 +123,6 @@ export default {
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
-}
-
-/* Botón con estilo invertido (outline) */
-.button--outline {
-  background-color: var(--body-color, #fff);
-  color: var(--first-color, #6E57E0);
-  border: 1px solid var(--first-color, #6E57E0);
-}
-
-.button--outline:hover {
-  background-color: var(--first-color, #6E57E0);
-  color: #fff;
-  border-color: var(--first-color, #6E57E0);
 }
 
 .about__container {

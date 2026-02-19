@@ -451,7 +451,7 @@ defineEmits(['toggle-theme']);
 }
 
 .theme-switch--dark .theme-switch__thumb .uil {
-  color: hsl(var(--hue-color), 65%, 75%);
+  color: #fff;
 }
 
 .theme-switch:hover .theme-switch__track {
@@ -491,7 +491,7 @@ defineEmits(['toggle-theme']);
   transform: translateX(-50%) scaleY(0);
   transform-origin: bottom center;
   background-color: var(--body-color);
-  border: 1px solid hsl(var(--hue-color), 30%, 80%);
+  border: 1px solid var(--border-color); /* antes hardcodeado */
   border-radius: 0.5rem;
   overflow: hidden;
   min-width: 72px;
@@ -517,7 +517,7 @@ defineEmits(['toggle-theme']);
   transition: background-color 0.15s;
 }
 .lang__option:hover {
-  background-color: hsl(var(--hue-color), 65%, 94%);
+  background-color: var(--input-color); /* antes hardcodeado con hsl */
 }
 .lang__option--active { color: var(--first-color); }
 .lang__check {

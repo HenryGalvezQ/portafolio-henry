@@ -209,16 +209,15 @@
 
 .home__subtitle {
   font-size: var(--h3-font-size);
-  color: var(--text-color);
+  color: var(--subtitle-color);
   font-weight: var(--font-medium);
   margin-bottom: var(--mb-0-75);
 }
 
 .home__discription {
   margin-bottom: var(--mb-2);
-  color: black;
+  color: var(--text-color-solid);
 }
-
 .button--animated {
   border: none;
   outline: none;
