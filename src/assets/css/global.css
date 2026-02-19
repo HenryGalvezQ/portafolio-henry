@@ -53,6 +53,11 @@
   --mb-2-5: 2.5rem;
   --mb-3: 3rem;
 
+  --icon-mono: #000000;    /* Para PHP y Flask */
+  --icon-mysql: #00546B;   /* Para MySQL */
+  --icon-java: #5382A1;    /* Para las partes azules de Java */
+  --icon-aws: #252f3e;     /* Para el texto de AWS */
+
   /* z index */
   --z-tooltip: 10;
   --z-fixed: 100;
@@ -87,6 +92,11 @@ body.dark-theme {
   --subtitle-color: hsl(var(--hue-color), 8%, 85%);
   --icon-color-social: #d3d3d3;
   --first-color-2: hsl(var(--hue-color), 40%, 60%);
+
+  --icon-mono: #ffffff;
+  --icon-mysql: #ffffff;
+  --icon-java: #ffffff;
+  --icon-aws: #ffffff;
 
 }
 /* Corrección para el menú móvil en modo oscuro */
@@ -298,7 +308,14 @@ body .button--outline:hover .button__icon {
   background-color: transparent;
   color: var(--first-color-alt);
 }
-
+/* ==================== MOBILE HOVER FIX ==================== */
+/* ==================== MOBILE HOVER FIX ==================== */
+@media (hover: none) and (pointer: coarse) {
+  .button,
+  .button--outline {
+    transition: none !important;
+  }
+}
 /*==================== GLOBAL COMPONENT STYLES ====================*/
 .scroll-header {
   box-shadow: 0 -1px 4px rgba(0, 0, 0, .15);
@@ -378,3 +395,4 @@ body .button--outline:hover .button__icon {
     zoom: 1.25;
   }
 }
+

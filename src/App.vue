@@ -98,15 +98,137 @@ const handleScroll = () => {
 // 8. En onMounted, ahora también leemos el tema guardado en localStorage
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
-  // Llamamos a handleScroll inmediatamente para detectar la sección inicial
   handleScroll();
-  
+
   const savedTheme = localStorage.getItem('selected-theme');
   if (savedTheme) {
     theme.value = savedTheme;
   }
-});
 
+// ==================== MOBILE HOVER FIX ====================
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+if (isTouchDevice) {
+  document.addEventListener('touchend', (e) => {
+    const btn = e.target.closest('.button, .home__social-icon, .portfolio__expand-button');
+    if (!btn) return;
+
+    setTimeout(() => {
+      const parent = btn.parentNode;
+      if (!parent) return;
+
+      // Detectar si es específicamente el botón de descargar CV (outline con ícono)
+      const isDownloadBtn = btn.classList.contains('button--outline') &&
+                            btn.querySelector('.button__icon');
+      
+      // Leer --first-color ANTES de tocar nada, solo para ese botón
+      const firstColorValue = isDownloadBtn
+        ? getComputedStyle(document.documentElement).getPropertyValue('--first-color').trim()
+        : null;
+
+      // 1. Congelamos estado hover actual del botón
+      const computed = window.getComputedStyle(btn);
+      btn.style.backgroundColor = computed.backgroundColor;
+      btn.style.color = computed.color;
+      btn.style.borderColor = computed.borderColor;
+      btn.style.transform = computed.transform;
+      btn.style.boxShadow = computed.boxShadow;
+      btn.style.paddingRight = computed.paddingRight;
+
+      // 2. Congelamos hijos
+      const children = btn.querySelectorAll('*');
+      children.forEach(child => {
+        const cs = window.getComputedStyle(child);
+        child.style.color = cs.color;
+        child.style.maxWidth = cs.maxWidth;
+        child.style.opacity = cs.opacity;
+        child.style.marginLeft = cs.marginLeft;
+      });
+
+      // 3. Clon fantasma para leer valores normales SIN hover
+      const ghost = btn.cloneNode(true);
+      ghost.style.cssText = '';
+      ghost.style.position = 'absolute';
+      ghost.style.visibility = 'hidden';
+      ghost.style.pointerEvents = 'none';
+      ghost.classList.add('no-hover-state');
+      document.body.appendChild(ghost);
+
+      const ng = window.getComputedStyle(ghost);
+      const normalBg = ng.backgroundColor;
+      const normalColor = ng.color;
+      const normalBorder = ng.borderColor;
+      const normalTransform = ng.transform;
+      const normalShadow = ng.boxShadow;
+      const normalPaddingRight = ng.paddingRight;
+
+      const ghostChildren = ghost.querySelectorAll('*');
+      const normalChildStyles = Array.from(ghostChildren).map(child => {
+        const s = window.getComputedStyle(child);
+        return { 
+          color: s.color, 
+          maxWidth: s.maxWidth, 
+          opacity: s.opacity,
+          marginLeft: s.marginLeft
+        };
+      });
+      document.body.removeChild(ghost);
+
+      // 4. Aplicamos transición a todo simultáneamente
+      const t = 'all 0.6s ease';
+      btn.style.transition = t;
+      children.forEach(child => {
+        child.style.transition = t;
+      });
+
+      // 5. Animamos hacia valores normales en el mismo frame
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          btn.style.backgroundColor = normalBg;
+          btn.style.color = normalColor;
+          btn.style.borderColor = normalBorder;
+          btn.style.transform = normalTransform;
+          btn.style.boxShadow = normalShadow;
+          btn.style.paddingRight = normalPaddingRight;
+
+          children.forEach((child, i) => {
+            if (normalChildStyles[i]) {
+              const isIcon = child.classList.contains('button__icon');
+              if (isIcon) {
+                // Solo para el botón de descarga CV usamos firstColorValue directo
+                // Para todos los demás, comportamiento original intacto
+                const iconColor = (isDownloadBtn && firstColorValue)
+                  ? firstColorValue
+                  : normalChildStyles[i].color;
+
+                child.setAttribute('style', 
+                  `color: ${iconColor} !important; transition: all 0.6s ease !important;`
+                );
+              } else {
+                child.style.color = normalChildStyles[i].color;
+                child.style.maxWidth = normalChildStyles[i].maxWidth;
+                child.style.opacity = normalChildStyles[i].opacity;
+                child.style.marginLeft = normalChildStyles[i].marginLeft;
+              }
+            }
+          });
+
+          setTimeout(() => {
+            const clone = btn.cloneNode(true);
+            clone.style.cssText = '';
+            clone.querySelectorAll('*').forEach(child => {
+              child.style.cssText = '';
+              child.removeAttribute('style');
+            });
+            parent.replaceChild(clone, btn);
+          }, 650);
+        });
+      });
+
+    }, 1500);
+
+  }, { passive: true });
+}});
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
