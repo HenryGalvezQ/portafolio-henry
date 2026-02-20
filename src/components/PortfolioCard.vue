@@ -241,6 +241,7 @@ export default {
 
 .portfolio__description {
   margin-bottom: var(--mb-0-72);
+  color: var(--subtitle-color);
   flex-grow: 1;
   max-height: 4.3em;
   overflow: hidden;

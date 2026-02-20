@@ -360,6 +360,67 @@ body.dark-theme .qualification__logo--bg {
   border-radius: 5px;
 }
 
+/* ==================== PORTFOLIO TAGS DARK MODE ==================== */
+body.dark-theme .portfolio__tag {
+  background-color: #eeeeee;
+  color: hsl(var(--hue-color), 8%, 30%);
+}
+/* ==================== PORTFOLIO TECH BADGES DARK MODE ==================== */
+body.dark-theme .portfolio__tech-badge {
+  background-color: hsl(var(--hue-color), 29%, 17%);
+}
+
+/* ==================== PORTFOLIO CAROUSEL BUTTONS ==================== */
+.portfolio-carousel__button {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: var(--first-color) !important;
+}
+
+.portfolio-carousel__button:hover {
+  background-color: var(--first-color) !important;
+  color: #ffffff !important;
+}
+
+/* ==================== PORTFOLIO TECH BADGES SVG POSITION ==================== */
+.portfolio__tech-badge svg {
+  margin-top: 5px;
+}
+
+body.dark-theme .portfolio__tech-badge svg {
+  margin-top: 5px;
+}
+/* ==================== PORTFOLIO CARD COLOR DARK MODE ==================== */
+body.dark-theme .portfolio-card-container,
+body.dark-theme .portfolio-card__content.is-expanded-mode,
+body.dark-theme .portfolio-expanded {
+  background-color: hsl(var(--hue-color), 29%, 15.5%);
+}
+
+/* ==================== PORTFOLIO CARD WRAPPER DARK MODE BORDER ==================== */
+body.dark-theme .portfolio-card-container {
+  box-shadow: 0 2px 4px rgba(0,0,0,.15), 0 0 0 1px hsl(var(--hue-color), 12%, 24%);
+}
+
+body.dark-theme .portfolio-card-container.is-hovered {
+  box-shadow: 0 4px 8px rgba(0,0,0,.15), 0 0 0 1px hsl(var(--hue-color), 12%, 24%);
+}
+
+/* ==================== PORTFOLIO EXPANDED DARK MODE BORDER ==================== */
+body.dark-theme .portfolio-expanded {
+  box-shadow: 0 0 0 1px hsl(var(--hue-color), 12%, 24%);
+}
+
+/* ==================== PORTFOLIO EXPANDED CLOSE BUTTON ==================== */
+.portfolio-expanded__close:hover {
+  background-color: #8b5cf6 !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .portfolio-expanded__close:hover {
+  background-color: #f3f4f6 !important;
+  color: #8b5cf6 !important;
+}
+
 /*==================== GLOBAL COMPONENT STYLES ====================*/
 .scroll-header {
   box-shadow: 0 -1px 4px rgba(0, 0, 0, .15);

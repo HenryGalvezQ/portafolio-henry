@@ -249,7 +249,7 @@ export default {
   background: none;
   border: none;
   font-size: 1.25rem;
-  color: var(--text-color);
+  color: var(--subtitle-color);
   cursor: pointer;
   padding: 0.25rem;
   border-radius: 50%;
@@ -263,7 +263,7 @@ export default {
 
 .portfolio-expanded__close:hover {
   background-color: #f3f4f6;
-  color: #ef4444;
+  color: #8b5cf6;
   transform: scale(1.1);
 }
 
@@ -295,7 +295,7 @@ export default {
 
 .portfolio-expanded__description {
   line-height: 1.7;
-  color: var(--text-color);
+  color: var(--subtitle-color);
 }
 
 /* Estilos para el contenido HTML */

@@ -455,24 +455,24 @@ const closeModal = () => {
 
 /* Educación activa: education hover +25% más, work hover +25% menos */
 .qualification__content.show-active-education .qualification__data-education:has(.qualification__item-content--clickable:hover) {
-  transform: scale(1.12);
+  transform: scale(1.10);
   position: relative;
   z-index: 5;
 }
 .qualification__content.show-active-education .qualification__data-work:has(.qualification__item-content--clickable:hover) {
-  transform: scale(1.06);
+  transform: scale(1.03);
   position: relative;
   z-index: 5;
 }
 
 /* Laboral activa: work hover +25% más, education hover +25% menos */
 .qualification__content.show-active-work .qualification__data-work:has(.qualification__item-content--clickable:hover) {
-  transform: scale(1.12);
+  transform: scale(1.10);
   position: relative;
   z-index: 5;
 }
 .qualification__content.show-active-work .qualification__data-education:has(.qualification__item-content--clickable:hover) {
-  transform: scale(1.06);
+  transform: scale(1.03);
   position: relative;
   z-index: 5;
 }
