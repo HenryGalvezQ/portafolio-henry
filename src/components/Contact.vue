@@ -75,14 +75,14 @@
       </form>
       
       <div class="contact__buttons">
-        <button type="button" @click="openWhatsApp" class="button button--flex button--whatsapp">
+        <a href="javascript:void(0)" @click="openWhatsApp" class="button button--flex button--animated button--whatsapp">
           WhatsApp
           <i class="uil uil-whatsapp button__icon"></i>
-        </button>
-        <button type="submit" @click="handleSubmit" class="button button--flex" :disabled="isSubmitting">
+        </a>
+        <a href="javascript:void(0)" @click="!isSubmitting && handleSubmit()" class="button button--flex button--animated" :class="{ 'button--submitting': isSubmitting }">
           {{ isSubmitting ? 'Enviando...' : 'Enviar Mensaje' }}
           <i class="uil uil-message button__icon"></i>
-        </button>
+        </a>
       </div>
     </div>
 
@@ -289,6 +289,7 @@ const openWhatsApp = () => {
 
 <style scoped>
 /* ==================== CONTACT ME ==================== */
+/* ==================== CONTACT ME ==================== */
 .contact {
   padding-bottom: 4.5rem;
 }
@@ -388,7 +389,8 @@ const openWhatsApp = () => {
   margin-top: 1.5rem;
 }
 
-.contact__buttons button {
+/* Reemplaza .contact__buttons button — idéntico en propiedades, apunta a .button */
+.contact__buttons .button {
   flex: 0 1 auto;
   min-width: 200px;
   border: none;
@@ -399,36 +401,14 @@ const openWhatsApp = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  transform: scale(1);
-}
-
-.contact__buttons button:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.contact__buttons button:active {
-  transform: translateY(-1px) scale(0.98);
 }
 
 .button--whatsapp {
-  background-color: #25D366;
   order: 1;
-}
-
-.button--whatsapp:hover {
-  background-color: #128C7E;
 }
 
 .button--flex:not(.button--whatsapp) {
   order: 2;
-}
-
-.button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: scale(1) !important;
 }
 
 .button__icon {
@@ -514,7 +494,7 @@ const openWhatsApp = () => {
   }
 
   .contact__input {
-      min-height: 3.5rem;
+    min-height: 3.5rem;
   }
 }
 
@@ -527,10 +507,10 @@ const openWhatsApp = () => {
     column-gap: 1.5rem;
   }
   .contact.section {
-    padding: 7rem 0 5.5rem; /* 7rem arriba (+1rem), 2rem abajo (original) */
+    padding: 7rem 0 5.5rem;
   }
   .section__subtitle {
-    margin-bottom: 4rem; /* 4rem en desktop (valor original) */
+    margin-bottom: 4rem;
   }
 }
 
@@ -545,7 +525,7 @@ const openWhatsApp = () => {
     margin-top: 1.5rem;
   }
   
-  .contact__buttons button {
+  .contact__buttons .button {
     min-width: 0;
     flex: 1;
     padding: 0.75rem 0.5rem;
@@ -564,5 +544,4 @@ const openWhatsApp = () => {
     max-width: none;
   }
 }
-
 </style>

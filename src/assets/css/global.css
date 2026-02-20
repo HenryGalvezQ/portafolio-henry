@@ -316,6 +316,43 @@ body .button--outline:hover .button__icon {
     transition: none !important;
   }
 }
+
+/* ==================== BUTTON ANIMATED (global para que replaceChild lo reciba) ==================== */
+.button--animated {
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.button--animated:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.button--animated:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* WhatsApp */
+.button--whatsapp {
+  background-color: #25D366;
+}
+
+.button--whatsapp:hover {
+  background-color: #128C7E;
+}
+
+/* Estado enviando */
+.button--submitting {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Tamaño de letra desktop para botones de contact */
+@media screen and (min-width: 768px) {
+  .contact__buttons .button--animated {
+    font-size: 1.1rem;
+  }
+}
 /*==================== GLOBAL COMPONENT STYLES ====================*/
 .scroll-header {
   box-shadow: 0 -1px 4px rgba(0, 0, 0, .15);

@@ -1,5 +1,3 @@
-// App.vue
-
 <template>
   <Header 
     :active-section="activeSection" 
@@ -82,7 +80,7 @@ const handleScroll = () => {
   
   // Calculamos el offset del header (diferente en mobile vs desktop)
   const isMobile = window.innerWidth < 768;
-  const headerOffset = isMobile ? 100 : 150; // Offset más grande para compensar desplegables
+  const headerOffset = isMobile ? 100 : 150;
   
   sections.forEach(current => {
     const sectionHeight = current.offsetHeight;
@@ -113,20 +111,20 @@ if (isTouchDevice) {
     const btn = e.target.closest('.button, .home__social-icon, .portfolio__expand-button');
     if (!btn) return;
 
+    // Excluir solo los botones dentro de contact__buttons — en Android vuelven solos
+    if (btn.closest('.contact__buttons')) return;
+
     setTimeout(() => {
       const parent = btn.parentNode;
       if (!parent) return;
 
-      // Detectar si es específicamente el botón de descargar CV (outline con ícono)
       const isDownloadBtn = btn.classList.contains('button--outline') &&
                             btn.querySelector('.button__icon');
       
-      // Leer --first-color ANTES de tocar nada, solo para ese botón
       const firstColorValue = isDownloadBtn
         ? getComputedStyle(document.documentElement).getPropertyValue('--first-color').trim()
         : null;
 
-      // 1. Congelamos estado hover actual del botón
       const computed = window.getComputedStyle(btn);
       btn.style.backgroundColor = computed.backgroundColor;
       btn.style.color = computed.color;
@@ -135,7 +133,6 @@ if (isTouchDevice) {
       btn.style.boxShadow = computed.boxShadow;
       btn.style.paddingRight = computed.paddingRight;
 
-      // 2. Congelamos hijos
       const children = btn.querySelectorAll('*');
       children.forEach(child => {
         const cs = window.getComputedStyle(child);
@@ -145,7 +142,6 @@ if (isTouchDevice) {
         child.style.marginLeft = cs.marginLeft;
       });
 
-      // 3. Clon fantasma para leer valores normales SIN hover
       const ghost = btn.cloneNode(true);
       ghost.style.cssText = '';
       ghost.style.position = 'absolute';
@@ -174,14 +170,12 @@ if (isTouchDevice) {
       });
       document.body.removeChild(ghost);
 
-      // 4. Aplicamos transición a todo simultáneamente
       const t = 'all 0.6s ease';
       btn.style.transition = t;
       children.forEach(child => {
         child.style.transition = t;
       });
 
-      // 5. Animamos hacia valores normales en el mismo frame
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           btn.style.backgroundColor = normalBg;
@@ -195,12 +189,9 @@ if (isTouchDevice) {
             if (normalChildStyles[i]) {
               const isIcon = child.classList.contains('button__icon');
               if (isIcon) {
-                // Solo para el botón de descarga CV usamos firstColorValue directo
-                // Para todos los demás, comportamiento original intacto
                 const iconColor = (isDownloadBtn && firstColorValue)
                   ? firstColorValue
                   : normalChildStyles[i].color;
-
                 child.setAttribute('style', 
                   `color: ${iconColor} !important; transition: all 0.6s ease !important;`
                 );
@@ -229,6 +220,7 @@ if (isTouchDevice) {
 
   }, { passive: true });
 }});
+
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
@@ -236,8 +228,8 @@ onUnmounted(() => {
 
 <style scoped>
 .main {
-  overflow-x: hidden; /* Opcional, si es necesario */
-  margin-top: 0; /* <--- Añade esta línea para subir todo */
+  overflow-x: hidden;
+  margin-top: 0;
 }
 
 .scrollup {
@@ -265,7 +257,6 @@ onUnmounted(() => {
   bottom: 3.6rem;
 }
 
-/* Media Queries para el botón de scroll */
 @media screen and (min-width: 768px) {
   .show-scroll {
     bottom: 3rem;
