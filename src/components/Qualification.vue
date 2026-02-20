@@ -28,7 +28,7 @@
           
           <div class="qualification__data qualification__data-education" @click="openModal('unsa')">
             <div class="qualification__item-content">
-              <img src="@/assets/img/logo-unsa.png" alt="Logo UNSA" class="qualification__logo">
+              <img src="@/assets/img/logo-unsa.png" alt="Logo UNSA" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">Ingeniería de Sistemas (Egresado)</h3>
                 <span class="qualification__subtitle">Universidad Nacional de San Agustín</span>
@@ -59,13 +59,13 @@
                   Diciembre 2025
                 </div>
               </div>
-              <img src="@/assets/img/symmetry_logo2.png" alt="Logo Symmetry" class="qualification__logo">
+              <img src="@/assets/img/symmetry_logo2.png" alt="Logo Symmetry" class="qualification__logo qualification__logo--rounded">
             </div>
           </div>
 
           <div class="qualification__data qualification__data-education" @click="openModal('ingles')">
             <div class="qualification__item-content">
-              <img src="@/assets/img/logo_idiomas.png" alt="Logo UNSA" class="qualification__logo">
+              <img src="@/assets/img/logo_idiomas.png" alt="Logo UNSA" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">Idioma Inglés Intermedio</h3>
                 <span class="qualification__subtitle">Centro de Idiomas UNSA</span>
@@ -96,13 +96,13 @@
                   Abril 2025 - Noviembre 2025
                 </div>
               </div>
-              <img src="@/assets/img/logo_innovaciencia.png" alt="Logo Innovaciencia" class="qualification__logo">
+              <img src="@/assets/img/logo_innovaciencia.png" alt="Logo Innovaciencia" class="qualification__logo qualification__logo--bg">
             </div>
           </div>
 
           <div class="qualification__data qualification__data-education" @click="openModal('cisco')">
             <div class="qualification__item-content">
-              <img src="@/assets/img/logo-cisco-net-academy.png" alt="Logo Cisco" class="qualification__logo">
+              <img src="@/assets/img/logo-cisco-net-academy.png" alt="Logo Cisco" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">Ciberseguridad</h3>
                 <span class="qualification__subtitle">CISCO Networking Academy</span>
@@ -139,7 +139,7 @@
 
           <div class="qualification__data qualification__data-education" @click="openModal('coderhouse')">
             <div class="qualification__item-content">
-              <img src="@/assets/img/logo-coderhouse.png" alt="Logo Coderhouse" class="qualification__logo">
+              <img src="@/assets/img/logo-coderhouse.png" alt="Logo Coderhouse" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">Carrera UX/UI</h3>
                 <span class="qualification__subtitle">Coderhouse</span>
@@ -175,7 +175,7 @@
 
           <div class="qualification__data qualification__data-education" @click="openModal('oracle')">
             <div class="qualification__item-content">
-              <img src="@/assets/img/logo-oracle.png" alt="Logo Oracle" class="qualification__logo">
+              <img src="@/assets/img/logo-oracle.png" alt="Logo Oracle" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">Oracle Cloud APEX Developer</h3>
                 <span class="qualification__subtitle">Oracle</span>
@@ -245,7 +245,7 @@ const modalData = {
     certificado_cisco4, certificado_cisco5, certificado_cisco6,
     certificado_cisco7, certificado_cisco8
   ],
-  symmetry: [], // Array vacío porque usa el componente SymmetryTestimonial
+  symmetry: [],
   ingles: [certificado_ingles, certificado_ingles2]
 };
 
@@ -265,7 +265,6 @@ const setActiveTab = (tabName) => {
 };
 
 const openModal = (modalId) => {
-  // MODIFICADO: Permite abrir modal de Symmetry aunque tenga array vacío
   if (modalId === 'symmetry' || (modalData[modalId] && modalData[modalId].length > 0)) {
     activeModalId.value = modalId;
   }
@@ -278,6 +277,9 @@ const closeModal = () => {
 
 <style scoped>
 /* ==================== QUALIFICATION ==================== */
+.section__subtitle {
+  color: var(--subtitle-color);
+}
 .qualification__tabs {
   display: flex;
   justify-content: center;
@@ -290,6 +292,7 @@ const closeModal = () => {
   font-weight: var(--font-medium);
   cursor: pointer;
   transition: .3s;
+  color: var(--subtitle-color);
 }
 
 .qualification__button:hover {
@@ -345,6 +348,7 @@ const closeModal = () => {
   display: inline-block;
   font-size: var(--small-font-size);
   margin-bottom: var(--mb-1);
+  color: var(--subtitle-color);
 }
 
 .qualification__calendar {
@@ -365,6 +369,9 @@ const closeModal = () => {
   height: 100%;
   background-color: var(--first-color);
   transform: translate(6px, -7px);
+}
+.qualification__logo--rounded {
+  border-radius: 5px;
 }
 
 /* ==================== LÓGICA DEL EFECTO DE ESCALADO ==================== */
@@ -456,12 +463,11 @@ const closeModal = () => {
   .qualification__tabs { justify-content: center; }
   .qualification__button { margin: 0 var(--mb-1); }
   .qualification__sections {
-    grid-template-columns: 1fr;   /* antes era .9fr */
+    grid-template-columns: 1fr;
   }
   .qualification__logo { width: 85px; height: 85px; }
   .qualification.section { padding: 7rem 0 1rem; }
 
-  /* ← ESTE ES EL CAMBIO CLAVE: rompe el techo del .container global */
   .qualification__container {
     max-width: 823px;
   }

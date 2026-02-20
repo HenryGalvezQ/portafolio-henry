@@ -225,6 +225,9 @@ export default {
 .skills__container {
   row-gap: 0;
 }
+.section__subtitle {
+  color: var(--subtitle-color);
+}
 .skills__header {
   display: flex;
   align-items: center;
@@ -244,7 +247,7 @@ export default {
 }
 .skills__subtitle {
   font-size: var(--small-font-size);
-  color: var(--text-color-light);
+  color: var(--subtitle-color);
 }
 .skills__arrow {
   margin-left: auto;

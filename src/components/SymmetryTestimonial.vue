@@ -45,12 +45,12 @@
 
 <style scoped>
 .testimonial-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  background: var(--container-color);
   border-radius: 16px;
-  padding: 2rem 1.75rem; /* Reducido de 3rem 2.5rem */
-  max-width: 500px; /* Reducido de 600px */
+  padding: 2rem 1.75rem;
+  max-width: 500px;
   margin: 0 auto;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Reducido de 0 10px 40px */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
   font-family: var(--body-font);
 }
 
@@ -58,18 +58,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem; /* Reducido de 1rem */
-  margin-bottom: 1.5rem; /* Reducido de 2rem */
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .testimonial-logo {
-  width: 150px; /* Reducido de 80px */
-  height: 100px; /* Reducido de 80px */
+  width: 150px;
+  height: 100px;
   object-fit: contain;
+  border-radius: 6px;
 }
 
 .testimonial-title {
-  font-size: 1.25rem; /* Reducido de 1.5rem */
+  font-size: 1.25rem;
   font-weight: var(--font-semi-bold);
   color: var(--title-color);
   text-align: center;
@@ -80,72 +81,72 @@
   width: 100%;
   height: 2px;
   background: linear-gradient(to right, transparent, var(--first-color), transparent);
-  margin: 1.25rem 0; /* Reducido de 1.5rem */
+  margin: 1.25rem 0;
 }
 
 .testimonial-quote {
   position: relative;
-  padding: 1rem 0; /* Reducido de 1.5rem */
+  padding: 1rem 0;
   text-align: center;
 }
 
 .quote-icon {
-  font-size: 1.5rem; /* Reducido de 2rem */
+  font-size: 1.5rem;
   color: var(--first-color);
   opacity: 0.3;
 }
 
 .quote-text {
-  font-size: 1.05rem; /* Reducido de 1.25rem */
-  line-height: 1.6; /* Reducido de 1.8 */
-  color: var(--text-color);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-color-solid);
   font-style: italic;
-  margin: 0.75rem 0; /* Reducido de 1rem */
-  padding: 0 0.75rem; /* Reducido de 0 1rem */
+  margin: 0.75rem 0;
+  padding: 0 0.75rem;
 }
 
 .testimonial-author {
   text-align: center;
-  margin: 1.5rem 0; /* Reducido de 2rem */
+  margin: 1.5rem 0;
 }
 
 .author-name {
-  font-size: 1rem; /* Reducido de 1.1rem */
+  font-size: 1rem;
   font-weight: var(--font-semi-bold);
   color: var(--title-color);
-  margin-bottom: 0.4rem; /* Reducido de 0.5rem */
+  margin-bottom: 0.4rem;
 }
 
 .author-title {
-  font-size: 0.875rem; /* Reducido de 0.95rem */
+  font-size: 0.875rem;
   color: var(--text-color);
-  margin-bottom: 0.2rem; /* Reducido de 0.25rem */
+  margin-bottom: 0.2rem;
 }
 
 .author-date {
-  font-size: 0.8rem; /* Reducido de 0.875rem */
+  font-size: 0.8rem;
   color: var(--text-color-light);
 }
 
 .testimonial-footer {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem; /* Reducido de 0.75rem */
-  margin-top: 1.25rem; /* Reducido de 1.5rem */
+  gap: 0.6rem;
+  margin-top: 1.25rem;
 }
 
 .contact-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem; /* Reducido de 0.5rem */
-  font-size: 0.85rem; /* Reducido de 0.9rem */
+  gap: 0.4rem;
+  font-size: 0.85rem;
   color: var(--text-color);
 }
 
 .contact-item i {
   color: var(--first-color);
-  font-size: 1rem; /* Reducido de 1.1rem */
+  font-size: 1rem;
 }
 
 .contact-item a {
@@ -161,7 +162,7 @@
 /* Responsive */
 @media screen and (max-width: 567px) {
   .testimonial-card {
-    padding: 1.5rem 1.25rem; /* Reducido de 2rem 1.5rem */
+    padding: 1.5rem 1.25rem;
   }
   
   .testimonial-logo {
@@ -170,36 +171,36 @@
   }
   
   .testimonial-title {
-    font-size: 1.1rem; /* Reducido de 1.2rem */
+    font-size: 1.1rem;
   }
   
   .quote-text {
-    font-size: 0.95rem; /* Reducido de 1rem */
+    font-size: 0.95rem;
     padding: 0 0.5rem;
   }
   
   .quote-icon {
-    font-size: 1.25rem; /* Reducido de 1.5rem */
+    font-size: 1.25rem;
   }
   
   .author-name {
-    font-size: 0.95rem; /* Reducido de 1rem */
+    font-size: 0.95rem;
   }
   
   .author-title,
   .author-date,
   .contact-item {
-    font-size: 0.8rem; /* Reducido de 0.85rem */
+    font-size: 0.8rem;
   }
 }
 
 @media screen and (max-width: 350px) {
   .testimonial-card {
-    padding: 1.25rem 1rem; /* Reducido de 1.5rem 1rem */
+    padding: 1.25rem 1rem;
   }
   
   .quote-text {
-    font-size: 0.85rem; /* Reducido de 0.9rem */
+    font-size: 0.85rem;
   }
 }
 </style>
