@@ -63,12 +63,11 @@
 }
 
 .testimonial-logo {
-  width: 150px;
-  height: 100px;
-  object-fit: contain;
-  border-radius: 6px;
+  width: 150px;       /* Mantenemos el ancho deseado */
+  height: auto;       /* IMPORTANTE: Esto elimina el espacio vacío vertical */
+  border-radius: 6px; /* El radio de 5px que pediste */
+  display: block;     /* Para evitar márgenes fantasma */
 }
-
 .testimonial-title {
   font-size: 1.25rem;
   font-weight: var(--font-semi-bold);
@@ -167,7 +166,7 @@
   
   .testimonial-logo {
     width: 100px;
-    height: 70px;
+    height: auto; /* Cambiar de 70px a auto para mantener la proporción */
   }
   
   .testimonial-title {

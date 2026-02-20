@@ -77,7 +77,6 @@
 
     <!-- Contador de resultados (solo si hay filtros activos) -->
     <p
-      v-if="searchQuery || activeTag !== 'Todos'"
       class="portfolio-filters__results-count"
     >
       <span class="portfolio-filters__results-number">{{ resultsCount }}</span>
@@ -186,7 +185,11 @@ export default {
       this.listboxOpen = false;
     },
     selectTag(tag) {
-      this.activeTag = tag;
+      if (tag !== 'Todos' && this.activeTag === tag) {
+        this.activeTag = 'Todos';
+      } else {
+        this.activeTag = tag;
+      }
     },
     handleOutsideClick(e) {
       if (this.$refs.listboxWrapper && !this.$refs.listboxWrapper.contains(e.target)) {
@@ -431,7 +434,7 @@ export default {
 /* ── Contador de resultados ──────────────────────── */
 .portfolio-filters__results-count {
   font-size: var(--small-font-size);
-  color: var(--text-color-darker);
+  color: var(--subtitle-color);
   margin: 0;
 }
 
@@ -478,6 +481,22 @@ export default {
   .portfolio-filters__listbox-btn {
     width: 100%;
     justify-content: center;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .portfolio-filters__tag-chip:focus:not(:focus-visible) {
+    outline: none;
+    border-color: var(--scroll-bar-color);
+    color: var(--text-color);
+    background-color: var(--container-color);
+  }
+
+  .portfolio-filters__tag-chip.is-active:focus:not(:focus-visible) {
+    border-color: transparent;
+    color: #fff;
+    background-color: var(--first-color);
   }
 }
 </style>

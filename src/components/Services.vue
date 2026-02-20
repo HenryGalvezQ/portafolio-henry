@@ -187,6 +187,10 @@ export default {
   padding-top: 1rem;
 }
 
+.section__subtitle {
+  color: var(--subtitle-color);
+}
+
 .services__content {
   background-color: var(--container-color);
   padding: 1.5rem;
@@ -240,7 +244,8 @@ export default {
 
 .services__subtitle {
   font-size: var(--small-font-size);
-  color: var(--text-color-light);
+  color: var(--subtitle-color);
+
 }
 
 .services__arrow {

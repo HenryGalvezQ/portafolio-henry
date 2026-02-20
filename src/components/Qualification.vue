@@ -26,8 +26,9 @@
       <div class="qualification__sections">
         <div class="qualification__content" :class="{ 'show-active-education': activeTab === 'education', 'show-active-work': activeTab === 'work' }">
           
-          <div class="qualification__data qualification__data-education" @click="openModal('unsa')">
-            <div class="qualification__item-content">
+          <!-- UNSA -->
+          <div class="qualification__data qualification__data-education">
+            <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('unsa')">
               <img src="@/assets/img/logo-unsa.png" alt="Logo UNSA" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">Ingeniería de Sistemas (Egresado)</h3>
@@ -44,27 +45,31 @@
             </div>
           </div>
 
-          <div class="qualification__data qualification__data-work" @click="openModal('symmetry')">
+          <!-- Symmetry -->
+          <div class="qualification__data qualification__data-work">
             <div></div>
             <div>
               <span class="qualification__rounder"></span>
               <span class="qualification__line"></span>
             </div>
-            <div class="qualification__item-content qualification__item-content--right">
-              <div class="qualification__text-content">
-                <h3 class="qualification__title">Frontend Developer (Freelance)</h3>
-                <span class="qualification__subtitle">Symmetry Club LLC • Fitness App</span>
-                <div class="qualification__calendar">
-                  <i class="uil uil-calendar-alt"></i>
-                  Diciembre 2025
+            <div class="qualification__col-right">
+              <div class="qualification__item-content qualification__item-content--right qualification__item-content--clickable" @click="openModal('symmetry')">
+                <div class="qualification__text-content">
+                  <h3 class="qualification__title">Frontend Developer (Freelance)</h3>
+                  <span class="qualification__subtitle">Symmetry Club LLC • Fitness App</span>
+                  <div class="qualification__calendar">
+                    <i class="uil uil-calendar-alt"></i>
+                    Diciembre 2025
+                  </div>
                 </div>
+                <img src="@/assets/img/symmetry_logo2.png" alt="Logo Symmetry" class="qualification__logo qualification__logo--rounded">
               </div>
-              <img src="@/assets/img/symmetry_logo2.png" alt="Logo Symmetry" class="qualification__logo qualification__logo--rounded">
             </div>
           </div>
 
-          <div class="qualification__data qualification__data-education" @click="openModal('ingles')">
-            <div class="qualification__item-content">
+          <!-- Inglés -->
+          <div class="qualification__data qualification__data-education">
+            <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('ingles')">
               <img src="@/assets/img/logo_idiomas.png" alt="Logo UNSA" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">Idioma Inglés Intermedio</h3>
@@ -81,27 +86,31 @@
             </div>
           </div>
 
-          <div class="qualification__data qualification__data-work" @click="openModal('innovaciencia')">
+          <!-- Innovaciencia -->
+          <div class="qualification__data qualification__data-work">
             <div></div>
             <div>
               <span class="qualification__rounder"></span>
               <span class="qualification__line"></span>
             </div>
-            <div class="qualification__item-content qualification__item-content--right">
-              <div class="qualification__text-content">
-                <h3 class="qualification__title">Frontend Developer (Prácticas pre-profesionales)</h3>
-                <span class="qualification__subtitle">Innovaciencia Peru</span>
-                <div class="qualification__calendar">
-                  <i class="uil uil-calendar-alt"></i>
-                  Abril 2025 - Noviembre 2025
+            <div class="qualification__col-right">
+              <div class="qualification__item-content qualification__item-content--right qualification__item-content--clickable" @click="openModal('innovaciencia')">
+                <div class="qualification__text-content">
+                  <h3 class="qualification__title">Frontend Developer (Prácticas pre-profesionales)</h3>
+                  <span class="qualification__subtitle">Innovaciencia Peru</span>
+                  <div class="qualification__calendar">
+                    <i class="uil uil-calendar-alt"></i>
+                    Abril 2025 - Noviembre 2025
+                  </div>
                 </div>
+                <img src="@/assets/img/logo_innovaciencia.png" alt="Logo Innovaciencia" class="qualification__logo qualification__logo--bg">
               </div>
-              <img src="@/assets/img/logo_innovaciencia.png" alt="Logo Innovaciencia" class="qualification__logo qualification__logo--bg">
             </div>
           </div>
 
-          <div class="qualification__data qualification__data-education" @click="openModal('cisco')">
-            <div class="qualification__item-content">
+          <!-- Cisco -->
+          <div class="qualification__data qualification__data-education">
+            <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('cisco')">
               <img src="@/assets/img/logo-cisco-net-academy.png" alt="Logo Cisco" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">Ciberseguridad</h3>
@@ -118,27 +127,31 @@
             </div>
           </div>
 
-          <div class="qualification__data qualification__data-work" @click="openModal('municipalidad')">
+          <!-- Municipalidad -->
+          <div class="qualification__data qualification__data-work">
             <div></div>
             <div>
               <span class="qualification__rounder"></span>
               <span class="qualification__line"></span>
             </div>
-            <div class="qualification__item-content qualification__item-content--right">
-              <div class="qualification__text-content">
-                <h3 class="qualification__title">Soporte Informática (Prácticas pre-profesionales)</h3>
-                <span class="qualification__subtitle">Municipalidad Distrital de La Joya</span>
-                <div class="qualification__calendar">
-                  <i class="uil uil-calendar-alt"></i>
-                  Enero 2025 - Marzo 2025
+            <div class="qualification__col-right">
+              <div class="qualification__item-content qualification__item-content--right qualification__item-content--clickable" @click="openModal('municipalidad')">
+                <div class="qualification__text-content">
+                  <h3 class="qualification__title">Soporte Informática (Prácticas pre-profesionales)</h3>
+                  <span class="qualification__subtitle">Municipalidad Distrital de La Joya</span>
+                  <div class="qualification__calendar">
+                    <i class="uil uil-calendar-alt"></i>
+                    Enero 2025 - Marzo 2025
+                  </div>
                 </div>
+                <img src="@/assets/img/logo-muni.png" alt="Logo Municipalidad" class="qualification__logo">
               </div>
-              <img src="@/assets/img/logo-muni.png" alt="Logo Municipalidad" class="qualification__logo">
             </div>
           </div>
 
-          <div class="qualification__data qualification__data-education" @click="openModal('coderhouse')">
-            <div class="qualification__item-content">
+          <!-- Coderhouse -->
+          <div class="qualification__data qualification__data-education">
+            <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('coderhouse')">
               <img src="@/assets/img/logo-coderhouse.png" alt="Logo Coderhouse" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">Carrera UX/UI</h3>
@@ -155,26 +168,31 @@
             </div>
           </div>
 
-          <div class="qualification__data qualification__data-work" @click="openModal('support')">
+          <!-- Soporte TI (sin modal) -->
+          <div class="qualification__data qualification__data-work">
             <div></div>
             <div>
               <span class="qualification__rounder"></span>
               <span class="qualification__line"></span>
             </div>
-            <div class="qualification__item-content qualification__item-content--right">
-              <div class="qualification__text-content">
-                <h3 class="qualification__title">Soporte TI</h3>
-                <span class="qualification__subtitle">Particulares</span>
-                <div class="qualification__calendar">
-                  <i class="uil uil-calendar-alt"></i>
-                  Enero 2022 - Diciembre 2024
+            <div class="qualification__col-right">
+              <div class="qualification__item-content qualification__item-content--right">
+                <div class="qualification__text-content">
+                  <h3 class="qualification__title">Soporte TI</h3>
+                  <span class="qualification__subtitle">Particulares</span>
+                  <div class="qualification__calendar">
+                    <i class="uil uil-calendar-alt"></i>
+                    Enero 2022 - Diciembre 2024
+                  </div>
                 </div>
+                <div class="qualification__logo-placeholder"></div>
               </div>
-              </div>
+            </div>
           </div>
 
-          <div class="qualification__data qualification__data-education" @click="openModal('oracle')">
-            <div class="qualification__item-content">
+          <!-- Oracle -->
+          <div class="qualification__data qualification__data-education">
+            <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('oracle')">
               <img src="@/assets/img/logo-oracle.png" alt="Logo Oracle" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">Oracle Cloud APEX Developer</h3>
@@ -187,7 +205,7 @@
             </div>
             <div>
               <span class="qualification__rounder"></span>
-              </div>
+            </div>
           </div>
     
         </div>
@@ -280,6 +298,7 @@ const closeModal = () => {
 .section__subtitle {
   color: var(--subtitle-color);
 }
+
 .qualification__tabs {
   display: flex;
   justify-content: center;
@@ -317,19 +336,48 @@ const closeModal = () => {
   grid-template-columns: 1fr max-content 1fr;
   column-gap: 1.5rem;
   transition: transform 0.4s ease;
-  cursor: pointer;
 }
 
+/* Columna izquierda: fit-content limita el área interactiva */
 .qualification__item-content {
   display: flex;
   align-items: center;
   gap: 1rem;
+  width: fit-content;
 }
 
+/* Wrapper columna derecha */
+.qualification__col-right {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Contenido derecho: ocupa todo el 1fr, logo pegado a la derecha */
 .qualification__item-content--right {
   display: flex;
   align-items: center;
   gap: 1rem;
+  pointer-events: auto;
+  width: 100%;
+}
+
+.qualification__item-content--right .qualification__logo,
+.qualification__item-content--right .qualification__logo-placeholder {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Hover en rounder y line al hacer hover sobre el item clickable */
+.qualification__data:has(.qualification__item-content--clickable:hover) {
+  transform: scale(1.08);
+  position: relative;
+  z-index: 5;
+}
+
+/* Solo los item-content con @click tienen cursor pointer */
+.qualification__item-content--clickable {
+  cursor: pointer;
 }
 
 .qualification__logo {
@@ -370,8 +418,20 @@ const closeModal = () => {
   background-color: var(--first-color);
   transform: translate(6px, -7px);
 }
+
 .qualification__logo--rounded {
-  border-radius: 5px;
+  border-radius: 6px;
+}
+
+.qualification__item-content--right .qualification__text-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.qualification__logo-placeholder {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
 }
 
 /* ==================== LÓGICA DEL EFECTO DE ESCALADO ==================== */
@@ -391,8 +451,28 @@ const closeModal = () => {
   transform: scale(0.95);
 }
 
-.qualification__content .qualification__data:hover {
-  transform: scale(1.08);
+/* Hover con mayor especificidad para ganar siempre a las reglas de escalado */
+
+/* Educación activa: education hover +25% más, work hover +25% menos */
+.qualification__content.show-active-education .qualification__data-education:has(.qualification__item-content--clickable:hover) {
+  transform: scale(1.12);
+  position: relative;
+  z-index: 5;
+}
+.qualification__content.show-active-education .qualification__data-work:has(.qualification__item-content--clickable:hover) {
+  transform: scale(1.06);
+  position: relative;
+  z-index: 5;
+}
+
+/* Laboral activa: work hover +25% más, education hover +25% menos */
+.qualification__content.show-active-work .qualification__data-work:has(.qualification__item-content--clickable:hover) {
+  transform: scale(1.12);
+  position: relative;
+  z-index: 5;
+}
+.qualification__content.show-active-work .qualification__data-education:has(.qualification__item-content--clickable:hover) {
+  transform: scale(1.06);
   position: relative;
   z-index: 5;
 }
@@ -403,6 +483,10 @@ const closeModal = () => {
     column-gap: 0.5rem;
   }
   .qualification__logo {
+    width: 25px;
+    height: 25px;
+  }
+  .qualification__logo-placeholder {
     width: 25px;
     height: 25px;
   }
@@ -425,6 +509,10 @@ const closeModal = () => {
     column-gap: 0.75rem;
   }
   .qualification__logo {
+    width: 30px;
+    height: 30px;
+  }
+  .qualification__logo-placeholder {
     width: 30px;
     height: 30px;
   }
@@ -466,6 +554,7 @@ const closeModal = () => {
     grid-template-columns: 1fr;
   }
   .qualification__logo { width: 85px; height: 85px; }
+  .qualification__logo-placeholder { width: 85px; height: 85px; }
   .qualification.section { padding: 7rem 0 1rem; }
 
   .qualification__container {

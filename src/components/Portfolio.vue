@@ -79,6 +79,11 @@ export default {
 </script>
 
 <style scoped>
+
+.section__subtitle {
+  color: var(--subtitle-color);
+}
+
 /* ── Filtros ─────────────────────────────────────── */
 .portfolio__filters-wrapper {
   /* Hereda los márgenes laterales del .container de global.css,
