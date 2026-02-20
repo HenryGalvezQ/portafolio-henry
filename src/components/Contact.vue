@@ -289,7 +289,9 @@ const openWhatsApp = () => {
 
 <style scoped>
 /* ==================== CONTACT ME ==================== */
-/* ==================== CONTACT ME ==================== */
+.section__subtitle {
+  color: var(--subtitle-color);
+}
 .contact {
   padding-bottom: 4.5rem;
 }
@@ -317,7 +319,7 @@ const openWhatsApp = () => {
 
 .contact__subtitle {
   font-size: var(--small-font-size);
-  color: var(--text-color-darker);
+    color: var(--subtitle-color);
 }
 
 .contact__content {

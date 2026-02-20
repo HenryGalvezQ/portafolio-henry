@@ -421,6 +421,28 @@ body.dark-theme .portfolio-expanded__close:hover {
   color: #8b5cf6 !important;
 }
 
+/* ==================== CONTACT FORM DARK MODE ==================== */
+/* Agrega esto en global.css, junto a los otros bloques de dark-theme */
+
+body.dark-theme .contact__content {
+  background-color: hsl(var(--hue-color), 29%, 18%);
+  box-shadow: 0 2px 4px rgba(0,0,0,.15), 0 0 0 1px hsl(var(--hue-color), 40%, 32%);
+}
+
+body.dark-theme .contact__input {
+  background-color: hsl(var(--hue-color), 29%, 18%);
+  color: hsl(var(--hue-color), 8%, 92%);
+}
+
+body.dark-theme .contact__input::placeholder {
+  color: hsl(var(--hue-color), 8%, 55%);
+  opacity: 1;
+}
+
+body.dark-theme .contact__label {
+  color: hsl(var(--hue-color), 30%, 85%);
+}
+
 /*==================== GLOBAL COMPONENT STYLES ====================*/
 .scroll-header {
   box-shadow: 0 -1px 4px rgba(0, 0, 0, .15);
