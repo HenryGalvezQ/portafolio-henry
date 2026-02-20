@@ -443,6 +443,12 @@ body.dark-theme .contact__label {
   color: hsl(var(--hue-color), 30%, 85%);
 }
 
+/* ==================== FOOTER DARK MODE HOVER ==================== */
+body.dark-theme .footer__social:hover,
+body.dark-theme .footer__link:hover {
+  color: var(--first-color); /* Tu morado intenso original */
+}
+
 /*==================== GLOBAL COMPONENT STYLES ====================*/
 .scroll-header {
   box-shadow: 0 -1px 4px rgba(0, 0, 0, .15);

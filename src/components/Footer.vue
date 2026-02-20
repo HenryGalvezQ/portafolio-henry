@@ -80,21 +80,30 @@ export default {
 
 .footer__link:hover {
   color: var(--first-color-lighter);
+  transform: scale(1.03); /* Zoom del 10% */
+}
+
+.footer__link {
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .footer__social {
   font-size: 1.25rem;
   margin-right: var(--mb-1-5);
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .footer__social:hover {
   color: var(--first-color-lighter);
+  transform: scale(1.10); /* Zoom un poquito mayor para los íconos (opcional) */
 }
 
 .footer__copy {
   font-size: var(--smaller-font-size);
   text-align: center;
-  color: var(--text-color-light);
+  color: #e0e0e0;
   margin-top: var(--mb-1-5); /* Reducido de var(--mb-2) */
 }
 

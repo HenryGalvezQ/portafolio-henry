@@ -237,7 +237,7 @@ onUnmounted(() => {
   right: 1rem;
   bottom: -20%;
   background-color: var(--first-color);
-  opacity: .8;
+  opacity: .92;
   padding: 0 .3rem;
   border-radius: .4rem;
   z-index: var(--z-tooltip);
