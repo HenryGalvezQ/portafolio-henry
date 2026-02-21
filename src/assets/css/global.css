@@ -91,7 +91,7 @@ body.dark-theme {
   --border-color: hsl(var(--hue-color), 30%, 30%);
   --text-color-solid: hsl(var(--hue-color), 8%, 95%);
   --subtitle-color: hsl(var(--hue-color), 8%, 85%);
-  --icon-color-social: #d3d3d3;
+  --icon-color-social: #e6e6e6;
   --first-color-2: hsl(var(--hue-color), 40%, 60%);
   --contact-input-color: hsl(var(--hue-color), 29%, 18%);
 
@@ -248,7 +248,7 @@ img {
   padding: 1rem;
   border-radius: .5rem;
   font-weight: var(--font-medium);
-  transition: .3s;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   /* Colores Base */
   background-color: #fff;
   color: var(--first-color);            
@@ -258,7 +258,7 @@ img {
 /* El icono siempre es morado por defecto */
 .button--outline .button__icon {
   color: var(--first-color);
-  transition: .3s;
+  transition: color 0.15s ease;
 }
 
 /* 2. MODO OSCURO (Overrides) */
@@ -267,8 +267,12 @@ body.dark-theme .button--outline {
   background-color: transparent;
   color: #fff; 
   /* El borde y el icono ya son morados por la regla base, no hay que repetirlos */
+  transition: background-color 0s, color 0s, border-color 0s, transform 0.3s ease, box-shadow 0.3s ease;
 }
+body.dark-theme .button--outline:hover {
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.3s ease, box-shadow 0.3s ease;
 
+}
 /* 3. HOVER (Unificado) */
 /* El selector 'body' al inicio le da fuerza para funcionar en ambos modos */
 body .button--outline:hover {

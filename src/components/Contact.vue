@@ -344,6 +344,13 @@ const openWhatsApp = () => {
   animation: shake 0.5s;
 }
 
+/* AGREGAR */
+.button--whatsapp:hover,
+.button--whatsapp:focus,
+.button--whatsapp:active {
+  background-color: #25D366 !important;
+}
+
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }

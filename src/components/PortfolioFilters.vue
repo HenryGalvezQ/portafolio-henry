@@ -251,7 +251,7 @@ export default {
   color: var(--text-color);
   font-size: var(--normal-font-size);
   font-family: var(--body-font);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
   box-sizing: border-box;
 }
 
@@ -306,7 +306,7 @@ export default {
   font-weight: var(--font-medium);
   cursor: pointer;
   white-space: nowrap;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
 
 .portfolio-filters__listbox-btn:hover,
@@ -413,7 +413,7 @@ export default {
   font-family: var(--body-font);
   font-weight: var(--font-medium);
   cursor: pointer;
-  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  transition: color 0.25s ease, box-shadow 0.25s ease;
   white-space: nowrap;
   line-height: 1.4;
 }

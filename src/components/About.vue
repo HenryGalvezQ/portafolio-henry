@@ -27,11 +27,11 @@
         </div>
 
         <div class="about__buttons">
-          <a href="/cv-henry-galvez.pdf" target="_blank" rel="noopener noreferrer" class="button button--flex">
+          <a href="/cv-henry-galvez.pdf" target="_blank" rel="noopener noreferrer" class="button button--flex button--animated">
             Ver CV<i class="uil uil-eye button__icon"></i>
           </a>
           
-          <a href="/cv-henry-galvez.pdf" download="CV_Henry_Galvez.pdf" class="button button--flex button--outline">
+          <a href="/cv-henry-galvez.pdf" download="CV_Henry_Galvez.pdf" class="button button--flex button--outline button--animated">
             Descargar CV<i class="uil uil-download-alt button__icon"></i>
           </a>
         </div>

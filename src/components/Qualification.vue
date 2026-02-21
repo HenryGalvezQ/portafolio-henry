@@ -9,14 +9,16 @@
       <div class="qualification__tabs">
         <div 
           class="qualification__button button--flex" 
-          @click="setActiveTab('education')"
+          @click="setActiveTab('education', $event)"
+          @touchend="handleTabTouch('education', $event)"
           :class="{ 'qualification__active': activeTab === 'education' }">
           <i class="uil uil-graduation-cap qualification__icon"></i>
           Educación
         </div>
         <div 
           class="qualification__button button--flex" 
-          @click="setActiveTab('work')"
+          @click="setActiveTab('work', $event)"
+          @touchend="handleTabTouch('work', $event)"
           :class="{ 'qualification__active': activeTab === 'work' }">
           <i class="uil uil-briefcase-alt qualification__icon"></i>
           Laboral
@@ -278,10 +280,40 @@ const isModalVertical = computed(() => {
 });
 
 // --- Métodos ---
-const setActiveTab = (tabName) => {
-  activeTab.value = tabName;
+const setActiveTab = (tabName, event) => {
+  if (activeTab.value === tabName) {
+    activeTab.value = activeTab.value === 'education' ? 'work' : 'education';
+  } else {
+    activeTab.value = tabName;
+  }
+  event.currentTarget.blur();
 };
 
+const handleTabTouch = (tabName, event) => {
+  event.preventDefault();
+  setActiveTab(tabName, event);
+  
+  const el = event.currentTarget;
+  // Capturamos el valor YA actualizado por setActiveTab
+  const resultingTab = activeTab.value;
+  
+  setTimeout(() => {
+    // El botón tocado: es activo si el tab resultante es él mismo
+    el.style.color = resultingTab === tabName 
+      ? 'var(--first-color)' 
+      : 'var(--subtitle-color)';
+    
+    // El otro botón también necesita actualizarse
+    const allBtns = document.querySelectorAll('.qualification__button');
+    allBtns.forEach(btn => {
+      const isEducation = btn.textContent.includes('Educación');
+      const btnTab = isEducation ? 'education' : 'work';
+      btn.style.color = resultingTab === btnTab 
+        ? 'var(--first-color)' 
+        : 'var(--subtitle-color)';
+    });
+  }, 50);
+};
 const openModal = (modalId) => {
   if (modalId === 'symmetry' || (modalData[modalId] && modalData[modalId].length > 0)) {
     activeModalId.value = modalId;
@@ -310,7 +342,7 @@ const closeModal = () => {
   font-size: var(--h3-font-size);
   font-weight: var(--font-medium);
   cursor: pointer;
-  transition: .3s;
+  transition: color 0.15s ease;
   color: var(--subtitle-color);
 }
 
@@ -561,4 +593,5 @@ const closeModal = () => {
     max-width: 823px;
   }
 }
+
 </style>

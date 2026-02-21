@@ -1,3 +1,5 @@
+// App.vue
+
 <template>
   <Header 
     :active-section="activeSection" 
@@ -108,11 +110,13 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 if (isTouchDevice) {
   document.addEventListener('touchend', (e) => {
-    const btn = e.target.closest('.button, .home__social-icon, .portfolio__expand-button');
+    const btn = e.target.closest('.button, .home__social-icon, .portfolio__expand-button, .footer__social, .footer__link');
     if (!btn) return;
 
     // Excluir solo los botones dentro de contact__buttons — en Android vuelven solos
     if (btn.closest('.contact__buttons')) return;
+    if (btn.closest('.qualification__tabs')) return;
+
 
     setTimeout(() => {
       const parent = btn.parentNode;

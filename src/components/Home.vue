@@ -119,7 +119,7 @@
   padding: 0.6rem;
   border-radius: 0.5rem;
   background-color: transparent;
-  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: padding 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   position: relative;
   overflow: hidden;
   width: fit-content;
