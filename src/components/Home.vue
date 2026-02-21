@@ -49,16 +49,15 @@
             </svg>
           </div>
           <div class="home__data">
-            <h1 class="home__title">Hi, I'm Henry Galvez</h1>
+            <h1 class="home__title">{{ t('title') }}</h1>
             <h3 class="home__subtitle">
-              <span>Ingeniero de Sistemas</span><br>
-              <span>Frontend/Mobile Developer</span><br>
-              <span>UX/UI Designer</span>
+              <span>{{ t('subtitle1') }}</span><br>
+              <span>{{ t('subtitle2') }}</span><br>
+              <span>{{ t('subtitle3') }}</span>
             </h3>
-            <p class="home__discription">Experiencia de alto nivel en diseño y desarrollo web, produciendo
-              trabajos de calidad.</p>
+            <p class="home__discription">{{ t('description') }}</p>
             <a href="#contact" class="button button--flex button--animated">
-              Contacto<i class="uil uil-message button__icon"></i>
+              {{ t('contact') }}<i class="uil uil-message button__icon"></i>
             </a>
           </div>
         </div>
@@ -67,13 +66,18 @@
       <div class="home__scroll">
         <a href="#about" class="home__scroll-button button--flex">
           <i class="uil uil-mouse-alt home__scroll-mouse"></i>
-          <span class="home__scroll-name">Scroll a CV</span>
+          <span class="home__scroll-name">{{ t('scroll') }}</span>
           <i class="uil uil-arrow-down"></i>
         </a>
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+</script>
 
 <style scoped>
 .home__container {
@@ -522,3 +526,26 @@
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "title": "Hi, I'm Henry Galvez",
+    "subtitle1": "Ingeniero de Sistemas",
+    "subtitle2": "Frontend/Mobile Developer",
+    "subtitle3": "UX/UI Designer",
+    "description": "Experiencia de alto nivel en diseño y desarrollo web, produciendo trabajos de calidad.",
+    "contact": "Contacto",
+    "scroll": "Scroll a CV"
+  },
+  "en": {
+    "title": "Hi, I'm Henry Galvez",
+    "subtitle1": "Systems Engineer",
+    "subtitle2": "Frontend/Mobile Developer",
+    "subtitle3": "UX/UI Designer",
+    "description": "High level experience in web design and development, producing quality work.",
+    "contact": "Contact",
+    "scroll": "Scroll to CV"
+  }
+}
+</i18n>

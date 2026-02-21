@@ -1,38 +1,38 @@
 <template>
   <section class="about section" id="about">
-    <h2 class="section__title">Acerca de mí</h2>
-    <span class="section__subtitle">Mi introducción</span>
+    <h2 class="section__title">{{ t('title') }}</h2>
+    <span class="section__subtitle">{{ t('subtitle') }}</span>
 
     <div class="about__container container grid">
       <img src="@/assets/img/about.jpg" alt="about" class="about__img">
       
       <div class="about__data">
         <p class="about__description">
-          Ingeniero de Sistemas especializado en desarrollo Frontend y Mobile, con enfoque en diseño UX/UI. Creo interfaces escalables, accesibles y centradas en el usuario utilizando arquitecturas modernas y mejores prácticas de desarrollo.
+          {{ t('description') }}
         </p>
         
         <div class="about__info">
           <div>
             <span class="about__info-title">02+</span>
-            <span class="about__info-name">Años <br> de experiencia</span>
+            <span class="about__info-name">{{ t('info.years') }}</span>
           </div>
           <div>
             <span class="about__info-title">10+</span>
-            <span class="about__info-name">Proyectos <br> completados</span>
+            <span class="about__info-name">{{ t('info.projects') }}</span>
           </div>
           <div>
             <span class="about__info-title">05+</span>
-            <span class="about__info-name">Certificados <br> obtenidos</span>
+            <span class="about__info-name">{{ t('info.certificates') }}</span>
           </div>
         </div>
 
         <div class="about__buttons">
-          <a href="/cv-henry-galvez.pdf" target="_blank" rel="noopener noreferrer" class="button button--flex button--animated">
-            Ver CV<i class="uil uil-eye button__icon"></i>
+          <a :href="locale === 'en' ? '/cv-henry-galvez-en.pdf' : '/cv-henry-galvez.pdf'" target="_blank" rel="noopener noreferrer" class="button button--flex button--animated">
+            {{ t('buttons.view') }}<i class="uil uil-eye button__icon"></i>
           </a>
           
-          <a href="/cv-henry-galvez.pdf" download="CV_Henry_Galvez.pdf" class="button button--flex button--outline button--animated">
-            Descargar CV<i class="uil uil-download-alt button__icon"></i>
+          <a :href="locale === 'en' ? '/cv-henry-galvez-en.pdf' : '/cv-henry-galvez.pdf'" :download="locale === 'en' ? 'CV_Henry_Galvez_EN.pdf' : 'CV_Henry_Galvez.pdf'" class="button button--flex button--outline button--animated">
+            {{ t('buttons.download') }}<i class="uil uil-download-alt button__icon"></i>
           </a>
         </div>
       </div>
@@ -40,7 +40,7 @@
       <div class="about__scroll">
         <a href="#portfolio" class="about__scroll-button button--flex" @click="scrollToPortfolio">
           <i class="uil uil-mouse-alt about__scroll-mouse"></i>
-          <span class="about__scroll-name">Ir a Portafolio</span>
+          <span class="about__scroll-name">{{ t('scroll') }}</span>
           <i class="uil uil-arrow-down"></i>
         </a>
       </div>
@@ -49,8 +49,15 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n'
+
 export default {
   name: 'About',
+  setup() {
+    const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+    const { locale } = useI18n({ useScope: 'global' })
+    return { t, locale }
+  },
   methods: {
     scrollToPortfolio(event) {
       event.preventDefault(); // Prevenir el scroll por defecto
@@ -237,3 +244,38 @@ export default {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "title": "Acerca de mí",
+    "subtitle": "Mi introducción",
+    "description": "Ingeniero de Sistemas especializado en desarrollo Frontend y Mobile, con enfoque en diseño UX/UI. Creo interfaces escalables, accesibles y centradas en el usuario utilizando arquitecturas modernas y mejores prácticas de desarrollo.",
+    "info": {
+      "years": "Años \n de experiencia",
+      "projects": "Proyectos \n completados",
+      "certificates": "Certificados \n obtenidos"
+    },
+    "buttons": {
+      "view": "Ver CV",
+      "download": "Descargar CV"
+    },
+    "scroll": "Ir a Portafolio"
+  },
+  "en": {
+    "title": "About Me",
+    "subtitle": "My introduction",
+    "description": "Systems Engineer specialized in Frontend and Mobile development, with a focus on UX/UI design. I build scalable, accessible, and user-centered interfaces using modern architectures and development best practices.",
+    "info": {
+      "years": "Years \n of experience",
+      "projects": "Projects \n completed",
+      "certificates": "Certificates \n obtained"
+    },
+    "buttons": {
+      "view": "View CV",
+      "download": "Download CV"
+    },
+    "scroll": "Go to Portfolio"
+  }
+}
+</i18n>

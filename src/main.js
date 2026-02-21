@@ -1,13 +1,18 @@
-// main.js
 import { createApp } from 'vue'
+import { createI18n } from 'vue-i18n'
 import App from './App.vue'
 
-// IMPORTA LOS ESTILOS DE SWIPER
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import '@iconscout/unicons/css/line.css'
+import './assets/css/global.css'
 
-import './assets/css/global.css' // Tu archivo global
+const i18n = createI18n({
+  legacy: false,
+  locale: 'es',
+  fallbackLocale: 'en',
+  messages: { es: {}, en: {} }
+})
 
-createApp(App).mount('#app')
+createApp(App).use(i18n).mount('#app')

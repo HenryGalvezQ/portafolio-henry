@@ -12,9 +12,11 @@
     "@emailjs/browser": "^4.4.1",
     "@iconscout/unicons": "^4.2.0",
     "swiper": "^11.2.10",
-    "vue": "^3.5.18"
+    "vue": "^3.5.18",
+    "vue-i18n": "^11.2.8"
   },
   "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^11.0.7",
     "@vitejs/plugin-vue": "^6.0.1",
     "vite": "^7.1.0"
   }

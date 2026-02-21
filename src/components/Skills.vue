@@ -2,8 +2,8 @@
 
 <template>
   <section class="skills section" id="skills">
-    <h2 class="section__title">Habilidades</h2>
-    <span class="section__subtitle">Mi Nivel Técnico</span>
+    <h2 class="section__title">{{ t('title') }}</h2>
+    <span class="section__subtitle">{{ t('subtitle') }}</span>
     
     <div class="skills__container container grid">
       
@@ -11,8 +11,8 @@
         <div class="skills__header" @click="toggleSkill('frontend')">
           <i class="uil uil-brackets-curly skills__icon"></i>
           <div>
-            <h1 class="skills__title">Frontend Development</h1>
-            <span class="skills__subtitle">Mi especialidad principal</span>
+            <h1 class="skills__title">{{ t('frontend.title') }}</h1>
+            <span class="skills__subtitle">{{ t('frontend.subtitle') }}</span>
           </div>
           <i class="uil uil-angle-down skills__arrow"></i>
         </div>
@@ -29,8 +29,8 @@
         <div class="skills__header" @click="toggleSkill('mobile')">
           <i class="uil uil-mobile-android skills__icon"></i>
           <div>
-            <h1 class="skills__title">Desarrollo Móvil</h1>
-            <span class="skills__subtitle">Aplicaciones Nativas & Híbridas</span>
+            <h1 class="skills__title">{{ t('mobile.title') }}</h1>
+            <span class="skills__subtitle">{{ t('mobile.subtitle') }}</span>
           </div>
           <i class="uil uil-angle-down skills__arrow"></i>
         </div>
@@ -47,8 +47,8 @@
         <div class="skills__header" @click="toggleSkill('backend')">
           <i class="uil uil-database skills__icon"></i>
           <div>
-            <h1 class="skills__title">Backend y Bases de Datos</h1>
-            <span class="skills__subtitle">Lógica de servidor y datos</span>
+            <h1 class="skills__title">{{ t('backend.title') }}</h1>
+            <span class="skills__subtitle">{{ t('backend.subtitle') }}</span>
           </div>
           <i class="uil uil-angle-down skills__arrow"></i>
         </div>
@@ -65,8 +65,8 @@
         <div class="skills__header" @click="toggleSkill('devops')">
           <i class="uil uil-server-network skills__icon"></i>
           <div>
-            <h1 class="skills__title">Programación y DevOps</h1>
-            <span class="skills__subtitle">Lenguajes y Arquitectura</span>
+            <h1 class="skills__title">{{ t('devops.title') }}</h1>
+            <span class="skills__subtitle">{{ t('devops.subtitle') }}</span>
           </div>
           <i class="uil uil-angle-down skills__arrow"></i>
         </div>
@@ -86,10 +86,15 @@
 <script>
 
 import SvgIcon from './SvgIcon.vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'Skills',
   components: { SvgIcon },
+  setup() {
+    const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+    return { t }
+  },
   data() {
     return {
       frontendSkills: [
@@ -329,3 +334,48 @@ export default {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "title": "Habilidades",
+    "subtitle": "Mi Nivel Técnico",
+    "frontend": {
+      "title": "Frontend Development",
+      "subtitle": "Mi especialidad principal"
+    },
+    "mobile": {
+      "title": "Desarrollo Móvil",
+      "subtitle": "Aplicaciones Nativas & Híbridas"
+    },
+    "backend": {
+      "title": "Backend y Bases de Datos",
+      "subtitle": "Lógica de servidor y datos"
+    },
+    "devops": {
+      "title": "Programación y DevOps",
+      "subtitle": "Lenguajes y Arquitectura"
+    }
+  },
+  "en": {
+    "title": "Skills",
+    "subtitle": "My Technical Level",
+    "frontend": {
+      "title": "Frontend Development",
+      "subtitle": "My main specialty"
+    },
+    "mobile": {
+      "title": "Mobile Development",
+      "subtitle": "Native & Hybrid Applications"
+    },
+    "backend": {
+      "title": "Backend & Databases",
+      "subtitle": "Server logic and data"
+    },
+    "devops": {
+      "title": "Programming & DevOps",
+      "subtitle": "Languages and Architecture"
+    }
+  }
+}
+</i18n>

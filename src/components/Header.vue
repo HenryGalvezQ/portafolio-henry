@@ -1,3 +1,5 @@
+// Header.vue
+
 <template>
   <header class="header" id="header" :class="{ 'scroll-header': isScrolled }">
     <nav class="nav container">
@@ -6,37 +8,37 @@
         <ul class="nav__list grid">
           <li class="nav__item">
             <a href="#home" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'home' }">
-              <i class="uil uil-estate nav__icon"></i> Home
+              <i class="uil uil-estate nav__icon"></i> {{ t('nav.home') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#about" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'about' }">
-              <i class="uil uil-user nav__icon"></i> Acerca de mí
+              <i class="uil uil-user nav__icon"></i> {{ t('nav.about') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#skills" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'skills' }">
-              <i class="uil uil-brackets-curly  nav__icon"></i> Habilidades
+              <i class="uil uil-brackets-curly  nav__icon"></i> {{ t('nav.skills') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#qualification" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'qualification' }">
-              <i class="uil uil-history  nav__icon"></i> Experiencia
+              <i class="uil uil-history  nav__icon"></i> {{ t('nav.qualification') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#services" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'services' }">
-              <i class="uil uil-briefcase-alt nav__icon"></i> Servicios
+              <i class="uil uil-briefcase-alt nav__icon"></i> {{ t('nav.services') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#portfolio" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'portfolio' }">
-              <i class="uil uil-scenery nav__icon"></i> Portafolio
+              <i class="uil uil-scenery nav__icon"></i> {{ t('nav.portfolio') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#contact" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'contact' }">
-              <i class="uil uil-message nav__icon"></i> Contáctame
+              <i class="uil uil-message nav__icon"></i> {{ t('nav.contact') }}
             </a>
           </li>
         </ul>
@@ -94,7 +96,7 @@
           class="theme-switch"
           :class="{ 'theme-switch--dark': currentTheme === 'dark' }"
           @click="$emit('toggle-theme')"
-          :aria-label="currentTheme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'"
+          :aria-label="currentTheme === 'dark' ? t('theme.toLight') : t('theme.toDark')"
         >
           <span class="theme-switch__track">
             <span class="theme-switch__thumb">
@@ -111,6 +113,10 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+const { locale } = useI18n({ useScope: 'global' })
 
 const isMenuOpen = ref(false);
 const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value;
@@ -166,6 +172,7 @@ const onLangClick = () => {
 
 const selectLang = (lang) => {
   currentLang.value = lang;
+  locale.value = lang === 'ES' ? 'es' : 'en';
   isLangOpen.value = false;
   isOverTrigger.value = false;
   isOverDropdown.value = false;
@@ -651,3 +658,38 @@ defineEmits(['toggle-theme']);
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "nav": {
+      "home": "Home",
+      "about": "Acerca de mí",
+      "skills": "Habilidades",
+      "qualification": "Experiencia",
+      "services": "Servicios",
+      "portfolio": "Portafolio",
+      "contact": "Contáctame"
+    },
+    "theme": {
+      "toDark": "Activar modo oscuro",
+      "toLight": "Activar modo claro"
+    }
+  },
+  "en": {
+    "nav": {
+      "home": "Home",
+      "about": "About me",
+      "skills": "Skills",
+      "qualification": "Experience",
+      "services": "Services",
+      "portfolio": "Portfolio",
+      "contact": "Contact me"
+    },
+    "theme": {
+      "toDark": "Enable dark mode",
+      "toLight": "Enable light mode"
+    }
+  }
+}
+</i18n>

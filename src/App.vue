@@ -22,13 +22,14 @@
   
   <Footer />
 
-  <a href="#" aria-label="scroll-up" class="scrollup" id="scroll-up" :class="{ 'show-scroll': showScrollBtn }">
+  <a href="#" :aria-label="t('scrollUp')"class="scrollup" id="scroll-up" :class="{ 'show-scroll': showScrollBtn }">
     <i class="uil uil-arrow-up scrollup__icon"></i>
   </a>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue';
+
 
 // Importamos todos los componentes
 import Header from './components/Header.vue'
@@ -45,7 +46,8 @@ import Footer from './components/Footer.vue'
 
 // Importamos los estilos globales
 
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
 // --- LÓGICA REACTIVA GLOBAL ---
 
 // 2. Variable para el botón de scroll (ya la teníamos)
@@ -267,3 +269,14 @@ onUnmounted(() => {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "scrollUp": "Subir al inicio"
+  },
+  "en": {
+    "scrollUp": "Scroll to top"
+  }
+}
+</i18n>
