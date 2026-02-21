@@ -1,3 +1,5 @@
+// Contact.vue
+
 <template>
   <section class="contact section" id="contact">
     <h2 class="section__title">Contáctame</h2>
@@ -323,10 +325,10 @@ const openWhatsApp = () => {
 }
 
 .contact__content {
-  background-color: hsl(240, 100%, 95%);
+  background-color: var(--contact-input-color);
   border-radius: .5rem;
   padding: .75rem 1rem .25rem;
-  transition: all 0.3s ease;
+  transition: border 0.3s ease;
   cursor: text;
   display: flex;
   flex-direction: column;
@@ -358,7 +360,7 @@ const openWhatsApp = () => {
 
 .contact__input {
   width: 100%;
-  background-color: hsl(240, 100%, 95%);
+  background-color: var(--contact-input-color);
   color: var(--text-color);
   font-family: var(--body-font);
   font-size: var(--normal-font-size);

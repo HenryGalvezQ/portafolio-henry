@@ -413,7 +413,7 @@ export default {
   font-family: var(--body-font);
   font-weight: var(--font-medium);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
   white-space: nowrap;
   line-height: 1.4;
 }
