@@ -33,7 +33,7 @@
           <!-- UNSA -->
           <div class="qualification__data qualification__data-education">
             <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('unsa')">
-              <img src="@/assets/img/logo-unsa.png" alt="Logo UNSA" class="qualification__logo qualification__logo--bg">
+              <img src="@/assets/img/logo-unsa.webp" alt="Logo UNSA" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">{{ t('unsa.title') }}</h3>
                 <span class="qualification__subtitle">{{ t('unsa.institution') }}</span>
@@ -66,7 +66,7 @@
                     {{ t('symmetry.date') }}
                   </div>
                 </div>
-                <img src="@/assets/img/symmetry_logo2.png" alt="Logo Symmetry" class="qualification__logo qualification__logo--rounded">
+                <img src="@/assets/img/symmetry_logo2.webp" alt="Logo Symmetry" class="qualification__logo qualification__logo--rounded">
               </div>
             </div>
           </div>
@@ -74,7 +74,7 @@
           <!-- Inglés -->
           <div class="qualification__data qualification__data-education">
             <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('ingles')">
-              <img src="@/assets/img/logo_idiomas.png" alt="Logo UNSA" class="qualification__logo qualification__logo--bg">
+              <img src="@/assets/img/logo_idiomas.webp" alt="Logo UNSA" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">{{ t('ingles.title') }}</h3>
                 <span class="qualification__subtitle">{{ t('ingles.institution') }}</span>
@@ -107,7 +107,7 @@
                     {{ t('innovaciencia.date') }}
                   </div>
                 </div>
-                <img src="@/assets/img/logo_innovaciencia.png" alt="Logo Innovaciencia" class="qualification__logo qualification__logo--bg">
+                <img src="@/assets/img/logo_innovaciencia.webp" alt="Logo Innovaciencia" class="qualification__logo qualification__logo--bg">
               </div>
             </div>
           </div>
@@ -115,7 +115,7 @@
           <!-- Cisco -->
           <div class="qualification__data qualification__data-education">
             <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('cisco')">
-              <img src="@/assets/img/logo-cisco-net-academy.png" alt="Logo Cisco" class="qualification__logo qualification__logo--bg">
+              <img src="@/assets/img/logo-cisco-net-academy.webp" alt="Logo Cisco" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">{{ t('cisco.title') }}</h3>
                 <span class="qualification__subtitle">{{ t('cisco.institution') }}</span>
@@ -148,7 +148,7 @@
                     {{ t('municipalidad.date') }}
                   </div>
                 </div>
-                <img src="@/assets/img/logo-muni.png" alt="Logo Municipalidad" class="qualification__logo">
+                <img src="@/assets/img/logo-muni.webp" alt="Logo Municipalidad" class="qualification__logo">
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@
           <!-- Coderhouse -->
           <div class="qualification__data qualification__data-education">
             <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('coderhouse')">
-              <img src="@/assets/img/logo-coderhouse.png" alt="Logo Coderhouse" class="qualification__logo qualification__logo--bg">
+              <img src="@/assets/img/logo-coderhouse.webp" alt="Logo Coderhouse" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">{{ t('coderhouse.title') }}</h3>
                 <span class="qualification__subtitle">{{ t('coderhouse.institution') }}</span>
@@ -197,7 +197,7 @@
           <!-- Oracle -->
           <div class="qualification__data qualification__data-education">
             <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('oracle')">
-              <img src="@/assets/img/logo-oracle.png" alt="Logo Oracle" class="qualification__logo qualification__logo--bg">
+              <img src="@/assets/img/logo-oracle.webp" alt="Logo Oracle" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
                 <h3 class="qualification__title">{{ t('oracle.title') }}</h3>
                 <span class="qualification__subtitle">{{ t('oracle.institution') }}</span>

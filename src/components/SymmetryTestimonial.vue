@@ -3,7 +3,7 @@
 <template>
   <div class="testimonial-card">
     <div class="testimonial-header">
-      <img src="@/assets/img/symmetry_logo.png" alt="Symmetry Logo" class="testimonial-logo">
+      <img src="@/assets/img/symmetry_logo.webp" alt="Symmetry Logo" class="testimonial-logo">
       <h3 class="testimonial-title">{{ t('title') }}</h3>
     </div>
     

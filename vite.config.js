@@ -2,11 +2,18 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
 import unpluginVueI18n from '@intlify/unplugin-vue-i18n'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
 export default defineConfig({
   plugins: [
     vue(),
-    unpluginVueI18n.vite()
+    unpluginVueI18n.vite(),
+    ViteImageOptimizer({
+      jpg:  { quality: 75 },
+      jpeg: { quality: 75 },
+      png:  { quality: 80 },
+      webp: { quality: 80 },
+    }),
   ],
   define: {
     __INTLIFY_JIT_COMPILATION__: true,
@@ -20,7 +27,6 @@ export default defineConfig({
     }
   },
   css: {
-    // Inyecta font-display swap para todas las @font-face procesadas por Vite
     preprocessorOptions: {}
   },
   build: {

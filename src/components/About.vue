@@ -6,7 +6,7 @@
     <span class="section__subtitle">{{ t('subtitle') }}</span>
 
     <div class="about__container container grid">
-      <img src="@/assets/img/about.jpg" alt="about" class="about__img">
+      <img src="@/assets/img/about.webp" alt="about" class="about__img">
       
       <div class="about__data">
         <p class="about__description">
