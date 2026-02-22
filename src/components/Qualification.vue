@@ -2,26 +2,28 @@
 
 <template>
   <section class="qualification section" id="qualification">
-    <h2 class="section__title">Experiencia</h2>
-    <span class="section__subtitle">Mi experiencia educativa y de trabajo</span>
+    <h2 class="section__title">{{ t('title') }}</h2>
+    <span class="section__subtitle">{{ t('subtitle') }}</span>
 
     <div class="qualification__container container">
       <div class="qualification__tabs">
         <div 
           class="qualification__button button--flex" 
+          data-tab="education"
           @click="setActiveTab('education', $event)"
           @touchend="handleTabTouch('education', $event)"
           :class="{ 'qualification__active': activeTab === 'education' }">
           <i class="uil uil-graduation-cap qualification__icon"></i>
-          Educación
+          {{ t('tabs.education') }}
         </div>
         <div 
           class="qualification__button button--flex" 
+          data-tab="work"
           @click="setActiveTab('work', $event)"
           @touchend="handleTabTouch('work', $event)"
           :class="{ 'qualification__active': activeTab === 'work' }">
           <i class="uil uil-briefcase-alt qualification__icon"></i>
-          Laboral
+          {{ t('tabs.work') }}
         </div>
       </div>
 
@@ -33,11 +35,11 @@
             <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('unsa')">
               <img src="@/assets/img/logo-unsa.png" alt="Logo UNSA" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
-                <h3 class="qualification__title">Ingeniería de Sistemas (Egresado)</h3>
-                <span class="qualification__subtitle">Universidad Nacional de San Agustín</span>
+                <h3 class="qualification__title">{{ t('unsa.title') }}</h3>
+                <span class="qualification__subtitle">{{ t('unsa.institution') }}</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Abril 2021 - Diciembre 2025
+                  {{ t('unsa.date') }}
                 </div>
               </div>
             </div>
@@ -57,11 +59,11 @@
             <div class="qualification__col-right">
               <div class="qualification__item-content qualification__item-content--right qualification__item-content--clickable" @click="openModal('symmetry')">
                 <div class="qualification__text-content">
-                  <h3 class="qualification__title">Frontend Developer (Freelance)</h3>
-                  <span class="qualification__subtitle">Symmetry Club LLC • Fitness App</span>
+                  <h3 class="qualification__title">{{ t('symmetry.title') }}</h3>
+                  <span class="qualification__subtitle">{{ t('symmetry.institution') }}</span>
                   <div class="qualification__calendar">
                     <i class="uil uil-calendar-alt"></i>
-                    Diciembre 2025
+                    {{ t('symmetry.date') }}
                   </div>
                 </div>
                 <img src="@/assets/img/symmetry_logo2.png" alt="Logo Symmetry" class="qualification__logo qualification__logo--rounded">
@@ -74,11 +76,11 @@
             <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('ingles')">
               <img src="@/assets/img/logo_idiomas.png" alt="Logo UNSA" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
-                <h3 class="qualification__title">Idioma Inglés Intermedio</h3>
-                <span class="qualification__subtitle">Centro de Idiomas UNSA</span>
+                <h3 class="qualification__title">{{ t('ingles.title') }}</h3>
+                <span class="qualification__subtitle">{{ t('ingles.institution') }}</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Noviembre 2024 - Octubre 2025
+                  {{ t('ingles.date') }}
                 </div>
               </div>
             </div>
@@ -98,11 +100,11 @@
             <div class="qualification__col-right">
               <div class="qualification__item-content qualification__item-content--right qualification__item-content--clickable" @click="openModal('innovaciencia')">
                 <div class="qualification__text-content">
-                  <h3 class="qualification__title">Frontend Developer (Prácticas pre-profesionales)</h3>
-                  <span class="qualification__subtitle">Innovaciencia Peru</span>
+                  <h3 class="qualification__title">{{ t('innovaciencia.title') }}</h3>
+                  <span class="qualification__subtitle">{{ t('innovaciencia.institution') }}</span>
                   <div class="qualification__calendar">
                     <i class="uil uil-calendar-alt"></i>
-                    Abril 2025 - Noviembre 2025
+                    {{ t('innovaciencia.date') }}
                   </div>
                 </div>
                 <img src="@/assets/img/logo_innovaciencia.png" alt="Logo Innovaciencia" class="qualification__logo qualification__logo--bg">
@@ -115,11 +117,11 @@
             <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('cisco')">
               <img src="@/assets/img/logo-cisco-net-academy.png" alt="Logo Cisco" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
-                <h3 class="qualification__title">Ciberseguridad</h3>
-                <span class="qualification__subtitle">CISCO Networking Academy</span>
+                <h3 class="qualification__title">{{ t('cisco.title') }}</h3>
+                <span class="qualification__subtitle">{{ t('cisco.institution') }}</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Agosto 2024 - Julio 2025
+                  {{ t('cisco.date') }}
                 </div>
               </div>
             </div>
@@ -139,11 +141,11 @@
             <div class="qualification__col-right">
               <div class="qualification__item-content qualification__item-content--right qualification__item-content--clickable" @click="openModal('municipalidad')">
                 <div class="qualification__text-content">
-                  <h3 class="qualification__title">Soporte Informática (Prácticas pre-profesionales)</h3>
-                  <span class="qualification__subtitle">Municipalidad Distrital de La Joya</span>
+                  <h3 class="qualification__title">{{ t('municipalidad.title') }}</h3>
+                  <span class="qualification__subtitle">{{ t('municipalidad.institution') }}</span>
                   <div class="qualification__calendar">
                     <i class="uil uil-calendar-alt"></i>
-                    Enero 2025 - Marzo 2025
+                    {{ t('municipalidad.date') }}
                   </div>
                 </div>
                 <img src="@/assets/img/logo-muni.png" alt="Logo Municipalidad" class="qualification__logo">
@@ -156,11 +158,11 @@
             <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('coderhouse')">
               <img src="@/assets/img/logo-coderhouse.png" alt="Logo Coderhouse" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
-                <h3 class="qualification__title">Carrera UX/UI</h3>
-                <span class="qualification__subtitle">Coderhouse</span>
+                <h3 class="qualification__title">{{ t('coderhouse.title') }}</h3>
+                <span class="qualification__subtitle">{{ t('coderhouse.institution') }}</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Abril 2023 - Diciembre 2023
+                  {{ t('coderhouse.date') }}
                 </div>
               </div>
             </div>
@@ -180,11 +182,11 @@
             <div class="qualification__col-right">
               <div class="qualification__item-content qualification__item-content--right">
                 <div class="qualification__text-content">
-                  <h3 class="qualification__title">Soporte TI</h3>
-                  <span class="qualification__subtitle">Particulares</span>
+                  <h3 class="qualification__title">{{ t('soporte.title') }}</h3>
+                  <span class="qualification__subtitle">{{ t('soporte.institution') }}</span>
                   <div class="qualification__calendar">
                     <i class="uil uil-calendar-alt"></i>
-                    Enero 2022 - Diciembre 2024
+                    {{ t('soporte.date') }}
                   </div>
                 </div>
                 <div class="qualification__logo-placeholder"></div>
@@ -197,11 +199,11 @@
             <div class="qualification__item-content qualification__item-content--clickable" @click="openModal('oracle')">
               <img src="@/assets/img/logo-oracle.png" alt="Logo Oracle" class="qualification__logo qualification__logo--bg">
               <div class="qualification__text-content">
-                <h3 class="qualification__title">Oracle Cloud APEX Developer</h3>
-                <span class="qualification__subtitle">Oracle</span>
+                <h3 class="qualification__title">{{ t('oracle.title') }}</h3>
+                <span class="qualification__subtitle">{{ t('oracle.institution') }}</span>
                 <div class="qualification__calendar">
                   <i class="uil uil-calendar-alt"></i>
-                  Agosto 2023 - Setiembre 2023
+                  {{ t('oracle.date') }}
                 </div>
               </div>
             </div>
@@ -227,6 +229,8 @@
 <script setup>
 import { ref, computed } from 'vue';
 import CertificateModal from './CertificateModal.vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
 
 // --- Importación de todas las imágenes ---
 import certificadoCoderhouse1 from '@/assets/img/certificado_coderhouse1.png';
@@ -306,7 +310,7 @@ const handleTabTouch = (tabName, event) => {
     // El otro botón también necesita actualizarse
     const allBtns = document.querySelectorAll('.qualification__button');
     allBtns.forEach(btn => {
-      const isEducation = btn.textContent.includes('Educación');
+      const isEducation = btn.dataset.tab === 'education';
       const btnTab = isEducation ? 'education' : 'work';
       btn.style.color = resultingTab === btnTab 
         ? 'var(--first-color)' 
@@ -595,3 +599,114 @@ const closeModal = () => {
 }
 
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "title": "Experiencia",
+    "subtitle": "Mi experiencia educativa y de trabajo",
+    "tabs": {
+      "education": "Educación",
+      "work": "Laboral"
+    },
+    "unsa": {
+      "title": "Ingeniería de Sistemas (Egresado)",
+      "institution": "Universidad Nacional de San Agustín",
+      "date": "Abril 2021 - Diciembre 2025"
+    },
+    "symmetry": {
+      "title": "Frontend Developer (Freelance)",
+      "institution": "Symmetry Club LLC • Fitness App",
+      "date": "Diciembre 2025"
+    },
+    "ingles": {
+      "title": "Idioma Inglés Intermedio",
+      "institution": "Centro de Idiomas UNSA",
+      "date": "Noviembre 2024 - Octubre 2025"
+    },
+    "innovaciencia": {
+      "title": "Frontend Developer (Prácticas pre-profesionales)",
+      "institution": "Innovaciencia Peru",
+      "date": "Abril 2025 - Noviembre 2025"
+    },
+    "cisco": {
+      "title": "Ciberseguridad",
+      "institution": "CISCO Networking Academy",
+      "date": "Agosto 2024 - Julio 2025"
+    },
+    "municipalidad": {
+      "title": "Soporte Informática (Prácticas pre-profesionales)",
+      "institution": "Municipalidad Distrital de La Joya",
+      "date": "Enero 2025 - Marzo 2025"
+    },
+    "coderhouse": {
+      "title": "Carrera UX/UI",
+      "institution": "Coderhouse",
+      "date": "Abril 2023 - Diciembre 2023"
+    },
+    "soporte": {
+      "title": "Soporte TI",
+      "institution": "Particulares",
+      "date": "Enero 2022 - Diciembre 2024"
+    },
+    "oracle": {
+      "title": "Oracle Cloud APEX Developer",
+      "institution": "Oracle",
+      "date": "Agosto 2023 - Setiembre 2023"
+    }
+  },
+  "en": {
+    "title": "Experience",
+    "subtitle": "My educational and work experience",
+    "tabs": {
+      "education": "Education",
+      "work": "Work"
+    },
+    "unsa": {
+      "title": "Systems Engineering (Graduate)",
+      "institution": "National University of San Agustín",
+      "date": "April 2021 - December 2025"
+    },
+    "symmetry": {
+      "title": "Frontend Developer (Freelance)",
+      "institution": "Symmetry Club LLC • Fitness App",
+      "date": "December 2025"
+    },
+    "ingles": {
+      "title": "Intermediate English Language",
+      "institution": "UNSA Language Center",
+      "date": "November 2024 - October 2025"
+    },
+    "innovaciencia": {
+      "title": "Frontend Developer (Pre-professional Internship)",
+      "institution": "Innovaciencia Peru",
+      "date": "April 2025 - November 2025"
+    },
+    "cisco": {
+      "title": "Cybersecurity",
+      "institution": "CISCO Networking Academy",
+      "date": "August 2024 - July 2025"
+    },
+    "municipalidad": {
+      "title": "IT Support (Pre-professional Internship)",
+      "institution": "Municipalidad Distrital de La Joya",
+      "date": "January 2025 - March 2025"
+    },
+    "coderhouse": {
+      "title": "UX/UI Career",
+      "institution": "Coderhouse",
+      "date": "April 2023 - December 2023"
+    },
+    "soporte": {
+      "title": "IT Support",
+      "institution": "Private clients",
+      "date": "January 2022 - December 2024"
+    },
+    "oracle": {
+      "title": "Oracle Cloud APEX Developer",
+      "institution": "Oracle",
+      "date": "August 2023 - September 2023"
+    }
+  }
+}
+</i18n>

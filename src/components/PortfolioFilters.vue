@@ -1,3 +1,5 @@
+// PortfolioFilters.vue
+
 <template>
   <div class="portfolio-filters">
     <!-- Fila: input + listbox -->
@@ -8,14 +10,14 @@
           v-model="searchQuery"
           type="text"
           class="portfolio-filters__input"
-          placeholder="Buscar proyectos..."
-          aria-label="Buscar proyectos"
+          :placeholder="t('search.placeholder')"
+          :aria-label="t('search.placeholder')"
         />
         <button
           v-if="searchQuery"
           class="portfolio-filters__clear-btn"
           @click="searchQuery = ''"
-          aria-label="Limpiar búsqueda"
+          :aria-label="t('search.clear')"
         >
           <i class="uil uil-times"></i>
         </button>
@@ -42,7 +44,7 @@
             v-if="listboxOpen"
             class="portfolio-filters__listbox"
             role="listbox"
-            aria-label="Campo de búsqueda"
+            :aria-label="t('search.fieldLabel')"
           >
             <li
               v-for="option in searchFieldOptions"
@@ -68,49 +70,39 @@
         v-for="tag in allTags"
         :key="tag"
         class="portfolio-filters__tag-chip"
-        :class="{ 'is-active': activeTag === tag }"
+        :class="{ 'is-active': tag === 'Todos' ? activeTag === 'Todos' : getEsEquivalent(tag) === activeTag }"
         @click="selectTag(tag)"
       >
-        {{ tag }}
+        {{ tag === 'Todos' ? t('tags.all') : tag }}
       </button>
     </div>
 
     <!-- Contador de resultados (solo si hay filtros activos) -->
-    <p
-      class="portfolio-filters__results-count"
-    >
+    <p class="portfolio-filters__results-count">
       <span class="portfolio-filters__results-number">{{ resultsCount }}</span>
-      {{ resultsCount === 1 ? 'proyecto encontrado' : 'proyectos encontrados' }}
+      {{ t('results', resultsCount) }}
     </p>
   </div>
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
 import { projectsData } from '@/data/projectsData.js';
 
 export default {
   name: 'PortfolioFilters',
   emits: ['filter-change'],
+  setup() {
+    const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+    const { locale } = useI18n({ useScope: 'global' })
+    return { t, locale }
+  },
   data() {
     return {
       searchQuery: '',
       searchField: 'title',
       activeTag: 'Todos',
       listboxOpen: false,
-      searchFieldOptions: [
-        { value: 'todos',       label: 'Todos los campos', icon: 'uil uil-apps'        },
-        { value: 'title',       label: 'Título',           icon: 'uil uil-sliders-v-alt'     },
-        { value: 'description', label: 'Descripción',      icon: 'uil uil-file-alt'    },
-        { value: 'tags',        label: 'Tags',             icon: 'uil uil-label'       },
-        { value: 'techBadge',   label: 'Tecnología',       icon: 'uil uil-code-branch' },
-      ],
-      searchFieldLabels: {
-        todos:       'Todos los campos',
-        title:       'Título',
-        description: 'Descripción',
-        tags:        'Tags',
-        techBadge:   'Tecnología',
-      },
       searchFieldIcons: {
         todos:       'uil uil-apps',
         title:       'uil uil-sliders-v-alt',
@@ -121,20 +113,40 @@ export default {
     };
   },
   computed: {
+    searchFieldOptions() {
+      return [
+        { value: 'todos',       label: this.t('fields.all'),         icon: 'uil uil-apps'         },
+        { value: 'title',       label: this.t('fields.title'),       icon: 'uil uil-sliders-v-alt' },
+        { value: 'description', label: this.t('fields.description'), icon: 'uil uil-file-alt'     },
+        { value: 'tags',        label: this.t('fields.tags'),        icon: 'uil uil-label'        },
+        { value: 'techBadge',   label: this.t('fields.tech'),        icon: 'uil uil-code-branch'  },
+      ];
+    },
+    searchFieldLabels() {
+      return {
+        todos:       this.t('fields.all'),
+        title:       this.t('fields.title'),
+        description: this.t('fields.description'),
+        tags:        this.t('fields.tags'),
+        techBadge:   this.t('fields.tech'),
+      };
+    },
     allTags() {
+      const lang = this.locale;
       const tagSet = new Set();
       projectsData.forEach(p => {
-        if (p.tags) p.tags.forEach(t => tagSet.add(t.trim()));
+        if (p.tags[lang]) p.tags[lang].forEach(t => tagSet.add(t.trim()));
       });
       return ['Todos', ...Array.from(tagSet).sort()];
     },
     filteredProjects() {
       let results = [...projectsData];
+      const lang = this.locale;
 
       // Filtro por tag activo
       if (this.activeTag !== 'Todos') {
         results = results.filter(p =>
-          p.tags && p.tags.some(t => t.trim() === this.activeTag)
+          p.tags.es && p.tags.es.some(t => t.trim() === this.activeTag)
         );
       }
 
@@ -144,18 +156,18 @@ export default {
         results = results.filter(p => {
           switch (this.searchField) {
             case 'title':
-              return p.title.toLowerCase().includes(q);
+              return p.title[lang].toLowerCase().includes(q);
             case 'description':
-              return p.description.toLowerCase().includes(q);
+              return p.description[lang].toLowerCase().includes(q);
             case 'tags':
-              return p.tags && p.tags.some(t => t.toLowerCase().includes(q));
+              return p.tags[lang] && p.tags[lang].some(t => t.toLowerCase().includes(q));
             case 'techBadge':
               return p.techBadge && p.techBadge.some(b => b.toLowerCase().includes(q));
             default: // 'todos'
               return (
-                p.title.toLowerCase().includes(q) ||
-                p.description.toLowerCase().includes(q) ||
-                (p.tags && p.tags.some(t => t.toLowerCase().includes(q))) ||
+                p.title[lang].toLowerCase().includes(q) ||
+                p.description[lang].toLowerCase().includes(q) ||
+                (p.tags[lang] && p.tags[lang].some(t => t.toLowerCase().includes(q))) ||
                 (p.techBadge && p.techBadge.some(b => b.toLowerCase().includes(q)))
               );
           }
@@ -185,11 +197,27 @@ export default {
       this.listboxOpen = false;
     },
     selectTag(tag) {
-      if (tag !== 'Todos' && this.activeTag === tag) {
+      // tag aquí es el valor ya en el idioma activo
+      // necesitamos guardarlo en 'es' como clave estable
+      const esTag = this.getEsEquivalent(tag);
+      if (esTag !== 'Todos' && this.activeTag === esTag) {
         this.activeTag = 'Todos';
       } else {
-        this.activeTag = tag;
+        this.activeTag = esTag;
       }
+    },
+    getEsEquivalent(tagInCurrentLocale) {
+      if (tagInCurrentLocale === 'Todos' || tagInCurrentLocale === 'All') return 'Todos';
+      const project = projectsData.find(p =>
+        p.tags.es.some(t => t.trim() === tagInCurrentLocale) ||
+        p.tags.en.some(t => t.trim() === tagInCurrentLocale)
+      );
+      if (!project) return tagInCurrentLocale;
+      const idx = [...project.tags.es, ...project.tags.en].indexOf(tagInCurrentLocale);
+      // Buscamos en qué idioma está y devolvemos el equivalente en 'es'
+      const enIdx = project.tags.en.findIndex(t => t.trim() === tagInCurrentLocale);
+      if (enIdx !== -1) return project.tags.es[enIdx];
+      return tagInCurrentLocale; // ya era 'es'
     },
     handleOutsideClick(e) {
       if (this.$refs.listboxWrapper && !this.$refs.listboxWrapper.contains(e.target)) {
@@ -500,3 +528,44 @@ export default {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "search": {
+      "placeholder": "Buscar proyectos...",
+      "clear": "Limpiar búsqueda",
+      "fieldLabel": "Campo de búsqueda"
+    },
+    "fields": {
+      "all": "Todos los campos",
+      "title": "Título",
+      "description": "Descripción",
+      "tags": "Tags",
+      "tech": "Tecnología"
+    },
+    "tags": {
+      "all": "Todos"
+    },
+    "results": "proyecto encontrado | proyectos encontrados"
+  },
+  "en": {
+    "search": {
+      "placeholder": "Search projects...",
+      "clear": "Clear search",
+      "fieldLabel": "Search field"
+    },
+    "fields": {
+      "all": "All fields",
+      "title": "Title",
+      "description": "Description",
+      "tags": "Tags",
+      "tech": "Technology"
+    },
+    "tags": {
+      "all": "All"
+    },
+    "results": "project found | projects found"
+  }
+}
+</i18n>

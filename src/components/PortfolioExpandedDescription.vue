@@ -7,11 +7,11 @@
     ref="expandedContainer"
   >
     <div class="portfolio-expanded__header">
-      <h3 class="portfolio-expanded__title">Detalles del Proyecto</h3>
+      <h3 class="portfolio-expanded__title">{{ t('title') }}</h3>
       <button 
         @click="$emit('close')" 
         class="portfolio-expanded__close"
-        aria-label="Cerrar descripción expandida"
+        :aria-label="t('closeAria')"
       >
         <i class="uil uil-times"></i>
       </button>
@@ -22,13 +22,13 @@
       ref="scrollContainer" 
       :style="contentStyle"
     >
-      <div class="portfolio-expanded__description" v-html="project.expandedDescription">
+      <div class="portfolio-expanded__description" v-html="project.expandedDescription[locale]">
       </div>
     </div>
 
     <button @click="$emit('close')" class="portfolio-expanded__read-less">
       <i class="uil uil-arrow-left"></i>
-      Leer menos
+      {{ t('readLess') }}
     </button>
 
     <!-- Indicador de scroll si es necesario -->
@@ -37,14 +37,21 @@
       class="portfolio-expanded__scroll-indicator"
     >
       <i class="uil uil-angle-down"></i>
-      <span>Desplaza para leer más</span>
+      <span>{{ t('scrollHint') }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'PortfolioExpandedDescription',
+  setup() {
+    const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+    const { locale } = useI18n({ useScope: 'global' })
+    return { t, locale }
+  },
   props: {
     project: {
       type: Object,
@@ -423,3 +430,20 @@ export default {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "title": "Detalles del Proyecto",
+    "closeAria": "Cerrar descripción expandida",
+    "readLess": "Leer menos",
+    "scrollHint": "Desplaza para leer más"
+  },
+  "en": {
+    "title": "Project Details",
+    "closeAria": "Close expanded description",
+    "readLess": "Read less",
+    "scrollHint": "Scroll to read more"
+  }
+}
+</i18n>

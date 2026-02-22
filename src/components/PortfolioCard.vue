@@ -1,4 +1,5 @@
 // PortfolioCard.vue
+
 <template>
   <div 
     class="portfolio-card__content" 
@@ -7,12 +8,13 @@
       'parent-is-hovered': isHovered && !isExpanded
     }"
   >
-    <PortfolioTags :tags="project.tags" />
+    <PortfolioTags :tags="project.tags[locale]" />
+
     <div class="carousel-wrapper">
       <PortfolioImageCarousel
         ref="carousel"
         :images="project.images"
-        :alt="project.title"
+        :alt="project.title[locale]"
         :tech-badges="project.techBadge"
         :is-expanded="isExpanded"
         @carousel-hint-shown="handleCarouselHintShown"
@@ -29,22 +31,22 @@
       />
     </Teleport>
     <div class="portfolio__data">
-      <h3 class="portfolio__title">{{ project.title }}</h3>
+      <h3 class="portfolio__title">{{ project.title[locale] }}</h3>
       <div class="portfolio__description-container">
         <p class="portfolio__description">
-          {{ project.description }}
+          {{ project.description[locale] }}
           <button 
             v-if="project.expandedDescription"
             @click="$emit('toggle-expand')"
             class="portfolio__read-more"
           >
-            {{ isExpanded ? 'Leer menos' : 'Leer más' }}
+            {{ isExpanded ? t('readLess') : t('readMore') }}
           </button>
         </p>
       </div>
       <div class="portfolio__cta" :class="{ 'portfolio__cta--visible': isExpanded }">
         <i class="uil uil-rocket"></i>
-        <span>Explora el proyecto aquí <i class="uil uil-arrow-down"></i></span> 
+        <span>{{ t('cta') }} <i class="uil uil-arrow-down"></i></span> 
       </div>
       <PortfolioActionButtons
         :buttons="project.buttons"
@@ -63,7 +65,7 @@
       class="portfolio__expand-button"
       @click.stop="$emit('toggle-expand')"
     >
-      <span>Ver más</span>
+      <span>{{ t('viewMore') }}</span>
       <i class="uil uil-arrow-down"></i>
     </div>
   </div>
@@ -75,8 +77,15 @@ import PortfolioImageCarousel from './PortfolioImageCarousel.vue';
 import PortfolioActionButtons from './PortfolioActionButtons.vue';
 import CertificateModal from './CertificateModal.vue';
 
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'PortfolioCard',
+  setup() {
+    const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+    const { locale } = useI18n({ useScope: 'global' })
+    return { t, locale }
+  },
   components: {
     PortfolioTags,
     PortfolioImageCarousel,
@@ -375,3 +384,20 @@ export default {
   flex-grow: 0;
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "readMore": "Leer más",
+    "readLess": "Leer menos",
+    "cta": "Explora el proyecto aquí",
+    "viewMore": "Ver más"
+  },
+  "en": {
+    "readMore": "Read more",
+    "readLess": "Read less",
+    "cta": "Explore the project here",
+    "viewMore": "View more"
+  }
+}
+</i18n>

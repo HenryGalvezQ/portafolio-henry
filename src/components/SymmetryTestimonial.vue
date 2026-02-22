@@ -1,8 +1,10 @@
+// SymmetryTestimonial.vue
+
 <template>
   <div class="testimonial-card">
     <div class="testimonial-header">
       <img src="@/assets/img/symmetry_logo.png" alt="Symmetry Logo" class="testimonial-logo">
-      <h3 class="testimonial-title">Confirmación de Trabajo</h3>
+      <h3 class="testimonial-title">{{ t('title') }}</h3>
     </div>
     
     <div class="testimonial-divider"></div>
@@ -10,16 +12,15 @@
     <div class="testimonial-quote">
       <i class="uil uil-quote-left quote-icon"></i>
       <p class="quote-text">
-        Tu prueba técnica es justo lo que queríamos. 
-        Nos encantaría que formaras parte de Symmetry Club.
+        {{ t('quote') }}
       </p>
       <i class="uil uil-quote-right quote-icon"></i>
     </div>
     
     <div class="testimonial-author">
-      <p class="author-name">— Mauro Botanes</p>
-      <p class="author-title">COO, Symmetry Club LLC</p>
-      <p class="author-date">Noviembre 2025</p>
+      <p class="author-name">{{ t('author.name') }}</p>
+      <p class="author-title">{{ t('author.role') }}</p>
+      <p class="author-date">{{ t('author.date') }}</p>
     </div>
     
     <div class="testimonial-divider"></div>
@@ -40,7 +41,8 @@
 </template>
 
 <script setup>
-// No requiere lógica
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
 </script>
 
 <style scoped>
@@ -203,3 +205,26 @@
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "title": "Confirmación de Trabajo",
+    "quote": "Tu prueba técnica es justo lo que queríamos. Nos encantaría que formaras parte de Symmetry Club.",
+    "author": {
+      "name": "— Mauro Botanes",
+      "role": "COO, Symmetry Club LLC",
+      "date": "Noviembre 2025"
+    }
+  },
+  "en": {
+    "title": "Work Confirmation",
+    "quote": "Your technical test is exactly what we were looking for. We would love for you to be part of Symmetry Club.",
+    "author": {
+      "name": "— Mauro Botanes",
+      "role": "COO, Symmetry Club LLC",
+      "date": "November 2025"
+    }
+  }
+}
+</i18n>

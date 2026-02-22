@@ -1,7 +1,9 @@
+// Services.vue
+
 <template>
   <section class="services section" id="services" ref="servicesSection">
-    <h2 class="section__title">Servicios</h2>
-    <span class="section__subtitle">Lo que ofrezco</span>
+    <h2 class="section__title">{{ t('title') }}</h2>
+    <span class="section__subtitle">{{ t('subtitle') }}</span>
 
     <div class="services__container container grid">
       
@@ -12,8 +14,8 @@
         <div class="services__header" @click="toggleService()">
           <i class="uil uil-web-grid services__icon"></i>
           <div>
-            <h3 class="services__title">Diseñador <br> UI/UX</h3>
-            <span class="services__subtitle">Diseño de interfaces y experiencia de usuario</span>
+            <h3 class="services__title">{{ t('ui.title') }}</h3>
+            <span class="services__subtitle">{{ t('ui.subtitle') }}</span>
           </div>
           <i class="uil uil-angle-down services__arrow"></i>
         </div>
@@ -22,25 +24,25 @@
           <ul class="services__list-ul">
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Desarrollo de interfaces de usuario atractivas.</p>
+              <p>{{ t('ui.items[0]') }}</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Creación de prototipos y wireframes en Figma.</p>
+              <p>{{ t('ui.items[1]') }}</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Diseño de interacciones y flujos de usuario.</p>
+              <p>{{ t('ui.items[2]') }}</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Investigación de usuarios y pruebas de usabilidad.</p>
+              <p>{{ t('ui.items[3]') }}</p>
             </li>
           </ul>
         </div>
 
         <span @click="toggleService()" class="services__button">
-          Ver más
+          {{ t('viewMore') }}
           <i class="uil uil-arrow-right button__icon"></i>
         </span>
       </div>
@@ -52,8 +54,8 @@
         <div class="services__header" @click="toggleService()">
           <i class="uil uil-arrow services__icon"></i>
           <div>
-            <h3 class="services__title">Desarrollador <br> Frontend</h3>
-            <span class="services__subtitle">Desarrollo de diseños y aplicaciones web</span>
+            <h3 class="services__title">{{ t('frontend.title') }}</h3>
+            <span class="services__subtitle">{{ t('frontend.subtitle') }}</span>
           </div>
           <i class="uil uil-angle-down services__arrow"></i>
         </div>
@@ -62,25 +64,25 @@
           <ul class="services__list-ul">
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Desarrollo de SPAs con Vue.js, Nuxt y React.js</p>
+              <p>{{ t('frontend.items[0]') }}</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Maquetación de sitios web responsivos.</p>
+              <p>{{ t('frontend.items[1]') }}</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Consumo de APIs REST y autenticación OAuth/JWT</p>
+              <p>{{ t('frontend.items[2]') }}</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Creación rápida de MVPs</p>
+              <p>{{ t('frontend.items[3]') }}</p>
             </li>
           </ul>
         </div>
 
         <span @click="toggleService()" class="services__button">
-          Ver más
+          {{ t('viewMore') }}
           <i class="uil uil-arrow-right button__icon"></i>
         </span>
       </div>
@@ -92,8 +94,8 @@
         <div class="services__header" @click="toggleService()">
           <i class="uil uil-mobile-android services__icon"></i>
           <div>
-            <h3 class="services__title">Desarrollador <br> Mobile</h3>
-            <span class="services__subtitle">Aplicaciones nativas e híbridas multiplataforma</span>
+            <h3 class="services__title">{{ t('mobile.title') }}</h3>
+            <span class="services__subtitle">{{ t('mobile.subtitle') }}</span>
           </div>
           <i class="uil uil-angle-down services__arrow"></i>
         </div>
@@ -102,25 +104,25 @@
           <ul class="services__list-ul">
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Desarrollo nativo Android con Kotlin y Jetpack Compose</p>
+              <p>{{ t('mobile.items[0]') }}</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Apps híbridas con Flutter y React Native</p>
+              <p>{{ t('mobile.items[1]') }}</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Arquitectura MVVM, Clean Architecture e inyección de dependencias</p>
+              <p>{{ t('mobile.items[2]') }}</p>
             </li>
             <li class="services__list-item">
               <i class="uil uil-check-circle services__list-icon"></i>
-              <p>Integración con APIs REST, Firebase y sincronización offline</p>
+              <p>{{ t('mobile.items[3]') }}</p>
             </li>
           </ul>
         </div>
 
         <span @click="toggleService()" class="services__button">
-          Ver más
+          {{ t('viewMore') }}
           <i class="uil uil-arrow-right button__icon"></i>
         </span>
       </div>
@@ -129,8 +131,15 @@
 </template>
 
 <script>
+
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'Services',
+  setup() {
+    const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+    return { t }
+  },
   data() {
     return {
       servicesState: {
@@ -360,3 +369,78 @@ export default {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "title": "Servicios",
+    "subtitle": "Lo que ofrezco",
+    "viewMore": "Ver más",
+    "ui": {
+      "title": "Diseñador \n UI/UX",
+      "subtitle": "Diseño de interfaces y experiencia de usuario",
+      "items": [
+        "Desarrollo de interfaces de usuario atractivas.",
+        "Creación de prototipos y wireframes en Figma.",
+        "Diseño de interacciones y flujos de usuario.",
+        "Investigación de usuarios y pruebas de usabilidad."
+      ]
+    },
+    "frontend": {
+      "title": "Desarrollador \n Frontend",
+      "subtitle": "Desarrollo de diseños y aplicaciones web",
+      "items": [
+        "Desarrollo de SPAs con Vue.js, Nuxt y React.js",
+        "Maquetación de sitios web responsivos.",
+        "Consumo de APIs REST y autenticación OAuth/JWT",
+        "Creación rápida de MVPs"
+      ]
+    },
+    "mobile": {
+      "title": "Desarrollador \n Mobile",
+      "subtitle": "Aplicaciones nativas e híbridas multiplataforma",
+      "items": [
+        "Desarrollo nativo Android con Kotlin y Jetpack Compose",
+        "Apps híbridas con Flutter y React Native",
+        "Arquitectura MVVM, Clean Architecture e inyección de dependencias",
+        "Integración con APIs REST, Firebase y sincronización offline"
+      ]
+    }
+  },
+  "en": {
+    "title": "Services",
+    "subtitle": "What I offer",
+    "viewMore": "View more",
+    "ui": {
+      "title": "UI/UX \n Designer",
+      "subtitle": "Interface design and user experience",
+      "items": [
+        "Development of attractive user interfaces.",
+        "Creation of prototypes and wireframes in Figma.",
+        "Design of interactions and user flows.",
+        "User research and usability testing."
+      ]
+    },
+    "frontend": {
+      "title": "Frontend \n Developer",
+      "subtitle": "Development of web designs and applications",
+      "items": [
+        "SPA development with Vue.js, Nuxt and React.js",
+        "Responsive website layout.",
+        "REST API consumption and OAuth/JWT authentication",
+        "Rapid MVP creation"
+      ]
+    },
+    "mobile": {
+      "title": "Mobile \n Developer",
+      "subtitle": "Native and hybrid cross-platform applications",
+      "items": [
+        "Native Android development with Kotlin and Jetpack Compose",
+        "Hybrid apps with Flutter and React Native",
+        "MVVM, Clean Architecture and dependency injection",
+        "Integration with REST APIs, Firebase and offline sync"
+      ]
+    }
+  }
+}
+</i18n>

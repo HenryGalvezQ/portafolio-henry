@@ -1,3 +1,5 @@
+// PortfolioImageCarousel.vue
+
 <template>
   <div 
     v-if="images && images.length > 0"
@@ -18,7 +20,7 @@
       >
         <img 
           :src="image" 
-          :alt="alt + ' project screenshot'"
+          :alt="alt + ' ' + t('imgAlt')"
           class="portfolio__img"
           style="cursor: zoom-in;"
         >
@@ -47,9 +49,14 @@
 
 <script>
 import PortfolioTechBadges from './PortfolioTechBadges.vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'PortfolioImageCarousel',
+  setup() {
+    const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+    return { t }
+  },
   components: {
     PortfolioTechBadges
   },
@@ -321,3 +328,14 @@ export default {
   background-color: var(--first-color);
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "imgAlt": "captura de pantalla del proyecto"
+  },
+  "en": {
+    "imgAlt": "project screenshot"
+  }
+}
+</i18n>

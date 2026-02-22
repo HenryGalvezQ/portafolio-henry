@@ -1,3 +1,5 @@
+// CertificateModal.vue
+
 <template>
   <transition name="fade">
     <div v-if="show" class="qualification__modal" @click="closeModal">
@@ -23,7 +25,7 @@
             <div v-if="!isCarousel" class="carousel__wrapper">
               <img v-if="images.length > 0" 
                    :src="images[0]" 
-                   alt="Certificado" 
+                   :alt="t('certAlt')" 
                    class="qualification__modal-img">
             </div>
             
@@ -32,7 +34,7 @@
                 <div class="carousel__track" :style="{ transform: `translateX(-${currentImageIndex * 100}%)` }">
                   <div v-for="(image, index) in images" :key="index" class="carousel__slide">
                     <img :src="image" 
-                         :alt="`Certificado ${index + 1}`" 
+                         :alt="`${t('certAlt')} ${index + 1}`" 
                          class="qualification__modal-img">
                   </div>
                 </div>
@@ -61,6 +63,9 @@
 <script setup>
 import { ref, computed, watch, onUnmounted } from 'vue';
 import SymmetryTestimonial from './SymmetryTestimonial.vue';
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
 
 // --- Props y Emits ---
 const props = defineProps({
@@ -420,3 +425,14 @@ onUnmounted(() => {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "certAlt": "Certificado"
+  },
+  "en": {
+    "certAlt": "Certificate"
+  }
+}
+</i18n>

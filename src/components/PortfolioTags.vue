@@ -1,3 +1,5 @@
+// PortfolioTags.vue
+
 <template>
   <div v-if="tags && tags.length > 0" class="portfolio__tags" ref="tagsContainer">
     <span 

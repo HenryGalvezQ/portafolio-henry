@@ -1,3 +1,5 @@
+// PortfolioTechBadges.vue
+
 <template>
   <div v-if="techBadges && techBadges.length > 0" class="portfolio__tech-badges-container">
     <div 
@@ -25,8 +27,14 @@
 <script>
 import SvgIcon from './SvgIcon.vue';
 
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'PortfolioTechBadges',
+  setup() {
+    const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+    return { t }
+  },
   components: {
     SvgIcon
   },
@@ -45,7 +53,7 @@ export default {
       }
     };
   },
-  methods: {
+    methods: {
     handleMouseEnter(event, techName) {
       const badge = event.currentTarget;
       const rect = badge.getBoundingClientRect();
@@ -56,7 +64,7 @@ export default {
       const top = (rect.top / zoomFactor) - 38;
       const left = (rect.left / zoomFactor) + (rect.width / zoomFactor / 2);
 
-      this.tooltip.text = `Diseñado en ${techName.charAt(0).toUpperCase() + techName.slice(1)}`;
+      this.tooltip.text = this.t('tooltip', { name: techName.charAt(0).toUpperCase() + techName.slice(1) });
       this.tooltip.style = {
         top: `${top}px`,
         left: `${left}px`,
@@ -143,3 +151,14 @@ export default {
   border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "tooltip": "Diseñado en {name}"
+  },
+  "en": {
+    "tooltip": "Designed in {name}"
+  }
+}
+</i18n>

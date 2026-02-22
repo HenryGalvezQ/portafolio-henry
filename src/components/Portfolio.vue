@@ -1,7 +1,9 @@
+// Portafolio.vue
+
 <template>
   <section class="portfolio section" id="portfolio">
-    <h2 class="section__title">Portafolio</h2>
-    <span class="section__subtitle">Trabajos más recientes</span>
+    <h2 class="section__title">{{ t('title') }}</h2>
+    <span class="section__subtitle">{{ t('subtitle') }}</span>
 
     <div class="portfolio__filters-wrapper container">
       <PortfolioFilters @filter-change="onFilterChange" />
@@ -17,8 +19,8 @@
       <!-- Estado vacío -->
       <div v-if="filteredProjects.length === 0" class="portfolio__empty">
         <i class="uil uil-search-slash portfolio__empty-icon"></i>
-        <p class="portfolio__empty-text">No se encontraron proyectos</p>
-        <span class="portfolio__empty-hint">Prueba con otros términos o cambia los filtros</span>
+        <p class="portfolio__empty-text">{{ t('empty.text') }}</p>
+        <span class="portfolio__empty-hint">{{ t('empty.hint') }}</span>
       </div>
     </div>
   </section>
@@ -27,9 +29,10 @@
 <script>
 import PortfolioCardWrapper from './PortfolioCardWrapper.vue';
 import PortfolioFilters from './PortfolioFilters.vue';
-import { buttonTemplates } from '@/config/button-config.js';
+import { getButtonTemplates } from '@/config/button-config.js';
 import projectsImages from '@/utils/image-loader.js';
 import { projectsData } from '@/data/projectsData.js';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'Portfolio',
@@ -37,13 +40,20 @@ export default {
     PortfolioCardWrapper,
     PortfolioFilters,
   },
+  setup() {
+    const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+    const { locale } = useI18n({ useScope: 'global' })
+    return { t, locale }
+  },
   data() {
     return {
-      projects: [],
       filteredIds: null, // null = mostrar todos
     };
   },
   computed: {
+    projects() {
+      return this.processProjects();
+    },
     filteredProjects() {
       if (!this.filteredIds) return this.projects;
       return this.projects.filter(p => this.filteredIds.includes(p.id));
@@ -55,8 +65,9 @@ export default {
     },
     createProjectButtons(buttonList) {
       if (!buttonList) return [];
+      const templates = getButtonTemplates(this.t);
       return buttonList.map((buttonInfo, index) => {
-        const template = buttonTemplates[buttonInfo.type] || {};
+        const template = templates[buttonInfo.type] || {};
         return {
           ...template,
           ...buttonInfo,
@@ -67,13 +78,10 @@ export default {
     processProjects() {
       return projectsData.map(project => ({
         ...project,
-        images: projectsImages[project.title] || [],
+        images: projectsImages[project.folderName] || [],
         buttons: this.createProjectButtons(project.buttons),
       }));
     },
-  },
-  created() {
-    this.projects = this.processProjects();
   },
 };
 </script>
@@ -166,3 +174,36 @@ export default {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "title": "Portafolio",
+    "subtitle": "Trabajos más recientes",
+    "empty": {
+      "text": "No se encontraron proyectos",
+      "hint": "Prueba con otros términos o cambia los filtros"
+    },
+    "buttons": {
+      "demo": "Demo",
+      "figma": "Diseño",
+      "github": "Código",
+      "presentation": "Slides"
+    }
+  },
+  "en": {
+    "title": "Portfolio",
+    "subtitle": "Most recent work",
+    "empty": {
+      "text": "No projects found",
+      "hint": "Try different terms or change the filters"
+    },
+    "buttons": {
+      "demo": "Demo",
+      "figma": "Design",
+      "github": "Code",
+      "presentation": "Slides"
+    }
+  }
+}
+</i18n>

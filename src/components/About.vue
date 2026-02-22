@@ -1,3 +1,5 @@
+// About.vue
+
 <template>
   <section class="about section" id="about">
     <h2 class="section__title">{{ t('title') }}</h2>

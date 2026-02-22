@@ -1,4 +1,5 @@
 // PortfolioCardWrapper.vue
+
 <template>
   <div 
     class="portfolio-card-container" 

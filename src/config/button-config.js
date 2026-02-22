@@ -1,45 +1,39 @@
 // src/config/button-config.js
 
-/**
- * Diccionario central para las plantillas de botones.
- * Cada clave (ej: 'demo', 'figma') representa un tipo de botón.
- * El objeto contiene todas las propiedades que se repiten para ese tipo.
- */
-
-export const buttonTemplates = {
+export const getButtonTemplates = (t) => ({
   'demo': {
-    text: 'Demo', // Texto añadido
+    text: t('buttons.demo'),
     icon: 'uil uil-play',
     animated: true,
     arrow: true,
     isSvg: false
   },
   'figma': {
-    text: 'Diseño', // Texto añadido
+    text: t('buttons.figma'),
     icon: 'figma',
     isSvg: true,
     animated: true,
     arrow: true
   },
   'github': {
-    text: 'Código', // Texto añadido
+    text: t('buttons.github'),
     icon: 'github',
     isSvg: true,
     animated: true,
     arrow: true
   },
   'presentation': {
-    text: 'Slides', // Texto añadido
+    text: t('buttons.presentation'),
     icon: 'uil uil-presentation-play',
     animated: true,
     arrow: true,
     isSvg: false
   },
   'demo-simple': {
-    text: 'Demo', // Texto añadido
+    text: t('buttons.demo'),
     icon: 'uil uil-arrow-right',
     animated: false,
     arrow: false,
     isSvg: false
   }
-};
+});
