@@ -2,30 +2,30 @@
 
 <template>
   <section class="contact section" id="contact">
-    <h2 class="section__title">Contáctame</h2>
-    <span class="section__subtitle">Ponte en contacto</span>
+    <h2 class="section__title">{{ t('title') }}</h2>
+    <span class="section__subtitle">{{ t('subtitle') }}</span>
 
     <div class="contact__container container grid">
       <div>
         <div class="contact__information">
           <i class="uil uil-phone contact__icon"></i>
           <div>
-            <h3 class="contact__title">Llámame</h3>
+            <h3 class="contact__title">{{ t('phone') }}</h3>
             <span class="contact__subtitle">+51 970675529</span>
           </div>
         </div>
         <div class="contact__information">
           <i class="uil uil-envelope contact__icon"></i>
           <div>
-            <h3 class="contact__title">Email</h3>
+            <h3 class="contact__title">{{ t('email') }}</h3>
             <span class="contact__subtitle">henrygalvezquilla@gmail.com</span>
           </div>
         </div>
         <div class="contact__information">
           <i class="uil uil-map-marker contact__icon"></i>
           <div>
-            <h3 class="contact__title">Ubicación</h3>
-            <span class="contact__subtitle">Perú - Arequipa</span>
+            <h3 class="contact__title">{{ t('location') }}</h3>
+            <span class="contact__subtitle">{{ t('locationValue') }}</span>
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@
       <form @submit.prevent="handleSubmit" class="contact__form grid">
         <div class="contact__inputs grid">
           <div class="contact__content" :class="{ 'input-error': errors.name }" @click="focusInput('name')">
-            <label for="name" class="contact__label">Nombre</label>
+            <label for="name" class="contact__label">{{ t('fieldName') }}</label>
             <textarea 
               id="name" 
               rows="1"
@@ -43,18 +43,18 @@
               ref="nameInput"></textarea>
           </div>
           <div class="contact__content" :class="{ 'input-error': errors.email }" @click="focusInput('email')">
-            <label for="email" class="contact__label">Email o Celular</label>
+            <label for="email" class="contact__label">{{ t('fieldEmail') }}</label>
             <textarea 
               id="email" 
               rows="1"
               class="contact__input contact__input--auto" 
               v-model="formData.email"
               @input="handleInput('email', $event)"
-              placeholder="ejemplo@email.com o +51 999999999"
+              :placeholder="t('emailPlaceholder')"
               ref="emailInput"></textarea>
           </div>
           <div class="contact__content contact__content--reduced" @click="focusInput('project')">
-            <label for="project" class="contact__label">Asunto (opcional)</label>
+            <label for="project" class="contact__label">{{ t('fieldProject') }}</label>
             <textarea 
               id="project" 
               rows="1"
@@ -64,7 +64,7 @@
               ref="projectInput"></textarea>
           </div>
           <div class="contact__content contact__content--reduced" :class="{ 'input-error': errors.message }" @click="focusInput('message')">
-            <label for="message" class="contact__label">Mensaje</label>
+            <label for="message" class="contact__label">{{ t('fieldMessage') }}</label>
             <textarea 
               id="message" 
               rows="4" 
@@ -82,7 +82,7 @@
           <i class="uil uil-whatsapp button__icon"></i>
         </a>
         <a href="javascript:void(0)" @click="!isSubmitting && handleSubmit()" class="button button--flex button--animated" :class="{ 'button--submitting': isSubmitting }">
-          {{ isSubmitting ? 'Enviando...' : 'Enviar Mensaje' }}
+          {{ isSubmitting ? t('sending') : t('send') }}
           <i class="uil uil-message button__icon"></i>
         </a>
       </div>
@@ -101,6 +101,8 @@
 <script setup>
 import { ref, nextTick, onMounted } from 'vue';
 import emailjs from '@emailjs/browser';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
 
 const formData = ref({
   name: '',
@@ -214,14 +216,14 @@ onMounted(() => {
 
 const handleSubmit = async () => {
   clearErrors();
-  
+
   // Validación básica de campos vacíos
   if (!formData.value.name || !formData.value.email || !formData.value.message) {
     if (!formData.value.name) errors.value.name = true;
     if (!formData.value.email) errors.value.email = true;
     if (!formData.value.message) errors.value.message = true;
     
-    showToast('Por favor, completa todos los campos requeridos', 'error');
+    showToast(t('toastRequired'), 'error');
     return;
   }
 
@@ -232,16 +234,23 @@ const handleSubmit = async () => {
 
   if (!isEmail && !isPhone) {
     errors.value.email = true;
-    showToast('Por favor, ingresa un email válido o un número de celular', 'error');
+    showToast(t('toastInvalidContact'), 'error');
     return;
   }
+
+  // Rate limit: máximo 5 mensajes por día por navegador
+  if (!checkRateLimit()) {
+    showToast(t('toastRateLimit'), 'error');
+    return;
+  }
+  
 
   isSubmitting.value = true;
 
   try {
     let emailData = {
       name: formData.value.name,
-      project: formData.value.project,
+      project: formData.value.project.trim() || t('defaultProject'),
       message: formData.value.message
     };
 
@@ -261,7 +270,7 @@ const handleSubmit = async () => {
       'D3S-rSMXgov-Ijdfg'
     );
 
-    showToast('¡Mensaje enviado exitosamente! Te contactaré pronto', 'success');
+    showToast(t('toastSuccess'), 'success');
     
     // Limpiar el formulario
     formData.value = { name: '', email: '', project: '', message: '' };
@@ -275,7 +284,7 @@ const handleSubmit = async () => {
     });
   } catch (error) {
     console.error('Error al enviar el mensaje:', error);
-    showToast('Hubo un error al enviar el mensaje. Por favor, intenta contactarme por WhatsApp', 'error');
+    showToast(t('toastError'), 'error');
   } finally {
     isSubmitting.value = false;
   }
@@ -283,9 +292,27 @@ const handleSubmit = async () => {
 
 const openWhatsApp = () => {
   const phoneNumber = '51970675529';
-  const message = encodeURIComponent('Hola, quiero contactarte por tus servicios.');
+  const message = encodeURIComponent(t('whatsappMessage'));
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
   window.open(whatsappUrl, '_blank');
+};
+
+const checkRateLimit = () => {
+  const key = 'contact_submissions';
+  const maxPerDay = 5; // Límite de envíos por día
+  const now = Date.now();
+  const oneDayMs = 24 * 60 * 60 * 1000;
+
+  const stored = JSON.parse(localStorage.getItem(key) || '[]');
+  const recent = stored.filter(ts => now - ts < oneDayMs);
+
+  if (recent.length >= maxPerDay) {
+    return false;
+  }
+
+  recent.push(now);
+  localStorage.setItem(key, JSON.stringify(recent));
+  return true;
 };
 </script>
 
@@ -556,3 +583,52 @@ const openWhatsApp = () => {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "title": "Contáctame",
+    "subtitle": "Ponte en contacto",
+    "phone": "Llámame",
+    "email": "Email",
+    "location": "Ubicación",
+    "locationValue": "Perú - Arequipa",
+    "fieldName": "Nombre",
+    "fieldEmail": "Email o Celular",
+    "emailPlaceholder": "ejemplo{'@'}email.com o +51 999999999",
+    "fieldProject": "Asunto (opcional)",
+    "fieldMessage": "Mensaje",
+    "sending": "Enviando...",
+    "send": "Enviar Mensaje",
+    "toastRequired": "Por favor, completa todos los campos requeridos",
+    "toastInvalidContact": "Por favor, ingresa un email válido o un número de celular",
+    "toastSuccess": "¡Mensaje enviado exitosamente! Te contactaré pronto",
+    "toastError": "Hubo un error al enviar el mensaje. Por favor, intenta contactarme por WhatsApp",
+    "toastRateLimit": "Has alcanzado el límite de mensajes por hoy. Inténtalo mañana o contáctame por WhatsApp.",
+    "whatsappMessage": "Hola, quiero contactarte por tus servicios.",
+    "defaultProject": "Trabajo"
+  },
+  "en": {
+    "title": "Contact Me",
+    "subtitle": "Get in touch",
+    "phone": "Call Me",
+    "email": "Email",
+    "location": "Location",
+    "locationValue": "Peru - Arequipa",
+    "fieldName": "Name",
+    "fieldEmail": "Email or Phone",
+    "emailPlaceholder": "example{'@'}email.com or +1 (555) 000-0000",
+    "fieldProject": "Subject (optional)",
+    "fieldMessage": "Message",
+    "sending": "Sending...",
+    "send": "Send Message",
+    "toastRequired": "Please fill in all required fields",
+    "toastInvalidContact": "Please enter a valid email or phone number",
+    "toastSuccess": "Message sent successfully! I'll get back to you soon",
+    "toastError": "There was an error sending the message. Please try contacting me via WhatsApp",
+    "toastRateLimit": "You've reached today's message limit. Try again tomorrow or contact me via WhatsApp.",
+    "whatsappMessage": "Hello, I want to contact you about your services.",
+    "defaultProject": "Work"
+  }
+}
+</i18n>

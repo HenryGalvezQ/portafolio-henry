@@ -1,20 +1,22 @@
+// Footer.vue
+
 <template>
   <footer class="footer">
     <div class="footer__bg">
       <div class="footer__container container grid">
         <div>
           <h1 class="footer__title">Henry Galvez</h1>
-          <span class="footer__subtitle">Frontend developer</span>
+          <span class="footer__subtitle">{{ t('subtitle') }}</span>
         </div>
         <ul class="footer__links">
           <li>
-            <a href="#services" class="footer__link">Servicios</a>
+            <a href="#services" class="footer__link">{{ t('services') }}</a>
           </li>
           <li>
-            <a href="#portfolio" class="footer__link">Portafolio</a>
+            <a href="#portfolio" class="footer__link">{{ t('portfolio') }}</a>
           </li>
           <li>
-            <a href="#contact" class="footer__link">Contacto</a>
+            <a href="#contact" class="footer__link">{{ t('contact') }}</a>
           </li>
         </ul>
         <div class="footer__socials">
@@ -27,19 +29,29 @@
           <a href="https://www.facebook.com/henry.galvez.quilla" aria-label="footer social facebook" target="_blank" class="footer__social">
             <i class="uil uil-facebook-f"></i>
           </a>
-          <a href="https://wa.me/51970675529?text=Hola,%20quiero%20contactarte%20por%20tus%20servicios." aria-label="footer social whatsapp" target="_blank" class="footer__social">
+          <a :href="whatsappUrl" aria-label="footer social whatsapp" target="_blank" class="footer__social">
             <i class="uil uil-whatsapp"></i>
           </a>
         </div>
       </div>
-      <p class="footer__copy">&#169; {{ currentYear }} Henry Galvez. All rights reserved</p>
+      <p class="footer__copy">&#169; {{ currentYear }} Henry Galvez. {{ t('rights') }}</p>
     </div>
   </footer>
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
+
 export default {
   name: 'Footer',
+  setup() {
+    const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
+    const whatsappUrl = computed(() => 
+      `https://wa.me/51970675529?text=${encodeURIComponent(t('whatsappMessage'))}`
+    );
+    return { t, whatsappUrl };
+  },
   data() {
     return {
       currentYear: new Date().getFullYear()
@@ -148,3 +160,24 @@ export default {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "es": {
+    "subtitle": "Desarrollador Frontend",
+    "services": "Servicios",
+    "portfolio": "Portafolio",
+    "contact": "Contacto",
+    "rights": "Todos los derechos reservados",
+    "whatsappMessage": "Hola, quiero contactarte por tus servicios."
+  },
+  "en": {
+    "subtitle": "Frontend Developer",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "contact": "Contact",
+    "rights": "All rights reserved",
+    "whatsappMessage": "Hello, I want to contact you about your services."
+  }
+}
+</i18n>
