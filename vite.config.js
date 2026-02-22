@@ -18,5 +18,20 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  css: {
+    // Inyecta font-display swap para todas las @font-face procesadas por Vite
+    preprocessorOptions: {}
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('@iconscout/unicons')) return 'unicons'
+          if (id.includes('swiper')) return 'swiper'
+          if (id.includes('emailjs')) return 'emailjs'
+        }
+      }
+    }
   }
 })

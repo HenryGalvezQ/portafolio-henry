@@ -1,6 +1,4 @@
 /*global.css*/
-/*==================== GOOGLE FONTS ====================*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 /*==================== VARIABLES CSS ====================*/
 :root {
@@ -92,7 +90,7 @@ body.dark-theme {
   --text-color-solid: hsl(var(--hue-color), 8%, 95%);
   --subtitle-color: hsl(var(--hue-color), 8%, 85%);
   --icon-color-social: #e6e6e6;
-  --first-color-2: hsl(var(--hue-color), 40%, 60%);
+  --first-color-2: hsl(var(--hue-color), 46%, 60%);
   --contact-input-color: hsl(var(--hue-color), 29%, 18%);
 
   --icon-mono: #ffffff;
@@ -543,3 +541,8 @@ body.dark-theme .footer__link:hover {
   }
 }
 
+/* Override font-display de Unicons para evitar FOIT */
+@font-face {
+  font-family: 'unicons';
+  font-display: swap;
+}
