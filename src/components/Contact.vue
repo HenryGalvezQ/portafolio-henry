@@ -264,10 +264,10 @@ const handleSubmit = async () => {
     }
 
     await emailjs.send(
-      'service_vcnwfaw',
-      'template_7lts8u5',
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
       emailData,
-      'D3S-rSMXgov-Ijdfg'
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     );
 
     showToast(t('toastSuccess'), 'success');

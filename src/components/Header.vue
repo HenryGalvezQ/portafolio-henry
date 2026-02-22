@@ -112,7 +112,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch,onMounted, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
@@ -121,7 +121,17 @@ const { locale } = useI18n({ useScope: 'global' })
 const isMenuOpen = ref(false);
 const toggleMenu = () => isMenuOpen.value = !isMenuOpen.value;
 
-const currentLang = ref('ES');
+const currentLang = ref(locale.value === 'en' ? 'EN' : 'ES');
+
+// Sincronizar document.documentElement.lang con el locale activo
+onMounted(() => {
+  document.documentElement.lang = locale.value;
+});
+
+watch(locale, (newLocale) => {
+  document.documentElement.lang = newLocale;
+});
+
 const isLangOpen = ref(false);
 const langSwitcher = ref(null);
 
