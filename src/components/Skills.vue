@@ -9,12 +9,12 @@
       
       <div :class="['skills__content', skillsState.frontend ? 'skills__open' : 'skills__close']" ref="frontendSkill" data-skill="frontend">
         <div class="skills__header" @click="toggleSkill('frontend')">
-          <i class="uil uil-brackets-curly skills__icon"></i>
+          <UilIcon name="brackets-curly" class="skills__icon" />
           <div>
             <h1 class="skills__title">{{ t('frontend.title') }}</h1>
             <span class="skills__subtitle">{{ t('frontend.subtitle') }}</span>
           </div>
-          <i class="uil uil-angle-down skills__arrow"></i>
+          <UilIcon name="angle-down" class="skills__arrow" />
         </div>
 
         <div class="skills__list skills__list--grid grid">
@@ -27,12 +27,12 @@
 
       <div :class="['skills__content', skillsState.mobile ? 'skills__open' : 'skills__close']" ref="mobileSkill" data-skill="mobile">
         <div class="skills__header" @click="toggleSkill('mobile')">
-          <i class="uil uil-mobile-android skills__icon"></i>
+          <UilIcon name="mobile-android" class="skills__icon" />
           <div>
             <h1 class="skills__title">{{ t('mobile.title') }}</h1>
             <span class="skills__subtitle">{{ t('mobile.subtitle') }}</span>
           </div>
-          <i class="uil uil-angle-down skills__arrow"></i>
+          <UilIcon name="angle-down" class="skills__arrow" />
         </div>
 
         <div class="skills__list skills__list--grid grid">
@@ -45,12 +45,12 @@
 
       <div :class="['skills__content', skillsState.backend ? 'skills__open' : 'skills__close']" ref="backendSkill" data-skill="backend">
         <div class="skills__header" @click="toggleSkill('backend')">
-          <i class="uil uil-database skills__icon"></i>
+          <UilIcon name="database" class="skills__icon" />
           <div>
             <h1 class="skills__title">{{ t('backend.title') }}</h1>
             <span class="skills__subtitle">{{ t('backend.subtitle') }}</span>
           </div>
-          <i class="uil uil-angle-down skills__arrow"></i>
+          <UilIcon name="angle-down" class="skills__arrow" />
         </div>
         
         <div class="skills__list skills__list--grid grid">
@@ -63,12 +63,12 @@
 
       <div :class="['skills__content', skillsState.devops ? 'skills__open' : 'skills__close']" ref="devopsSkill" data-skill="devops">
         <div class="skills__header" @click="toggleSkill('devops')">
-          <i class="uil uil-server-network skills__icon"></i>
+          <UilIcon name="server-network" class="skills__icon" />
           <div>
             <h1 class="skills__title">{{ t('devops.title') }}</h1>
             <span class="skills__subtitle">{{ t('devops.subtitle') }}</span>
           </div>
-          <i class="uil uil-angle-down skills__arrow"></i>
+          <UilIcon name="angle-down" class="skills__arrow" />
         </div>
         
         <div class="skills__list skills__list--grid grid">
@@ -84,13 +84,13 @@
 </template>
 
 <script>
-
+import UilIcon from '@/components/UilIcon.vue'
 import SvgIcon from './SvgIcon.vue';
 import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'Skills',
-  components: { SvgIcon },
+  components: { SvgIcon, UilIcon },
   setup() {
     const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
     return { t }

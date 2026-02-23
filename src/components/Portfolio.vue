@@ -18,7 +18,7 @@
 
       <!-- Estado vacío -->
       <div v-if="filteredProjects.length === 0" class="portfolio__empty">
-        <i class="uil uil-search-slash portfolio__empty-icon"></i>
+        <UilIcon name="folder-slash" class="portfolio__empty-icon" />
         <p class="portfolio__empty-text">{{ t('empty.text') }}</p>
         <span class="portfolio__empty-hint">{{ t('empty.hint') }}</span>
       </div>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import UilIcon from '@/components/UilIcon.vue';
 import PortfolioCardWrapper from './PortfolioCardWrapper.vue';
 import PortfolioFilters from './PortfolioFilters.vue';
 import { getButtonTemplates } from '@/config/button-config.js';
@@ -39,6 +40,7 @@ export default {
   components: {
     PortfolioCardWrapper,
     PortfolioFilters,
+    UilIcon
   },
   setup() {
     const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
@@ -121,8 +123,9 @@ export default {
 }
 
 .portfolio__empty-icon {
-  font-size: 3rem;
-  color: var(--text-color-light);
+  width: 3rem;
+  height: 3rem;
+  color: var(--first-color);
   margin-bottom: 0.5rem;
 }
 

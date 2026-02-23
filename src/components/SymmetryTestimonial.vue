@@ -10,11 +10,11 @@
     <div class="testimonial-divider"></div>
     
     <div class="testimonial-quote">
-      <i class="uil uil-quote-left quote-icon"></i>
+      <span class="quote-icon quote-icon--left">"</span>
       <p class="quote-text">
         {{ t('quote') }}
       </p>
-      <i class="uil uil-quote-right quote-icon"></i>
+      <span class="quote-icon quote-icon--right">"</span>
     </div>
     
     <div class="testimonial-author">
@@ -27,11 +27,11 @@
     
     <div class="testimonial-footer">
       <div class="contact-item">
-        <i class="uil uil-envelope"></i>
+        <UilIcon name="envelope" />
         <span>info@symmetry.club</span>
       </div>
       <div class="contact-item">
-        <i class="uil uil-link"></i>
+        <UilIcon name="link" />
         <a href="https://symmetry.club" target="_blank" rel="noopener noreferrer">
           https://symmetry.club
         </a>
@@ -41,6 +41,7 @@
 </template>
 
 <script setup>
+import UilIcon from '@/components/UilIcon.vue'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
 </script>
@@ -75,7 +76,7 @@ const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
   font-weight: var(--font-semi-bold);
   color: var(--title-color);
   text-align: center;
-  margin: 0;
+  margin-top: 0.5rem;
 }
 
 .testimonial-divider {
@@ -92,23 +93,30 @@ const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
 }
 
 .quote-icon {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   color: var(--first-color);
-  opacity: 0.3;
+  opacity: 0.75;
+  line-height: 1;
+  font-family: Georgia, serif;
+  display: block;   
+  font-style: italic; 
 }
+
+.quote-icon--left { text-align: left; margin-bottom: -1.2rem;}
+.quote-icon--right { text-align: right; }
 
 .quote-text {
   font-size: 1.05rem;
   line-height: 1.6;
   color: var(--text-color-solid);
   font-style: italic;
-  margin: 0.75rem 0;
   padding: 0 0.75rem;
+  
 }
 
 .testimonial-author {
   text-align: center;
-  margin: 1.5rem 0;
+  margin: 0.2rem 0;
 }
 
 .author-name {
@@ -145,10 +153,13 @@ const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
   color: var(--text-color);
 }
 
-.contact-item i {
+.contact-item svg {
   color: var(--first-color);
-  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
 }
+
 
 .contact-item a {
   color: var(--first-color);
@@ -181,7 +192,7 @@ const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
   }
   
   .quote-icon {
-    font-size: 1.25rem;
+    font-size: 2rem;
   }
   
   .author-name {

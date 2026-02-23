@@ -16,20 +16,22 @@
       @mouseleave="$emit('button-leave')"
     >
       <SvgIcon v-if="button.isSvg" :name="button.icon" />
-      <i v-else :class="button.icon" class="button__icon"></i>
+      <UilIcon v-else :name="button.icon" class="button__icon" />
       <span class="button__text">{{ button.text }}</span>
-      <i v-if="button.arrow" class="uil uil-arrow-right button__icon button__arrow"></i>
+      <UilIcon v-if="button.arrow" name="arrow-right" class="button__icon button__arrow" />
     </a>
   </div>
 </template>
 
 <script>
+import UilIcon from '@/components/UilIcon.vue'
 import SvgIcon from './SvgIcon.vue';
 
 export default {
   name: 'PortfolioActionButtons',
   components: {
-    SvgIcon
+    SvgIcon,
+    UilIcon,
   },
   props: {
     buttons: {
@@ -253,8 +255,6 @@ export default {
   width: 0;
   overflow: hidden;
 }
-.portfolio__button--animated .uil-dribbble,
-.portfolio__button--animated .uil-presentation-play,
 .portfolio__button--animated svg {
   opacity: 1 !important;
   display: flex !important;
@@ -318,7 +318,7 @@ export default {
 .button--demo .uil-play {
   animation: pulse 2s infinite;
 }
-.portfolio__button:not(.portfolio__button--animated):hover .uil-arrow-right {
+.portfolio__button:not(.portfolio__button--animated):hover svg.button__arrow {
   transform: translateX(.25rem);
 }
 .button__icon {
@@ -326,6 +326,9 @@ export default {
   display: inline-flex;
   align-items: center;
   margin: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
 }
 .portfolio__buttons:not(.presentation-hover):not(.delayed-reorder) .portfolio__button:nth-child(1) {
   animation: button-disappear-reappear 1.4s cubic-bezier(0.55, 0, 0.2, 1) forwards;

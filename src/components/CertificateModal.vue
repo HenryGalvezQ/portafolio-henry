@@ -10,7 +10,7 @@
         @touchend="onTouchEnd"
       >
 
-        <i @click="closeModal" class="uil uil-times qualification__modal-close"></i>
+        <UilIcon name="times" class="qualification__modal-close" @click="closeModal" />
 
         <!-- NUEVO: Mostrar testimonial si es Symmetry -->
         <div v-if="showSymmetryTestimonial" class="qualification__modal-content qualification__modal-content--testimonial">
@@ -19,7 +19,7 @@
 
         <!-- EXISTENTE: Lógica normal de imágenes para otros modales -->
         <template v-else>
-          <i v-if="isCarousel" @click.stop="prevImage" class="uil uil-angle-left-b carousel__button carousel__button--left"></i>
+          <UilIcon v-if="isCarousel" name="angle-left-b" class="carousel__button carousel__button--left" @click.stop="prevImage" />
 
           <div class="qualification__modal-content">
             <div v-if="!isCarousel" class="carousel__wrapper">
@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          <i v-if="isCarousel" @click.stop="nextImage" class="uil uil-angle-right-b carousel__button carousel__button--right"></i>
+          <UilIcon v-if="isCarousel" name="angle-right-b" class="carousel__button carousel__button--right" @click.stop="nextImage" />
         </template>
 
       </div>
@@ -61,6 +61,7 @@
 
 
 <script setup>
+import UilIcon from '@/components/UilIcon.vue'
 import { ref, computed, watch, onUnmounted } from 'vue';
 import SymmetryTestimonial from './SymmetryTestimonial.vue';
 
@@ -184,16 +185,19 @@ const closeModal = () => {
 // --- Hooks del Ciclo de Vida (sin cambios) ---
 watch(() => props.show, (isNowVisible) => {
   if (isNowVisible) {
+    document.body.style.overflow = 'hidden';
     currentImageIndex.value = 0;
     if (isCarousel.value && !showSymmetryTestimonial.value) { // MODIFICADO: No autoplay para testimonial
       startAutoSlide();
     }
   } else {
+    document.body.style.overflow = '';
     clearAutoSlide();
   }
 });
 
 onUnmounted(() => {
+  document.body.style.overflow = '';
   clearAutoSlide(); 
 });
 </script>
@@ -253,19 +257,19 @@ onUnmounted(() => {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  font-size: 1.5rem;
+  width: 2.4rem;
+  height: 2.4rem;
   color: var(--first-color);
   cursor: pointer;
   z-index: 15;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 50%;
-  width: 1.6em;
-  height: 1.6em;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   box-sizing: border-box;
+  padding: 0.45rem;
   transition: background-color .3s, color .3s;
 }
 
@@ -295,13 +299,12 @@ onUnmounted(() => {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 2.5rem;
+  width: 4rem;
+  height: 4rem;
   color: var(--first-color);
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 50%;
-  padding: 0.3rem;
-  width: 1.6em;
-  height: 1.6em;
+  padding: 0.75rem;
   cursor: pointer;
   transition: background-color .3s, color .3s;
   z-index: 15;
@@ -309,7 +312,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 .carousel__button:hover {
   background-color: var(--first-color);
@@ -320,9 +323,6 @@ onUnmounted(() => {
 }
 .carousel__button--right {
   right: -8rem;
-}
-.carousel__button .uil {
-  line-height: 1; 
 }
 .carousel__wrapper {
   overflow: hidden;
@@ -385,21 +385,12 @@ onUnmounted(() => {
    un tamaño mínimo cómodo al tacto. ==================== */
 @media screen and (max-width: 767px) {
   .carousel__button {
-    font-size: 1.8rem;   /* reducido respecto a 2.5rem de desktop, pero táctil */
-    padding: 0.2rem;
-    width: 2.4rem;       /* tamaño fijo en rem para el círculo */
+    width: 2.4rem;
     height: 2.4rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
-
-  .carousel__button--left {
-    left: 0.4rem;
-  }
-
-  .carousel__button--right {
-    right: 0.4rem;
+    padding: 0.3rem;
   }
 }
+
 
 @media screen and (max-width: 1024px) { 
   .carousel__button--left {
@@ -412,16 +403,9 @@ onUnmounted(() => {
 
 @media screen and (max-width: 350px) {
   .carousel__button {
-    font-size: 1.5rem;
-    padding: 0.15rem;
-    width: 2rem; 
-    height: 2rem; 
-  }
-  .carousel__button--left {
-    left: 0.25rem;
-  }
-  .carousel__button--right {
-    right: 0.25rem;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.2rem;
   }
 }
 </style>

@@ -8,12 +8,8 @@
   >
     <div class="portfolio-expanded__header">
       <h3 class="portfolio-expanded__title">{{ t('title') }}</h3>
-      <button 
-        @click="$emit('close')" 
-        class="portfolio-expanded__close"
-        :aria-label="t('closeAria')"
-      >
-        <i class="uil uil-times"></i>
+      <button @click="$emit('close')" class="portfolio-expanded__close">
+        <UilIcon name="times" />
       </button>
     </div>
     
@@ -27,7 +23,7 @@
     </div>
 
     <button @click="$emit('close')" class="portfolio-expanded__read-less">
-      <i class="uil uil-arrow-left"></i>
+      <UilIcon name="arrow-left" />
       {{ t('readLess') }}
     </button>
 
@@ -36,17 +32,19 @@
       v-if="showScrollIndicator" 
       class="portfolio-expanded__scroll-indicator"
     >
-      <i class="uil uil-angle-down"></i>
+      <UilIcon name="angle-down" />
       <span>{{ t('scrollHint') }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import UilIcon from '@/components/UilIcon.vue'
 import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'PortfolioExpandedDescription',
+  components: { UilIcon },
   setup() {
     const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
     const { locale } = useI18n({ useScope: 'global' })
@@ -384,9 +382,11 @@ export default {
   pointer-events: none;
 }
 
-.portfolio-expanded__scroll-indicator i {
-  font-size: 1rem;
+.portfolio-expanded__scroll-indicator svg {
+  width: 1rem;
+  height: 1rem;
   margin-bottom: 0.25rem;
+  flex-shrink: 0;
 }
 
 @keyframes bounce {

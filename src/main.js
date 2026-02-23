@@ -1,15 +1,10 @@
 import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 import App from './App.vue'
-
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import '@iconscout/unicons/css/line.css'
 import './assets/css/global.css'
 
 const getInitialLocale = () => {
-  const browserLang = navigator.language?.slice(0, 2) // 'en-US' → 'en'
+  const browserLang = navigator.language?.slice(0, 2)
   const supported = ['es', 'en']
   return supported.includes(browserLang)
     ? browserLang

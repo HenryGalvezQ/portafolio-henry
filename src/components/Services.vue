@@ -12,30 +12,30 @@
         <img src="@/assets/img/diseno_captura.png" alt="Captura de Diseño UI/UX" class="services__img">
 
         <div class="services__header" @click="toggleService()">
-          <i class="uil uil-web-grid services__icon"></i>
+          <UilIcon name="web-grid" class="services__icon" />
           <div>
             <h3 class="services__title">{{ t('ui.title') }}</h3>
             <span class="services__subtitle">{{ t('ui.subtitle') }}</span>
           </div>
-          <i class="uil uil-angle-down services__arrow"></i>
+          <UilIcon name="angle-down" class="services__arrow" />
         </div>
         
         <div class="services__list grid">
           <ul class="services__list-ul">
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('ui.items[0]') }}</p>
             </li>
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('ui.items[1]') }}</p>
             </li>
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('ui.items[2]') }}</p>
             </li>
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('ui.items[3]') }}</p>
             </li>
           </ul>
@@ -43,7 +43,7 @@
 
         <span @click="toggleService()" class="services__button">
           {{ t('viewMore') }}
-          <i class="uil uil-arrow-right button__icon"></i>
+          <UilIcon name="arrow-right" class="button__icon" />
         </span>
       </div>
 
@@ -52,30 +52,30 @@
         <img src="@/assets/img/desarrollo_captura.png" alt="Captura de Desarrollo Frontend" class="services__img">
 
         <div class="services__header" @click="toggleService()">
-          <i class="uil uil-arrow services__icon"></i>
+          <UilIcon name="arrow" class="services__icon" />
           <div>
             <h3 class="services__title">{{ t('frontend.title') }}</h3>
             <span class="services__subtitle">{{ t('frontend.subtitle') }}</span>
           </div>
-          <i class="uil uil-angle-down services__arrow"></i>
+          <UilIcon name="angle-down" class="services__arrow" />
         </div>
 
         <div class="services__list grid">
           <ul class="services__list-ul">
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('frontend.items[0]') }}</p>
             </li>
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('frontend.items[1]') }}</p>
             </li>
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('frontend.items[2]') }}</p>
             </li>
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('frontend.items[3]') }}</p>
             </li>
           </ul>
@@ -83,7 +83,7 @@
 
         <span @click="toggleService()" class="services__button">
           {{ t('viewMore') }}
-          <i class="uil uil-arrow-right button__icon"></i>
+          <UilIcon name="arrow-right" class="button__icon" />
         </span>
       </div>
 
@@ -92,30 +92,30 @@
         <img src="@/assets/img/mobile_captura.jpg" alt="Captura de Desarrollo Mobile" class="services__img">
 
         <div class="services__header" @click="toggleService()">
-          <i class="uil uil-mobile-android services__icon"></i>
+          <UilIcon name="mobile-android" class="services__icon" />
           <div>
             <h3 class="services__title">{{ t('mobile.title') }}</h3>
             <span class="services__subtitle">{{ t('mobile.subtitle') }}</span>
           </div>
-          <i class="uil uil-angle-down services__arrow"></i>
+          <UilIcon name="angle-down" class="services__arrow" />
         </div>
 
         <div class="services__list grid">
           <ul class="services__list-ul">
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('mobile.items[0]') }}</p>
             </li>
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('mobile.items[1]') }}</p>
             </li>
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('mobile.items[2]') }}</p>
             </li>
             <li class="services__list-item">
-              <i class="uil uil-check-circle services__list-icon"></i>
+              <UilIcon name="check-circle" class="services__list-icon" />
               <p>{{ t('mobile.items[3]') }}</p>
             </li>
           </ul>
@@ -123,7 +123,7 @@
 
         <span @click="toggleService()" class="services__button">
           {{ t('viewMore') }}
-          <i class="uil uil-arrow-right button__icon"></i>
+          <UilIcon name="arrow-right" class="button__icon" />
         </span>
       </div>
     </div>
@@ -131,11 +131,12 @@
 </template>
 
 <script>
-
+import UilIcon from '@/components/UilIcon.vue'
 import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'Services',
+  components: { UilIcon },
   setup() {
     const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
     return { t }
@@ -238,8 +239,10 @@ export default {
 
 .services__icon,
 .services__arrow {
-  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
   color: var(--first-color);
+  flex-shrink: 0;
 }
 
 .services__icon {
@@ -284,10 +287,12 @@ export default {
 .services__list-icon {
   color: var(--first-color);
   margin-right: var(--mb-0-5);
-  font-size: 1.2rem;
-  margin-top: 2px;
+  width: 1.2rem;
+  height: 1.2rem;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 4px;
 }
-
 /* --- Estados de Abierto y Cerrado --- */
 .services__close .services__list {
   max-height: 0;
@@ -326,7 +331,8 @@ export default {
 }
 
 .button__icon {
-  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
   transition: transform .3s;
 }
 

@@ -23,7 +23,7 @@
   <Footer />
 
   <a href="#" :aria-label="t('scrollUp')"class="scrollup" id="scroll-up" :class="{ 'show-scroll': showScrollBtn }">
-    <i class="uil uil-arrow-up scrollup__icon"></i>
+    <UilIcon name="arrow-up" class="scrollup__icon" />
   </a>
 </template>
 
@@ -43,6 +43,7 @@ import Project from './components/Project.vue'
 import Testimonial from './components/Testimonial.vue'
 import Contact from './components/Contact.vue'
 import Footer from './components/Footer.vue'
+import UilIcon from '@/components/UilIcon.vue'
 
 // Importamos los estilos globales
 
@@ -244,19 +245,22 @@ onUnmounted(() => {
   bottom: -20%;
   background-color: var(--first-color);
   opacity: .92;
-  padding: 0 .3rem;
+  padding: .3rem;
   border-radius: .4rem;
   z-index: var(--z-tooltip);
   transition: .4s;
 }
 
-.scrollup:hover {
-  background-color: var(--first-color-alt);
+.scrollup__icon {
+  font-size: 1.6rem;
+  width: 1.5rem;
+  height: 1.6rem;
+  color: #fff;
+  display: block;
 }
 
-.scrollup__icon {
-  font-size: 1.5rem;
-  color: #fff;
+.scrollup:hover {
+  background-color: var(--first-color-alt);
 }
 
 .show-scroll {

@@ -3,7 +3,7 @@
 export const getButtonTemplates = (t) => ({
   'demo': {
     text: t('buttons.demo'),
-    icon: 'uil uil-play',
+    icon: 'play',
     animated: true,
     arrow: true,
     isSvg: false
@@ -24,14 +24,14 @@ export const getButtonTemplates = (t) => ({
   },
   'presentation': {
     text: t('buttons.presentation'),
-    icon: 'uil uil-presentation-play',
+    icon: 'presentation-play',
     animated: true,
     arrow: true,
     isSvg: false
   },
   'demo-simple': {
     text: t('buttons.demo'),
-    icon: 'uil uil-arrow-right',
+    icon: 'arrow-right',
     animated: false,
     arrow: false,
     isSvg: false

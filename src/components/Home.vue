@@ -6,27 +6,27 @@
       <div class="home__wrapper">
         <div class="home__social">
           <a href="https://www.linkedin.com/in/henry-galvez-quilla-26367b281" aria-label="LinkedIn" target="_blank" class="home__social-icon">
-            <i class="uil uil-linkedin-alt"></i>
+            <UilIcon name="linkedin-alt" />
             <span class="home__social-text">LinkedIn</span>
           </a>
           <a href="https://www.credly.com/users/henry-quilla" aria-label="Credly" target="_blank" class="home__social-icon">
-            <i class="uil uil-dribbble"></i>
+            <UilIcon name="dribbble" />
             <span class="home__social-text">Credly</span>
           </a>
           <a href="https://github.com/HenryGalvezQ" aria-label="GitHub" target="_blank" class="home__social-icon">
-            <i class="uil uil-github-alt"></i>
+            <UilIcon name="github-alt" />
             <span class="home__social-text">GitHub</span>
           </a>
-          <a href="https://wa.me/51970675529?text=Hola,%20quiero%20contactarte%20por%20tus%20servicios." aria-label="WhatsApp" target="_blank" class="home__social-icon">
-            <i class="uil uil-whatsapp"></i>
+          <a :href="whatsappUrl" aria-label="WhatsApp" target="_blank" class="home__social-icon">
+            <UilIcon name="whatsapp" />
             <span class="home__social-text">WhatsApp</span>
           </a>
           <a href="https://www.facebook.com/henry.galvez.quilla" aria-label="Facebook" target="_blank" class="home__social-icon">
-            <i class="uil uil-facebook-f"></i>
+            <UilIcon name="facebook-f" />
             <span class="home__social-text">Facebook</span>
           </a>
           <a href="#contact" aria-label="Email" class="home__social-icon">
-            <i class="uil uil-envelope-alt"></i>
+            <UilIcon name="envelope-alt" />
             <span class="home__social-text">Email</span>
           </a>
         </div>
@@ -58,7 +58,7 @@
             </h3>
             <p class="home__discription">{{ t('description') }}</p>
             <a href="#contact" class="button button--flex button--animated">
-              {{ t('contact') }}<i class="uil uil-message button__icon"></i>
+              {{ t('contact') }}<UilIcon name="message" class="button__icon home__message-icon" />
             </a>
           </div>
         </div>
@@ -66,9 +66,9 @@
       
       <div class="home__scroll">
         <a href="#about" class="home__scroll-button button--flex">
-          <i class="uil uil-mouse-alt home__scroll-mouse"></i>
+          <UilIcon name="mouse-alt" class="home__scroll-mouse" />
           <span class="home__scroll-name">{{ t('scroll') }}</span>
-          <i class="uil uil-arrow-down"></i>
+          <UilIcon name="arrow-down" />
         </a>
       </div>
     </div>
@@ -76,8 +76,15 @@
 </template>
 
 <script setup>
+import UilIcon from '@/components/UilIcon.vue'
 import { useI18n } from 'vue-i18n'
+import { computed } from 'vue'
+
 const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
+
+const whatsappUrl = computed(() => 
+  `https://wa.me/51970675529?text=${encodeURIComponent(t('whatsappMessage'))}`
+)
 </script>
 
 <style scoped>
@@ -131,7 +138,7 @@ const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
   text-decoration: none;
 }
 
-.home__social-icon i {
+.home__social-icon svg {
   z-index: 2;
   position: relative;
   transition: transform 0.3s ease;
@@ -177,9 +184,13 @@ const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
   width: 100%;
 }
 
-.home__social-icon:hover i {
+.home__social-icon:hover svg {
   color: white;
   transform: scale(1.1);
+}
+
+.home__message-icon {
+  filter: drop-shadow(0 0 0.3px currentColor);
 }
 
 .home__social-icon:hover .home__social-text {
@@ -243,7 +254,7 @@ const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
 .home__scroll {
   display: none;
   position: absolute;
-  top: 450px;
+  top: 445px;
   right: 13.5rem;
   bottom: 4rem;
 }
@@ -526,6 +537,12 @@ const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
     font-size: 1.7rem;
   }
 }
+
+@media screen and (min-width: 768px) and (max-width: 1400px) and (max-height: 800px) {
+  .home.section {
+    padding-top: 3rem;
+  }
+}
 </style>
 
 <i18n lang="json">
@@ -537,7 +554,8 @@ const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
     "subtitle3": "UX/UI Designer",
     "description": "Experiencia de alto nivel en diseño y desarrollo web, produciendo trabajos de calidad.",
     "contact": "Contacto",
-    "scroll": "Scroll a CV"
+    "scroll": "Scroll a CV",
+    "whatsappMessage": "Hola, quiero contactarte por tus servicios."
   },
   "en": {
     "title": "Hi, I'm Henry Galvez",
@@ -546,7 +564,8 @@ const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
     "subtitle3": "UX/UI Designer",
     "description": "High level experience in web design and development, producing quality work.",
     "contact": "Contact",
-    "scroll": "Scroll to CV"
+    "scroll": "Scroll to CV",
+    "whatsappMessage": "Hello, I want to contact you about your services."
   }
 }
 </i18n>

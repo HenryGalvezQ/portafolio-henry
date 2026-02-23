@@ -8,21 +8,21 @@
     <div class="contact__container container grid">
       <div>
         <div class="contact__information">
-          <i class="uil uil-phone contact__icon"></i>
+          <UilIcon name="phone" class="contact__icon" />
           <div>
             <h3 class="contact__title">{{ t('phone') }}</h3>
             <span class="contact__subtitle">+51 970675529</span>
           </div>
         </div>
         <div class="contact__information">
-          <i class="uil uil-envelope contact__icon"></i>
+          <UilIcon name="envelope" class="contact__icon" />
           <div>
             <h3 class="contact__title">{{ t('email') }}</h3>
             <span class="contact__subtitle">henrygalvezquilla@gmail.com</span>
           </div>
         </div>
         <div class="contact__information">
-          <i class="uil uil-map-marker contact__icon"></i>
+          <UilIcon name="map-marker" class="contact__icon" />
           <div>
             <h3 class="contact__title">{{ t('location') }}</h3>
             <span class="contact__subtitle">{{ t('locationValue') }}</span>
@@ -79,11 +79,11 @@
       <div class="contact__buttons">
         <a href="javascript:void(0)" @click="openWhatsApp" class="button button--flex button--animated button--whatsapp">
           WhatsApp
-          <i class="uil uil-whatsapp button__icon"></i>
+          <UilIcon name="whatsapp" class="button__icon" />
         </a>
         <a href="javascript:void(0)" @click="!isSubmitting && handleSubmit()" class="button button--flex button--animated" :class="{ 'button--submitting': isSubmitting }">
           {{ isSubmitting ? t('sending') : t('send') }}
-          <i class="uil uil-message button__icon"></i>
+          <UilIcon name="message" class="button__icon" />
         </a>
       </div>
     </div>
@@ -91,7 +91,7 @@
     <!-- Toast Notification -->
     <transition name="toast">
       <div v-if="toast.show" :class="['toast', `toast--${toast.type}`]">
-        <i :class="['toast__icon', toast.type === 'success' ? 'uil uil-check-circle' : 'uil uil-exclamation-triangle']"></i>
+        <UilIcon :name="toast.type === 'success' ? 'check-circle' : 'exclamation-triangle'" class="toast__icon" />
         <span class="toast__message">{{ toast.message }}</span>
       </div>
     </transition>
@@ -99,6 +99,7 @@
 </template>
 
 <script setup>
+import UilIcon from '@/components/UilIcon.vue'
 import { ref, nextTick, onMounted } from 'vue';
 import emailjs from '@emailjs/browser';
 import { useI18n } from 'vue-i18n';
@@ -336,9 +337,11 @@ const checkRateLimit = () => {
 }
 
 .contact__icon {
-  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
   color: var(--first-color);
   margin-right: var(--mb-0-75);
+  flex-shrink: 0;
 }
 
 .contact__title {
@@ -451,9 +454,11 @@ const checkRateLimit = () => {
 
 .button__icon {
   margin-left: 0.5rem;
-  font-size: 1.3rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 0.3px currentColor);
 }
-
 /* ==================== TOAST NOTIFICATION ==================== */
 .toast {
   position: fixed;
@@ -494,7 +499,8 @@ const checkRateLimit = () => {
 }
 
 .toast__icon {
-  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
   flex-shrink: 0;
 }
 
@@ -572,7 +578,8 @@ const checkRateLimit = () => {
   
   .button__icon {
     margin-left: 0.25rem;
-    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
   }
   
   .toast {

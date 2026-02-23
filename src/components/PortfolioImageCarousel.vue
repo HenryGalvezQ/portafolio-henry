@@ -30,8 +30,9 @@
     <PortfolioTechBadges :tech-badges="techBadges" />
     
     <template v-if="images.length > 1">
-      <i @click="prevImage" class="uil uil-angle-left-b portfolio-carousel__button portfolio-carousel__button--left"></i>
-      <i @click="nextImage" class="uil uil-angle-right-b portfolio-carousel__button portfolio-carousel__button--right"></i>
+      <UilIcon name="angle-left-b" class="portfolio-carousel__button portfolio-carousel__button--left" @click="prevImage" />
+      <UilIcon name="angle-right-b" class="portfolio-carousel__button portfolio-carousel__button--right" @click="nextImage" />
+
       
       <div class="portfolio-carousel__pagination">
         <span 
@@ -48,6 +49,7 @@
 </template>
 
 <script>
+import UilIcon from '@/components/UilIcon.vue'
 import PortfolioTechBadges from './PortfolioTechBadges.vue';
 import { useI18n } from 'vue-i18n';
 
@@ -58,7 +60,8 @@ export default {
     return { t }
   },
   components: {
-    PortfolioTechBadges
+    PortfolioTechBadges,
+    UilIcon,
   },
   props: {
     images: {
@@ -278,11 +281,12 @@ export default {
   border-radius: 50%;
   width: 2rem;
   height: 2rem;
-  font-size: 1.5rem;
+  padding: 0.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .portfolio-carousel__button:hover {

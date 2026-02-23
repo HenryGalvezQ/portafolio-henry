@@ -8,41 +8,41 @@
         <ul class="nav__list grid">
           <li class="nav__item">
             <a href="#home" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'home' }">
-              <i class="uil uil-estate nav__icon"></i> {{ t('nav.home') }}
+              <UilIcon name="estate" class="nav__icon" /> {{ t('nav.home') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#about" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'about' }">
-              <i class="uil uil-user nav__icon"></i> {{ t('nav.about') }}
+              <UilIcon name="user" class="nav__icon" /> {{ t('nav.about') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#skills" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'skills' }">
-              <i class="uil uil-brackets-curly  nav__icon"></i> {{ t('nav.skills') }}
+              <UilIcon name="brackets-curly" class="nav__icon" /> {{ t('nav.skills') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#qualification" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'qualification' }">
-              <i class="uil uil-history  nav__icon"></i> {{ t('nav.qualification') }}
+              <UilIcon name="history" class="nav__icon" /> {{ t('nav.qualification') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#services" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'services' }">
-              <i class="uil uil-briefcase-alt nav__icon"></i> {{ t('nav.services') }}
+              <UilIcon name="briefcase-alt" class="nav__icon" /> {{ t('nav.services') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#portfolio" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'portfolio' }">
-              <i class="uil uil-scenery nav__icon"></i> {{ t('nav.portfolio') }}
+              <UilIcon name="scenery" class="nav__icon" /> {{ t('nav.portfolio') }}
             </a>
           </li>
           <li class="nav__item">
             <a href="#contact" class="nav__link" @click="closeMenu" :class="{ 'active-link': activeSection === 'contact' }">
-              <i class="uil uil-message nav__icon"></i> {{ t('nav.contact') }}
+              <UilIcon name="message" class="nav__icon" /> {{ t('nav.contact') }}
             </a>
           </li>
         </ul>
-        <i class="uil uil-times nav__close" id="nav-close" @click="closeMenu"></i>
+        <UilIcon name="times" class="nav__close" id="nav-close" @click="closeMenu" />
       </div>
 
       <div class="nav__btns">
@@ -56,9 +56,9 @@
           @click="onLangClick"
           ref="langSwitcher"
         >
-          <i class="uil uil-english-to-chinese lang__icon"></i>
+          <UilIcon name="english-to-chinese" class="lang__icon" />
           <span class="lang__label">{{ currentLang }}</span>
-          <i class="uil lang__arrow" :class="isLangOpen ? 'uil-angle-down' : 'uil-angle-up'"></i>
+          <UilIcon :name="isLangOpen ? 'angle-down' : 'angle-up'" class="lang__arrow" />
 
           <div
             class="lang__dropdown"
@@ -72,7 +72,7 @@
               @click.stop="selectLang('ES')"
             >
               <span>ES</span>
-              <i v-if="currentLang === 'ES'" class="uil uil-check lang__check"></i>
+              <UilIcon v-if="currentLang === 'ES'" name="check" class="lang__check" />
             </div>
             <div
               class="lang__option"
@@ -80,7 +80,7 @@
               @click.stop="selectLang('EN')"
             >
               <span>EN</span>
-              <i v-if="currentLang === 'EN'" class="uil uil-check lang__check"></i>
+              <UilIcon v-if="currentLang === 'EN'" name="check" class="lang__check" />
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@
 
         <!-- Nav Toggle (mobile menu) -->
         <div class="nav__toggle" id="nav-toggle" @click="toggleMenu">
-          <i class="uil uil-list-ul"></i>
+          <UilIcon name="list-ul" />
         </div>
 
         <!-- Theme Switch Button -->
@@ -100,7 +100,7 @@
         >
           <span class="theme-switch__track">
             <span class="theme-switch__thumb">
-              <i class="uil" :class="currentTheme === 'dark' ? 'uil-moon' : 'uil-sun'"></i>
+              <UilIcon :name="currentTheme === 'dark' ? 'moon' : 'sun'" />
             </span>
           </span>
         </button>
@@ -112,6 +112,7 @@
 </template>
 
 <script setup>
+import UilIcon from '@/components/UilIcon.vue'
 import { ref, watch,onMounted, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n'
 
@@ -326,7 +327,7 @@ defineEmits(['toggle-theme']);
   bottom: -100%;
   left: 0;
   width: 100%;
-  min-height: 228px;
+  min-height: 203px;
   background-color: var(--body-color);
   padding: 2rem 1.5rem 4rem;
   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
@@ -460,14 +461,16 @@ defineEmits(['toggle-theme']);
   background-color: hsl(var(--hue-color), 65%, 20%);
 }
 
-.theme-switch__thumb .uil {
+.theme-switch__thumb svg {
   font-size: 0.9rem;
-  line-height: 1;
+  width: 0.9rem;
+  height: 0.9rem;
   color: hsl(var(--hue-color), 65%, 45%);
   transition: color 0.35s ease;
+  filter: drop-shadow(0 0 0.1px currentColor);
 }
 
-.theme-switch--dark .theme-switch__thumb .uil {
+.theme-switch--dark .theme-switch__thumb svg {
   color: #fff;
 }
 
@@ -486,7 +489,10 @@ defineEmits(['toggle-theme']);
   color: white;
   user-select: none;
 }
-.lang__icon { font-size: 1.25rem; }
+.lang__icon { 
+  font-size: 1.25rem;
+  filter: drop-shadow(0 0 0.3px currentColor);
+ }
 .lang__label {
   font-size: 0.8rem;
   font-weight: var(--font-medium);
@@ -495,6 +501,7 @@ defineEmits(['toggle-theme']);
 .lang__arrow {
   font-size: 1rem;
   transition: transform 0.2s ease;
+  filter: drop-shadow(0 0 0.3px currentColor);
 }
 .lang__switcher--active .lang__icon,
 .lang__switcher--active .lang__label,
@@ -543,7 +550,14 @@ defineEmits(['toggle-theme']);
   margin-left: 0.4rem;
 }
 /* ─────────────────────────────────────────────────────────── */
-
+@media screen and (max-width: 767px) {
+  .nav__toggle svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: block;
+    filter: drop-shadow(0 0 0.3px currentColor);
+  }
+}
 /* ── DESKTOP ────────────────────────────────────────────────── */
 @media screen and (min-width: 768px) {
   .header {

@@ -45,8 +45,8 @@
         </p>
       </div>
       <div class="portfolio__cta" :class="{ 'portfolio__cta--visible': isExpanded }">
-        <i class="uil uil-rocket"></i>
-        <span>{{ t('cta') }} <i class="uil uil-arrow-down"></i></span> 
+        <UilIcon name="rocket" />
+        <span class="portfolio__cta-text">{{ t('cta') }} <UilIcon name="arrow-down" /></span> 
       </div>
       <PortfolioActionButtons
         :buttons="project.buttons"
@@ -66,12 +66,13 @@
       @click.stop="$emit('toggle-expand')"
     >
       <span>{{ t('viewMore') }}</span>
-      <i class="uil uil-arrow-down"></i>
+      <UilIcon name="arrow-down" />
     </div>
   </div>
 </template>
 
 <script>
+import UilIcon from '@/components/UilIcon.vue'
 import PortfolioTags from './PortfolioTags.vue';
 import PortfolioImageCarousel from './PortfolioImageCarousel.vue';
 import PortfolioActionButtons from './PortfolioActionButtons.vue';
@@ -90,7 +91,8 @@ export default {
     PortfolioTags,
     PortfolioImageCarousel,
     PortfolioActionButtons,
-    CertificateModal
+    CertificateModal,
+    UilIcon,
   },
   props: {
     project: {
@@ -329,10 +331,19 @@ export default {
   transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s, visibility 0s 0.1s, height 0.4s ease 0.1s;
 }
 
-.portfolio__cta i {
-  font-size: 1rem;
+.portfolio__cta svg {
+  width: 1rem;
+  height: 1rem;
   animation: pulse 2s infinite;
+  flex-shrink: 0;
 }
+
+.portfolio__cta-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }
@@ -372,11 +383,14 @@ export default {
   transition: opacity 0.3s ease, height 0.3s ease, padding 0.3s ease;
 }
 
-.portfolio__expand-button i {
+.portfolio__expand-button svg {
+  width: 1rem;
+  height: 1rem;
   transition: transform .3s;
+  flex-shrink: 0;
 }
 
-.parent-is-hovered .portfolio__expand-button i {
+.parent-is-hovered .portfolio__expand-button svg {
   transform: translateY(5px);
 }
 

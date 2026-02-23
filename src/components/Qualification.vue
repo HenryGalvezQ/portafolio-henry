@@ -13,7 +13,7 @@
           @click="setActiveTab('education', $event)"
           @touchend="handleTabTouch('education', $event)"
           :class="{ 'qualification__active': activeTab === 'education' }">
-          <i class="uil uil-graduation-cap qualification__icon"></i>
+          <UilIcon name="graduation-cap" class="qualification__icon" />
           {{ t('tabs.education') }}
         </div>
         <div 
@@ -22,7 +22,7 @@
           @click="setActiveTab('work', $event)"
           @touchend="handleTabTouch('work', $event)"
           :class="{ 'qualification__active': activeTab === 'work' }">
-          <i class="uil uil-briefcase-alt qualification__icon"></i>
+          <UilIcon name="briefcase-alt" class="qualification__icon" />
           {{ t('tabs.work') }}
         </div>
       </div>
@@ -38,7 +38,7 @@
                 <h3 class="qualification__title">{{ t('unsa.title') }}</h3>
                 <span class="qualification__subtitle">{{ t('unsa.institution') }}</span>
                 <div class="qualification__calendar">
-                  <i class="uil uil-calendar-alt"></i>
+                  <UilIcon name="calendar-alt" />
                   {{ t('unsa.date') }}
                 </div>
               </div>
@@ -62,7 +62,7 @@
                   <h3 class="qualification__title">{{ t('symmetry.title') }}</h3>
                   <span class="qualification__subtitle">{{ t('symmetry.institution') }}</span>
                   <div class="qualification__calendar">
-                    <i class="uil uil-calendar-alt"></i>
+                    <UilIcon name="calendar-alt" />
                     {{ t('symmetry.date') }}
                   </div>
                 </div>
@@ -79,7 +79,7 @@
                 <h3 class="qualification__title">{{ t('ingles.title') }}</h3>
                 <span class="qualification__subtitle">{{ t('ingles.institution') }}</span>
                 <div class="qualification__calendar">
-                  <i class="uil uil-calendar-alt"></i>
+                  <UilIcon name="calendar-alt" />
                   {{ t('ingles.date') }}
                 </div>
               </div>
@@ -103,7 +103,7 @@
                   <h3 class="qualification__title">{{ t('innovaciencia.title') }}</h3>
                   <span class="qualification__subtitle">{{ t('innovaciencia.institution') }}</span>
                   <div class="qualification__calendar">
-                    <i class="uil uil-calendar-alt"></i>
+                    <UilIcon name="calendar-alt" />
                     {{ t('innovaciencia.date') }}
                   </div>
                 </div>
@@ -120,7 +120,7 @@
                 <h3 class="qualification__title">{{ t('cisco.title') }}</h3>
                 <span class="qualification__subtitle">{{ t('cisco.institution') }}</span>
                 <div class="qualification__calendar">
-                  <i class="uil uil-calendar-alt"></i>
+                  <UilIcon name="calendar-alt" />
                   {{ t('cisco.date') }}
                 </div>
               </div>
@@ -144,7 +144,7 @@
                   <h3 class="qualification__title">{{ t('municipalidad.title') }}</h3>
                   <span class="qualification__subtitle">{{ t('municipalidad.institution') }}</span>
                   <div class="qualification__calendar">
-                    <i class="uil uil-calendar-alt"></i>
+                    <UilIcon name="calendar-alt" />
                     {{ t('municipalidad.date') }}
                   </div>
                 </div>
@@ -161,7 +161,7 @@
                 <h3 class="qualification__title">{{ t('coderhouse.title') }}</h3>
                 <span class="qualification__subtitle">{{ t('coderhouse.institution') }}</span>
                 <div class="qualification__calendar">
-                  <i class="uil uil-calendar-alt"></i>
+                  <UilIcon name="calendar-alt" />
                   {{ t('coderhouse.date') }}
                 </div>
               </div>
@@ -185,7 +185,7 @@
                   <h3 class="qualification__title">{{ t('soporte.title') }}</h3>
                   <span class="qualification__subtitle">{{ t('soporte.institution') }}</span>
                   <div class="qualification__calendar">
-                    <i class="uil uil-calendar-alt"></i>
+                    <UilIcon name="calendar-alt" />
                     {{ t('soporte.date') }}
                   </div>
                 </div>
@@ -202,7 +202,7 @@
                 <h3 class="qualification__title">{{ t('oracle.title') }}</h3>
                 <span class="qualification__subtitle">{{ t('oracle.institution') }}</span>
                 <div class="qualification__calendar">
-                  <i class="uil uil-calendar-alt"></i>
+                  <UilIcon name="calendar-alt" />
                   {{ t('oracle.date') }}
                 </div>
               </div>
@@ -227,6 +227,7 @@
 </template>
 
 <script setup>
+import UilIcon from '@/components/UilIcon.vue'
 import { ref, computed } from 'vue';
 import CertificateModal from './CertificateModal.vue';
 import { useI18n } from 'vue-i18n';
@@ -356,7 +357,10 @@ const closeModal = () => {
 
 .qualification__icon {
   font-size: 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
   margin-right: var(--mb-0-25);
+  flex-shrink: 0;
 }
 
 .qualification__button.qualification__active {

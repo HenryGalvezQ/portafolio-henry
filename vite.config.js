@@ -33,8 +33,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('@iconscout/unicons')) return 'unicons'
-          if (id.includes('swiper')) return 'swiper'
           if (id.includes('emailjs')) return 'emailjs'
         }
       }

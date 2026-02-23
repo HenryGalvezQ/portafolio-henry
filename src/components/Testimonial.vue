@@ -74,12 +74,8 @@
 <script setup>
 import { onMounted } from 'vue';
 // Importaciones de Swiper
-import Swiper from 'swiper';
-import { Pagination } from 'swiper/modules';
 
 // Importa los estilos de Swiper
-import 'swiper/css';
-import 'swiper/css/pagination';
 
 onMounted(() => {
   new Swiper('.testimonial_container', {

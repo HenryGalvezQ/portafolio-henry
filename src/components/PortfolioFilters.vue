@@ -5,7 +5,7 @@
     <!-- Fila: input + listbox -->
     <div class="portfolio-filters__search-row">
       <div class="portfolio-filters__search-wrapper">
-        <i class="uil uil-search portfolio-filters__search-icon"></i>
+        <UilIcon name="search" class="portfolio-filters__search-icon" />
         <input
           v-model="searchQuery"
           type="text"
@@ -19,7 +19,7 @@
           @click="searchQuery = ''"
           :aria-label="t('search.clear')"
         >
-          <i class="uil uil-times"></i>
+          <UilIcon name="times" />
         </button>
       </div>
 
@@ -31,12 +31,9 @@
           :aria-expanded="listboxOpen"
           aria-haspopup="listbox"
         >
-          <i :class="searchFieldIcons[searchField]"></i>
+          <UilIcon :name="iconName(searchFieldIcons[searchField])" />
           <span class="portfolio-filters__listbox-label">{{ searchFieldLabels[searchField] }}</span>
-          <i
-            class="uil uil-angle-down portfolio-filters__listbox-arrow"
-            :class="{ 'is-open': listboxOpen }"
-          ></i>
+          <UilIcon name="angle-down" class="portfolio-filters__listbox-arrow" :class="{ 'is-open': listboxOpen }" />
         </button>
 
         <Transition name="pf-dropdown">
@@ -55,9 +52,9 @@
               :aria-selected="searchField === option.value"
               @click="selectField(option.value)"
             >
-              <i :class="option.icon"></i>
+              <UilIcon :name="iconName(option.icon)" />
               <span>{{ option.label }}</span>
-              <i v-if="searchField === option.value" class="uil uil-check portfolio-filters__check"></i>
+              <UilIcon v-if="searchField === option.value" name="check" class="portfolio-filters__check" />
             </li>
           </ul>
         </Transition>
@@ -86,11 +83,13 @@
 </template>
 
 <script>
+import UilIcon from '@/components/UilIcon.vue'
 import { useI18n } from 'vue-i18n';
 import { projectsData } from '@/data/projectsData.js';
 
 export default {
   name: 'PortfolioFilters',
+  components: { UilIcon },
   emits: ['filter-change'],
   setup() {
     const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
@@ -192,6 +191,9 @@ export default {
     document.removeEventListener('click', this.handleOutsideClick);
   },
   methods: {
+    iconName(uilClass) {
+      return uilClass.replace('uil uil-', '');
+    },
     selectField(value) {
       this.searchField = value;
       this.listboxOpen = false;
@@ -343,9 +345,11 @@ export default {
   box-shadow: 0 0 0 3px var(--first-color-lighter);
 }
 
-.portfolio-filters__listbox-btn i:first-child {
+.portfolio-filters__listbox-btn svg:first-child {
   color: var(--first-color);
   font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
 }
 
 /* Label oculto en móvil, visible en ≥480px */
@@ -401,9 +405,10 @@ export default {
   font-weight: var(--font-medium);
 }
 
-.portfolio-filters__listbox-option i:first-child {
+.portfolio-filters__listbox-option svg:first-child {
   font-size: 1rem;
   width: 1rem;
+  height: 1rem;
   flex-shrink: 0;
 }
 

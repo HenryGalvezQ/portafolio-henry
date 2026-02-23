@@ -30,20 +30,20 @@
 
         <div class="about__buttons">
           <a :href="locale === 'en' ? '/cv-henry-galvez-en.pdf' : '/cv-henry-galvez.pdf'" target="_blank" rel="noopener noreferrer" class="button button--flex button--animated">
-            {{ t('buttons.view') }}<i class="uil uil-eye button__icon"></i>
+            {{ t('buttons.view') }}<UilIcon name="eye" class="button__icon" />
           </a>
           
           <a :href="locale === 'en' ? '/cv-henry-galvez-en.pdf' : '/cv-henry-galvez.pdf'" :download="locale === 'en' ? 'CV_Henry_Galvez_EN.pdf' : 'CV_Henry_Galvez.pdf'" class="button button--flex button--outline button--animated">
-            {{ t('buttons.download') }}<i class="uil uil-download-alt button__icon"></i>
+            {{ t('buttons.download') }}<UilIcon name="download-alt" class="button__icon" />
           </a>
         </div>
       </div>
 
       <div class="about__scroll">
         <a href="#portfolio" class="about__scroll-button button--flex" @click="scrollToPortfolio">
-          <i class="uil uil-mouse-alt about__scroll-mouse"></i>
+          <UilIcon name="mouse-alt" class="about__scroll-mouse" />
           <span class="about__scroll-name">{{ t('scroll') }}</span>
-          <i class="uil uil-arrow-down"></i>
+          <UilIcon name="arrow-down" />
         </a>
       </div>
     </div>
@@ -51,10 +51,12 @@
 </template>
 
 <script>
+import UilIcon from '@/components/UilIcon.vue'
 import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'About',
+  components: { UilIcon },
   setup() {
     const { t } = useI18n({ inheritLocale: true, useScope: 'local' })
     const { locale } = useI18n({ useScope: 'global' })
@@ -158,6 +160,7 @@ export default {
   column-gap: .5rem;
   text-decoration: none;
   cursor: pointer;
+  min-height: 3.5rem;
 }
 
 .about__scroll-button:hover {

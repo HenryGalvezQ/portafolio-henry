@@ -161,42 +161,48 @@ export const projectsData = [
       en: 'Personal Portfolio',
     },
     description: {
-      es: 'Diseñé y desarrollé mi sitio web personal utilizando Vue 3 y Vite, implementando una arquitectura de componentes modular, con un diseño responsive enfocado en la experiencia de usuario.',
-      en: 'I designed and developed my personal website using Vue 3 and Vite, implementing a modular component architecture with a responsive design focused on user experience.',
+      es: 'Diseñé y desarrollé mi sitio web personal con Vue 3 y Vite, implementando i18n (ES/EN), modo oscuro/claro y optimizaciones avanzadas de rendimiento (Lazy Loading, WebP, SEO) para una experiencia de usuario superior.',
+      en: 'I designed and developed my personal website using Vue 3 and Vite, implementing i18n (ES/EN), dark/light mode, and advanced performance optimizations (Lazy Loading, WebP, SEO) for a superior user experience.',
     },
     expandedDescription: {
-      es: `<h3>Portafolio Profesional - Identidad Digital</h3>
+      es: `<h3>Portafolio Profesional - Identidad Digital & Rendimiento</h3>
 <p>Este portafolio es una representación de mis habilidades como Desarrollador Frontend y Diseñador UX/UI. Fue construido desde cero con el objetivo de crear una interfaz limpia, moderna y altamente performante que sirva como escaparate para mis proyectos y experiencia profesional.</p>
 
-<p>La arquitectura técnica se basa en <strong>Vue 3 (Composition API)</strong> potenciado por <strong>Vite</strong>, lo que asegura una carga instantánea y una gestión eficiente de los recursos. Implementé una estructura de componentes reutilizables y un manejo de estado reactivo para funcionalidades globales como el cambio de tema (Dark/Light Mode) y la navegación activa (Scroll Spy), mejorando la interactividad sin comprometer el rendimiento.</p>
+<p>La arquitectura técnica se basa en <strong>Vue 3 (Composition API)</strong> potenciado por <strong>Vite</strong>. Implementé una estructura de componentes reutilizables y un manejo de estado reactivo para funcionalidades globales como el cambio de tema (Dark/Light Mode) y la navegación activa (Scroll Spy). Además, organicé la información en módulos JS independientes (como estos datos de proyectos) para facilitar la escalabilidad a largo plazo.</p>
 
-<p>El diseño visual sigue principios de <strong>Mobile-First</strong> y diseño adaptativo, asegurando una visualización perfecta en cualquier dispositivo. Utilicé CSS moderno para las animaciones y transiciones suaves, y organicé la información (como estos datos de proyectos) en módulos JS independientes para facilitar la escalabilidad y el mantenimiento del contenido a largo plazo.</p>
+<p>A nivel de <strong>Rendimiento y SEO</strong>, configuré <em>ViteImageOptimizer</em> para la compresión automática a formatos .webp y reduje el peso del bundle importando selectivamente íconos SVG (reemplazando librerías pesadas). Apliqué <em>Code Splitting</em> manual para dependencias como EmailJS y optimicé la carga de fuentes críticas usando <code>fetchpriority</code> y <code>preload</code>. Todo esto, sumado a metaetiquetas Open Graph, garantiza métricas sobresalientes y un excelente posicionamiento.</p>
+
+<p>El diseño sigue principios de <strong>Mobile-First</strong>, con animaciones fluidas en CSS moderno. Finalmente, enriquecí la experiencia global con un sistema de internacionalización robusto (<strong>Vue I18n</strong>), gestionando las traducciones inglés/español de forma modular mediante bloques <code>&lt;i18n&gt;</code> por componente.</p>
 
 <h4>Características Destacadas:</h4>
 <ul>
-<li><strong>Arquitectura Basada en Componentes:</strong> Estructura modular (Header, Hero, Projects, Contact) que facilita la reutilización y el mantenimiento del código.</li>
-<li><strong>Gestión de Tema Dinámico:</strong> Sistema de modo oscuro/claro con persistencia en el almacenamiento local (LocalStorage) para recordar las preferencias del usuario.</li>
-<li><strong>Optimización y Performance:</strong> Uso de carga perezosa (lazy loading) para recursos y optimización de assets para maximizar la velocidad del sitio.</li>
+<li><strong>Arquitectura Modular:</strong> Estructura basada en componentes (Header, Hero, Projects) y separación limpia de la capa de datos.</li>
+<li><strong>Internacionalización (i18n):</strong> Soporte bilingüe dinámico con gestión de locales aislada por componente para un código más limpio.</li>
+<li><strong>Optimización Extrema y SEO:</strong> Uso de imágenes WebP, Code Splitting, carga diferida (lazy loading) y eliminación de recursos bloqueantes.</li>
+<li><strong>Gestión de Tema Dinámico:</strong> Sistema de modo oscuro/claro con persistencia en el almacenamiento local (LocalStorage).</li>
 </ul>`,
-      en: `<h3>Professional Portfolio - Digital Identity</h3>
+      en: `<h3>Professional Portfolio - Digital Identity & Performance</h3>
 <p>This portfolio is a representation of my skills as a Frontend Developer and UX/UI Designer. It was built from scratch with the goal of creating a clean, modern, and highly performant interface that serves as a showcase for my projects and professional experience.</p>
 
-<p>The technical architecture is based on <strong>Vue 3 (Composition API)</strong> powered by <strong>Vite</strong>, which ensures instant loading and efficient resource management. I implemented a reusable component structure and reactive state management for global features such as theme switching (Dark/Light Mode) and active navigation (Scroll Spy), improving interactivity without compromising performance.</p>
+<p>The technical architecture is based on <strong>Vue 3 (Composition API)</strong> powered by <strong>Vite</strong>. I implemented a reusable component structure and reactive state management for global features such as theme switching (Dark/Light Mode) and active navigation (Scroll Spy). Furthermore, I organized the information into independent JS modules (like this project data) to facilitate long-term scalability.</p>
 
-<p>The visual design follows <strong>Mobile-First</strong> and responsive design principles, ensuring a perfect display on any device. I used modern CSS for smooth animations and transitions, and organized the information (like this project data) into independent JS modules to facilitate scalability and long-term content maintenance.</p>
+<p>At the <strong>Performance and SEO</strong> level, I configured <em>ViteImageOptimizer</em> for automatic compression to .webp formats and reduced the bundle size by selectively importing custom SVG icons (replacing heavy libraries). I applied manual <em>Code Splitting</em> for dependencies like EmailJS and optimized the loading of critical fonts using <code>fetchpriority</code> and <code>preload</code>. This, combined with Open Graph meta tags, guarantees outstanding metrics and excellent search ranking.</p>
+
+<p>The design follows <strong>Mobile-First</strong> principles, featuring smooth animations with modern CSS. Finally, I enriched the overall experience with a robust internationalization system (<strong>Vue I18n</strong>), managing English/Spanish translations modularly through <code>&lt;i18n&gt;</code> blocks per component.</p>
 
 <h4>Key Features:</h4>
 <ul>
-<li><strong>Component-Based Architecture:</strong> Modular structure (Header, Hero, Projects, Contact) that facilitates code reuse and maintenance.</li>
-<li><strong>Dynamic Theme Management:</strong> Dark/light mode system with local storage persistence (LocalStorage) to remember user preferences.</li>
-<li><strong>Optimization and Performance:</strong> Use of lazy loading for resources and asset optimization to maximize site speed.</li>
+<li><strong>Modular Architecture:</strong> Component-based structure (Header, Hero, Projects) and clean separation of the data layer.</li>
+<li><strong>Internationalization (i18n):</strong> Dynamic bilingual support with isolated locale management per component for cleaner code.</li>
+<li><strong>Extreme Optimization and SEO:</strong> Use of WebP images, Code Splitting, lazy loading, and removal of render-blocking resources.</li>
+<li><strong>Dynamic Theme Management:</strong> Dark/light mode system with local storage persistence (LocalStorage).</li>
 </ul>`
     },
     tags: {
       es: ["Frontend Dev", "Diseño UX/UI"],
       en: ["Frontend Dev", "UX/UI Design"],
     },
-    techBadge: ['vue', 'javascript'],
+    techBadge: ['vue', 'javascript', 'css'],
     buttons: [
       { type: 'github', url: 'https://github.com/HenryGalvezQ/portafolio-henry' },
       { type: 'demo', url: 'https://henrygalvez-frontend.netlify.app/' }
@@ -351,7 +357,7 @@ export const projectsData = [
     },
     techBadge: ['react', 'typescript', 'android'], 
     buttons: [
-      { type: 'presentation', url: '#' }, 
+      { type: 'presentation', url: 'https://www.canva.com/design/DAHAxjn71Y0/K-DK_Deb6BflkS7lDPxIhA/edit?utm_content=DAHAxjn71Y0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton' }, 
       { type: 'github', url: 'https://github.com/HenryGalvezQ' }
     ]
   },
@@ -403,7 +409,7 @@ export const projectsData = [
     techBadge: ['flutter', 'dart', 'firebase'],
     buttons: [
       { type: 'github', url: 'https://github.com/HenryGalvezQ/starter-project/tree/main' },
-      { type: 'demo', url: '#' }
+      { type: 'presentation', url: 'https://github.com/HenryGalvezQ/starter-project/blob/main/docs/REPORT.md' }
     ]
   },
   {
@@ -709,7 +715,7 @@ export const projectsData = [
     buttons: [
       { type: 'figma', url: 'https://www.figma.com/design/xTNEM1O2k9DXR0TT4iqxFH/Helpy?node-id=0-1&t=Uvg2YkNJB1jzOhIH-1' },
       { type: 'demo', url: 'https://www.figma.com/proto/xTNEM1O2k9DXR0TT4iqxFH/Helpy?node-id=18-481&t=ppQjiazUjlvGGxTY-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=8%3A61' },
-      { type: 'presentation', url: '#' }
+      { type: 'presentation', url: 'https://docs.google.com/presentation/d/1OzpJs1ve9EgU8Uswvirko6vM4HiLPS7LZag_ZOrAzBM/edit?usp=sharing' }
     ]
   },
   {

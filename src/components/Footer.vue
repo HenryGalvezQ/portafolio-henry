@@ -21,16 +21,16 @@
         </ul>
         <div class="footer__socials">
           <a href="https://www.linkedin.com/in/henry-galvez-quilla-26367b281" aria-label="footer social linkedin" target="_blank" class="footer__social">
-            <i class="uil uil-linkedin-alt"></i>
+            <UilIcon name="linkedin-alt" />
           </a>
           <a href="https://github.com/HenryGalvezQ" aria-label="footer social github" target="_blank" class="footer__social">
-            <i class="uil uil-github-alt"></i>
+            <UilIcon name="github-alt" />
           </a>
           <a href="https://www.facebook.com/henry.galvez.quilla" aria-label="footer social facebook" target="_blank" class="footer__social">
-            <i class="uil uil-facebook-f"></i>
+            <UilIcon name="facebook-f" />
           </a>
           <a :href="whatsappUrl" aria-label="footer social whatsapp" target="_blank" class="footer__social">
-            <i class="uil uil-whatsapp"></i>
+            <UilIcon name="whatsapp" />
           </a>
         </div>
       </div>
@@ -40,11 +40,13 @@
 </template>
 
 <script>
+import UilIcon from '@/components/UilIcon.vue';
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 
 export default {
   name: 'Footer',
+  components: { UilIcon },
   setup() {
     const { t } = useI18n({ inheritLocale: true, useScope: 'local' });
     const whatsappUrl = computed(() => 
@@ -101,10 +103,16 @@ export default {
 }
 
 .footer__social {
-  font-size: 1.25rem;
   margin-right: var(--mb-1-5);
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer__social svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  filter: drop-shadow(0 0 0.2px currentColor);
 }
 
 .footer__social:hover {
