@@ -7,19 +7,30 @@
 
     <div class="contact__container container grid">
       <div>
-        <div class="contact__information">
+        <div class="contact__information contact__information--copyable" 
+          @click="copyToClipboard('+51970675529', 'phone')"
+          @touchstart.passive="(e) => handleCopyableTouch(e.currentTarget, true)"
+          @touchend.passive="(e) => handleCopyableTouch(e.currentTarget, false)"
+          @touchcancel.passive="(e) => handleCopyableTouch(e.currentTarget, false)">
           <UilIcon name="phone" class="contact__icon" />
           <div>
             <h3 class="contact__title">{{ t('phone') }}</h3>
             <span class="contact__subtitle">+51 970675529</span>
           </div>
+          <UilIcon name="copy" class="contact__copy-icon" />
         </div>
-        <div class="contact__information">
+
+        <div class="contact__information contact__information--copyable" 
+          @click="copyToClipboard('henrygalvezquilla@gmail.com', 'email')"
+          @touchstart.passive="(e) => handleCopyableTouch(e.currentTarget, true)"
+          @touchend.passive="(e) => handleCopyableTouch(e.currentTarget, false)"
+          @touchcancel.passive="(e) => handleCopyableTouch(e.currentTarget, false)">
           <UilIcon name="envelope" class="contact__icon" />
           <div>
             <h3 class="contact__title">{{ t('email') }}</h3>
             <span class="contact__subtitle">henrygalvezquilla@gmail.com</span>
           </div>
+          <UilIcon name="copy" class="contact__copy-icon" />
         </div>
         <div class="contact__information">
           <UilIcon name="map-marker" class="contact__icon" />
@@ -91,7 +102,7 @@
     <!-- Toast Notification -->
     <transition name="toast">
       <div v-if="toast.show" :class="['toast', `toast--${toast.type}`]">
-        <UilIcon :name="toast.type === 'success' ? 'check-circle' : 'exclamation-triangle'" class="toast__icon" />
+        <UilIcon :name="toast.type === 'success' ? 'check-circle' : toast.type === 'info' ? 'info-circle' : 'exclamation-triangle'" class="toast__icon" />
         <span class="toast__message">{{ toast.message }}</span>
       </div>
     </transition>
@@ -150,6 +161,55 @@ const clearErrors = () => {
     email: false,
     message: false
   };
+};
+
+const copyToClipboard = async (value, type) => {
+  const msg = type === 'phone' ? t('toastCopiedPhone') : t('toastCopiedEmail');
+  
+  // Intento moderno (funciona en desktop y algunos mobile)
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    try {
+      await navigator.clipboard.writeText(value);
+      showToast(msg, 'info');
+      return;
+    } catch {
+      // Cae al fallback
+    }
+  }
+
+  // Fallback para mobile (Safari, Android WebView, etc.)
+  try {
+    const textarea = document.createElement('textarea');
+    textarea.value = value;
+    textarea.setAttribute('readonly', '');
+    textarea.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    // Para iOS específicamente
+    textarea.setSelectionRange(0, textarea.value.length);
+    const success = document.execCommand('copy');
+    document.body.removeChild(textarea);
+    
+    if (success) {
+      showToast(msg, 'info');
+    } else {
+      showToast(t('toastCopyError'), 'error');
+    }
+  } catch {
+    showToast(t('toastCopyError'), 'error');
+  }
+};
+
+const handleCopyableTouch = (el, touching) => {
+  if (touching) {
+    el.classList.add('is-touching');
+  } else {
+    // Pequeño delay para que se vea el feedback antes de quitarlo
+    setTimeout(() => {
+      el.classList.remove('is-touching');
+    }, 420);
+  }
 };
 
 // Validar si es un email válido
@@ -213,6 +273,15 @@ onMounted(() => {
       input.value.style.height = input.value.scrollHeight + 'px';
     }
   });
+
+  // Hover para desktop (mouse)
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (!isTouch) {
+    document.querySelectorAll('.contact__information--copyable').forEach(el => {
+      el.addEventListener('mouseenter', () => el.classList.add('is-touching'));
+      el.addEventListener('mouseleave', () => el.classList.remove('is-touching'));
+    });
+  }
 });
 
 const handleSubmit = async () => {
@@ -478,6 +547,41 @@ const checkRateLimit = () => {
   animation: slideIn 0.3s ease;
 }
 
+.contact__information--copyable {
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  margin-left: -0.5rem;
+  transition: background-color 0.2s ease;
+  user-select: none;
+  /* Sin :hover CSS en absoluto */
+}
+
+.contact__information--copyable.is-touching {
+  background-color: var(--contact-input-color);
+}
+
+.contact__information--copyable.is-touching .contact__copy-icon {
+  opacity: 1;
+}
+
+.contact__copy-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--first-color);
+  margin-left: auto;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+/* Mobile: siempre visible el icono (no hay hover) */
+@media (hover: none) {
+  .contact__copy-icon {
+    opacity: 0.5;
+  }
+}
+
 @keyframes slideIn {
   from {
     transform: translateX(400px);
@@ -496,6 +600,11 @@ const checkRateLimit = () => {
 
 .toast--error {
   background-color: #ef4444;
+  color: white;
+}
+
+.toast--info {
+  background-color: #8498ab;
   color: white;
 }
 
@@ -588,6 +697,7 @@ const checkRateLimit = () => {
     right: 1rem;
     left: 1rem;
     max-width: none;
+    padding: 1rem 1.4rem;
   }
 }
 </style>
@@ -614,7 +724,10 @@ const checkRateLimit = () => {
     "toastError": "Hubo un error al enviar el mensaje. Por favor, intenta contactarme por WhatsApp",
     "toastRateLimit": "Has alcanzado el límite de mensajes por hoy. Inténtalo mañana o contáctame por WhatsApp.",
     "whatsappMessage": "Hola, quiero contactarte por tus servicios.",
-    "defaultProject": "Trabajo"
+    "defaultProject": "Trabajo",
+    "toastCopiedPhone": "Número copiado al portapapeles",
+    "toastCopiedEmail": "Email copiado al portapapeles",
+    "toastCopyError": "No se pudo copiar. Inténtalo manualmente"
   },
   "en": {
     "title": "Contact Me",
@@ -636,7 +749,10 @@ const checkRateLimit = () => {
     "toastError": "There was an error sending the message. Please try contacting me via WhatsApp",
     "toastRateLimit": "You've reached today's message limit. Try again tomorrow or contact me via WhatsApp.",
     "whatsappMessage": "Hello, I want to contact you about your services.",
-    "defaultProject": "Work"
+    "defaultProject": "Work",
+    "toastCopiedPhone": "Phone number copied to clipboard",
+    "toastCopiedEmail": "Email copied to clipboard",
+    "toastCopyError": "Couldn't copy. Please try manually"
   }
 }
 </i18n>
