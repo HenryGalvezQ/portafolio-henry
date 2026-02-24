@@ -77,14 +77,14 @@
       </form>
       
       <div class="contact__buttons">
-        <a href="javascript:void(0)" @click="openWhatsApp" class="button button--flex button--animated button--whatsapp">
+        <button @click="openWhatsApp" class="button button--flex button--animated button--whatsapp">
           WhatsApp
           <UilIcon name="whatsapp" class="button__icon" />
-        </a>
-        <a href="javascript:void(0)" @click="!isSubmitting && handleSubmit()" class="button button--flex button--animated" :class="{ 'button--submitting': isSubmitting }">
+        </button>
+        <button @click="!isSubmitting && handleSubmit()" class="button button--flex button--animated" :class="{ 'button--submitting': isSubmitting }">
           {{ isSubmitting ? t('sending') : t('send') }}
           <UilIcon name="message" class="button__icon" />
-        </a>
+        </button>
       </div>
     </div>
 
@@ -442,6 +442,7 @@ const checkRateLimit = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--body-font);
 }
 
 .button--whatsapp {
