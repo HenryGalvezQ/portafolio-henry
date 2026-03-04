@@ -53,7 +53,7 @@ export const projectsData = [
       { type: 'demo', url: 'http://138.68.254.39/app/' },
       { type: 'figma', url: 'https://www.figma.com/design/6yVeJjKkAnVy7yTG1shhTq/Prototipado-SIGEPRO?node-id=1292-511&p=f&t=QlJ8irZ9W3I0wwd6-0' },
       { type: 'github', url: 'https://github.com/HenryGalvezQ/phaseflow' },
-      { type: 'presentation', url: 'https://www.canva.com/design/DAG75rU1odw/JxcqLztKz2kCwu3wimlAxA/edit?utm_content=DAG75rU1odw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton' }
+      { type: 'presentation', url: 'https://www.canva.com/design/DAHC_-4HNoU/UiJu2g4j_a3O3fDyjyMsoQ/edit?utm_content=DAHC_-4HNoU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton' }
     ]
   },
   {
@@ -205,7 +205,8 @@ export const projectsData = [
     techBadge: ['vue', 'javascript', 'css'],
     buttons: [
       { type: 'github', url: 'https://github.com/HenryGalvezQ/portafolio-henry' },
-      { type: 'demo', url: 'https://henrygalvez-frontend.netlify.app/' }
+      { type: 'demo', url: 'https://henrygalvez-frontend.netlify.app/' },
+      { type: 'presentation', url: 'https://www.canva.com/design/DAHDALokZZM/x7qprjy6xVBx9vEthp2qgw/edit?utm_content=DAHDALokZZM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton' }
     ]
   },
   {
